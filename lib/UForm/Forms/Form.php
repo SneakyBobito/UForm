@@ -60,7 +60,10 @@ class Form implements
 	*/
 	protected $_elements;
 
-	/**
+        protected $validation;
+
+
+        /**
 	 * Indexed Elements
 	 * 
 	 * @var null|array
@@ -280,35 +283,30 @@ class Form implements
         }
 
 	/**
-	 * Validates the form
+	 * Validates the the passed datas without affecting the form
 	 *
 	 * @param array|null $data
 	 * @param object|null $entity
 	 * @return boolean
 	 * @throws Exception
 	 */
-        public function isValid($data = null, $entity = null)
+        public function dataValidation($data,  Validation\ChainedValidation $cV)
         {
-            if( !is_array($data) && !is_null($data) ) {
+            if( !is_array($data)  ) {
                 throw new Exception('Invalid parameter type.');
             }
 
-            if( !is_object($entity) && !is_null($entity) ) {
+            if( !is_object($entity) ) {
                 throw new Exception('Invalid parameter type.');
             }
 
-            if( !is_array($this->_elements)) {
+            if( !is_array($this->_elements) ) {
                     return true;
-            }
-
-            //If the data is not an array use the one passed previously
-            if( !is_array($data) ) {
-                $data = $this->_data;
             }
 
             //Check if there is a method 'beforeValidation'
             if( method_exists($this, 'beforeValidation') ) {
-                if( !$this->beforeValidation($data, $entity) ) {
+                if( !$this->beforeValidation($data) ) {
                     return false;
                 }
             }
@@ -318,15 +316,11 @@ class Form implements
             $messages = array();
 
             foreach($this->_elements as $element) {
-                $validation = $element->validate( $this->getValue($element->getName()) , $this->getData() , $messages );
+                $validation = $element->validate( $this->getData() , $this->getData() , null , $cV);
                 if(!$validation->isValid()){
                     $passed = false;
                 }
-            }
-
-            //If the validation fails we update the messages
-            if($passed === false) {
-                $this->_messages = $messages;
+                
             }
 
             //Check if there is a method 'afterValidation'
@@ -335,42 +329,53 @@ class Form implements
             }
 
             return $passed;
-	}
+        }
+        
+        public function validate(){
+            if(!$this->_data)
+                throw new Exception("No data to validate");
+            
+            $validation = new Validation\ChainedValidation;
+            
+            $this->dataValidation($this->_data, $validation);
+            
+            $this->validation = $validation;
+        }
 
-	/**
-	 * Returns the messages generated in the validation
-	 *
-	 * @param boolean|null $byItemName
-	 * @return array
-	 * @throws Exception
-	 */
-	public function getMessages($byItemName = null)
-	{
-		if(is_null($byItemName) === true) {
-			$byItemName = false;
-		} elseif(is_bool($byItemName) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+        /**
+         * Returns the messages generated in the validation
+         *
+         * @param boolean|null $byItemName
+         * @return array
+         * @throws Exception
+         */
+        public function getMessages($byItemName = null)
+        {
+            if(is_null($byItemName) === true) {
+                $byItemName = false;
+            } elseif(is_bool($byItemName) === false) {
+                throw new Exception('Invalid parameter type.');
+            }
 
-		$messages = $this->_messages;
+            $messages = $this->_messages;
 
-		if($byItemName === true) {
-			if(is_array($messages) === false) {
-				return new Group();
-			}
+            if($byItemName === true) {
+                if(is_array($messages) === false) {
+                    return new Group();
+                }
 
-			return $messages;
-		}
+                return $messages;
+            }
 
-		$g = new Group();
-		if(is_array($message) === true) {
-			foreach($messages as $message) {
-				$g->appendMessages($message);
-			}
-		}
+            $g = new Group();
+            if(is_array($message) === true) {
+                foreach($messages as $message) {
+                    $g->appendMessages($message);
+                }
+            }
 
-		return $g;
-	}
+            return $g;
+        }
 
 	/**
 	 * Returns the messages generated for a specific element
@@ -381,22 +386,22 @@ class Form implements
 	 */
 	public function getMessagesFor($name)
 	{
-		if(is_string($name) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+            if(is_string($name) === false) {
+                throw new Exception('Invalid parameter type.');
+            }
 
-		if(is_array($this->_messages) === false) {
-			$this->_messages = array();
-		}
+            if(is_array($this->_messages) === false) {
+                $this->_messages = array();
+            }
 
-		if(isset($this->_messages[$name]) === true) {
-			return $this->_messages[$name];
-		}
+            if(isset($this->_messages[$name]) === true) {
+                return $this->_messages[$name];
+            }
 
-		$group = new Group();
-		$this->_messages[$name] = $group;
+            $group = new Group();
+            $this->_messages[$name] = $group;
 
-		return $group;
+            return $group;
 	}
 
 	/**
@@ -426,23 +431,23 @@ class Form implements
 	 * @return \Phalcon\Forms\Form
 	 * @throws Exception
 	 */
-	public function add($element)
-	{
-		if(is_object($element) === false ||
-			$element instanceof ElementInterface === false) {
-			throw new Exception('The element is not valid');
-		}
+        public function add($element)
+        {
+            if(is_object($element) === false ||
+                $element instanceof ElementInterface === false) {
+                throw new Exception('The element is not valid');
+            }
 
-		if(is_array($this->_elements) === false) {
-			$this->_elements = array();
-		}
-                
-		$element->setForm($this);
+            if(is_array($this->_elements) === false) {
+                $this->_elements = array();
+            }
 
-		$this->_elements[$element->getName()] = $element;
+            $element->setForm($this);
 
-		return $this;
-	}
+            $this->_elements[$element->getName()] = $element;
+
+            return $this;
+        }
 
 	/**
 	 * Renders a specific item in the form
@@ -487,99 +492,51 @@ class Form implements
 		return $this->_elements[$name];
 	}
 
-	/**
-	 * Generate the label of a element added to the form including HTML
-	 *
-	 * @param string $name
-	 * @return string
-	 * @throws Exception
-	 */
-	public function label($name)
-	{
-		if(is_string($name) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+	
 
-		if(is_array($this->_elements) === false ||
-			isset($this->_elements[$name]) === false) {
-			throw new Exception('Element with ID='.$name.' is not part of the form');
-		}
+       /**
+        * Gets a value from the internal related entity or from the default value
+        *
+        * @param string $name
+        * @return mixed
+        * @throws Exception
+        */
+        public function getValue($name)
+        {
+           if(is_string($name) === false) {
+               throw new Exception('Invalid parameter type.');
+           }
 
-		return $this->_elements[$name]->label();
-	}
+           if(is_array($this->_data) === true) {
+               //Check if the data is in the data array
+               if(isset($this->_data[$name]) === true) {
+                   return $this->_data[$name];
+               }
+           }
+        }
 
-	/**
-	 * Returns a label for an element
-	 *
-	 * @param string $name
-	 * @return string
-	 * @throws Exception
-	 */
-	public function getLabel($name)
-	{
-		if(is_string($name) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+        public function getData(){
+           return $this->_data;
+        }
 
-		if(is_array($this->_elements) === false ||
-			isset($this->_elements[$name]) === false) {
-			throw new Exception('Element with ID='.$name.' is not part of the form');
-		}
-
-		$label = $this->_elements[$name]->getLabel();
-
-		//Use the element's name as label if the label is not available
-		if(empty($label) === true) {
-			return $name;
-		}
-
-		return $label;
-	}
-
-	/**
-	 * Gets a value from the internal related entity or from the default value
-	 *
-	 * @param string $name
-	 * @return mixed
-	 * @throws Exception
-	 */
-	public function getValue($name)
-	{
+        /**
+        * Check if the form contains an element
+        *
+        * @param string $name
+        * @return boolean
+        * @throws Exception
+        */
+        public function has($name){
             if(is_string($name) === false) {
                 throw new Exception('Invalid parameter type.');
             }
 
-            if(is_array($this->_data) === true) {
-                //Check if the data is in the data array
-                if(isset($this->_data[$name]) === true) {
-                    return $this->_data[$name];
-                }
+            if(is_array($this->_elements) === false) {
+                return false;
             }
-	}
 
-        public function getData(){
-            return $this->_data;
-        }
-        
-	/**
-	 * Check if the form contains an element
-	 *
-	 * @param string $name
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public function has($name)
-	{
-		if(is_string($name) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		if(is_array($this->_elements) === false) {
-			return false;
-		}
-
-		//Checks if the element is in the form
-		return isset($this->_elements[$name]);
+            //Checks if the element is in the form
+            return isset($this->_elements[$name]);
 	}
 
 	/**
@@ -591,20 +548,20 @@ class Form implements
 	 */
 	public function remove($name)
 	{
-		if(is_string($name) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+            if(is_string($name) === false) {
+                throw new Exception('Invalid parameter type.');
+            }
 
-		//Checks if the element is in the form
-		if(is_array($this->_elements) === true &&
-			isset($this->_elements[$name]) === true) {
-			unset($this->_elements[$name]);
-			return true;
-		}
+            //Checks if the element is in the form
+            if(is_array($this->_elements) === true &&
+                isset($this->_elements[$name]) === true) {
+                unset($this->_elements[$name]);
+                return true;
+            }
 
-		//Clean the iterator index
-		$this->_elementsIndexed = null;
-		return false;
+            //Clean the iterator index
+            $this->_elementsIndexed = null;
+            return false;
 	}
 
 	/**
@@ -616,25 +573,25 @@ class Form implements
 	 */
 	public function clear($fields = null)
 	{
-		if(is_null($fields) === false &&
-			is_array($fields) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+            if(is_null($fields) === false &&
+                is_array($fields) === false) {
+                throw new Exception('Invalid parameter type.');
+            }
 
-		if(is_array($this->_elements) === true) {
-			foreach($this->_elements as $element) {
-				//@note slightly inefficient structure
-				if(is_array($fields) === false) {
-					$element->clear();
-				} else {
-					if(in_array($element->getName(), $fields) === true) {
-						$element->clear();
-					}
-				}
-			}
-		}
+            if(is_array($this->_elements) === true) {
+                foreach($this->_elements as $element) {
+                    //@note slightly inefficient structure
+                    if(is_array($fields) === false) {
+                        $element->clear();
+                    } else {
+                        if(in_array($element->getName(), $fields) === true) {
+                            $element->clear();
+                        }
+                    }
+                }
+            }
 
-		return $this;
+            return $this;
 	}
 
 	/**

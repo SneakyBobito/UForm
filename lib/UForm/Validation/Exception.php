@@ -16,7 +16,7 @@ namespace Uform\Validation;
  *
  * @see https://github.com/phalcon/cphalcon/blob/1.2.6/ext/validation/exception.c
  */
-class Exception extends \Uform\Exception
+class Exception extends \Exception
 {
 
 }

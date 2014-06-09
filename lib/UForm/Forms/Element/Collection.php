@@ -44,4 +44,21 @@ class Collection extends Element{
         return $render;
     }
     
+    public function validate($values, $data, $prename = null , \UForm\Validation\ChainedValidation $cV = null) {
+        
+        $validation = parent::validate($values, $data, $prename, $cV);
+        
+        // TODO add validator min/max
+        
+        if( isset($values[$this->getName()]) && is_array($values[$this->getName()]) ){
+            foreach ($values[$this->getName()] as $k=>$v){
+                $newPrename = $this->getName($prename,true) . "." . $k;
+                $this->elementDefinition->validate($v, $data, $newPrename, $cV);
+            }
+        }
+        
+        return $validation;
+        
+    }
+    
 }

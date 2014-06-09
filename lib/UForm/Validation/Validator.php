@@ -19,93 +19,89 @@ use \UForm\Validation\Exception;
  */
 abstract class Validator
 {
-	/**
-	 * Options
-	 * 
-	 * @var null
-	 * @access protected
-	*/
-	protected $_options;
+    /**
+     * Options
+     * 
+     * @var null
+     * @access protected
+    */
+    protected $_options;
 
-	/**
-	 * \UForm\Validation\Validator constructor
-	 *
-	 * @param array|null $options
-	 * @throws Exception
-	 */
-	public function __construct($options = null)
-	{
-		if(is_array($options) === true) {
-			$this->_options = $options;
-		} elseif(is_null($options) === false) {
-			//@note this exception message is nonsence
-			throw new Exception('The attribute must be a string');
-		}
-	}
+    /**
+     * \UForm\Validation\Validator constructor
+     *
+     * @param array|null $options
+     * @throws Exception
+     */
+    public function __construct($options = null)
+    {
+        $this->_options = $options;
 
-	/**
-	 * Checks if an option is defined
-	 *
-	 * @param string $key
-	 * @return mixed
-	 * @throws Exception
-	 */
-	public function isSetOption($key)
-	{
-		if(is_string($key) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+    }
 
-		if(is_array($this->_options) === true) {
-			return isset($this->_options[$key]);
-		}
+    /**
+     * Checks if an option is defined
+     *
+     * @param string $key
+     * @return mixed
+     * @throws Exception
+     */
+    public function isSetOption($key)
+    {
+        if(is_string($key) === false) {
+            throw new Exception('Invalid parameter type.');
+        }
 
-		return false;
-	}
+        if(is_array($this->_options) === true) {
+            return isset($this->_options[$key]);
+        }
 
-	/**
-	 * Returns an option in the validator's options
-	 * Returns null if the option hasn't been set
-	 *
-	 * @param string $key
-	 * @return mixed
-	 * @throws Exception
-	 */
-	public function getOption($key)
-	{
-		if(is_string($key) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+        return false;
+    }
 
-		if(is_array($this->_options) === true) {
-			if(isset($this->_options[$key]) === true) {
-				return $this->_options[$key];
-			}
-		}
+    /**
+     * Returns an option in the validator's options
+     * Returns null if the option hasn't been set
+     *
+     * @param string $key
+     * @return mixed
+     * @throws Exception
+     */
+    public function getOption($key)
+    {
+        if(is_string($key) === false) {
+            throw new Exception('Invalid parameter type.');
+        }
 
-		return null;
-	}
+        if(is_array($this->_options) === true) {
+            if(isset($this->_options[$key]) === true) {
+                return $this->_options[$key];
+            }
+        }
 
-	/**
-	 * Sets an option in the validator
-	 *
-	 * @param string $key
-	 * @param mixed $value
-	 * @throws Exception
-	 */
-	public function setOption($key, $value)
-	{
-		if(is_string($key) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+        return null;
+    }
 
-		if(is_array($this->_options) === false) {
-			$this->_options = array();
-		}
+    /**
+     * Sets an option in the validator
+     *
+     * @param string $key
+     * @param mixed $value
+     * @throws Exception
+     */
+    public function setOption($key, $value)
+    {
+        if(is_string($key) === false) {
+            throw new Exception('Invalid parameter type.');
+        }
 
-		$this->_options[$key] = $value;
-	}
-        
-        abstract public function validate($validator, $attribute);
-        
+        if(is_array($this->_options) === false) {
+            $this->_options = array();
+        }
+
+        $this->_options[$key] = $value;
+    }
+
+    abstract public function validate($validator);
+
 }

@@ -206,6 +206,6 @@ interface ElementInterface
          * @param type $messages
          * @return \UForm\Validation
          */
-        public function validate($value,$data,&$messages);
+        public function validate($values, $data,$prename = null , \UForm\Validation\ChainedValidation $cV = null);
         
 }

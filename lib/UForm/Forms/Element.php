@@ -183,11 +183,15 @@ abstract class Element implements ElementInterface
          *
          * @return string
          */
-        public function getName($prename = null)
+        public function getName($prename = null,$dottedNotation = false)
         {
-            if( null !== $prename)
-                return $prename . "[" . $this->getName() . "]";
-            else
+            if( null !== $prename){
+                
+                if($dottedNotation)
+                    return $prename . "." . $this->getName();
+                else
+                    return $prename . "[" . $this->getName() . "]";
+            }else
                 return $this->_name;
         }
 
@@ -243,32 +247,27 @@ abstract class Element implements ElementInterface
          * @return \UForm\Forms\ElementInterface
          * @throws Exception
          */
-        public function addValidators($validators, $merge = null)
+        public function addValidators($validators, $merge = true)
         {
-                if(is_null($merge) === true) {
-                        $merge = true;
-                } elseif(is_bool($merge) === false) {
-                        throw new Exception('Invalid parameter type.');
-                }
+            
+            if(is_array($validators) === false) {
+                throw new Exception("The validators parameter must be an array");
+            }
 
-                if(is_array($validators) === false) {
-                        throw new Exception("The validators parameter must be an array");
-                }
+            if(is_array($this->_validators) === false) {
+                $this->_validators = array();
+            }
 
-                if(is_array($this->_validators) === false) {
-                        $this->_validators = array();
+            //@note nothing happens when $merge === false
+            if($merge === true) {
+                if(is_array($this->_validators) === true) {
+                    $this->_validators = array_merge($this->_validators, $validators);
+                } else {
+                    $this->_validators = $validators;
                 }
+            }
 
-                //@note nothing happens when $merge === false
-                if($merge === true) {
-                        if(is_array($this->_validators) === true) {
-                                $this->_validators = array_merge($this->_validators, $validators);
-                        } else {
-                                $this->_validators = $validators;
-                        }
-                }
-
-                return $this;
+            return $this;
         }
 
         /**
@@ -280,16 +279,17 @@ abstract class Element implements ElementInterface
          */
         public function addValidator($validator)
         {
-                if(is_object($validator) === false ||
-                        $validator instanceof ValidatorInterface === false) {
-                        throw new Exception('The validators parameter must be an object');
-                }
+            
+            if(is_object($validator) === false ||
+                $validator instanceof Validation\Validator === false) {
+                throw new Exception('The validators parameter must be an object extending UForm\Validation\Validator ');
+            }
 
-                if(is_array($this->_validators) === false) {
-                        $this->_validators = array();
-                }
+            if(is_array($this->_validators) === false) {
+                $this->_validators = array();
+            }
 
-                $this->_validators[] = $validators;
+            $this->_validators[] = $validator;
         }
 
         /**
@@ -299,7 +299,7 @@ abstract class Element implements ElementInterface
          */
         public function getValidators()
         {
-                return $this->_validators;
+            return $this->_validators;
         }
 
         /**
@@ -559,27 +559,28 @@ abstract class Element implements ElementInterface
          */
         public function __toString()
         {
-                try {
-                        return $this->render();
-                } catch(\Exception $e) {
-                        trigger_error((string)$e->getMessage(), \E_USER_ERROR);
-                }
+            try {
+                return $this->render();
+            } catch(\Exception $e) {
+                trigger_error((string)$e->getMessage(), \E_USER_ERROR);
+            }
         }
         
-        public function validate($value, $data, &$messages, $prename = null ) {
+        public function validate($values, $data, $prename = null ,  Validation\ChainedValidation $cV = null ) {
             $validators = $this->getValidators();
             if(is_array($validators) && !empty($validators) ) {
-                $name = ($prename ? $prename . "." : "" ) . $element->getName();
+                $localName = $this->getName();
+                $name = $this->getName($prename,true);
                 $prepared_validators = array();
                 foreach($validators as $validator) {
-                        $prepared_validators[] = array($name, $validator);
+                    $prepared_validators[] = array($name, $validator);
                 }
 
                 //Create an implicit validator
-                $validation = new Validation($prepared_validators);
-
+                $validation = new Validation($localName,$name,$prepared_validators);
+                
                 //Get filters in the element
-                $filters = $element->getFilters();
+                $filters = $this->getFilters();
 
                 //Assign the filters to the validation
                 if(is_array($filters) === true) {
@@ -587,11 +588,10 @@ abstract class Element implements ElementInterface
                 }
 
                 //Perform the validation
-                $validation->validate($data, $entity);
-                $messages = $validation->getMessages();
-                if( !empty($messages) ) {
-                    $messages[$name] = $messages ;
-                }
+                $validation->validate($values , $data);
+                
+                if($cV)
+                    $cV->addValidation ($name, $validation);
                 
                 return $validation;
                 

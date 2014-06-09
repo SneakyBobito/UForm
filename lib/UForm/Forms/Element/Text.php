@@ -32,6 +32,19 @@ class Text extends Element implements ElementInterface
          * @throws Exception
          */
         public function render( $attributes , $value , $data , $prename = null ){
-            return "input value= " . $value[$this->getName()] . " name=" . $this->getName($prename);
+            
+            $params = array(
+                "type" => "text",
+                "name" => $this->getName($prename)
+            );
+            
+            if(isset($value[$this->getName()])){
+                $params["value"] = $value[$this->getName()];
+            }
+            
+            $render = new Tag("input", $params , true);
+            
+            
+            return $render->draw($attributes, null);
         }
 }
