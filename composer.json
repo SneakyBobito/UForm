@@ -1,0 +1,15 @@
+{
+    
+    "name": "Sneakybobito/UForm",
+    "type": "library",
+
+    "autoload":{
+        "psr-0" : {
+            "UForm"   :   "lib"
+        }
+    },
+
+    "require-dev":{
+        "phpunit/phpunit": "4.1.2"
+    }
+}
