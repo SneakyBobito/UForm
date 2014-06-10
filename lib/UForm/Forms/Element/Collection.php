@@ -5,13 +5,14 @@ namespace UForm\Forms\Element;
 use UForm\Forms\Element
 
 ;
+use UForm\Forms\ElementContainer;
 
 /**
  * Collection
  *
  * @author sghzal
  */
-class Collection extends Element{
+class Collection extends ElementContainer{
     
     /**
      * @var \UForm\Forms\ElementInterface
@@ -60,5 +61,10 @@ class Collection extends Element{
         return $validation;
         
     }
-    
+
+    public function getElement($name){
+        return $this->elementDefinition;
+    }
+
+
 }

@@ -5,13 +5,14 @@ namespace UForm\Forms\Element;
 use UForm\Forms\Element
 
 ;
+use UForm\Forms\ElementContainer;
 
 /**
  * Collection
  *
  * @author sghzal
  */
-class Group extends Element{
+class Group extends ElementContainer{
     
     /**
      * @var \UForm\Forms\ElementInterface
@@ -45,5 +46,10 @@ class Group extends Element{
         
         return $render;
     }
-    
+
+    public function getElement($name){
+        return $this->elements[$name];
+    }
+
+
 }

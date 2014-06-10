@@ -301,10 +301,6 @@ class Form implements
                 throw new Exception('Invalid parameter type.');
             }
 
-            if( !is_object($entity) ) {
-                throw new Exception('Invalid parameter type.');
-            }
-
             if( !is_array($this->_elements) ) {
                     return true;
             }
