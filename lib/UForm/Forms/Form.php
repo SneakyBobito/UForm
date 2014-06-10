@@ -17,6 +17,7 @@ use
 	\UForm\Forms\ElementInterface,
 	\UForm\Validation,
 	\UForm\Validation\Message\Group;
+use UForm\Navigator;
 
 /**
  * Phalcon\Forms\Form
@@ -478,12 +479,14 @@ class Form implements
 			throw new Exception('The name must be a string');
 		}
 
-		if(is_array($this->_elements) === false || 
-			isset($this->_elements[$name]) === false) {
-			throw new Exception('Element with ID='.$name.' is not part of the form');
-		}
+		$n = new Navigator();
+        $element = $n->formGet($this,$name);
 
-		return $this->_elements[$name]->render($attributes , $this->getData() , $this->getData());
+        if(!$element){
+            throw new Exception('Element with ID='.$name.' is not part of the form');
+        }
+
+		return $element->render($attributes , $this->getData() , $this->getData());
 	}
 
 	/**

@@ -10,7 +10,16 @@ use UForm\Navigator\Exception;
 class Navigator {
 
 
-
+    /**
+     *
+     * Gets an element from the form
+     *
+     * Usefull for doted notation eg : 'elm.subelm.0.name'
+     *
+     * @param Form $form
+     * @param $string
+     * @throws Navigator\Exception
+     */
     public function formGet(Form $form,$string){
 
         $stringParts = explode("." , $string);
