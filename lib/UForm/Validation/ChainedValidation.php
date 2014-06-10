@@ -19,6 +19,11 @@ class ChainedValidation {
         $this->validations[$name] = $validation;
     }
 
+    /**
+     * get the validation by its name
+     * @param $name
+     * @return null|Validation
+     */
     public function getValidation($name){
 
         if(isset($this->validations[$name])){

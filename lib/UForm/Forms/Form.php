@@ -473,21 +473,62 @@ class Form implements
 	 * @return string
 	 * @throws Exception
 	 */
-	public function render($name, $attributes = null)
-	{
-		if(is_string($name) === false) {
-			throw new Exception('The name must be a string');
-		}
+    public function render($name, $attributes = null)
+    {
+        if(is_string($name) === false) {
+            throw new Exception('The name must be a string');
+        }
 
-		$n = new Navigator();
+        $n = new Navigator();
         $element = $n->formGet($this,$name);
 
         if(!$element){
             throw new Exception('Element with ID='.$name.' is not part of the form');
         }
 
-		return $element->render($attributes , $this->getData() , $this->getData());
-	}
+        return $element->render($attributes , $this->getData() , $this->getData());
+    }
+
+
+    /**
+     * true is the element is valid
+     * @param $name
+     * @return bool
+     * @throws Exception
+     */
+    public function elementIsValid($name){
+
+        if(!$this->validation)
+            return true;
+
+        $validation =$this->validation->getValidation($name);
+
+        if(!$validation){
+            throw new Exception('Element with ID='.$name.' is not part of the form');
+        }
+
+        return $validation->isValid();
+    }
+
+    /**
+     * get the message list for the given element name
+     * @param $name
+     * @return bool|null|Group
+     * @throws Exception
+     */
+    public function elementMessages($name){
+
+        if(!$this->validation)
+            return true;
+
+        $validation =$this->validation->getValidation($name);
+
+        if(!$validation){
+            throw new Exception('Element with ID='.$name.' is not part of the form');
+        }
+
+        return $validation->getMessages();
+    }
 
 	/**
 	 * Returns an element added to the form by its name
