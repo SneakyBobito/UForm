@@ -1,6 +1,7 @@
 <?php
 
 namespace UForm\Validation;
+use UForm\Validation;
 
 /**
  * ChaineValidation
@@ -9,6 +10,9 @@ namespace UForm\Validation;
  */
 class ChainedValidation {
 
+    /**
+     * @var Validation[]
+     */
     protected $validations = array();
     
     public function addValidation($name,  \UForm\Validation $validation){
@@ -23,5 +27,13 @@ class ChainedValidation {
 
         return null;
 
+    }
+
+    public function isValid(){
+        foreach($this->validations as $v){
+            if(!$v->isValid())
+                return false;
+        }
+        return true;
     }
 }

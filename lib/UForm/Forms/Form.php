@@ -60,7 +60,11 @@ class Form implements
 	*/
 	protected $_elements;
 
-        protected $validation;
+
+    /**
+     * @var Validation\ChainedValidation
+     */
+    protected $validation;
 
 
         /**
@@ -97,10 +101,11 @@ class Form implements
 	public function __construct()
 	{
             if(method_exists($this, 'initialize') === true) {
-                    $this->initialize($entity, $userOptions);
+                    $this->initialize();
             }
 	}
-        
+
+
 
 
 	/**
@@ -341,6 +346,20 @@ class Form implements
             
             $this->validation = $validation;
         }
+
+
+        public function isValid(){
+            if(!$this->_data){
+                throw new Exception("no data to valid");
+            }
+
+            if(!$this->validation)
+                $this->validate();
+
+            return $this->validation->isValid();
+        }
+
+
 
         /**
          * Returns the messages generated in the validation
