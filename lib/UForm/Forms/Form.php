@@ -358,87 +358,6 @@ class Form implements
 
 
 
-        /**
-         * Returns the messages generated in the validation
-         *
-         * @param boolean|null $byItemName
-         * @return array
-         * @throws Exception
-         */
-        public function getMessages($byItemName = null)
-        {
-            if(is_null($byItemName) === true) {
-                $byItemName = false;
-            } elseif(is_bool($byItemName) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            $messages = $this->_messages;
-
-            if($byItemName === true) {
-                if(is_array($messages) === false) {
-                    return new Group();
-                }
-
-                return $messages;
-            }
-
-            $g = new Group();
-            if(is_array($message) === true) {
-                foreach($messages as $message) {
-                    $g->appendMessages($message);
-                }
-            }
-
-            return $g;
-        }
-
-	/**
-	 * Returns the messages generated for a specific element
-	 *
-	 * @param string $name
-	 * @return \Phalcon\Validation\Message\Group[]
-	 * @throws Exception
-	 */
-	public function getMessagesFor($name)
-	{
-            if(is_string($name) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            if(is_array($this->_messages) === false) {
-                $this->_messages = array();
-            }
-
-            if(isset($this->_messages[$name]) === true) {
-                return $this->_messages[$name];
-            }
-
-            $group = new Group();
-            $this->_messages[$name] = $group;
-
-            return $group;
-	}
-
-	/**
-	 * Check if messages were generated for a specific element
-	 *
-	 * @param string $name
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public function hasMessagesFor($name)
-	{
-		if(is_string($name) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		if(is_array($this->_messages) === true) {
-			return isset($this->_messages[$name]);
-		}
-
-		return false;
-	}
 
 	/**
 	 * Adds an element to the form
@@ -519,7 +438,7 @@ class Form implements
     public function elementMessages($name){
 
         if(!$this->validation)
-            return true;
+            return array();
 
         $validation =$this->validation->getValidation($name);
 
