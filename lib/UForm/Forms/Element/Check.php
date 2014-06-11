@@ -1,43 +1,32 @@
 <?php
-/**
- * Checkbox
- *
- * @author Andres Gutierrez <andres@phalconphp.com>
- * @author Eduar Carvajal <eduar@phalconphp.com>
- * @author Wenzel Pünter <wenzel@phelix.me>
- * @version 1.2.6
- * @package Phalcon
-*/
+
 namespace UForm\Forms\Element;
 
-use \UForm\Tag,
-	\UForm\Forms\Element,
-	\UForm\Forms\ElementInterface,
-	\UForm\Forms\Exception;
+class Check extends Input{
+    
+    protected $value;
 
-/**
- * Phalcon\Forms\Element\Check
- *
- * Component INPUT[type=check] for forms
- * 
- * @see https://github.com/phalcon/cphalcon/blob/1.2.6/ext/forms/element/check.c
- */
-class Check extends Element implements ElementInterface
-{
-	/**
-	 * Renders the element widget returning html
-	 *
-	 * @param array|null $attributes
-	 * @return string
-	 * @throws Exception
-	 */
-	public function render($attributes = null)
-	{
-		if(is_array($attributes) === false &&
-			is_null($attributes) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
 
-		return Tag::checkField($this->prepareAttributes($attributes, true));
-	}
+    public function __construct($name,$value = null, $attributes = null, $validators = null, $filters = null) {
+        parent::__construct("checkbox", $name, $attributes, $validators, $filters);
+        $this->value = $value; 
+    }
+    
+    protected function overidesParamsBeforeRender($params, $attributes, $value, $data, $prename = null) {
+        
+        if(isset($value[$this->getName()]) && $value[$this->getName()] == $this->value  ){
+            $params["checked"] = "checked";
+        }
+        
+        if($this->value)
+            $params["value"] = $this->value;
+        else
+            unset($params["value"]);
+        
+        return $params;
+        
+    }
+
+
+
 }

@@ -112,10 +112,6 @@ abstract class Element implements ElementInterface
 
         $this->_name = $name;
 
-        if(is_string($name) === false) {
-            throw new Exception("The element's name must be a string");
-        }
-
         if(is_array($attributes) === true) {
             $this->_attributes = $attributes;
         }

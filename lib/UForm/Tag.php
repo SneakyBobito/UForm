@@ -13,9 +13,9 @@ class Tag {
     protected $baseProperties;
     protected $closed;
             
-    function __construct($name, $baseProperties, $closed) {
+    function __construct($name, $baseProperties = array(), $closed = false) {
         $this->name = $name;
-        $this->baseProperties = $baseProperties;
+        $this->baseProperties = $baseProperties ;
         $this->closed = $closed;
     }
 
@@ -55,7 +55,7 @@ class Tag {
         
     }
     
-    public function draw($p,$content){
+    public function draw($p,$content = ""){
         $d = "<" . $this->name;
         $d .= $this->parseProperties($p);
         

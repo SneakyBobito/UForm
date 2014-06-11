@@ -40,7 +40,7 @@ class Group extends ElementContainer{
         $render = "";
         
         foreach($this->elements as $v){
-            $newPrename = $this->getName($prename) . "[" . $v->getName() . "]"; 
+            $newPrename = $this->getName($prename); 
             $render .= $v->render( isset($attributes[$v->getName()]) ? $attributes[$v->getName()] : null , $values[$this->getName()] , $data, $newPrename);
         }
         
