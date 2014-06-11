@@ -588,16 +588,19 @@ abstract class Element implements ElementInterface
                 $validation->setFilters($name, $filters);
             }
 
-            //Perform the validation
-            $validation->validate($values , $data);
+            
 
-            if($cV)
-                $cV->addValidation ($name, $validation);
-
-            return $validation;
-
+        }else{
+            $validation = new Validation($localName,$name);
         }
+        
+        
+        //Perform the validation
+        $validation->validate($values , $data);
 
-        return new Validation($localName,$name);
+        if($cV)
+            $cV->addValidation ($name, $validation);
+
+        return $validation;
     }
 }

@@ -124,19 +124,21 @@ class Validation
                 $this->_dataLocal = $values;
             }
 
-            //Validate
-            foreach($this->_validators as $scope) {
+            if(is_array($this->_validators)){
+                //Validate
+                foreach($this->_validators as $scope) {
 
-                if(is_object($scope[1]) === false) {
-                    throw new Exception('One of the validators is not valid');
-                }
+                    if(is_object($scope[1]) === false) {
+                        throw new Exception('One of the validators is not valid');
+                    }
 
-                if( !$scope[1]->validate($this) ) {
+                    if( !$scope[1]->validate($this) ) {
 
-                    $this->_valid = false;
+                        $this->_valid = false;
 
-                    if($scope[1]->getOption('cancelOnFail') === true) {
-                        break;
+                        if($scope[1]->getOption('cancelOnFail') === true) {
+                            break;
+                        }
                     }
                 }
             }
