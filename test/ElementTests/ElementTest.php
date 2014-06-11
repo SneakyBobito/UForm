@@ -95,6 +95,33 @@ class ElementTest extends PHPUnit_Framework_TestCase
         
     }
     
+    public function testHidden(){
+        
+        $f = new UForm\Forms\Form();
+        
+        $elm = new \UForm\Forms\Element\Hidden("foo");
+       
+        $f->add($elm);
+        
+        $data = array(
+            "foo" => "oof"
+        );
+        
+        $f->setData($data);
+        $f->validate();
+        $render = $f->render("foo");
+
+        $sxe = simplexml_load_string("<root>$render</root>");
+        
+        $this->assertEquals(1,$sxe->count());
+        
+        $this->assertEquals("oof", $sxe->input[0]["value"]);
+        $this->assertEquals("hidden", $sxe->input[0]["type"]);
+        $this->assertEquals("foo", $sxe->input[0]["name"]);
+        
+    }
+    
+    
     
     public function testCheckGroup(){
         
