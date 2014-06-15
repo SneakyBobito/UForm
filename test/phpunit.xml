@@ -4,8 +4,12 @@
             <directory>./CoreTest</directory>
         </testsuite>
         
-        <testsuite name="ElementTests">
-            <directory>./ElementTests</directory>
+        <testsuite name="ElementTest">
+            <directory>./ElementTest</directory>
+        </testsuite>
+        
+        <testsuite name="ValidationTest">
+            <directory>./ValidationTest</directory>
         </testsuite>
     </testsuites>
 </phpunit>

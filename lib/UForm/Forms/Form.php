@@ -435,7 +435,7 @@ class Form implements
      * @return bool|null|Group
      * @throws Exception
      */
-    public function elementMessages($name){
+    public function getElementMessages($name){
 
         if(!$this->validation)
             return array();

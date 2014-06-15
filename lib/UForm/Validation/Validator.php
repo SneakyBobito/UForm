@@ -102,6 +102,6 @@ abstract class Validator
         $this->_options[$key] = $value;
     }
 
-    abstract public function validate($validator);
+    abstract public function validate(\UForm\Validation $validator);
 
 }

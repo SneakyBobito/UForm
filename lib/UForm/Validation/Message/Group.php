@@ -2,12 +2,7 @@
 /**
  * Group
  *
- * @author Andres Gutierrez <andres@phalconphp.com>
- * @author Eduar Carvajal <eduar@phalconphp.com>
- * @author Wenzel Pünter <wenzel@phelix.me>
- * @version 1.2.6
- * @package Phalcon
-*/
+ */
 namespace UForm\Validation\Message;
 
 use \UForm\Validation\Message,
@@ -17,11 +12,8 @@ use \UForm\Validation\Message,
 	\Iterator;
 
 /**
- * Phalcon\Validation\Message\Group
- *
  * Represents a group of validation messages
  * 
- * @see https://github.com/phalcon/cphalcon/blob/1.2.6/ext/validation/message/group.c
  */
 class Group implements Countable, ArrayAccess, Iterator
 {
@@ -55,54 +47,47 @@ class Group implements Countable, ArrayAccess, Iterator
 		}
 	}
 
-	/**
-	 * Gets an attribute a message using the array syntax
-	 *
-	 *<code>
-	 * print_r($messages[0]);
-	 *</code>
-	 *
-	 * @param string $index
-	 * @return \UForm\Validation\Message|null
-	 * @throws Exception
-	 */
-	public function offsetGet($index)
-	{
-		if(is_string($index) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+        /**
+         * Gets an attribute a message using the array syntax
+         *
+         *<code>
+         * print_r($messages[0]);
+         *</code>
+         *
+         * @param string $index
+         * @return \UForm\Validation\Message|null
+         * @throws Exception
+         */
+        public function offsetGet($index)
+        {
 
-		if(isset($this->_messages[$index]) === true) {
-			return $this->_messages[$index];
-		}
+            if(isset($this->_messages[$index]) === true) {
+                return $this->_messages[$index];
+            }
 
-		return null;
-	}
+            return null;
+        }
 
-	/**
-	 * Sets an attribute using the array-syntax
-	 *
-	 *<code>
-	 * $messages[0] = new \UForm\Validation\Message('This is a message');
-	 *</code>
-	 *
-	 * @param string $index
-	 * @param \UForm\Validation\Message $message
-	 * @throws Exception
-	 */
-	public function offsetSet($index, $message)
-	{
-		if(is_string($index) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+        /**
+         * Sets an attribute using the array-syntax
+         *
+         *<code>
+         * $messages[0] = new \UForm\Validation\Message('This is a message');
+         *</code>
+         *
+         * @param string $index
+         * @param \UForm\Validation\Message $message
+         * @throws Exception
+         */
+        public function offsetSet($index, $message)
+        {
+            if(is_object($message) === false &&
+                $message instanceof Message === false) {
+                throw new Exception('The message must be an object');
+            }
 
-		if(is_object($message) === false &&
-			$message instanceof Message === false) {
-			throw new Exception('The message must be an object');
-		}
-
-		$this->_messages[$index] = $message;
-	}
+            $this->_messages[$index] = $message;
+        }
 
 	/**
 	 * Checks if an index exists
@@ -117,31 +102,31 @@ class Group implements Countable, ArrayAccess, Iterator
 	 */
 	public function offsetExists($index)
 	{
-		if(is_string($index) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+                if(is_string($index) === false) {
+                    throw new Exception('Invalid parameter type.');
+                }
 
-		return isset($this->_messages[$index]);
+                return isset($this->_messages[$index]);
 	}
 
-	/**
-	 * Removes a message from the list
-	 *
-	 *<code>
-	 * unset($message['database']);
-	 *</code>
-	 *
-	 * @param string $index
-	 * @throws Exception
-	 */
-	public function offsetUnset($index)
-	{
-		if(is_string($index) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
+        /**
+         * Removes a message from the list
+         *
+         *<code>
+         * unset($message['database']);
+         *</code>
+         *
+         * @param string $index
+         * @throws Exception
+         */
+        public function offsetUnset($index)
+        {
+            if(is_string($index) === false) {
+                throw new Exception('Invalid parameter type.');
+            }
 
-		unset($this->_messages[$index]);
-	}
+            unset($this->_messages[$index]);
+        }
 
 	/**
 	 * Appends a message to the group

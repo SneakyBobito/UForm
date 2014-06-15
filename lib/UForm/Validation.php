@@ -277,7 +277,25 @@ class Validation
 
             return $this;
 	}
+        
+        public function getLocalName() {
+            return $this->_localName;
+        }
 
+        public function getGlobalName() {
+            return $this->_globalName;
+        }
+
+        public function getGlobalData() {
+            return $this->_data;
+        }
+
+        public function getLocalData() {
+            return $this->_dataLocal;
+        }
+
+                
+        
 	/**
 	 * Gets the value to validate in the array/object data source
 	 *
