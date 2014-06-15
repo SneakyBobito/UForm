@@ -72,68 +72,6 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
     }
     
-    public function testValidation(){
-        $f = new UForm\Forms\Form();
-        
-                
-        $foo = new \UForm\Forms\Element\Text("foo");
-        $foo->addValidator(new \UForm\Validation\DirectValidator(function($validator,$self){
-            return $validator->getValue() == "foo";
-        }));
-        
-        $bar = new \UForm\Forms\Element\Text("bar");
-        $bar->addFilter(new UForm\DirectFilter(function($v){
-            return "{" . $v;
-        }));
-        $bar->addFilter(function($v){
-            return $v . "}";
-        });
-        $bar->addValidator(new \UForm\Validation\DirectValidator(function(UForm\Validation $validation,$self){
-            $valid = true;
-            
-            $value =  $validation->getValue();
-            if($value{0} !=="{"){
-                $valid = false;
-                $validation->appendMessage("should begin with {, " . $value[0] . " found instead");
-            }
-            
-            return $valid;
-        }));
-        
-        $f->add($foo);
-        $f->add($bar);
-        $f->add(new \UForm\Forms\Element\Text("baz"));
-        
-        $data = array(
-            "foo" => "oof",
-            "baz" => "zab",
-            "bla" => "alb",
-            "bar" => "rab"
-        );
-        $messages = null;
-        $this->assertEquals(true,$bar->validate($data, $data, $messages)->isValid());
-        $this->assertEquals(false,$foo->validate($data, $data, $messages)->isValid());
-        
-        
-        
-        
-        $data = array(
-            "foo" => "foo",
-            "baz" => "zab",
-            "bla" => "alb",
-            "bar" => "rab"
-        );
-        $messages = null;
-        $this->assertEquals(true,$foo->validate($data, $data, $messages)->isValid());
-        
-        $bar->addFilter(function($v){
-            return '=' . $v;
-        });
-        $messages = null;
-        $validation = $bar->validate($data, $data, $messages);
-        $this->assertEquals(false,$validation->isValid());
-        
-    }
     
     
     public function testCollectionValidation(){
@@ -141,24 +79,98 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
         $bar = new \UForm\Forms\Element\Text("bar");
         $bar->addValidator(new \UForm\Validation\DirectValidator(function($validator,$self){
-            $validator->getValue() == "rab";
+            return $validator->getValue() == "rab";
         }));
-                
+        
         $foo = new \UForm\Forms\Element\Collection("foo",$bar);
         
         $data = array(
             "foo" => array(
                 array(
                     "bar" => "rab"
+                ),
+                array(
+                    "bar" => "rab"
                 )
             ) 
         );
+        $cV = new \UForm\Validation\ChainedValidation($data);
+        $foo->prepareValidation($data, $cV);
+        $cV->validate();
+        $this->assertTrue($cV->isValid());
         
-        $foo->validate($data, $data);
         
+        
+        
+        $data = array(
+            "foo" => array(
+                array(
+                    "bar" => "oof"
+                ),
+                array(
+                    "bar" => "rab"
+                )
+            ) 
+        );
+        $cV = new \UForm\Validation\ChainedValidation($data);
+        $foo->prepareValidation($data, $cV);
+        $cV->validate();
+        $this->assertFalse($cV->isValid());
         
         
     }
+    
+    
+    
+    public function testGroupValidation(){
+        $f = new UForm\Forms\Form();
+        
+        $bar = new \UForm\Forms\Element\Text("bar");
+        $bar->addValidator(new \UForm\Validation\DirectValidator(function($validator,$self){
+            return $validator->getValue() == "rab";
+        }));
+        
+        $baz = new \UForm\Forms\Element\Text("baz");
+        $baz->addValidator(new \UForm\Validation\DirectValidator(function(UForm\Validation $validator,$self){
+            return $validator->getValue() == "zab";
+        }));
+        
+        $foo = new UForm\Forms\Element\Group("foo",array(
+            $bar,
+            $baz
+        ));
+        
+        
+        
+        $data = array(
+            "foo" => array(
+                "bar" => "rab",
+                "baz" => "zab"
+            ) 
+        );
+        $cV = new \UForm\Validation\ChainedValidation($data);
+        $foo->prepareValidation($data, $cV);
+        $cV->validate();
+        $this->assertTrue($cV->isValid());
+        
+        
+        
+        
+        $data = array(
+            "foo" => array(
+                "bar" => "rab",
+                "baz" => "rab"
+            ) 
+        );
+        $cV = new \UForm\Validation\ChainedValidation($data);
+        $foo->prepareValidation($data, $cV);
+        $cV->validate();
+        $this->assertFalse($cV->isValid());
+        
+        
+    }
+    
+    
     
     public function testTag(){
         

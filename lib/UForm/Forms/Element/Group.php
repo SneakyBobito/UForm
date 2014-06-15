@@ -2,8 +2,7 @@
 
 namespace UForm\Forms\Element;
 
-use UForm\Forms\Element
-
+use UForm\Validation\ChainedValidation
 ;
 use UForm\Forms\ElementContainer;
 
@@ -15,7 +14,7 @@ use UForm\Forms\ElementContainer;
 class Group extends ElementContainer{
     
     /**
-     * @var \UForm\Forms\ElementInterface
+     * @var \UForm\Forms\ElementInterface[]
      */
     protected $elements;
 
@@ -51,5 +50,16 @@ class Group extends ElementContainer{
         return $this->elements[$name];
     }
 
+    
+    public function prepareValidation($localValues,  ChainedValidation $cV , $prename = null){
+        
+        parent::prepareValidation($localValues, $cV, $prename);
+        
+        foreach ($this->elements as $k=>$v){
+            $newPrename = $this->getName($prename,true);
+            $v->prepareValidation($localValues[$this->getName()], $cV, $newPrename);
+        }
+        
+    }
 
 }

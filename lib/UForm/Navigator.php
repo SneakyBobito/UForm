@@ -30,7 +30,7 @@ class Navigator {
 
             if($actual instanceof ElementContainer){
 
-                $actual->getElement(array_shift($stringParts));
+                $actual = $actual->getElement(array_shift($stringParts));
 
             }else{
                 throw new Exception("element should be a group (usualy collection or group)");
@@ -40,6 +40,30 @@ class Navigator {
 
         return $actual;
 
+    }
+    
+    public function arrayGet($local,$global,$string){
+        
+        $stringParts = explode(".", $string);
+        
+        
+        if( "." === $string{0} )
+            $actual = $local;
+        else
+            $actual = $global;
+        
+        
+        while (!empty($stringParts)){
+            $newName = array_shift($stringParts);
+            if(!isset($actual[$newName])){
+                return null;
+            }else{
+                $actual = $actual[$newName];
+            }
+        }
+        
+        return $actual;
+        
     }
 
 

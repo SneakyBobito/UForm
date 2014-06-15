@@ -3,20 +3,14 @@
 namespace UForm\Validation\Validator;
 
 use \UForm\Validation\Validator,
-	\UForm\Validation\Message,
 	\UForm\Validation\Exception,
 	\UForm\Validation;
 
 
-class Required extends Validator
-{
+class Required extends Validator{
+    
     /**
-     * Executes the validation
-     *
-     * @param \UForm\Validation $validator
-     * @param string $attribute
-     * @return boolean
-     * @throws Exception
+     * @inheritdoc
      */
     public function validate(Validation $validator){
         

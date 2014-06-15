@@ -102,6 +102,13 @@ abstract class Validator
         $this->_options[$key] = $value;
     }
 
+    /**
+     * Executes the validation
+     *
+     * @param \UForm\Validation $validator
+     * @return boolean true if validation was successful
+     * @throws Exception
+     */
     abstract public function validate(\UForm\Validation $validator);
 
 }

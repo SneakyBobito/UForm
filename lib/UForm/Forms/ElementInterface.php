@@ -9,6 +9,8 @@
 */
 namespace UForm\Forms;
 
+use UForm\Validation\ChainedValidation;
+
 /**
  * Phalcon\Forms\ElementInterface initializer
  * 
@@ -206,6 +208,6 @@ interface ElementInterface
          * @param type $messages
          * @return \UForm\Validation
          */
-        public function validate($values, $data,$prename = null , \UForm\Validation\ChainedValidation $cV = null);
+        public function  prepareValidation($localValues,  ChainedValidation $cV , $prename = null);
         
 }

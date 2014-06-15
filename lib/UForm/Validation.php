@@ -13,7 +13,7 @@ namespace UForm;
 use 
 	\UForm\Validation\Exception,
 	\UForm\Validation\Message\Group,
-	\UForm\FilterInterface;
+	\UForm\Validation\ChainedValidation;
 
 /**
  * Phalcon\Validation
@@ -28,7 +28,6 @@ class Validation
 	 * @var null|array|object
 	 * @access protected
 	*/
-	protected $_data      = null;
 	protected $_dataLocal = null;
 
         protected $_localName = null;
@@ -71,20 +70,35 @@ class Validation
         
         protected $_valid = false;
 
-	/**
+        /**
+         *
+         * @var Forms\Form
+         */
+        protected $form;
+        
+        /**
+         *
+         * @var ChainedValidation
+         */
+        protected $chainedValidation;
+
+
+        /**
 	 * \UForm\Validation constructor
 	 *
          * @param name with dotted syntaxe
 	 * @param array|null $validators
 	 * @throws Exception
 	 */
-	public function __construct($localName , $globalName , $validators = null)
+	public function __construct($localName , $globalName , $localData , ChainedValidation $cV,$validators = array())
 	{
-            
+            $this->chainedValidation = $cV;
             $this->_localName = $localName;
             $this->_globalName = $globalName;
             
-            if(is_null($validators) === false && is_array($validators) === false) {
+            $this->_dataLocal = $localData;
+            
+            if(is_array($validators) === false) {
                 throw new Exception('Validators must be an array');
             }
 
@@ -96,7 +110,15 @@ class Validation
 	}
         
 
+        public function getForm() {
+            return $this->form;
+        }
 
+        public function setForm(Forms\Form $form) {
+            $this->form = $form;
+        }
+
+        
         
 	/**
 	 * Validate a set of data according to a set of rules
@@ -105,7 +127,7 @@ class Validation
 	 * @return \UForm\Validation\Message\Group|boolean|null
 	 * @throws Exception
 	 */
-	public function validate( $values , $data ){
+	public function validate( $localValues ){
 
 
             //Clear pre-calculated values
@@ -116,27 +138,20 @@ class Validation
             $messages = new Group();
 
             $this->_messages = $messages;
-            if( is_array($data) ) {
-                $this->_data = $data;
-            }
-            
-            if( is_array($values) ) {
-                $this->_dataLocal = $values;
-            }
 
             if(is_array($this->_validators)){
                 //Validate
-                foreach($this->_validators as $scope) {
+                foreach($this->_validators as $v) {
 
-                    if(is_object($scope[1]) === false) {
+                    if(is_object($v) === false) {
                         throw new Exception('One of the validators is not valid');
                     }
 
-                    if( !$scope[1]->validate($this) ) {
+                    if( !$v->validate($this) ) {
 
                         $this->_valid = false;
 
-                        if($scope[1]->getOption('cancelOnFail') === true) {
+                        if($v->getOption('cancelOnFail') === true) {
                             break;
                         }
                     }
@@ -183,17 +198,10 @@ class Validation
 	 * @return \UForm\Validation
 	 * @throws Exception
 	 */
-	public function setFilters($attribute, $filters)
+	public function setFilters($filters)
 	{
-            if(is_string($attribute) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
 
-            if(is_array($attribute) === false && is_string($attribute) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            $this->_filters[$attribute] = $filters;
+            $this->_filters = $filters;
 	}
 
 	/**
@@ -202,16 +210,7 @@ class Validation
 	 * @param string|null $attribute
 	 * @return null|array|string
 	 */
-	public function getFilters($attribute = null)
-	{
-            if(is_string($attribute) === true) {
-                if(isset($this->_filters[$attribute]) === true) {
-                    return $this->_filters[$attribute];
-                }
-
-                return null;
-            }
-
+	public function getFilters(){
             return $this->_filters;
 	}
 
@@ -253,30 +252,7 @@ class Validation
             return $this;
 	}
 
-	/**
-	 * Assigns the data to an entity
-	 * The entity is used to obtain the validation values
-	 *
-	 * @param object $entity
-	 * @param object|array $data
-	 * @return \UForm\Validation
-	 * @throws Exception
-	 */
-	public function bind($entity, $data)
-	{
-            if(is_object($entity) === false) {
-                    throw new Exception('The entity must be an object');
-            }
 
-            if(is_array($data) === false && is_object($data) === false) {
-                    throw new Exception('The data to validate must be an array or object');
-            }
-
-            $this->_entity = $entity;
-            $this->_data = $data;
-
-            return $this;
-	}
         
         public function getLocalName() {
             return $this->_localName;
@@ -287,7 +263,7 @@ class Validation
         }
 
         public function getGlobalData() {
-            return $this->_data;
+            return $this->chainedValidation->getData();
         }
 
         public function getLocalData() {
@@ -306,55 +282,33 @@ class Validation
 	public function getValue($attribute = null)
 	{
             
-            if(null == $attribute)
-                $attribute = $this->_localName;
-            
-            if(is_object($this->_entity) === true) {
-                $method = 'get'.$attribute;
-                if(method_exists($this->_entity, $method) === true) {
-                        return call_user_method($method, $this->_entity);
-                } elseif(method_exists($this->_entity, 'readattribute') === true) {
-                        return $this->_entity->readattribute($attribute);
-                } elseif(property_exists($this->_entity, $attribute) === true) {
-                        return $this->_entity->$attribute;
-                } else {
-                        return null;
-                }
-            }
-            
-            //Check if there is a calculated value
-            if(isset($this->_values[$attribute]) === true) {
-                return $this->_values[$attribute];
-            }
-
-            if( is_array($this->_data) ) {
-                if( isset($this->_data[$attribute]) ) {
-                    $value = $this->_data[$attribute];
-                }else{
-                    $value = null;
-                }
-            } elseif( is_object($this->_data) ) {
-                if(property_exists($this->_data, $attribute) === true) {
-                    $value = $this->_data->$attribute;
-                }else{
-                    $value = null;
-                }
-            } else {
-                throw new Exception('There is no data to validate');
-            }
+            if(null === $attribute){
+                $attribute = $this->getGlobalName();
+                $value = $this->getLocalData();
+                
+                $value = isset($value[$this->getLocalName()]) ? $value[$this->getLocalName()] : null;
+                $filters = $this->getFilters();
+                
+            }else{
+                if($attribute{0} === ".")
+                    // we need to get element from the root,
+                    // form->getValidation is not aware of localScope
+                    $scopedAttribute = $this->getGlobalName().$attribute;
+                else
+                    $scopedAttribute = $attribute;
+                
+                $validation = $this->chainedValidation->getValidation($scopedAttribute);
+                
+                $value   = $validation->getValue();
+                $filters = $validation->getFilters();
+            }  
 
             if( !is_null($value) ) {
-                if( is_array($this->_filters) && isset($this->_filters[$attribute]) ) {
-
-                    foreach($this->_filters[$attribute] as $f){
+                if( is_array($filters)) {
+                    foreach($filters as $f){
                         $value = $f->filter($value);
                     }
                 }
-
-                //Cache the calculated value
-                $this->_values[$attribute] = $value;
-                return $value;
-                
                 return $value;
             }
 

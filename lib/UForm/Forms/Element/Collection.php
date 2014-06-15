@@ -2,8 +2,7 @@
 
 namespace UForm\Forms\Element;
 
-use UForm\Forms\Element
-
+use UForm\Validation\ChainedValidation
 ;
 use UForm\Forms\ElementContainer;
 
@@ -45,23 +44,21 @@ class Collection extends ElementContainer{
         return $render;
     }
     
-    public function validate($values, $data, $prename = null , \UForm\Validation\ChainedValidation $cV = null) {
+    
+    public function prepareValidation($localValues,  ChainedValidation $cV , $prename = null){
         
-        $validation = parent::validate($values, $data, $prename, $cV);
+        parent::prepareValidation($localValues, $cV, $prename);
         
-        // TODO add validator min/max
-        
-        if( isset($values[$this->getName()]) && is_array($values[$this->getName()]) ){
-            foreach ($values[$this->getName()] as $k=>$v){
+        if( isset($localValues[$this->getName()]) && is_array($localValues[$this->getName()]) ){
+            foreach ($localValues[$this->getName()] as $k=>$v){
                 $newPrename = $this->getName($prename,true) . "." . $k;
-                $this->elementDefinition->validate($v, $data, $newPrename, $cV);
+                $this->elementDefinition->prepareValidation($localValues[$this->getName()][$k], $cV,$newPrename);
             }
         }
         
-        return $validation;
-        
     }
-
+    
+    
     public function getElement($name){
         return $this->elementDefinition;
     }

@@ -10,13 +10,11 @@
 */
 namespace UForm\Forms;
 
-use \UForm\Forms\Exception,
-        \UForm\Forms\Form,
-        \UForm\Validation\ValidatorInterface,
-        \UForm\Validation\Message\Group,
-        \UForm\Validation\Message,
-        \UForm\Tag,
-        \UForm\Validation
+use UForm\Forms\Exception,
+        UForm\Forms\Form,
+        UForm\Validation\ChainedValidation,
+        UForm\Tag,
+        UForm\Validation
         ;
 
 /**
@@ -299,7 +297,7 @@ abstract class Element implements ElementInterface
      */
     public function getValidators()
     {
-        return $this->_validators;
+        return $this->_validators ? $this->_validators : array();
     }
 
     /**
@@ -565,42 +563,17 @@ abstract class Element implements ElementInterface
             trigger_error((string)$e->getMessage(), \E_USER_ERROR);
         }
     }
-
-    public function validate($values, $data, $prename = null ,  Validation\ChainedValidation $cV = null ) {
+    
+    public function prepareValidation($localValues,  ChainedValidation $cV , $prename = null){
         $validators = $this->getValidators();
-        $localName = $this->getName();
-        $name = $this->getName($prename,true);
-        if(is_array($validators) && !empty($validators) ) {
+        $localName  = $this->getName();
+        $globalName = $this->getName($prename,true);
+        $filters    = $this->getFilters();
 
-            $prepared_validators = array();
-            foreach($validators as $validator) {
-                $prepared_validators[] = array($name, $validator);
-            }
-
-            //Create an implicit validator
-            $validation = new Validation($localName,$name,$prepared_validators);
-
-            //Get filters in the element
-            $filters = $this->getFilters();
-
-            //Assign the filters to the validation
-            if(is_array($filters) === true) {
-                $validation->setFilters($name, $filters);
-            }
-
-            
-
-        }else{
-            $validation = new Validation($localName,$name);
-        }
+        $v = new \UForm\Validation($localName, $globalName, $localValues , $cV, $validators);
+        $v->setFilters($filters);
         
-        
-        //Perform the validation
-        $validation->validate($values , $data);
-
-        if($cV)
-            $cV->addValidation ($name, $validation);
-
-        return $validation;
+        $cV->addValidation($globalName, $v);
     }
+
 }

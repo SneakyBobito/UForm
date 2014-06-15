@@ -15,6 +15,15 @@ class ChainedValidation {
      */
     protected $validations = array();
     
+    protected $data;
+    
+    protected $isValid;
+            
+    function __construct($data) {
+        $this->data = $data;
+    }
+
+    
     public function addValidation($name,  \UForm\Validation $validation){
         $this->validations[$name] = $validation;
     }
@@ -33,12 +42,33 @@ class ChainedValidation {
         return null;
 
     }
+    
+    public function getValidations() {
+        return $this->validations;
+    }
+
+    
+    public function getData() {
+        return $this->data;
+    }
+    
+    public function validate(){
+        
+        $passed = true;
+        
+        foreach ($this->validations as $v){
+            if(!$v->validate($this->data,  $this->data))
+                $passed = false;
+        }
+        
+        
+        $this->isValid = $passed;
+        
+        return $passed;
+        
+    }
 
     public function isValid(){
-        foreach($this->validations as $v){
-            if(!$v->isValid())
-                return false;
-        }
-        return true;
+        return $this->isValid;
     }
 }

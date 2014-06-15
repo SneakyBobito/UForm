@@ -56,7 +56,7 @@ class Form implements
 	/**
 	 * Elements
 	 * 
-	 * @var null|array
+	 * @var Element[]
 	 * @access protected
 	*/
 	protected $_elements;
@@ -286,6 +286,7 @@ class Form implements
         
         public function setData($data){
             $this->_data = $data;
+            $this->validation = null;
         }
 
 	/**
@@ -313,41 +314,30 @@ class Form implements
                 }
             }
 
-            $passed = true;
-
-            $messages = array();
+    
 
             foreach($this->_elements as $element) {
-                $validation = $element->validate( $this->getData() , $this->getData() , null , $cV);
-                if(!$validation->isValid()){
-                    $passed = false;
-                }
-                
+                $element->prepareValidation($this->_data, $cV);
             }
-
-            //Check if there is a method 'afterValidation'
-            if(method_exists($this, 'afterValidation') === true) {
-                $this->afterValidation($messages);
-            }
-
-            return $passed;
+            
+            $cV->validate();
         }
         
         public function validate(){
-            if(!$this->_data)
+            if(!is_array($this->_data))
                 throw new Exception("No data to validate");
             
-            $validation = new Validation\ChainedValidation;
+            $validation = new Validation\ChainedValidation($this->_data);
+            $this->validation = $validation;
             
             $this->dataValidation($this->_data, $validation);
             
-            $this->validation = $validation;
         }
 
 
         public function isValid(){
-            if(!$this->_data){
-                throw new Exception("no data to valid");
+            if(!is_array($this->_data)){
+                throw new Exception("no data to validate");
             }
 
             if(!$this->validation)
@@ -356,6 +346,22 @@ class Form implements
             return $this->validation->isValid();
         }
 
+        
+        /**
+         * 
+         * @param type $name
+         * @return Validation
+         * @throws Exception
+         */
+        public function getValidation($name){
+            $validation =$this->validation->getValidation($name);
+
+            if(!$validation){
+                throw new Exception('Element with ID='.$name.' is not part of the form');
+            }
+
+            return $validation;
+        }
 
 
 
