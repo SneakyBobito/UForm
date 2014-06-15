@@ -3,7 +3,7 @@ UForm
 
 Php reimplemented and refactored version of Phalcon\Form, because the concept is good, but some things were missing
 
-
+[![Build Status](https://travis-ci.org/SneakyBobito/UForm.png)](https://travis-ci.org/SneakyBobito/UForm)
 
 What has been Refactored
 ========================
