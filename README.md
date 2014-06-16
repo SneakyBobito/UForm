@@ -21,3 +21,8 @@ ROADMAP
 * [ ] csrf
 * [ ] full form rendering + deep attribute definition
 * [ ] collection/group detailled rendering + deep attribute definition
+* [ ] not empty checkbox
+* [ ] complet element types
+* [ ] complet filters
+* [ ] complet validators
+* [ ] make a doc
