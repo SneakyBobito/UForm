@@ -44,10 +44,13 @@ class Tag {
         
         foreach ($properties as $k=>$v){
             
+            $vs = htmlentities($v);
+            $ks = htmlentities($k);
+            
             if(is_string($v)){
-                $d .= " $k='$v'";
+                $d .= " $ks='$vs'";
             }else if(is_bool($v) && true == $v){
-                $d .= " $k";
+                $d .= " $ks";
             }
         }
         
