@@ -18,3 +18,6 @@ ROADMAP
 =======
 
 * [ ] Filters / validators interaction with rendering
+* [ ] csrf
+* [ ] full form rendering + deep attribute definition
+* [ ] collection/group detailled rendering + deep attribute definition
