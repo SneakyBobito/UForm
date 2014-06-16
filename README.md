@@ -27,3 +27,4 @@ ROADMAP
 * [ ] complet validators
 * [ ] make a doc
 * [ ] select improvement (multi, default value, invalidation) + test
+* [ ] textarea test
