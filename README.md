@@ -12,3 +12,9 @@ UForm is a refactoring of the phalcon\Form component. It's a library to manage h
 
 
 DOC INCOMING...
+
+
+ROADMAP
+=======
+
+* [ ] Filters / validators interaction with rendering
