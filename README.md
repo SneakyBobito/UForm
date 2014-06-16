@@ -26,3 +26,4 @@ ROADMAP
 * [ ] complet filters
 * [ ] complet validators
 * [ ] make a doc
+* [ ] select improvement (multi, default value, invalidation) + test
