@@ -18,7 +18,7 @@ class Group extends ElementContainer{
      */
     protected $elements;
 
-    public function __construct($name, $elements = null) {
+    public function __construct($name=null, $elements = null) {
         parent::__construct($name);
         
         if(is_array($elements)){
@@ -35,12 +35,24 @@ class Group extends ElementContainer{
         $this->elements[] = $element;
     }
     
+    public function getName($prename = null, $dottedNotation = false) {
+        if(null === $this->_name)
+            return $prename;
+            
+        parent::getName($prename, $dottedNotation);
+    }
+
     public function render( $attributes , $values , $data , $prename = null ) {
         $render = "";
         
         foreach($this->elements as $v){
-            $newPrename = $this->getName($prename); 
-            $render .= $v->render( isset($attributes[$v->getName()]) ? $attributes[$v->getName()] : null , $values[$this->getName()] , $data, $newPrename);
+            $newPrename = $this->getName($prename);
+            $hasName = null !== $this->_name ;
+            
+            if($hasName)
+                $render .= $v->render( isset($attributes[$v->getName()]) ? $attributes[$v->getName()] : null , $values[$this->getName()] , $data, $newPrename);
+            else
+                $render .= $v->render( isset($attributes[$v->getName()]) ? $attributes[$v->getName()] : null , $values , $data, $newPrename);
         }
         
         return $render;
@@ -55,9 +67,11 @@ class Group extends ElementContainer{
         
         parent::prepareValidation($localValues, $cV, $prename);
         
+        $localValues = (array) $localValues;
+        
         foreach ($this->elements as $k=>$v){
             $newPrename = $this->getName($prename,true);
-            $v->prepareValidation($localValues[$this->getName()], $cV, $newPrename);
+            $v->prepareValidation(isset($localValues[$this->getName()]) ? $localValues[$this->getName()] : null, $cV, $newPrename);
         }
         
     }
