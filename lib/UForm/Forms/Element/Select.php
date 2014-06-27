@@ -35,6 +35,20 @@ class Select extends Element
             $this->_optionsValues = $options;
             parent::__construct($name, $attributes);
         }
+        
+        public function validateOnSelfValues($message = null){
+            
+            $values = $this->getOptions();
+            if(!$message)
+                $message = "Choice not valid";
+            
+            $this->addValidator(new \UForm\Validation\DirectValidator(function(\UForm\Validation $v) use ($values,$message){
+                if(!isset($values[$v->getValue()])){
+                    $v->appendMessage($message);
+                    return false;
+                }
+            }));
+        }
 
         /**
          * Set the choice's options
