@@ -123,6 +123,11 @@ abstract class Element implements ElementInterface
                 $this->addFilter($f);
         }
     }
+    
+    public function addRequiredValidator($message){
+        $validator = new Validation\Validator\Required(array("message"=>$message));
+        $this->addValidator($validator);
+    }
 
 
     /**
