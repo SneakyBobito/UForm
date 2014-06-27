@@ -39,7 +39,7 @@ class Group extends ElementContainer{
         if(null === $this->_name)
             return $prename;
             
-        parent::getName($prename, $dottedNotation);
+        return parent::getName($prename, $dottedNotation);
     }
 
     public function render( $attributes , $values , $data , $prename = null ) {
