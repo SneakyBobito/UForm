@@ -147,7 +147,7 @@ class Validation
                         throw new Exception('One of the validators is not valid');
                     }
 
-                    if( !$v->validate($this) ) {
+                    if( false === $v->validate($this) ) {
 
                         $this->_valid = false;
 
