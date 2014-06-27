@@ -17,6 +17,8 @@ DOC INCOMING...
 ROADMAP
 =======
 
+* [ ] Subrendering (render only one child from a group)
+
 * [ ] Filters / validators interaction with rendering
 * [ ] csrf
 * [ ] full form rendering + deep attribute definition
