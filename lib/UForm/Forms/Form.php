@@ -391,7 +391,7 @@ class Form implements
         }
 
 	/**
-	 * Renders a specific item in the form
+	 * Renders a specific item with the form context
 	 *
 	 * @param string $name
 	 * @param array|null $attributes
@@ -407,16 +407,27 @@ class Form implements
         $n = new Navigator();
         $element = $n->formGet($this,$name);
 
-        if(!$element){
-            throw new Exception('Element with ID='.$name.' is not part of the form');
+
+        if( strpos($name,".") > 1){
+            $prename = substr($name, 0, strrpos( $name, '.') );
+            $localValue = $n->arrayGet($this->getData(),$this->getData(),$name,1);
+        }else{
+            $prename = null;
+            $localValue = $this->getData() ;
         }
 
-        return $element->render($attributes , $this->getData() , $this->getData());
+
+
+        if(!$element){
+            throw new Exception('Element with ID=' . $name . ' is not part of the form');
+        }
+
+        return $element->render($attributes , $localValue , $this->getData() , $prename);
     }
 
 
     /**
-     * true is the element is valid
+     * true if the element is valid
      * @param $name
      * @return bool
      * @throws Exception

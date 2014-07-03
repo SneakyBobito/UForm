@@ -2,8 +2,9 @@
 
 namespace UForm\Forms\Element;
 
-use UForm\Validation\ChainedValidation
-;
+use UForm\Validation\ChainedValidation,
+    UForm\Forms\Exception
+    ;
 use UForm\Forms\ElementContainer;
 
 /**
@@ -59,7 +60,19 @@ class Group extends ElementContainer{
     }
 
     public function getElement($name){
-        return $this->elements[$name];
+        foreach($this->elements as $elm){
+            if( $name == $elm->getName()){
+                return $elm;
+            }
+        }
+
+        $availNames =  array();
+        foreach($this->elements as $elm){
+            $availNames[] = $elm->getName();
+        }
+
+
+        throw new Exception('Element with ID=' . $name . ' is not part of the Group. Availables : [' . implode(",",$availNames) . ']' );
     }
 
     

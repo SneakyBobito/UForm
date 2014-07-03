@@ -169,6 +169,54 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
         
     }
+
+    public function testDeepRendering(){
+
+        $f = new UForm\Forms\Form();
+
+        $col = new \UForm\Forms\Element\Group("foos", array(
+            new \UForm\Forms\Element\Text("fooname"),
+            new \UForm\Forms\Element\Text("footype"),
+
+        ));
+
+
+        $f->add($col);
+
+        $data = array(
+            "foos" => array(
+                "fooname"=>"bob",
+                "footype"=>"silly"
+            )
+        );
+
+        $f->setData($data);
+
+        // first test : foos.fooname
+        //
+        $render = $f->render("foos.fooname");
+
+        $sxe = simplexml_load_string("<root>$render</root>");
+
+        $this->assertEquals(1,$sxe->count());
+
+        $this->assertEquals("bob", $sxe->input[0]["value"]);
+        $this->assertEquals("foos[fooname]", $sxe->input[0]["name"]);
+
+
+
+        // second test : foos.footype
+        //
+        $render = $f->render("foos.footype");
+
+        $sxe = simplexml_load_string("<root>$render</root>");
+
+        $this->assertEquals(1,$sxe->count());
+
+        $this->assertEquals("silly", $sxe->input[0]["value"]);
+        $this->assertEquals("foos[footype]", $sxe->input[0]["name"]);
+
+    }
     
     
     
