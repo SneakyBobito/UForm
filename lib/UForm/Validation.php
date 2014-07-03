@@ -279,23 +279,23 @@ class Validation
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public function getValue($attribute = null)
+	public function getValue($name = null)
 	{
-            
-            if(null === $attribute){
-                $attribute = $this->getGlobalName();
+
+            if(null === $name){
+                $name = $this->getGlobalName();
                 $value = $this->getLocalData();
-                
-                $value = isset($value[$this->getLocalName()]) ? $value[$this->getLocalName()] : null;
+                $value = isset($value[$this->getLocalName()])
+                    ? $value[$this->getLocalName()] : null;
                 $filters = $this->getFilters();
                 
             }else{
-                if($attribute{0} === ".")
+                if($name{0} === ".")
                     // we need to get element from the root,
                     // form->getValidation is not aware of localScope
-                    $scopedAttribute = $this->getGlobalName().$attribute;
+                    $scopedAttribute = $this->getGlobalName().$name;
                 else
-                    $scopedAttribute = $attribute;
+                    $scopedAttribute = $name;
                 
                 $validation = $this->chainedValidation->getValidation($scopedAttribute);
                 

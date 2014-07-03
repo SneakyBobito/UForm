@@ -12,5 +12,6 @@ namespace UForm\Forms;
 abstract class ElementContainer extends Element {
 
     abstract public function getElement($name);
+    abstract public function getElements();
 
-} 
+}

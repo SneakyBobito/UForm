@@ -3,6 +3,7 @@
 namespace UForm;
 
 
+use UForm\Forms\Element\Collection;
 use UForm\Forms\ElementContainer;
 use UForm\Forms\Form;
 use UForm\Navigator\Exception;
@@ -28,10 +29,8 @@ class Navigator {
 
         while( !empty($stringParts) ){
 
-            if($actual instanceof ElementContainer){
-
+            if($actual instanceof ElementContainer || $actual instanceof Collection){
                 $actual = $actual->getElement(array_shift($stringParts));
-
             }else{
                 throw new Exception("element should be a group (usualy collection or group)");
             }

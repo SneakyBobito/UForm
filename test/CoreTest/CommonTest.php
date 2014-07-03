@@ -71,14 +71,16 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("{rab}",$rec->bar);
         
     }
-    
-    
-    
+
+
+
     public function testCollectionValidation(){
         $f = new UForm\Forms\Form();
         
         $bar = new \UForm\Forms\Element\Text("bar");
         $bar->addValidator(new \UForm\Validation\DirectValidator(function($validator,$self){
+
+
             return $validator->getValue() == "rab";
         }));
         
@@ -86,12 +88,8 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
         $data = array(
             "foo" => array(
-                array(
-                    "bar" => "rab"
-                ),
-                array(
-                    "bar" => "rab"
-                )
+                "rab",
+                "rab"
             ) 
         );
         $cV = new \UForm\Validation\ChainedValidation($data);

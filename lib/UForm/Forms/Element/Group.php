@@ -75,7 +75,12 @@ class Group extends ElementContainer{
         throw new Exception('Element with ID=' . $name . ' is not part of the Group. Availables : [' . implode(",",$availNames) . ']' );
     }
 
-    
+
+    public function getElements(){
+        return $this->elements;
+    }
+
+
     public function prepareValidation($localValues,  ChainedValidation $cV , $prename = null){
         
         parent::prepareValidation($localValues, $cV, $prename);

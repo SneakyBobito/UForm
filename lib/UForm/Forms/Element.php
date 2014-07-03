@@ -42,21 +42,6 @@ abstract class Element implements ElementInterface
     */
     protected $_name;
 
-    /**
-     * Value
-     *
-     * @var mixed
-     * @access protected
-    */
-    protected $_value;
-
-    /**
-     * Label
-     *
-     * @var null|string
-     * @access protected
-    */
-    protected $_label;
 
     /**
      * Attributes
@@ -90,13 +75,6 @@ abstract class Element implements ElementInterface
     */
     protected $_options;
 
-    /**
-     * Messages
-     *
-     * @var null|\UForm\Validation\Message\Group
-     * @access protected
-    */
-    protected $_messages;
 
     /**
      * \UForm\Forms\Element constructor
@@ -168,8 +146,8 @@ abstract class Element implements ElementInterface
      */
     public function setName($name)
     {
-            if(is_string($name) === false) {
-                    throw new Exception('Invalid parameter type.');
+            if( !is_string($name) && !is_null($name) && !is_numeric($name)) {
+                throw new Exception('Invalid parameter type.');
             }
 
             $this->_name = $name;
@@ -555,20 +533,7 @@ abstract class Element implements ElementInterface
             return $this;
     }
 
-    /**
-     * Magic method __toString renders the widget without atttributes
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        try {
-            return $this->render();
-        } catch(\Exception $e) {
-            trigger_error((string)$e->getMessage(), \E_USER_ERROR);
-        }
-    }
-    
+
     public function prepareValidation($localValues,  ChainedValidation $cV , $prename = null){
         $validators = $this->getValidators();
         $localName  = $this->getName();

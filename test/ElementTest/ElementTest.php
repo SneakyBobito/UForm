@@ -8,6 +8,7 @@
 class ElementTest extends PHPUnit_Framework_TestCase
 {
 
+
     public function testCollection(){
         
         $f = new UForm\Forms\Form();
@@ -18,12 +19,7 @@ class ElementTest extends PHPUnit_Framework_TestCase
         
         $data = array(
             "foos" => array(
-                array(
-                    "fooname"=>"foo1"
-                ),
-                array(
-                    "fooname"=>"foo2"
-                )
+                "foo1","foo2"
             )
         );
         
@@ -37,8 +33,8 @@ class ElementTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals("foo1", $sxe->input[0]["value"]);
         $this->assertEquals("foo2", $sxe->input[1]["value"]);
-        $this->assertEquals("foos[0][fooname]", $sxe->input[0]["name"]);
-        $this->assertEquals("foos[1][fooname]", $sxe->input[1]["name"]);
+        $this->assertEquals("foos[0]", $sxe->input[0]["name"]);
+        $this->assertEquals("foos[1]", $sxe->input[1]["name"]);
         
     }
     

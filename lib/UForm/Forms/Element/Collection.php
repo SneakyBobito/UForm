@@ -2,6 +2,7 @@
 
 namespace UForm\Forms\Element;
 
+use UForm\Forms\Element;
 use UForm\Validation\ChainedValidation
 ;
 use UForm\Forms\ElementContainer;
@@ -11,20 +12,25 @@ use UForm\Forms\ElementContainer;
  *
  * @author sghzal
  */
-class Collection extends ElementContainer{
+class Collection extends Element{
     
     /**
-     * @var \UForm\Forms\ElementInterface
+     * @var \UForm\Forms\Element
      */
     protected $elementDefinition;
     protected $min;
     protected $max;
 
+
+
+
+
     public function __construct($name, $elementDefinition, $min = 1, $max = -1) {
         parent::__construct($name);
         $this->elementDefinition = $elementDefinition;
         $this->min = $min;
-        $this->max = $max;        
+        $this->max = $max;
+        $this->elementDefinition->setName(null);
     }
     
     public function setForm($form) {
@@ -37,8 +43,9 @@ class Collection extends ElementContainer{
         $render = "";
         
         foreach($values[$this->getName()] as $k=>$v){
-            $newPrename = $this->getName($prename) . "[$k]"; 
-            $render .= $this->elementDefinition->render( $attributes , $v , $data, $newPrename);
+            $newPrename = $this->getName($prename);
+            $element = $this->__getElemement($k);
+            $render .= $element->render( $attributes , $v , $data, $newPrename);
         }
         
         return $render;
@@ -51,17 +58,45 @@ class Collection extends ElementContainer{
         
         if( isset($localValues[$this->getName()]) && is_array($localValues[$this->getName()]) ){
             foreach ($localValues[$this->getName()] as $k=>$v){
-                $newPrename = $this->getName($prename,true) . "." . $k;
-                $this->elementDefinition->prepareValidation($localValues[$this->getName()][$k], $cV,$newPrename);
+                $newPrename = $this->getName($prename,true);
+                $element = $this->__getElemement($k);
+                $element->prepareValidation($localValues[$this->getName()], $cV,$newPrename);
             }
         }
-        
+
     }
-    
-    
+
+
+    // CLONED INSTANCES CONTAINER
+    private $__internalElementClones;
+
+    private function __getElemement($index){
+        if(!$this->__internalElementClones)
+            $this->__internalElementClones = array();
+
+        if(!isset($this->__internalElementClones[$index])){
+            $element = clone $this->elementDefinition;
+            $element->setName($index);
+            $this->__internalElementClones[$index] = $element;
+        }
+
+        return $this->__internalElementClones[$index];
+    }
+
     public function getElement($name){
         return $this->elementDefinition;
     }
+
+
+
+    public function getElements($values){
+        $el = array();
+        foreach($values as $v){
+            $el[] = $v;
+        }
+        return $el;
+    }
+
 
 
 }
