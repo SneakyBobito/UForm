@@ -45,7 +45,7 @@ class Collection extends Element{
         foreach($values[$this->getName()] as $k=>$v){
             $newPrename = $this->getName($prename);
             $element = $this->__getElemement($k);
-            $render .= $element->render( $attributes , $v , $data, $newPrename);
+            $render .= $element->render( $attributes , $values[$this->getName()] , $data, $newPrename);
         }
         
         return $render;
