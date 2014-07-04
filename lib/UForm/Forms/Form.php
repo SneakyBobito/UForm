@@ -18,6 +18,7 @@ use
 	\UForm\Validation,
 	\UForm\Validation\Message\Group;
 use UForm\Navigator;
+use UForm\RenderContext;
 
 /**
  * Phalcon\Forms\Form
@@ -337,7 +338,7 @@ class Form implements
 
         public function isValid(){
             if(!is_array($this->_data)){
-                throw new Exception("no data to validate");
+                return true;
             }
 
             if(!$this->validation)
@@ -425,6 +426,9 @@ class Form implements
         return $element->render($attributes , $localValue , $this->getData() , $prename);
     }
 
+    public function renderHelper(){
+        return new RenderContext($this);
+    }
 
     /**
      * true if the element is valid

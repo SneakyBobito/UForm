@@ -35,7 +35,15 @@ class ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("foo2", $sxe->input[1]["value"]);
         $this->assertEquals("foos[0]", $sxe->input[0]["name"]);
         $this->assertEquals("foos[1]", $sxe->input[1]["name"]);
-        
+
+        $elements = $col->getElements($data);
+
+
+        $this->assertEquals(2,count($elements));
+        $this->assertEquals(0,$elements[0]->getName());
+        $this->assertEquals(1,$elements[1]->getName());
+
+
     }
     
     

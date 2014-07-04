@@ -72,7 +72,49 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
     }
 
+    public function testRenderContext(){
 
+        $f = new UForm\Forms\Form();
+
+        $bar = new \UForm\Forms\Element\Text("bar");
+        $bar->addValidator(new \UForm\Validation\DirectValidator(function($validator,$self){
+            return $validator->getValue() == "rab";
+        }));
+
+        $foo = new \UForm\Forms\Element\Collection("foo",$bar);
+
+        $f->add($foo);
+
+        $data = array(
+            "foo" => array(
+                "bar",
+                "rab"
+            )
+        );
+
+        $f->setData($data);
+
+        $context = $f->renderHelper();
+
+
+        $fooChildren = $context->getChildren("foo");
+
+        $this->assertEquals(2,count($fooChildren));
+
+        $this->assertEquals("0",reset(array_keys($fooChildren)));
+        $this->assertEquals("foo",$fooChildren[0]->getPrename());
+
+
+        $render =  $context->render($fooChildren[0]);
+
+        $sxe = simplexml_load_string("<root>$render</root>");
+
+        $this->assertEquals(1,$sxe->count());
+
+        $this->assertEquals("bar", $sxe->input[0]["value"]);
+        $this->assertEquals("foo[0]", $sxe->input[0]["name"]);
+
+    }
 
     public function testCollectionValidation(){
         $f = new UForm\Forms\Form();
@@ -97,17 +139,10 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $cV->validate();
         $this->assertTrue($cV->isValid());
         
-        
-        
-        
+
         $data = array(
             "foo" => array(
-                array(
-                    "bar" => "oof"
-                ),
-                array(
-                    "bar" => "rab"
-                )
+                "oof","rab"
             ) 
         );
         $cV = new \UForm\Validation\ChainedValidation($data);
@@ -117,9 +152,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
         
     }
-    
-    
-    
+
     public function testGroupValidation(){
         $f = new UForm\Forms\Form();
         

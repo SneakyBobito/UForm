@@ -3,6 +3,7 @@
 namespace UForm\Forms\Element;
 
 use UForm\Forms\Element;
+use UForm\Forms\Exception;
 use UForm\Validation\ChainedValidation
 ;
 use UForm\Forms\ElementContainer;
@@ -91,8 +92,19 @@ class Collection extends Element{
 
     public function getElements($values){
         $el = array();
-        foreach($values as $v){
-            $el[] = $v;
+
+        if(!is_array($values) ){
+            throw new Exception("Collection::getElements requires that the first parameters to be an array of values");
+        }else if(!isset($values[$this->getName()])){
+            throw new Exception("Collection::getElements requires the array given as first parameters to contain subvalues named as the collection");
+        }
+
+
+        $realValues = $values[$this->getName()] ;
+
+
+        foreach($realValues as $k=>$v){
+            $el[] = $this->__getElemement($k);
         }
         return $el;
     }

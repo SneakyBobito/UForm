@@ -49,7 +49,11 @@ class Navigator {
      * @return null
      */
     public function arrayGet($local,$global,$string,$rOffset = 0){
-        
+
+        if( is_null($string) || empty($string)){
+            return $global;
+        }
+
         $stringParts = explode(".", $string);
 
         if($rOffset>0){
