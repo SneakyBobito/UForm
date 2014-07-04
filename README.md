@@ -17,8 +17,7 @@ DOC INCOMING...
 ROADMAP
 =======
 
-* [ ] Subrendering (render only one child from a group)
-
+* [x] Subrendering (render only one child from a group)
 * [ ] Filters / validators interaction with rendering
 * [ ] csrf
 * [ ] full form rendering + deep attribute definition
@@ -30,4 +29,4 @@ ROADMAP
 * [ ] make a doc
 * [ ] select improvement (multi, default value, invalidation) + test
 * [ ] textarea test
-* [ ] implement collection array
+* [x] implement collection array
