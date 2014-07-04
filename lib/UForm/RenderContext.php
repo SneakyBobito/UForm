@@ -99,9 +99,7 @@ class RenderContext {
                 throw new Exception('Invalid param for checking element validation');
         }
 
-        $el = $elC->getElement();
-
-        $validation = $this->validation->getValidation($el->getName());
+        $validation = $this->validation->getValidation($elC->getFullName(true));
 
         return $validation->isValid();
     }
@@ -121,9 +119,9 @@ class RenderContext {
                 throw new Exception('Invalid param for checking element validation');
         }
 
-        $el = $elC->getElement();
 
-        $validation = $this->validation->getValidation($el->getName());
+
+        $validation = $this->validation->getValidation($elC->getFullName(true));
 
         return $validation->getMessages();
 
