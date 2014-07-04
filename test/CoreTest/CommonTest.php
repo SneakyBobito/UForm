@@ -97,6 +97,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $context = $f->renderHelper();
 
 
+
         $fooChildren = $context->getChildren("foo");
 
         $this->assertEquals(2,count($fooChildren));
@@ -138,7 +139,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
 
 
 
-        // DEEPER RENDERING
+        // DEEPER STRUCTURE
 
         $baz = new \UForm\Forms\Element\Collection("baz",new \UForm\Forms\Element\Group(null,array(
 
@@ -162,8 +163,18 @@ class CommonTest extends PHPUnit_Framework_TestCase
         );
 
         $f->setData($data);
-
         $context = $f->renderHelper();
+
+
+        // TEST DEEPER ElementContext NAME GETTERS
+
+        $elC = $context->getElement("baz.0.baz");
+
+        $this->assertEquals("baz.0.baz",$elC->getFullName(true));
+        $this->assertEquals("baz[0][baz]",$elC->getFullName(false));
+
+
+        // TEST DEEPER RENDERING
 
         $render = $context->render("baz.0.baz");
 
@@ -173,6 +184,13 @@ class CommonTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals("abb", $sxe->input[0]["value"]);
         $this->assertEquals("baz[0][baz]", $sxe->input[0]["name"]);
+
+
+
+
+
+
+
 
     }
 

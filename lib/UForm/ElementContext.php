@@ -38,7 +38,7 @@ class ElementContext {
     }
 
     public function getFullName($dottedNotation = false){
-        return $this->element->getName($this->prename , $dottedNotation );
+        return $this->element->getName($this->getPrename($dottedNotation) , $dottedNotation );
     }
 
     /**
