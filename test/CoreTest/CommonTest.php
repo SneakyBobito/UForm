@@ -101,7 +101,9 @@ class CommonTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(2,count($fooChildren));
 
-        $this->assertEquals("0",reset(array_keys($fooChildren)));
+        $arrayKeys = array_keys($fooChildren);
+
+        $this->assertEquals("0",reset($arrayKeys));
         $this->assertEquals("foo",$fooChildren[0]->getPrename());
 
 
