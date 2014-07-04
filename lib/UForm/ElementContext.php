@@ -21,7 +21,7 @@ class ElementContext {
     function __construct($element, $prename)
     {
         $this->element = $element;
-        $this->prename = $prename;
+        $this->prename = explode(".",$prename);
     }
 
     /**
@@ -44,9 +44,25 @@ class ElementContext {
     /**
      * @return mixed
      */
-    public function getPrename()
+    public function getPrename($dotted = false)
     {
-        return $this->prename;
+
+        if($dotted)
+            return implode(".",$this->prename);
+        else{
+
+            $prenamePieces = $this->prename;
+
+            $prename = array_shift($prenamePieces);
+
+            if(count($prenamePieces)>0){
+                foreach($prenamePieces as $v){
+                    $prename.="[$v]";
+                }
+            }
+
+            return $prename;
+        }
     }
 
 

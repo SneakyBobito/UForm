@@ -143,16 +143,20 @@ class RenderContext {
     }
 
 
-    public function render($elC,$attributes = null){
+    public function render($elm,$attributes = null){
 
-        $elC = $this->__parseElement($elC);
+        $elC = $this->__parseElement($elm);
 
-        if(!$elC)
-            throw new Exception("the given arg is not renderable by render context");
+        if(!$elC){
+            if(is_string($elm))
+                throw new Exception('Element with ID='.$elm.' is not part of the form');
+            else
+                throw new Exception('the given arg is not renderable by render context');
+        }
 
         $el = $elC->getElement();
 
-        $values = self::__getNavigator()->arrayGet($this->data,$this->data,$elC->getPrename());
+        $values = self::__getNavigator()->arrayGet($this->data,$this->data,$elC->getPrename(true));
 
         return $el->render($attributes , $values , $this->data , $elC->getPrename());
 

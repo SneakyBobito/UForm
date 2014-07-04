@@ -107,6 +107,11 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("foo",$fooChildren[0]->getPrename());
 
 
+
+
+
+
+
         // RENDER BY ELEMENTCONTEXT
         $render =  $context->render($fooChildren[0]);
 
@@ -129,6 +134,45 @@ class CommonTest extends PHPUnit_Framework_TestCase
 
 
 
+
+
+
+
+        // DEEPER RENDERING
+
+        $baz = new \UForm\Forms\Element\Collection("baz",new \UForm\Forms\Element\Group(null,array(
+
+            new \UForm\Forms\Element\Text("foo"),
+            new \UForm\Forms\Element\Text("baz"),
+
+        )));
+        $f->add($baz);
+
+        $data = array(
+            "foo" => array(
+                "bar",
+                "rab"
+            ),
+            "baz" => array(
+                array(
+                    "foo" => "off",
+                    "baz" => "abb"
+                )
+            )
+        );
+
+        $f->setData($data);
+
+        $context = $f->renderHelper();
+
+        $render = $context->render("baz.0.baz");
+
+        $sxe = simplexml_load_string("<root>$render</root>");
+
+        $this->assertEquals(1,$sxe->count());
+
+        $this->assertEquals("abb", $sxe->input[0]["value"]);
+        $this->assertEquals("baz[0][baz]", $sxe->input[0]["name"]);
 
     }
 
