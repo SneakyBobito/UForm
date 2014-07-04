@@ -30,3 +30,5 @@ ROADMAP
 * [ ] select improvement (multi, default value, invalidation) + test
 * [ ] textarea test
 * [x] implement collection array
+* [ ] globalize form and render context methods
+* [ ] globalize error messages in render context

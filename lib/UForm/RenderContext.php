@@ -89,15 +89,17 @@ class RenderContext {
         if(!$this->validation)
             return true;
 
-        $el = $this->__parseElement($elm);
+        $elC = $this->__parseElement($elm);
 
-        if(!$el){
+        if(!$elC){
 
             if(is_string($elm))
                 throw new Exception('Element with ID='.$elm.' is not part of the form');
             else
                 throw new Exception('Invalid param for checking element validation');
         }
+
+        $el = $elC->getElement();
 
         $validation = $this->validation->getValidation($el->getName());
 
@@ -109,15 +111,17 @@ class RenderContext {
         if(!$this->validation)
             return array();
 
-        $el = $this->__parseElement($elm);
+        $elC = $this->__parseElement($elm);
 
-        if(!$el){
+        if(!$elC){
 
             if(is_string($elm))
                 throw new Exception('Element with ID='.$elm.' is not part of the form');
             else
                 throw new Exception('Invalid param for checking element validation');
         }
+
+        $el = $elC->getElement();
 
         $validation = $this->validation->getValidation($el->getName());
 
@@ -127,32 +131,28 @@ class RenderContext {
 
     /**
      * @param $elC
-     * @return null|ElementInterface
+     * @return ElementContext
      */
     private function __parseElement($elC){
 
-        $el = null;
-
         if($elC instanceof ElementContext)
-            $el = $elC->getElement();
+            ;
         else if(is_string($elC)){
             $elC = $this->getElement($elC);
-            if($elC)
-                $el = $elC->getElement();
         }
 
-        return $el;
+        return $elC;
     }
+
 
     public function render($elC,$attributes = null){
 
-        $el = null;
+        $elC = $this->__parseElement($elC);
 
-
-
-
-        if(!is_object($el) || ! $el instanceof ElementInterface)
+        if(!$elC)
             throw new Exception("the given arg is not renderable by render context");
+
+        $el = $elC->getElement();
 
         $values = self::__getNavigator()->arrayGet($this->data,$this->data,$elC->getPrename());
 
