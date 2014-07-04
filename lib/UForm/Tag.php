@@ -46,11 +46,11 @@ class Tag {
             
             $vs = htmlentities($v);
             $ks = htmlentities($k);
-            
-            if(is_string($v)){
-                $d .= " $ks='$vs'";
-            }else if(is_bool($v) && true == $v){
+
+            if(is_bool($v) && true == $v){
                 $d .= " $ks";
+            }else{
+                $d .= " $ks='$vs'";
             }
         }
         
