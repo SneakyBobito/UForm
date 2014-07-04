@@ -298,71 +298,75 @@ class Form implements
 	 * @return boolean
 	 * @throws Exception
 	 */
-        public function dataValidation($data,  Validation\ChainedValidation $cV)
-        {
-            if( !is_array($data)  ) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            if( !is_array($this->_elements) ) {
-                    return true;
-            }
-
-            //Check if there is a method 'beforeValidation'
-            if( method_exists($this, 'beforeValidation') ) {
-                if( !$this->beforeValidation($data) ) {
-                    return false;
-                }
-            }
-
-    
-
-            foreach($this->_elements as $element) {
-                $element->prepareValidation($this->_data, $cV);
-            }
-            
-            $cV->validate();
-        }
-        
-        public function validate(){
-            if(!is_array($this->_data))
-                throw new Exception("No data to validate");
-            
-            $validation = new Validation\ChainedValidation($this->_data);
-            $this->validation = $validation;
-            
-            $this->dataValidation($this->_data, $validation);
-            
+    public function dataValidation($data,  Validation\ChainedValidation $cV)
+    {
+        if( !is_array($data)  ) {
+            throw new Exception('Invalid parameter type.');
         }
 
-
-        public function isValid(){
-            if(!is_array($this->_data)){
+        if( !is_array($this->_elements) ) {
                 return true;
-            }
-
-            if(!$this->validation)
-                $this->validate();
-
-            return $this->validation->isValid();
         }
 
-        
-        /**
-         * 
-         * @param type $name
-         * @return Validation
-         * @throws Exception
-         */
-        public function getValidation($name){
-            $validation =$this->validation->getValidation($name);
-
-            if(!$validation){
-                throw new Exception('Element with ID='.$name.' is not part of the form');
+        //Check if there is a method 'beforeValidation'
+        if( method_exists($this, 'beforeValidation') ) {
+            if( !$this->beforeValidation($data) ) {
+                return false;
             }
-
-            return $validation;
         }
+
+
+
+        foreach($this->_elements as $element) {
+            $element->prepareValidation($this->_data, $cV);
+        }
+
+        $cV->validate();
+    }
+
+    public function validate(){
+        if(!is_array($this->_data))
+            throw new Exception("No data to validate");
+
+        $validation = new Validation\ChainedValidation($this->_data);
+        $this->validation = $validation;
+
+        $this->dataValidation($this->_data, $validation);
+
+    }
+
+
+    public function isValid(){
+        if(!is_array($this->_data)){
+            return true;
+        }
+
+        if(!$this->validation)
+            $this->validate();
+
+        return $this->validation->isValid();
+    }
+
+
+    /**
+     *
+     * @param type $name
+     * @return Validation
+     * @throws Exception
+     */
+    public function getValidation($name = null){
+
+        if(null == $name)
+            return $this->validation;
+
+        $validation =$this->validation->getValidation($name);
+
+        if(!$validation){
+            throw new Exception('Element with ID='.$name.' is not part of the form');
+        }
+
+        return $validation;
+    }
 
 
 

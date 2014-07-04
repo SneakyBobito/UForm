@@ -13,6 +13,7 @@ use UForm\Forms\ElementContainer;
 use UForm\Forms\ElementInterface;
 use UForm\Forms\Exception;
 use UForm\Forms\Form;
+use UForm\Validation\ChainedValidation;
 
 class RenderContext {
 
@@ -26,6 +27,10 @@ class RenderContext {
 
     protected $elements = array();
 
+    /**
+     * @var ChainedValidation
+     */
+    protected $validation;
 
 
     function __construct(Form $form)
@@ -36,6 +41,8 @@ class RenderContext {
         $this->isValid = $form->isValid();
 
         $initialElements = $form->getElements();
+
+        $this->validation = $form->getValidation();
 
         if(!is_array($initialElements) || count($initialElements) <= 0 ){
             throw new Exception("Trying to generate a render helper with an empty form. The form must have at least 1 elements");
@@ -78,8 +85,51 @@ class RenderContext {
 
     }
 
+    public function elementIsValid($elm){
+        if(!$this->validation)
+            return true;
 
-    public function render($elC,$attributes = null){
+        $el = $this->__parseElement($elm);
+
+        if(!$el){
+
+            if(is_string($elm))
+                throw new Exception('Element with ID='.$elm.' is not part of the form');
+            else
+                throw new Exception('Invalid param for checking element validation');
+        }
+
+        $validation = $this->validation->getValidation($el->getName());
+
+        return $validation->isValid();
+    }
+
+    public function elementMessages($elm){
+
+        if(!$this->validation)
+            return array();
+
+        $el = $this->__parseElement($elm);
+
+        if(!$el){
+
+            if(is_string($elm))
+                throw new Exception('Element with ID='.$elm.' is not part of the form');
+            else
+                throw new Exception('Invalid param for checking element validation');
+        }
+
+        $validation = $this->validation->getValidation($el->getName());
+
+        return $validation->getMessages();
+
+    }
+
+    /**
+     * @param $elC
+     * @return null|ElementInterface
+     */
+    private function __parseElement($elC){
 
         $el = null;
 
@@ -90,6 +140,15 @@ class RenderContext {
             if($elC)
                 $el = $elC->getElement();
         }
+
+        return $el;
+    }
+
+    public function render($elC,$attributes = null){
+
+        $el = null;
+
+
 
 
         if(!is_object($el) || ! $el instanceof ElementInterface)
