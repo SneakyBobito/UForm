@@ -10,6 +10,7 @@ namespace UForm;
 
 use UForm\Forms\Element;
 use UForm\Forms\ElementContainer;
+use UForm\Forms\ElementInterface;
 use UForm\Forms\Exception;
 use UForm\Forms\Form;
 
@@ -78,11 +79,25 @@ class RenderContext {
     }
 
 
-    public function render(ElementContext $elC,$attributes = null){
+    public function render($elC,$attributes = null){
+
+        $el = null;
+
+        if($elC instanceof ElementContext)
+            $el = $elC->getElement();
+        else if(is_string($elC)){
+            $elC = $this->getElement($elC);
+            if($elC)
+                $el = $elC->getElement();
+        }
+
+
+        if(!is_object($el) || ! $el instanceof ElementInterface)
+            throw new Exception("the given arg is not renderable by render context");
 
         $values = self::__getNavigator()->arrayGet($this->data,$this->data,$elC->getPrename());
 
-        return $elC->getElement()->render($attributes , $values , $this->data , $elC->getPrename());
+        return $el->render($attributes , $values , $this->data , $elC->getPrename());
 
     }
 

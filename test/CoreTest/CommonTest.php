@@ -107,6 +107,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("foo",$fooChildren[0]->getPrename());
 
 
+        // RENDER BY ELEMENTCONTEXT
         $render =  $context->render($fooChildren[0]);
 
         $sxe = simplexml_load_string("<root>$render</root>");
@@ -115,6 +116,19 @@ class CommonTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals("bar", $sxe->input[0]["value"]);
         $this->assertEquals("foo[0]", $sxe->input[0]["name"]);
+
+        // RENDER BY STIRNG NAME
+        $render =  $context->render("foo.0");
+
+        $sxe = simplexml_load_string("<root>$render</root>");
+
+        $this->assertEquals(1,$sxe->count());
+
+        $this->assertEquals("bar", $sxe->input[0]["value"]);
+        $this->assertEquals("foo[0]", $sxe->input[0]["name"]);
+
+
+
 
     }
 
