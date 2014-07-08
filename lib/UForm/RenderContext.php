@@ -142,6 +142,10 @@ class RenderContext {
         return $elC;
     }
 
+    public function clearValidation(){
+        $this->validation = null;
+        $this->isValid = true;
+    }
 
     public function render($elm,$attributes = null){
 
