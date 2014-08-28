@@ -185,22 +185,67 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("abb", $sxe->input[0]["value"]);
         $this->assertEquals("baz[0][baz]", $sxe->input[0]["name"]);
 
-
-
-
-
-
-
-
     }
 
+    
+    public function testWrapper(){
+        
+        $f = new UForm\Forms\Form();
+        
+        $bar = new \UForm\Forms\Element\Text("bar");
+        $bar->addValidator(new \UForm\Validation\DirectValidator(function($validator,$self){
+            if($validator->getValue() != "rab"){
+                $validator->appendMessage("bar not valid");
+                return false;
+            }
+        }));
+        
+        $foo = new \UForm\Forms\ElementWrapper($bar);
+        $f->add($foo);
+        
+        
+        // TESTS
+        
+        // 1
+        $data = array(
+            "bar" => "rab"
+        );
+        $f->setData($data);
+        $this->assertEquals(true, $f->isValid());
+        
+        
+        // 2
+        $data = array(
+            "bar" => "bar"
+        );
+        $f->setData($data);
+        $this->assertEquals(false, $f->isValid());
+        $messages =$f->getElementMessages("bar");
+        $this->assertEquals("bar not valid", $messages[0]);
+        
+        
+        // 3
+        $this->assertEquals($f,$foo->getForm());
+        $this->assertEquals($f,$bar->getForm());
+        
+        
+        // 4
+        $f2 = new \UForm\Forms\Form();
+        $f2->add($bar);
+        $f2->setData($data);
+        $barRender1 = $f->render("bar");
+        $barRender2 = $f2->render("bar");
+        
+        $this->assertTrue(!empty($barRender1));
+        $this->assertEquals($barRender1, $barRender2);
+        
+    }
+    
     public function testCollectionValidation(){
         $f = new UForm\Forms\Form();
         
         $bar = new \UForm\Forms\Element\Text("bar");
         $bar->addValidator(new \UForm\Validation\DirectValidator(function($validator,$self){
-
-
             return $validator->getValue() == "rab";
         }));
         
