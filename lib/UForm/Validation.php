@@ -118,7 +118,20 @@ class Validation
             $this->form = $form;
         }
 
+        public function getChainedValidation() {
+            return $this->chainedValidation;
+        }        
         
+        public function initValidation(){
+            
+            //Clear pre-calculated values
+            $this->_values = null;
+            $this->_valid = true;
+            
+            $messages = new Group();
+            $this->_messages = $messages;
+
+        }
         
 	/**
 	 * Validate a set of data according to a set of rules
@@ -129,16 +142,7 @@ class Validation
 	 */
 	public function validate( $localValues ){
 
-
-            //Clear pre-calculated values
-            $this->_values = null;
             
-            $this->_valid = true;
-            
-            $messages = new Group();
-
-            $this->_messages = $messages;
-
             if(is_array($this->_validators)){
                 //Validate
                 foreach($this->_validators as $v) {
@@ -242,13 +246,19 @@ class Validation
 	 * @param \UForm\Validation\MessageInterface $message
 	 * @return \UForm\Validation
 	 */
-	public function appendMessage($message)
-	{
-            //@note the type check is not implemented in the original source code
-            if(is_null($this->_messages) === false) {
+	public function appendMessage($message,$elementName = null){
+            
+            if(null == $elementName){
                 $this->_messages->appendMessage($message);
+            }else{
+                
+                $v = $this->chainedValidation->getValidation($elementName);
+                if(!$v){
+                    throw new \Uform\Forms\Exception('Unable to append message : element with ID='.$elementName.' is not part of the form.');
+                }
+                $v->appendMessage($message);
             }
-
+                
             return $this;
 	}
 

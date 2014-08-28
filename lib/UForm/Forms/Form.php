@@ -337,10 +337,6 @@ class Form implements
 
 
     public function isValid(){
-        if(!is_array($this->_data)){
-            return true;
-        }
-
         if(!$this->validation)
             $this->validate();
 

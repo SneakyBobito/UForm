@@ -56,6 +56,11 @@ class ChainedValidation {
         
         $passed = true;
         
+        // we init validation before (e.g we init messages to make them ready from everywhere)
+        foreach($this->validations as $v){
+            $v->initValidation();
+        }
+        
         foreach ($this->validations as $v){
             if(!$v->validate($this->data,  $this->data))
                 $passed = false;

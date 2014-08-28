@@ -49,6 +49,32 @@ class ValidationTest extends PHPUnit_Framework_TestCase
     }
     
     
+    public function testAddMessageToOtherElement(){
+        
+        $f = new UForm\Forms\Form();
+        
+        $elm = new UForm\Forms\Element\Text("foo");
+        $elm->addValidator(new \UForm\Validation\DirectValidator(function($v){
+            $v->appendMessage("hey bar","bar");
+            $v->appendMessage("im foo");
+        }));
+        $f->add($elm);
+        
+        $elm = new UForm\Forms\Element\Text("bar");
+        $f->add($elm);
+        
+        $f->setData(array("foo"=>"aa"));
+        $f->validate();
+        
+        $fooMessages = $f->getElementMessages("foo");
+        $barMessages = $f->getElementMessages("bar");
+        
+        $this->assertEquals("hey bar",$barMessages[0]);
+        $this->assertEquals("im foo",$fooMessages[0]);
+        
+    }
+    
+    
     public function testSameAs(){
         
         $f = new UForm\Forms\Form();
