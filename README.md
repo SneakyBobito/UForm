@@ -1,15 +1,33 @@
 UForm
 =====
 
-UForm is a refactoring of the phalcon\Form component. It's a library to manage html forms and php validation easily and with high extendability.
+UForm is a form validation/filtering/rendering library that solve all the problems I had with other similar libraries.
+It is mostly based on the Phalcon\Form one, but totaly refactored to be more flexible.
 
-**The idea** : The Phalcon component was good, butsome thing were not good or missing. For instance it was very difficult to implement group or collection of form elements. The rendering, validation and filtering have also been refactored
+The library is tested then stable.
 
+Build status
+============
 
 [![Build Status](https://travis-ci.org/SneakyBobito/UForm.png)](https://travis-ci.org/SneakyBobito/UForm)
 
 
 
+Installation
+============
+
+The library is [available on packagist](https://packagist.org/packages/sneakybobito/uform) :
+
+```json
+{
+    "require": {
+        "sneakybobito/uform": "v0.0.2-beta"
+    }
+}
+```
+
+Usage
+=====
 
 DOC INCOMING...
 
