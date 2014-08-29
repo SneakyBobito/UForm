@@ -17,7 +17,11 @@ class ElementContext {
      */
     protected $element;
     protected $prename;
-
+    
+    protected $parent = null;
+    protected $children = array(); 
+            
+            
     function __construct($element, $prename)
     {
         $this->element = $element;
@@ -31,7 +35,24 @@ class ElementContext {
     {
         return $this->element;
     }
+    
+    public function getParent() {
+        return $this->parent;
+    }
 
+    public function setParent($parent) {
+        $this->parent = $parent;
+    }
+
+    public function getChildren() {
+        return $this->children;
+    }
+
+    public function addChild($child) {
+        $this->children[] = $child;
+    }
+
+    
 
     public function getName(){
         return $this->element->getName();

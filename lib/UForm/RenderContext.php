@@ -24,8 +24,14 @@ class RenderContext {
 
     protected $data;
     protected $isValid;
-
+    
+    // all named elements 
     protected $elements = array();
+    // all unamed elements
+    protected $unamedElements = array();
+    // all base element
+    protected $baseElements = array();
+
 
     /**
      * @var ChainedValidation
@@ -48,7 +54,7 @@ class RenderContext {
             throw new Exception("Trying to generate a render helper with an empty form. The form must have at least 1 elements");
         }
 
-        $this->_recursiveElementPreparation($initialElements,null);
+        $this->_recursiveElementPreparation($initialElements,null,null,true);
 
     }
 
@@ -56,29 +62,35 @@ class RenderContext {
      * @param Element[] $elements
      * @param $prename
      */
-    private function _recursiveElementPreparation($elements,$prename){
+    private function _recursiveElementPreparation($elements,$prename,$parent=null,$base=false){
 
         foreach($elements as $el){
 
-            $name = $el->getName($prename,true);
-
-            if($name){
-
-                $elC = new ElementContext($el,$prename);
-
-                $this->elements[$name]["base"] = $elC;
-                if($prename){
-                    $this->elements[$prename]["children"][] = $elC;
-                }
+            $elC = new ElementContext($el,$prename);
+            
+            if($parent){
+                $elC->setParent($parent);
+                $parent->addChild($elC);
+            }
+            
+            if($el->getName() !== null){
+                $name = $el->getName($prename,true);
+                $this->elements[$name] = $elC;
+            }else{
+                $this->unamedElements[] = $elC;
+            }
+            
+            if($base){
+                $this->baseElements[] = $elC;
             }
 
             if($el instanceof ElementContainer){
-                $this->_recursiveElementPreparation($el->getElements(), $name );
+                $name = $el->getName($prename,true);
+                $this->_recursiveElementPreparation($el->getElements(), $name , $elC);
             }else if($el instanceof Element\Collection){
-
+                $name = $el->getName($prename,true);
                 $values = self::__getNavigator()->arrayGet($this->data,$this->data,$prename);
-
-                $this->_recursiveElementPreparation($el->getElements($values) , $name);
+                $this->_recursiveElementPreparation($el->getElements($values) , $name , $elC);
             }
 
         }
@@ -135,7 +147,23 @@ class RenderContext {
 
         if($elC instanceof ElementContext)
             ;
-        else if(is_string($elC)){
+        else if($elC instanceof ElementInterface){
+            do{
+                foreach($this->elements as $el){
+                    if($elC == $el->getElement()){
+                        $elC = $el;
+                        break 2;
+                    }
+                }
+                foreach($this->unamedElements as $el){
+                    if($elC == $el->getElement()){
+                        $elC = $el;
+                        break 2;
+                    }
+                }
+            }while(false);
+                
+        }else if(is_string($elC)){
             $elC = $this->getElement($elC);
         }
 
@@ -172,9 +200,9 @@ class RenderContext {
      * @return ElementContext
      */
     public function getElement($string){
-
-        if(isset($this->elements[$string]) && isset($this->elements[$string]["base"]))
-            return $this->elements[$string]["base"];
+        
+        if(isset($this->elements[$string]) )
+            return $this->elements[$string];
 
         return null;
 
@@ -185,12 +213,15 @@ class RenderContext {
      * @param $string
      * @return ElementContext[]
      */
-    public function getChildren($string){
+    public function getChildren($el){
 
-        if(isset($this->elements[$string]) && isset($this->elements[$string]["children"]))
-            return $this->elements[$string]["children"];
-
-        return array();
+        $el = $this->__parseElement($el);
+        
+        if(!$el){
+            return false;
+        }else{
+            return $el->getChildren();
+        }
     }
 
 
