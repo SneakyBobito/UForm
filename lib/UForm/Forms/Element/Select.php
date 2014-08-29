@@ -96,7 +96,7 @@ class Select extends Element
         }
 
          
-        public function render( $attributes , $value , $data , $prename = null ){
+        public function _render( $attributes , $value , $data , $prename = null ){
 
             $params = array(
                 "name" => $this->getName($prename)

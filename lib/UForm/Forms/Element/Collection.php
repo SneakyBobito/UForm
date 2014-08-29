@@ -40,7 +40,7 @@ class Collection extends Element{
     }
 
     
-    public function render( $attributes , $values , $data , $prename = null ) {
+    public function _render( $attributes , $values , $data , $prename = null ) {
         $render = "";
         
         foreach($values[$this->getName()] as $k=>$v){

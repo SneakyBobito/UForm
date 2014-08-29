@@ -94,97 +94,9 @@ interface ElementInterface
 	 */
 	public function getValidators();
 
-	/**
-	 * Returns an array of prepared attributes for \Phalcon\Tag helpers
-	 * according to the element's parameters
-	 *
-	 * @param array $attributes
-	 * @param boolean $useChecked
-	 * @return array
-	 */
-	public function prepareAttributes($attributes = null, $useChecked = null);
 
-	/**
-	 * Sets a default attribute for the element
-	 *
-	 * @param string $attribute
-	 * @param mixed $value
-	 * @return \Phalcon\Forms\ElementInterface
-	 */
-	public function setAttribute($attribute, $value);
+      
 
-	/**
-	 * Returns the value of an attribute if present
-	 *
-	 * @param string $attribute
-	 * @param mixed $defaultValue
-	 * @return mixed
-	 */
-	public function getAttribute($attribute, $defaultValue = null);
-
-	/**
-	 * Sets default attributes for the element
-	 *
-	 * @param array $attributes
-	 * @return \Phalcon\Forms\ElementInterface
-	 */
-	public function setAttributes($attributes);
-
-	/**
-	 * Returns the default attributes for the element
-	 *
-	 * @return array
-	 */
-	public function getAttributes();
-
-	/**
-	 * Sets an option for the element
-	 *
-	 * @param string $option
-	 * @param mixed $value
-	 * @return \Phalcon\Forms\ElementInterface
-	 */
-	public function setUserOption($option, $value);
-
-	/**
-	 * Returns the value of an option if present
-	 *
-	 * @param string $option
-	 * @param mixed $defaultValue
-	 * @return mixed
-	 */
-	public function getUserOption($option, $defaultValue = null);
-
-	/**
-	 * Sets options for the element
-	 *
-	 * @param array $options
-	 * @return \Phalcon\Forms\ElementInterface
-	 */
-	public function setUserOptions($options);
-
-	/**
-	 * Returns the options for the element
-	 *
-	 * @return array
-	 */
-	public function getUserOptions();
-
-	/**
-	 * Sets a default value in case the form does not use an entity
-	 * or there is no value available for the element in $_POST
-	 *
-	 * @param mixed $value
-	 * @return \Phalcon\Forms\ElementInterface
-	 */
-	public function setDefault($value);
-
-	/**
-	 * Returns the default value assigned to the element
-	 *
-	 * @return mixed
-	 */
-	public function getDefault();
 
 	/**
 	 * Clears every element in the form to its default value

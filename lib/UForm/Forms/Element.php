@@ -1,12 +1,6 @@
 <?php
 /**
  * Element
- *
- * @author Andres Gutierrez <andres@phalconphp.com>
- * @author Eduar Carvajal <eduar@phalconphp.com>
- * @author Wenzel Pünter <wenzel@phelix.me>
- * @version 1.2.6
- * @package Phalcon
 */
 namespace UForm\Forms;
 
@@ -18,11 +12,8 @@ use UForm\Forms\Exception,
         ;
 
 /**
- * Phalcon\Forms\Element
  *
  * This is a base class for form elements
- * 
- * @see https://github.com/phalcon/cphalcon/blob/1.2.6/ext/forms/element.c
  */
 abstract class Element implements ElementInterface
 {
@@ -283,66 +274,7 @@ abstract class Element implements ElementInterface
         return $this->_validators ? $this->_validators : array();
     }
 
-    /**
-     * Returns an array of prepared attributes for \UForm\Tag helpers
-     * according to the element's parameters
-     *
-     * @param array|null $attributes
-     * @param boolean|null $useChecked
-     * @return array
-     * @throws Exception
-     */
-    public function prepareAttributes($attributes = null, $useChecked = null)
-    {
-            /* Type check */
-            if(is_array($attributes) === false) {
-                    $attributes = array();
-            }
-
-            if(is_null($useChecked) === true) {
-                    $useChecked = false;
-            } elseif(is_bool($useChecked) === false) {
-                    throw new Exception('Invalid parameter type.');
-            }
-
-            //Create an array of parameters
-            $attributes[0] = $this->_name;
-
-            //Merge passed parameters with default ones
-            if(is_array($this->_attributes) === true) {
-                    //@note we are potentially overriding data from $attributes
-                    $attributes = array_merge($this->_attributes, $attributes);
-            }
-
-            //Get the current element's value
-            $value = $this->getValue();
-
-            //If the widget has a value set it as default value
-            if(is_null($value) === false) {
-                    if($useChecked === true) {
-                            /*
-                             * Check if the element already has a default value, compare it with the one in the
-                             * attributes, if they are the same mark the element as checked
-                             */
-                            if(isset($attributes['value']) === true) {
-                                    if($attributes['value'] === $value) {
-                                            $attributes['checked'] = 'checked';
-                                    }
-                            } else {
-                                    //Evaluate the current value and mark the check as checked
-                                    if($value == true) {
-                                            $attributes['checked'] = 'checked';
-                                    }
-
-                                    $attributes['value'] = $value;
-                            }
-                    } else {
-                            $attributes['value'] = $value;
-                    }
-            }
-
-            return $attributes;
-    }
+    
 
     /**
      * Sets a default attribute for the element
@@ -352,8 +284,7 @@ abstract class Element implements ElementInterface
      * @return \UForm\Forms\ElementInterface
      * @throws Exception
      */
-    public function setAttribute($attribute, $value)
-    {
+    public function setAttribute($attribute, $value){
             if(is_string($attribute) === false) {
                     throw new Exception('Invalid parameter type.');
             }
@@ -375,8 +306,7 @@ abstract class Element implements ElementInterface
      * @return mixed
      * @throws Exception
      */
-    public function getAttribute($attribute, $defaultValue = null)
-    {
+    public function getAttribute($attribute, $defaultValue = null){
             if(is_string($attribute) === false) {
                     throw new Exception('Invalid parameter type.');
             }
@@ -396,8 +326,7 @@ abstract class Element implements ElementInterface
      * @return \UForm\Forms\ElementInterface
      * @throws Exception
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes){
             if(is_array($attributes) === false) {
                     throw new Exception("Parameter 'attributes' must be an array");
             }
@@ -407,18 +336,30 @@ abstract class Element implements ElementInterface
             return $this;
     }
 
+    public function render( $attributes , $value , $data , $prename = null ){
+        if(!is_array($attributes)){
+            $attributes = $this->getAttributes();
+        }else{
+            $attributes = array_merge($this->getAttributes(),$attributes);
+        }
+        
+        return $this->_render($attributes, $value, $data, $prename);
+        
+        
+    }
+    protected abstract function _render( $attributes , $value , $data , $prename = null );
+    
     /**
      * Returns the default attributes for the element
      *
      * @return array
      */
-    public function getAttributes()
-    {
-            if(is_array($this->_attributes) === false) {
-                    return array();
-            }
+    public function getAttributes(){
+        if(is_array($this->_attributes) === false) {
+            return array();
+        }
 
-            return $this->_attributes;
+        return $this->_attributes;
     }
 
     /**
@@ -429,19 +370,15 @@ abstract class Element implements ElementInterface
      * @return \UForm\Forms\ElementInterface
      * @throws Exception
      */
-    public function setUserOption($option, $value)
-    {
-            if(is_string($option) === false) {
-                    throw new Exception('Invalid parameter type.');
-            }
-
-            if(is_array($this->_options) === false) {
-                    $this->_options = array();
-            }
-
-            $this->_options[$option] = $value;
-
-            return $this;
+    public function setUserOption($option, $value){
+        if(is_string($option) === false) {
+            throw new Exception('Invalid parameter type.');
+        }
+        if(is_array($this->_options) === false) {
+            $this->_options = array();
+        }
+        $this->_options[$option] = $value;
+        return $this;
     }
 
     /**
@@ -452,18 +389,12 @@ abstract class Element implements ElementInterface
      * @return mixed
      * @throws Exception
      */
-    public function getUserOption($option, $defaultValue = null)
-    {
-            if(is_string($option) === false) {
-                    throw new Exception('Invalid parameter type.');
-            }
-
-            if(is_array($this->_options) === true &&
-                    isset($this->_options[$option]) === true) {
-                    return $this->_options[$option];
-            }
-
-            return $defaultValue;
+    public function getUserOption($option, $defaultValue = null){
+        if(is_array($this->_options) === true &&
+            isset($this->_options[$option]) === true) {
+            return $this->_options[$option];
+        }
+        return $defaultValue;
     }
 
     /**
@@ -473,15 +404,12 @@ abstract class Element implements ElementInterface
      * @return \UForm\Forms\ElementInterface
      * @throws Exception
      */
-    public function setUserOptions($options)
-    {
-            if(is_array($options) === false) {
-                    throw new Exception("Parameter 'options' must be an array");
-            }
-
-            $this->_options = $options;
-
-            return $this;
+    public function setUserOptions($options){
+        if(is_array($options) === false) {
+            throw new Exception("Parameter 'options' must be an array");
+        }
+        $this->_options = $options;
+        return $this;
     }
 
     /**
@@ -495,30 +423,6 @@ abstract class Element implements ElementInterface
     }
 
 
-
-    /**
-     * Sets a default value in case the form does not use an entity
-     * or there is no value available for the element in $_POST
-     *
-     * @param mixed $value
-     * @return \UForm\Forms\ElementInterface
-     */
-    public function setDefault($value)
-    {
-            $this->_value = $value;
-
-            return $this;
-    }
-
-    /**
-     * Returns the default value assigned to the element
-     *
-     * @return mixed
-     */
-    public function getDefault()
-    {
-            return $this->_value;
-    }
 
 
     /**

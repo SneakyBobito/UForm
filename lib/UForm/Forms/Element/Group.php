@@ -43,7 +43,7 @@ class Group extends ElementContainer{
         return parent::getName($prename, $dottedNotation);
     }
 
-    public function render( $attributes , $values , $data , $prename = null ) {
+    public function _render( $attributes , $values , $data , $prename = null ) {
         $render = "";
         
         foreach($this->elements as $v){

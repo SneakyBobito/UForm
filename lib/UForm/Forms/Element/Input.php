@@ -12,7 +12,7 @@ use UForm\Forms\Element,
  *
  * @author sghzal
  */
-class Input extends Element implements ElementInterface {
+class Input extends Element {
     
     protected $type;
 
@@ -22,7 +22,7 @@ class Input extends Element implements ElementInterface {
     }
 
     
-    public function render( $attributes , $value , $data , $prename = null ){
+    public function _render( $attributes , $value , $data , $prename = null ){
 
         $params = array(
             "type" => $this->type,
@@ -32,11 +32,8 @@ class Input extends Element implements ElementInterface {
         if(is_array($value) && isset($value[$this->getName()])){
             $params["value"] = $value[$this->getName()];
         }
-
-        $params = $this->overidesParamsBeforeRender($params , $attributes , $value , $data , $prename);
-        
-        $render = new Tag("input", $params , true);
-
+       
+        $render = new Tag("input", $this->overidesParamsBeforeRender($params , $attributes , $value , $data , $prename) , true);
 
         return $render->draw($attributes, null);
     }

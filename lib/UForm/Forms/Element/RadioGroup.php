@@ -20,7 +20,7 @@ class RadioGroup extends \UForm\Forms\Element{
     }
 
     
-    public function render( $attributes , $value , $data , $prename = null ){
+    public function _render( $attributes , $value , $data , $prename = null ){
 
         $renderHtml = "";
         
