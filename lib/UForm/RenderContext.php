@@ -58,6 +58,11 @@ class RenderContext {
 
     }
 
+    public function getBaseElements() {
+        return $this->baseElements;
+    }
+
+        
     /**
      * @param Element[] $elements
      * @param $prename
