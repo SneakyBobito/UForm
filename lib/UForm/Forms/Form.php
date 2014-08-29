@@ -1,12 +1,6 @@
 <?php
 /**
  * Form
- *
- * @author Andres Gutierrez <andres@phalconphp.com>
- * @author Eduar Carvajal <eduar@phalconphp.com>
- * @author Wenzel Pünter <wenzel@phelix.me>
- * @version 1.2.6
- * @package Phalcon
 */
 namespace UForm\Forms;
 
@@ -21,11 +15,10 @@ use UForm\Navigator;
 use UForm\RenderContext;
 
 /**
- * Phalcon\Forms\Form
+ * UForm\Forms\Form
  *
  * This component allows to build forms using an object-oriented interface
  * 
- * @see https://github.com/phalcon/cphalcon/blob/1.2.6/ext/forms/form.c
  */
 class Form implements
 	Countable, Iterator
@@ -63,10 +56,10 @@ class Form implements
 	protected $_elements;
 
 
-    /**
-     * @var Validation\ChainedValidation
-     */
-    protected $validation;
+        /**
+         * @var Validation\ChainedValidation
+         */
+        protected $validation;
 
 
         /**
