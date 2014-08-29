@@ -294,6 +294,8 @@ class CommonTest extends PHPUnit_Framework_TestCase
             $baz
         ));
         
+        $f->add($foo);
+        
         
         
         $data = array(
@@ -307,7 +309,8 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $cV->validate();
         $this->assertTrue($cV->isValid());
         
-        
+        $f->setData($data);
+        $this->assertTrue($f->renderHelper()->childrenAreValid($foo));
         
         
         $data = array(
@@ -320,6 +323,12 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $foo->prepareValidation($data, $cV);
         $cV->validate();
         $this->assertFalse($cV->isValid());
+        
+        $f->setData($data);
+        $this->assertFalse($f->renderHelper()->childrenAreValid($foo));
+        
+        
+        
         
         
     }

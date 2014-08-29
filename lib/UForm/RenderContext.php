@@ -61,6 +61,39 @@ class RenderContext {
     public function getBaseElements() {
         return $this->baseElements;
     }
+    
+    public function childrenAreValid($elm){
+        
+        $elC = $this->__parseElement($elm);
+
+        if(!$elC){
+
+            if(is_string($elm))
+                throw new Exception('Element with ID='.$elm.' is not part of the form');
+            else
+                throw new Exception('Invalid param for checking element validation');
+        }
+        
+        $valid = true;
+        
+        if( ! $this->elementIsValid($elC) ){
+            return false;
+        }
+            
+        
+        if( $elC->getElement() instanceof ElementContainer ){
+            foreach ($elC->getChildren() as $cElC){
+                $cValid = $this->childrenAreValid($cElC);
+                if(!$cValid){
+                    $valid = false;
+                    break;
+                }
+            }
+        }
+        
+        return $valid;
+        
+    }
 
         
     /**
