@@ -153,7 +153,7 @@ abstract class Element implements ElementInterface
      */
     public function getName($prename = null,$dottedNotation = false)
     {
-        if( null !== $prename){
+        if( $prename && !empty($prename)){
 
             if($dottedNotation)
                 return $prename . "." . $this->getName();
