@@ -184,14 +184,16 @@ class Form extends ElementGroup {
 	 * @return string
 	 * @throws Exception
 	 */
-    public function renderElement($name, $attributes = null)
-    {
-        if(is_string($name) === false) {
-            throw new Exception('The name must be a string');
+    public function renderElement($name, $attributes = null){
+        if(is_string($name)) {
+            $n = new Navigator();
+            $element = $n->formGet($this,$name);
+        }else if(is_object($name) && $name instanceof Element){
+            $element = $name;
+            $name = $element->getName(true,true);
+        }else{
+            throw new Exception('The form::renderElement() 1st param must be a string or Element instance');
         }
-
-        $n = new Navigator();
-        $element = $n->formGet($this,$name);
 
 
         if( strpos($name,".") > 1){
