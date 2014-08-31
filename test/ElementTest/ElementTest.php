@@ -25,7 +25,7 @@ class ElementTest extends PHPUnit_Framework_TestCase
         
         $f->setData($data);
         
-        $render = $f->render("foos");
+        $render = $f->renderElement("foos");
         
         $sxe = simplexml_load_string("<root>$render</root>");
         
@@ -61,7 +61,7 @@ class ElementTest extends PHPUnit_Framework_TestCase
         
         $f->setData($data);
         $f->validate();
-        $render = $f->render("foo");
+        $render = $f->renderElement("foo");
 
         $sxe = simplexml_load_string("<root>$render</root>");
         
@@ -87,7 +87,7 @@ class ElementTest extends PHPUnit_Framework_TestCase
         
         $f->setData($data);
         $f->validate();
-        $render = $f->render("foo");
+        $render = $f->renderElement("foo");
 
         $sxe = simplexml_load_string("<root>$render</root>");
         
@@ -113,7 +113,7 @@ class ElementTest extends PHPUnit_Framework_TestCase
         
         $f->setData($data);
         $f->validate();
-        $render = $f->render("foo");
+        $render = $f->renderElement("foo");
 
         $sxe = simplexml_load_string("<root>$render</root>");
         
@@ -145,7 +145,7 @@ class ElementTest extends PHPUnit_Framework_TestCase
         
         $f->setData($data);
         $f->validate();
-        $render = $f->render("foo");
+        $render = $f->renderElement("foo");
         
         $sxe = simplexml_load_string("<root>$render</root>");
         

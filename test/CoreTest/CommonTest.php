@@ -146,8 +146,8 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $f2 = new \UForm\Forms\Form();
         $f2->add($bar);
         $f2->setData($data);
-        $barRender1 = $f->render("bar");
-        $barRender2 = $f2->render("bar");
+        $barRender1 = $f->renderElement("bar");
+        $barRender2 = $f2->renderElement("bar");
         
         $this->assertTrue(!empty($barRender1));
         $this->assertEquals($barRender1, $barRender2);
@@ -268,7 +268,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
 
         // first test : foos.fooname
         //
-        $render = $f->render("foos.fooname");
+        $render = $f->renderElement("foos.fooname");
 
         $sxe = simplexml_load_string("<root>$render</root>");
 
@@ -282,7 +282,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
 
         // second test : foos.footype
         //
-        $render = $f->render("foos.footype");
+        $render = $f->renderElement("foos.footype");
 
         $sxe = simplexml_load_string("<root>$render</root>");
 

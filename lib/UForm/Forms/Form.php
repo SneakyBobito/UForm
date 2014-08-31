@@ -184,7 +184,7 @@ class Form extends ElementGroup {
 	 * @return string
 	 * @throws Exception
 	 */
-    public function render($name, $attributes = null)
+    public function renderElement($name, $attributes = null)
     {
         if(is_string($name) === false) {
             throw new Exception('The name must be a string');
