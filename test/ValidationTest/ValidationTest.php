@@ -8,6 +8,9 @@
 class ValidationTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @group validation
+     */
     public function testRequired(){
         
         $f = new UForm\Forms\Form();
@@ -17,7 +20,7 @@ class ValidationTest extends PHPUnit_Framework_TestCase
             "message"=>"field required"
         )));
        
-        $f->add($elm);
+        $f->addElement($elm);
      
         // CASE IS PRESENT
         $f->setData(array(
