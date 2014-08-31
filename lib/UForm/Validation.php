@@ -244,17 +244,18 @@ class Validation
     {
 
         if(null === $name){
-            $name = $this->getGlobalName();
+            $name = $this->getElement()->getName();
             $value = $this->getLocalData();
-            $value = isset($value[$this->getLocalName()])
-                ? $value[$this->getLocalName()] : null;
+            $value = isset($value[$name]) ? 
+                    $value[$name] 
+                  : null;
             $filters = $this->getFilters();
 
         }else{
             if($name{0} === ".")
                 // we need to get element from the root,
                 // form->getValidation is not aware of localScope
-                $scopedAttribute = $this->getGlobalName().$name;
+                $scopedAttribute = $this->getElement()->getName(true, true) . $name;
             else
                 $scopedAttribute = $name;
 

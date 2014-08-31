@@ -23,110 +23,113 @@ use UForm\RenderContext;
  */
 class Form extends ElementGroup {
 
-	/**
-	 * Data
-	 * 
-	 * @var null|array
-	 * @access protected
-	*/
-	protected $_data;
+    /**
+     * Data
+     * 
+     * @var null|array
+     * @access protected
+    */
+    protected $_data;
 
 
-        /**
-         * @var Validation\ChainedValidation
-         */
-        protected $chainedValidation;
-  
-	/**
-	 * Messages
-	 * 
-	 * @var null|array
-	 * @access protected
-	*/
-	protected $_messages;
+    /**
+     * @var Validation\ChainedValidation
+     */
+    protected $chainedValidation;
+
+    /**
+     * Messages
+     * 
+     * @var null|array
+     * @access protected
+    */
+    protected $_messages;
 
 
-        /**
-	 * \Phalcon\Forms\Form constructor
-	 *
-	 * @param object|null $entity
-	 * @param array|null $userOptions
-	 * @throws Exception
-	 */
-	public function __construct()
-	{
-            if(method_exists($this, 'initialize') === true) {
-                    $this->initialize();
+    /**
+     * \Phalcon\Forms\Form constructor
+     *
+     * @param object|null $entity
+     * @param array|null $userOptions
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        if(method_exists($this, 'initialize') === true) {
+                $this->initialize();
+        }
+        
+        $this->_form = $this;
+    }
+
+    public function add(Element $element) {
+        parent::addElement($element);
+    }
+
+            /**
+     * Binds data to the entity
+     *
+     * @param array $data
+     * @param object $entity
+     * @param array|null $whitelist
+     * @return \Phalcon\Forms\Form
+     * @throws Exception
+     */
+    public function bind($entity , $data = null, $whitelist = null)
+    {
+
+        if(null == $data)
+            $data = $this->getData ();
+
+        if(is_array($data) === false) {
+            throw new Exception('The data must be an array');
+        }
+
+        if(is_object($entity) === false) {
+            throw new Exception('Invalid parameter type.');
+        }
+
+        if(is_array($whitelist) === false &&
+            is_null($whitelist) === false) {
+            throw new Exception('Invalid parameter type.');
+        }
+
+        if(is_array($this->getElements()) === false) {
+            throw new Exception('There are no elements in the form');
+        }
+
+        foreach($data as $key => $value) {
+
+            $element = $this->getElement($key);
+
+            if(!$element) {
+                continue;
             }
-	}
 
-
-
-	/**
-	 * Binds data to the entity
-	 *
-	 * @param array $data
-	 * @param object $entity
-	 * @param array|null $whitelist
-	 * @return \Phalcon\Forms\Form
-	 * @throws Exception
-	 */
-	public function bind($entity , $data = null, $whitelist = null)
-	{
-            
-            if(null == $data)
-                $data = $this->getData ();
-
-            if(is_array($data) === false) {
-                throw new Exception('The data must be an array');
+            //Check if the item is in the whitelist
+            if(is_array($whitelist) === true && !in_array($key, $whitelist)) {
+                continue;
             }
 
-            if(is_object($entity) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            if(is_array($whitelist) === false &&
-                is_null($whitelist) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            if(is_array($this->_elements) === false) {
-                throw new Exception('There are no elements in the form');
-            }
-
-            foreach($data as $key => $value) {
-
-                if(!isset($this->_elements[$key])) {
-                    continue;
+            //Apply filters
+            $filters = $element->getFilters();
+            if(is_array($filters)) {
+                foreach ($filters as $filter){
+                    $value = $filter->filter($value);
                 }
-
-                //Check if the item is in the whitelist
-                if(is_array($whitelist) === true && !in_array($key, $whitelist)) {
-                    continue;
-                }
-
-                //Get the element
-                $element = $this->_elements[$key];
-
-                //Apply filters
-                $filters = $element->getFilters();
-                if(is_array($filters)) {
-                    foreach ($filters as $filter){
-                        $value = $filter->filter($value);
-                    }
-                }
-
-                //Use the setter if available
-                $method = 'set'.$key;
-                if(method_exists($entity, $method) === true) {
-                    call_user_func(array($entity, $method), $value);
-                }else{
-                    //Use the public property if it doesn't have a setter
-                    $entity->$key = $value;
-                }
-
             }
-	}
+
+            //Use the setter if available
+            $method = 'set'.$key;
+            if(method_exists($entity, $method) === true) {
+                call_user_func(array($entity, $method), $value);
+            }else{
+                //Use the public property if it doesn't have a setter
+                $entity->$key = $value;
+            }
+
+        }
+    }
         
     public function setData($data){
         $this->_data = $data;
@@ -144,6 +147,9 @@ class Form extends ElementGroup {
 
     public function isValid(){
  
+        if(!$this->chainedValidation)
+            $this->validate ();
+        
         return $this->chainedValidation->isValid();
     }
 
@@ -205,9 +211,6 @@ class Form extends ElementGroup {
         return $element->render($attributes , $localValue , $this->getData() , $prename);
     }
 
-    public function renderHelper(){
-        return new RenderContext($this);
-    }
 
     /**
      * true if the element is valid
@@ -228,6 +231,26 @@ class Form extends ElementGroup {
         }
 
         return $validation->isValid();
+    }
+    
+    public function childrenAreValid($name){
+        
+        if(is_object($name) && $name instanceof Element){
+            $name = $name->getName(true, true);
+        }
+
+        if (!$this->chainedValidation) {
+            return true;
+        }
+        
+        $validation = $this->chainedValidation->getValidation($name);
+
+        if(!$validation){
+            return true;
+        }
+        
+        return $validation->getElement()->childrenAreValid($this->chainedValidation);
+        
     }
 
     /**
@@ -251,26 +274,15 @@ class Form extends ElementGroup {
         return $validation->getMessages();
     }
 
-	/**
-	 * Returns an element added to the form by its name
-	 *
-	 * @param string $name
-	 * @return \Phalcon\Forms\ElementInterface
-	 * @throws Exception
-	 */
-	public function get($name)
-	{
-		if(is_string($name) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		if(is_array($this->_elements) === false ||
-			isset($this->_elements[$name]) === false) {
-			throw new Exception('Element with ID='.$name.' is not part of the form');
-		}
-
-		return $this->_elements[$name];
-	}
+    /**
+     * Alias pour getElement()
+     * @param string $name
+     * @return Element
+     */
+    public function get($name)
+    {
+            return $this->getElement($name);
+    }
 
 	
 

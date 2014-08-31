@@ -47,8 +47,16 @@ abstract class Element
      * @var \UForm\Filter[]
     */
     protected $_filters = array();
-
     
+    
+    /**
+     *
+     * @var Form
+     */
+    protected $_form;
+
+
+
 
     /**
      * \UForm\Forms\Element constructor
@@ -91,14 +99,21 @@ abstract class Element
      * @throws Exception
      */
     public function setParent(ElementContainer $p,$iname = null){
+        $this->_form = $p->getForm();
         $this->_parent = $p;
         $this->_internalPrename = $p->getInternalName(true);
+        $this->_prename = $p->getName(true, true);
         if ($iname) {
             $this->_internalName = $iname;
         }
         return $this;
     }
 
+    public function getForm() {
+        return $this->_form;
+    }
+
+        
     /**
      * Get the parent Element
      * @return ElementContainer
@@ -127,7 +142,10 @@ abstract class Element
                 return $this->_prename . "." . $this->_name;
             } else {
                 $ppart = explode(".", $this->_prename);
-                return "[" . implode("][", $ppart) . "]" . "[" . $this->_name . "]";
+                $ppart[] = $this->_name;
+                $final = array_shift($ppart);
+                $final .= "[" . implode("][", $ppart) . "]";
+                return $final;
             }
         } else {
             return $this->_name;
@@ -455,9 +473,18 @@ abstract class Element
             return $this->_options;
     }
 
+    public function setName($_name) {
+        $this->_name = $_name;
+    }
 
-
-
+    
+    public function isValid(ChainedValidation $cV){
+        return $cV->getValidation($this->getInternalName(true) , true);
+    }
+    
+    public function childrenAreValid(ChainedValidation $cV){
+        return $this->isValid($cV);
+    }
 
     public function prepareValidation($localValues,  ChainedValidation $cV){
         $validators = $this->getValidators();

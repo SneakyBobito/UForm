@@ -23,10 +23,10 @@ class Input extends Element {
 
     
     public function _render( $attributes , $value , $data , $prename = null ){
-
+        
         $params = array(
             "type" => $this->type,
-            "name" => $this->getName($prename)
+            "name" => $this->getName(true)
         );
 
         if(is_array($value) && isset($value[$this->getName()])){

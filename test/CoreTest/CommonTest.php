@@ -8,6 +8,34 @@
 class CommonTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @group setform
+     */
+    public function testSetForm(){
+        
+        $f = new UForm\Forms\Form();
+        
+        $f->add(new \UForm\Forms\Element\Text("foo"));
+
+        
+        $bar = new \UForm\Forms\Element\Text("bar");
+        
+        $baz = new \UForm\Forms\Element\Text("baz");
+        
+        $foo = new UForm\Forms\Element\Group("groupe",array(
+            $bar,
+            $baz
+        ));
+        
+        $f->add($foo);
+        
+        $this->assertEquals($f, $bar->getForm());
+        $this->assertEquals($f, $baz->getForm());
+        $this->assertEquals($f, $f->get("groupe")->getForm());
+        $this->assertEquals($f, $f->get("foo")->getForm());
+        
+    }
+    
     public function testBind(){
         
         $f = new UForm\Forms\Form();
@@ -70,121 +98,6 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("zab",$rec->baz);
         $this->assertEquals("{rab}",$rec->bar);
         
-    }
-
-    public function testRenderContext(){
-
-        $f = new UForm\Forms\Form();
-
-        $bar = new \UForm\Forms\Element\Text("bar");
-        $bar->addValidator(new \UForm\Validation\DirectValidator(function($validator,$self){
-            return $validator->getValue() == "rab";
-        }));
-
-        $foo = new \UForm\Forms\Element\Collection("foo",$bar);
-
-        $f->add($foo);
-
-        $data = array(
-            "foo" => array(
-                "bar",
-                "rab"
-            )
-        );
-
-        $f->setData($data);
-
-        $context = $f->renderHelper();
-
-
-
-        $fooChildren = $context->getChildren("foo");
-
-        $this->assertEquals(2,count($fooChildren));
-
-        $arrayKeys = array_keys($fooChildren);
-
-        $this->assertEquals("0",reset($arrayKeys));
-        $this->assertEquals("foo",$fooChildren[0]->getPrename());
-
-
-
-
-
-
-
-        // RENDER BY ELEMENTCONTEXT
-        $render =  $context->render($fooChildren[0]);
-
-        $sxe = simplexml_load_string("<root>$render</root>");
-
-        $this->assertEquals(1,$sxe->count());
-
-        $this->assertEquals("bar", $sxe->input[0]["value"]);
-        $this->assertEquals("foo[0]", $sxe->input[0]["name"]);
-
-        // RENDER BY STIRNG NAME
-        $render =  $context->render("foo.0");
-
-        $sxe = simplexml_load_string("<root>$render</root>");
-
-        $this->assertEquals(1,$sxe->count());
-
-        $this->assertEquals("bar", $sxe->input[0]["value"]);
-        $this->assertEquals("foo[0]", $sxe->input[0]["name"]);
-
-
-
-
-
-
-
-        // DEEPER STRUCTURE
-
-        $baz = new \UForm\Forms\Element\Collection("baz",new \UForm\Forms\Element\Group(null,array(
-
-            new \UForm\Forms\Element\Text("foo"),
-            new \UForm\Forms\Element\Text("baz"),
-
-        )));
-        $f->add($baz);
-
-        $data = array(
-            "foo" => array(
-                "bar",
-                "rab"
-            ),
-            "baz" => array(
-                array(
-                    "foo" => "off",
-                    "baz" => "abb"
-                )
-            )
-        );
-
-        $f->setData($data);
-        $context = $f->renderHelper();
-
-
-        // TEST DEEPER ElementContext NAME GETTERS
-
-        $elC = $context->getElement("baz.0.baz");
-
-        $this->assertEquals("baz.0.baz",$elC->getFullName(true));
-        $this->assertEquals("baz[0][baz]",$elC->getFullName(false));
-
-
-        // TEST DEEPER RENDERING
-
-        $render = $context->render("baz.0.baz");
-
-        $sxe = simplexml_load_string("<root>$render</root>");
-
-        $this->assertEquals(1,$sxe->count());
-
-        $this->assertEquals("abb", $sxe->input[0]["value"]);
-        $this->assertEquals("baz[0][baz]", $sxe->input[0]["name"]);
-
     }
 
     
@@ -276,6 +189,9 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
     }
 
+    /**
+     * @group groupvalidation
+     */
     public function testGroupValidation(){
         $f = new UForm\Forms\Form();
         
@@ -310,7 +226,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($cV->isValid());
         
         $f->setData($data);
-        $this->assertTrue($f->renderHelper()->childrenAreValid($foo));
+        $this->assertTrue($f->childrenAreValid($foo));
         
         
         $data = array(
@@ -325,12 +241,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($cV->isValid());
         
         $f->setData($data);
-        $this->assertFalse($f->renderHelper()->childrenAreValid($foo));
-        
-        
-        
-        
-        
+        $this->assertFalse($foo->childrenAreValid($cV));
     }
 
     public function testDeepRendering(){
@@ -364,6 +275,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1,$sxe->count());
 
         $this->assertEquals("bob", $sxe->input[0]["value"]);
+
         $this->assertEquals("foos[fooname]", $sxe->input[0]["name"]);
 
 

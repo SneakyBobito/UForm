@@ -113,5 +113,21 @@ class Group extends ElementContainer{
         }
         
     }
+    
+    public function childrenAreValid(ChainedValidation $cV) {
+        
+        foreach($this->getElements() as $el){
+            
+            $v = $cV->getValidation($el->getInternalName(true),true);
+     
+            if(!$v->isValid())
+                return false;
+            
+            if(!$el->childrenAreValid($cV))
+                return false;
+            
+        }
+        
+    }
 
 }

@@ -12,11 +12,11 @@ class ElementWrapper extends Element {
     
     /**
      *
-     * @var ElementInterface
+     * @var Element
      */
     protected $_wrapped;
     
-    function __construct(ElementInterface $element) {
+    function __construct(Element $element) {
         $this->_wrapped = $element;
     }
     
@@ -24,18 +24,23 @@ class ElementWrapper extends Element {
         return $this->_wrapped->_render($attributes, $value, $data,$prename);
     }
     
-    public function setForm($form) {
-        parent::setForm($form);
-        $this->_wrapped->setForm($form);
+    public function setParent(ElementContainer $p,$iname = null){
+        parent::setParent($p,$iname);
+        $this->_wrapped->setParent($p,$iname);
     }
     
     public function getName($prename = null, $dottedNotation = false) {
         return $this->_wrapped->getName($prename, $dottedNotation);
     }
     
+    public function getInternalName($prenamed = false) {
+        parent::getInternalName($prenamed);
+    }
+    
     public function prepareValidation($localValues, \UForm\Validation\ChainedValidation $cV, $prename = null) {
         return $this->_wrapped->prepareValidation($localValues, $cV, $prename);
     }
 
+    
     
 }

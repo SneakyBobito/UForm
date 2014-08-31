@@ -13,7 +13,7 @@ use UForm\Forms\ElementContainer;
  *
  * @author sghzal
  */
-class Collection extends Element{
+class Collection extends ElementContainer{
     
     /**
      * @var \UForm\Forms\Element
@@ -53,15 +53,14 @@ class Collection extends Element{
     }
     
     
-    public function prepareValidation($localValues,  ChainedValidation $cV , $prename = null){
+    public function prepareValidation($localValues,  ChainedValidation $cV){
         
-        parent::prepareValidation($localValues, $cV, $prename);
+        parent::prepareValidation($localValues, $cV);
         
         if( isset($localValues[$this->getName()]) && is_array($localValues[$this->getName()]) ){
             foreach ($localValues[$this->getName()] as $k=>$v){
-                $newPrename = $this->getName($prename,true);
                 $element = $this->__getElemement($k);
-                $element->prepareValidation($localValues[$this->getName()], $cV,$newPrename);
+                $element->prepareValidation($localValues[$this->getName()], $cV);
             }
         }
 
@@ -72,12 +71,14 @@ class Collection extends Element{
     private $__internalElementClones;
 
     private function __getElemement($index){
-        if(!$this->__internalElementClones)
+        if (!$this->__internalElementClones) {
             $this->__internalElementClones = array();
+        }
 
         if(!isset($this->__internalElementClones[$index])){
             $element = clone $this->elementDefinition;
             $element->setName($index);
+            $element->setParent($this, $index);
             $this->__internalElementClones[$index] = $element;
         }
 
@@ -90,15 +91,14 @@ class Collection extends Element{
 
 
 
-    public function getElements($values){
+    public function getElements($values = null){
+        
+        if(!$values)
+            return array();
+        
         $el = array();
 
-        if(!is_array($values) ){
-            throw new Exception("Collection::getElements requires that the first parameters to be an array of values");
-        }else if(!isset($values[$this->getName()])){
-            throw new Exception("Collection::getElements requires the array given as first parameters to contain subvalues named as the collection");
-        }
-
+      
 
         $realValues = $values[$this->getName()] ;
 
