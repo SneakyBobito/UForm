@@ -226,7 +226,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($cV->isValid());
         
         $f->setData($data);
-        $this->assertTrue($f->childrenAreValid($foo));
+        $this->assertTrue($f->elementChildrenAreValid($foo));
         
         
         $data = array(

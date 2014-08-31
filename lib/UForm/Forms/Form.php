@@ -233,7 +233,7 @@ class Form extends ElementGroup {
         return $validation->isValid();
     }
     
-    public function childrenAreValid($name){
+    public function elementChildrenAreValid($name){
         
         if(is_object($name) && $name instanceof Element){
             $name = $name->getName(true, true);
