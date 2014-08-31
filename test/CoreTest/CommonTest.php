@@ -124,7 +124,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
             "bar" => "rab"
         );
         $f->setData($data);
-        $this->assertEquals(true, $f->isValid());
+        $this->assertEquals(true, $f->formIsValid());
         
         
         // 2
@@ -132,7 +132,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
             "bar" => "bar"
         );
         $f->setData($data);
-        $this->assertEquals(false, $f->isValid());
+        $this->assertEquals(false, $f->formIsValid());
         $messages =$f->getElementMessages("bar");
         $this->assertEquals("bar not valid", $messages[0]);
         

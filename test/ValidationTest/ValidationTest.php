@@ -27,7 +27,7 @@ class ValidationTest extends PHPUnit_Framework_TestCase
             "foo" => "oof"
         ));
         $f->validate();
-        $this->assertTrue($f->isValid());
+        $this->assertTrue($f->formIsValid());
         
         
         
@@ -36,7 +36,7 @@ class ValidationTest extends PHPUnit_Framework_TestCase
             
         ));
         $f->validate();
-        $this->assertFalse($f->isValid());
+        $this->assertFalse($f->formIsValid());
         
         
         
@@ -46,7 +46,7 @@ class ValidationTest extends PHPUnit_Framework_TestCase
         ));
         $f->validate();
         $messages = $f->getElementMessages("foo");
-        $this->assertFalse($f->isValid());
+        $this->assertFalse($f->formIsValid());
         $this->assertEquals(1,count($messages));
         $this->assertEquals("field required",$messages[0]);
     }
@@ -98,7 +98,7 @@ class ValidationTest extends PHPUnit_Framework_TestCase
             "bar" => "oof"
         ));
         $f->validate();
-        $this->assertTrue($f->isValid());
+        $this->assertTrue($f->formIsValid());
         
         
         
@@ -107,7 +107,7 @@ class ValidationTest extends PHPUnit_Framework_TestCase
             "foo" => "oof",
         ));
         $f->validate();
-        $this->assertFalse($f->isValid());
+        $this->assertFalse($f->formIsValid());
     }
     
     
