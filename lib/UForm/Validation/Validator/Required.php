@@ -15,6 +15,7 @@ class Required extends Validator{
     public function validate(Validation $validator){
         
         $value = $validator->getLocalData();
+  
         
         if(!isset($value[$validator->getLocalName()]) || !$value[$validator->getLocalName()] ){
             $validator->appendMessage($this->getOption('message'));

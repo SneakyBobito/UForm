@@ -10,7 +10,8 @@ use
 	\UForm\Forms\Exception,
 	\UForm\Forms\ElementInterface,
 	\UForm\Validation,
-	\UForm\Validation\Message\Group;
+	\UForm\Validation\Message\Group,
+        UForm\Forms\Element\Group as ElementGroup;
 use UForm\Navigator;
 use UForm\RenderContext;
 
@@ -20,24 +21,7 @@ use UForm\RenderContext;
  * This component allows to build forms using an object-oriented interface
  * 
  */
-class Form implements
-	Countable, Iterator
-{
-	/**
-	 * Position
-	 * 
-	 * @var null|int
-	 * @access protected
-	*/
-	protected $_position;
-
-	/**
-	 * Options
-	 * 
-	 * @var null|array
-	 * @access protected
-	*/
-	protected $_options;
+class Form extends ElementGroup {
 
 	/**
 	 * Data
@@ -47,29 +31,12 @@ class Form implements
 	*/
 	protected $_data;
 
-	/**
-	 * Elements
-	 * 
-	 * @var Element[]
-	 * @access protected
-	*/
-	protected $_elements;
-
 
         /**
          * @var Validation\ChainedValidation
          */
-        protected $validation;
-
-
-        /**
-	 * Indexed Elements
-	 * 
-	 * @var null|array
-	 * @access protected
-	*/
-	protected $_elementsIndexed;
-
+        protected $chainedValidation;
+  
 	/**
 	 * Messages
 	 * 
@@ -78,13 +45,6 @@ class Form implements
 	*/
 	protected $_messages;
 
-	/**
-	 * Action
-	 * 
-	 * @var null|string
-	 * @access protected
-	*/
-	protected $_action;
 
         /**
 	 * \Phalcon\Forms\Form constructor
@@ -101,116 +61,6 @@ class Form implements
 	}
 
 
-
-
-	/**
-	 * Sets the form's action
-	 *
-	 * @param string $action
-	 * @return \UForm\Forms\Form
-	 * @throws Exception
-	 */
-	public function setAction($action)
-	{
-		if(is_string($action) === false) {
-                    throw new Exception('Invalid parameter type.');
-		}
-
-		$this->_action = $action;
-	}
-
-	/**
-	 * Returns the form's action
-	 *
-	 * @return string|null
-	 */
-	public function getAction()
-	{
-		return $this->_action;
-	}
-
-	/**
-	 * Sets an option for the form
-	 *
-	 * @param string $option
-	 * @param mixed $value
-	 * @return \UForm\Forms\Form
-	 * @throws Exception
-	 */
-	public function setUserOption($option, $value)
-	{
-		if(is_string($option) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		if(is_array($this->_options) === false) {
-			$this->_options = array();
-		}
-
-		$this->_options[$option] = $value;
-
-		return $this;
-	}
-
-	/**
-	 * Returns the value of an option if present
-	 *
-	 * @param string $option
-	 * @param mixed $defaultValue
-	 * @return mixed
-	 * @throws Exception
-	 */
-	public function getUserOption($option, $defaultValue = null)
-	{
-		if(is_string($option) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		if(is_array($this->_options) === true &&
-			isset($this->_options[$option]) === true) {
-			return $this->_options[$option];
-		}
-
-		return $defaultValue;
-	}
-
-	/**
-	 * Sets options for the element
-	 *
-	 * @param array $options
-	 * @return \UForm\Forms\ElementInterface
-	 * @throws Exception
-	 */
-	public function setUserOptions($options)
-	{
-		if(is_array($options) === false) {
-			throw new Exception("Parameter 'options' must be an array", 1);
-		}
-
-		$this->_options = $options;
-
-		return $this;
-	}
-
-	/**
-	 * Returns the options for the element
-	 *
-	 * @return array|null
-	 */
-	public function getUserOptions()
-	{
-		return $this->_options;
-	}
-
-	/**
-	 * Returns the form elements added to the form
-	 *
-	 * @return \Phalcon\Forms\ElementInterface[]|null
-	 */
-	public function getElements()
-	{
-            return $this->_elements;
-	}
 
 	/**
 	 * Binds data to the entity
@@ -278,62 +128,23 @@ class Form implements
             }
 	}
         
-        public function setData($data){
-            $this->_data = $data;
-            $this->validation = null;
-        }
-
-	/**
-	 * Validates the the passed datas without affecting the form
-	 *
-	 * @param array|null $data
-	 * @param object|null $entity
-	 * @return boolean
-	 * @throws Exception
-	 */
-    public function dataValidation($data,  Validation\ChainedValidation $cV)
-    {
-        if( !is_array($data)  ) {
-            throw new Exception('Invalid parameter type.');
-        }
-
-        if( !is_array($this->_elements) ) {
-                return true;
-        }
-
-        //Check if there is a method 'beforeValidation'
-        if( method_exists($this, 'beforeValidation') ) {
-            if( !$this->beforeValidation($data) ) {
-                return false;
-            }
-        }
-
-
-
-        foreach($this->_elements as $element) {
-            $element->prepareValidation($this->_data, $cV);
-        }
-
-        $cV->validate();
+    public function setData($data){
+        $this->_data = $data;
+        $this->chainedValidation = null;
     }
 
     public function validate(){
-        if(!is_array($this->_data))
-            throw new Exception("No data to validate");
-
-        $validation = new Validation\ChainedValidation($this->_data);
-        $this->validation = $validation;
-
-        $this->dataValidation($this->_data, $validation);
-
+        $validation = new Validation\ChainedValidation(is_array($this->_data) ? $this->_data : array());
+        $this->chainedValidation = $validation;
+        $this->prepareValidation($validation->getData() , $validation);
+        $this->_isValid = $validation->validate();
+        return $validation;
     }
 
 
     public function isValid(){
-        if(!$this->validation)
-            $this->validate();
-
-        return $this->validation->isValid();
+ 
+        return $this->chainedValidation->isValid();
     }
 
 
@@ -345,10 +156,11 @@ class Form implements
      */
     public function getValidation($name = null){
 
-        if(null == $name)
-            return $this->validation;
+        if (null == $name) {
+            return $this->chainedValidation;
+        }
 
-        $validation =$this->validation->getValidation($name);
+        $validation =$this->chainedValidation->getValidation($name);
 
         if(!$validation){
             throw new Exception('Element with ID='.$name.' is not part of the form');
@@ -357,32 +169,6 @@ class Form implements
         return $validation;
     }
 
-
-
-	/**
-	 * Adds an element to the form
-	 *
-	 * @param \Phalcon\Forms\ElementInterface $element
-	 * @return \Phalcon\Forms\Form
-	 * @throws Exception
-	 */
-        public function add($element)
-        {
-            if(is_object($element) === false ||
-                $element instanceof ElementInterface === false) {
-                throw new Exception('The element is not valid');
-            }
-
-            if(is_array($this->_elements) === false) {
-                $this->_elements = array();
-            }
-
-            $element->setForm($this);
-
-            $this->_elements[$element->getName()] = $element;
-
-            return $this;
-        }
 
 	/**
 	 * Renders a specific item with the form context
@@ -431,10 +217,11 @@ class Form implements
      */
     public function elementIsValid($name){
 
-        if(!$this->validation)
+        if (!$this->chainedValidation) {
             return true;
+        }
 
-        $validation =$this->validation->getValidation($name);
+        $validation =$this->chainedValidation->getValidation($name);
 
         if(!$validation){
             throw new Exception('Element with ID='.$name.' is not part of the form');
@@ -451,10 +238,11 @@ class Form implements
      */
     public function getElementMessages($name){
 
-        if(!$this->validation)
+        if (!$this->chainedValidation) {
             return array();
+        }
 
-        $validation =$this->validation->getValidation($name);
+        $validation =$this->chainedValidation->getValidation($name);
 
         if(!$validation){
             throw new Exception('Element with ID='.$name.' is not part of the form');
@@ -511,145 +299,5 @@ class Form implements
            return $this->_data;
         }
 
-        /**
-        * Check if the form contains an element
-        *
-        * @param string $name
-        * @return boolean
-        * @throws Exception
-        */
-        public function has($name){
-            if(is_string($name) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
 
-            if(is_array($this->_elements) === false) {
-                return false;
-            }
-
-            //Checks if the element is in the form
-            return isset($this->_elements[$name]);
-	}
-
-	/**
-	 * Removes an element from the form
-	 *
-	 * @param string $name
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public function remove($name)
-	{
-            if(is_string($name) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            //Checks if the element is in the form
-            if(is_array($this->_elements) === true &&
-                isset($this->_elements[$name]) === true) {
-                unset($this->_elements[$name]);
-                return true;
-            }
-
-            //Clean the iterator index
-            $this->_elementsIndexed = null;
-            return false;
-	}
-
-	/**
-	 * Clears every element in the form to its default value
-	 *
-	 * @param array|null $fields
-	 * @return \Phalcon\Forms\Form
-	 * @throws Exception
-	 */
-	public function clear($fields = null)
-	{
-            if(is_null($fields) === false &&
-                is_array($fields) === false) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            if(is_array($this->_elements) === true) {
-                foreach($this->_elements as $element) {
-                    //@note slightly inefficient structure
-                    if(is_array($fields) === false) {
-                        $element->clear();
-                    } else {
-                        if(in_array($element->getName(), $fields) === true) {
-                            $element->clear();
-                        }
-                    }
-                }
-            }
-
-            return $this;
-	}
-
-	/**
-	 * Returns the number of elements in the form
-	 *
-	 * @return int
-	 */
-	public function count()
-	{
-		if(is_array($this->_elements) === true) {
-			return count($this->_elements);
-		}
-
-		return 0;
-	}
-
-	/**
-	 * Rewinds the internal iterator
-	 */
-	public function rewind()
-	{
-		$this->_position = 0;
-
-		$this->_elementsIndexed = array_values($this->_elements);
-	}
-
-	/**
-	 * Returns the current element in the iterator
-	 *
-	 * @return \Phalcon\Validation\Message|null
-	 */
-	public function current()
-	{
-		if(is_array($this->_elementsIndexed) === true &&
-			isset($this->_elementsIndexed[$this->_position]) === true) {
-			return $this->_elementsIndexed[$this->_position];
-		}
-	}
-
-	/**
-	 * Returns the current position/key in the iterator
-	 *
-	 * @return int
-	 */
-	public function key()
-	{
-		return $this->_position;
-	}
-
-	/**
-	 * Moves the internal iteration pointer to the next position
-	 */
-	public function next()
-	{
-		++$this->_position;
-	}
-
-	/**
-	 * Check if the current element in the iterator is valid
-	 *
-	 * @return boolean
-	 */
-	public function valid()
-	{
-		if(is_array($this->_elementsIndexed) === true) {
-			return isset($this->_elementsIndexed[$this->_position]);
-		}
-	}
 }

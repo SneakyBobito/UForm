@@ -8,7 +8,7 @@ use UForm\Validation\ChainedValidation,
 use UForm\Forms\ElementContainer;
 
 /**
- * Collection
+ * Group that can contains many elements
  *
  * @author sghzal
  */
@@ -17,30 +17,31 @@ class Group extends ElementContainer{
     /**
      * @var \UForm\Forms\ElementInterface[]
      */
-    protected $elements;
+    protected $elements = array();
 
     public function __construct($name=null, $elements = null) {
         parent::__construct($name);
-        
         if(is_array($elements)){
             foreach ($elements as $el){
-                $this->elements[] = $el;
+                $this->addElement($el);
             }
         }else if(is_object ($elements)){
-            $this->elements[] = $elements;
+            $this->addElement($elements);
         }
-        
     }
     
-    public function addElement(\UForm\Forms\ElementInterface $element){
-        $this->elements[] = $element;
+    public function addElement(\UForm\Forms\Element $element){
+        $iname = "i" . count($this->elements);
+        $this->elements[$iname] = $element;
+        $element->setParent($this,$iname);
     }
     
-    public function getName($prename = null, $dottedNotation = false) {
-        if(null === $this->_name)
-            return $prename;
-            
-        return parent::getName($prename, $dottedNotation);
+    public function getName($prenamed = null, $dottedNotation = false) {
+        if (null === $this->_name) {
+            return $this->_prename;
+        }
+
+        return parent::getName($prenamed, $dottedNotation);
     }
 
     public function _render( $attributes , $values , $data , $prename = null ) {
@@ -60,36 +61,55 @@ class Group extends ElementContainer{
     }
 
     public function getElement($name){
+        if (!is_array($name)) {
+            $namesP = explode(".", $name);
+        }else{
+            $namesP = $name;
+        }
+        
+        $finalElm = $this->getDirectElement($namesP[0]);
+        
+        if( $finalElm && count($namesP)>1){
+            array_shift($namesP);
+            return $finalElm->getElement(($namesP));
+        }
+        return $finalElm;
+    }
+
+    public function getDirectElement($name){
         foreach($this->elements as $elm){
             if( $name == $elm->getName()){
                 return $elm;
+            }else if( !$elm->getName() && $elm instanceof ElementContainer ){
+                /* @var $elm UForm\Forms\ElementContainer */
+                $element = $elm->getDirectElement($name);
+                if($element)
+                    return $element;
             }
         }
-
-        $availNames =  array();
-        foreach($this->elements as $elm){
-            $availNames[] = $elm->getName();
-        }
-
-
-        throw new Exception('Element with ID=' . $name . ' is not part of the Group. Availables : [' . implode(",",$availNames) . ']' );
+        return null;
     }
+    
 
-
-    public function getElements(){
+    public function getElements($values = null){
         return $this->elements;
     }
 
 
-    public function prepareValidation($localValues,  ChainedValidation $cV , $prename = null){
+    public function prepareValidation($localValues,  ChainedValidation $cV){
         
-        parent::prepareValidation($localValues, $cV, $prename);
-        
+        parent::prepareValidation($localValues, $cV);
         $localValues = (array) $localValues;
-        
-        foreach ($this->elements as $k=>$v){
-            $newPrename = $this->getName($prename,true);
-            $v->prepareValidation(isset($localValues[$this->getName()]) ? $localValues[$this->getName()] : null, $cV, $newPrename);
+        foreach ($this->getElements() as $k=>$v){
+            
+            if($this->getName()){
+                $values = isset($localValues[$this->getName()]) ? $localValues[$this->getName()] : null;
+            }else{
+                $values = $localValues;
+            }
+            
+            
+            $v->prepareValidation($values, $cV);
         }
         
     }

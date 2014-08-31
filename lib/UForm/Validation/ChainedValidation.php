@@ -13,7 +13,8 @@ class ChainedValidation {
     /**
      * @var Validation[]
      */
-    protected $validations = array();
+    protected $validationsName = array();
+    protected $validationsInternalName = array();
     
     protected $data;
     
@@ -24,8 +25,13 @@ class ChainedValidation {
     }
 
     
-    public function addValidation($name,  \UForm\Validation $validation){
-        $this->validations[$name] = $validation;
+    public function addValidation(\UForm\Validation $validation){
+        $el = $validation->getElement();
+        if($el->getName()){
+            $this->validationsName[$el->getName(true, true)] = $validation;
+        }
+        $this->validationsInternalName[$validation->getElement()->getInternalName(true)] = $validation;
+        
     }
 
     /**
@@ -33,18 +39,24 @@ class ChainedValidation {
      * @param $name
      * @return null|Validation
      */
-    public function getValidation($name){
+    public function getValidation($name,$iname=false){
 
-        if(isset($this->validations[$name])){
-            return $this->validations[$name];
+        if($iname){
+            if(isset($this->validationsInternalName[$name])){
+                return $this->validationsInternalName[$name];
+            }
+        }else{
+            if(isset($this->validationsName[$name])){
+                return $this->validationsName[$name];
+            }
         }
-
+        
         return null;
 
     }
     
     public function getValidations() {
-        return $this->validations;
+        return $this->validationsInternalName;
     }
 
     
@@ -57,13 +69,14 @@ class ChainedValidation {
         $passed = true;
         
         // we init validation before (e.g we init messages to make them ready from everywhere)
-        foreach($this->validations as $v){
+        foreach($this->validationsInternalName as $v){
             $v->initValidation();
         }
         
-        foreach ($this->validations as $v){
-            if(!$v->validate($this->data,  $this->data))
+        foreach ($this->validationsInternalName as $v){
+            if (false === $v->validate($this->data, $this->data)) {
                 $passed = false;
+            }
         }
         
         

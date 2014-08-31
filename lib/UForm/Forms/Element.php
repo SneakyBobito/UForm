@@ -15,7 +15,7 @@ use UForm\Forms\Exception,
  *
  * This is a base class for form elements
  */
-abstract class Element implements ElementInterface
+abstract class Element
 {
     /**
      * Form
@@ -23,29 +23,20 @@ abstract class Element implements ElementInterface
      * @var null|\UForm\Forms\Form
      * @access protected
     */
-    protected $_form;
+    protected $_parent;
 
-    /**
-     * Name
-     *
-     * @var null|string
-     * @access protected
-    */
+    protected $_prename;
     protected $_name;
-
-
-    /**
-     * Attributes
-     *
-     * @var null|array
-     * @access protected
-    */
+    protected $_internalPrename;
+    protected $_internalName;
+    
     protected $_attributes;
+    protected $_options;
 
     /**
      * Validators
      *
-     * @var null|array
+     * @var Validation\Validator[]
      * @access protected
     */
     protected $_validators;
@@ -53,19 +44,11 @@ abstract class Element implements ElementInterface
     /**
      * Filters
      *
-     * @var null|string|array
-     * @access protected
+     * @var \UForm\Filter[]
     */
     protected $_filters = array();
 
-    /**
-     * Options
-     *
-     * @var null|array
-     * @access protected
-    */
-    protected $_options;
-
+    
 
     /**
      * \UForm\Forms\Element constructor
@@ -74,7 +57,7 @@ abstract class Element implements ElementInterface
      * @param array|null $attributes
      * @throws Exception
      */
-    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
     {
 
         $this->_name = $name;
@@ -88,80 +71,93 @@ abstract class Element implements ElementInterface
         }
 
         if(null !== $filters){
-            foreach ($filters as $f)
+            foreach ($filters as $f) {
                 $this->addFilter($f);
+            }
         }
     }
     
-    public function addRequiredValidator($message){
-        $validator = new Validation\Validator\Required(array("message"=>$message));
-        $this->addValidator($validator);
-    }
 
 
+    /////////
+    //
+    // PARENT
+    //
+    
     /**
-     * Sets the parent form to the element
-     *
-     * @param \UForm\Forms\Form $form
+     * Internal use only sets the parent
+     * @param \UForm\Forms\Form $p
      * @return \UForm\Forms\ElementInterface
      * @throws Exception
      */
-    public function setForm($form)
-    {
-            if(is_object($form) === false ||
-                $form instanceof Form === false) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            $this->_form = $form;
-
-            return $this;
+    public function setParent(ElementContainer $p,$iname = null){
+        $this->_parent = $p;
+        $this->_internalPrename = $p->getInternalName(true);
+        if ($iname) {
+            $this->_internalName = $iname;
+        }
+        return $this;
     }
 
     /**
-     * Returns the parent form to the element
-     *
-     * @return \UForm\Forms\Form|null
+     * Get the parent Element
+     * @return ElementContainer
      */
-    public function getForm()
-    {
-            return $this->_form;
+    public function getParent() {
+        return $this->_parent;
     }
 
-    /**
-     * Sets the element's name
-     *
-     * @param string $name
-     * @return \UForm\Forms\ElementInterface
-     * @throws Exception
-     */
-    public function setName($name)
-    {
-            if( !is_string($name) && !is_null($name) && !is_numeric($name)) {
-                throw new Exception('Invalid parameter type.');
-            }
-
-            $this->_name = $name;
-
-            return $this;
-    }
-
+    
+    
+    
+    
+    /////////////
+    //
+    // NAME / INAME
+    //
+    
     /**
      * Returns the element's name
      *
      * @return string
      */
-    public function getName($prename = null,$dottedNotation = false)
-    {
-        if( $prename && !empty($prename)){
-
-            if($dottedNotation)
-                return $prename . "." . $this->getName();
-            else
-                return $prename . "[" . $this->getName() . "]";
-        }else
+    public function getName($prenamed = false , $dottedNotation = false){
+        if ($prenamed && !empty($prenamed) && $this->_prename && !empty($this->_prename)) {
+            if ($dottedNotation) {
+                return $this->_prename . "." . $this->_name;
+            } else {
+                $ppart = explode(".", $this->_prename);
+                return "[" . implode("][", $ppart) . "]" . "[" . $this->_name . "]";
+            }
+        } else {
             return $this->_name;
+        }
     }
+    
+    public function getInternalName($prenamed = false) {
+        if ($prenamed && !empty($prenamed) && $this->_internalPrename && !empty($this->_internalPrename)) {
+            return $this->_internalPrename . "." . $this->_internalName;
+        } else {
+            return $this->_internalName;
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /////////////
+    //
+    // FILTER
+    //
 
     /**
      * Sets the element's filters
@@ -206,6 +202,16 @@ abstract class Element implements ElementInterface
     {
             return $this->_filters;
     }
+    
+    
+    
+    
+    
+    
+    /////////////////
+    //
+    // VALIDATORS
+    //
 
     /**
      * Adds a group of validators
@@ -275,6 +281,11 @@ abstract class Element implements ElementInterface
     }
 
     
+    
+    
+    
+    
+    /**
 
     /**
      * Sets a default attribute for the element
@@ -336,6 +347,29 @@ abstract class Element implements ElementInterface
             return $this;
     }
 
+    /**
+     * Returns the default attributes for the element
+     *
+     * @return array
+     */
+    public function getAttributes(){
+        if(is_array($this->_attributes) === false) {
+            return array();
+        }
+
+        return $this->_attributes;
+    }
+    
+    
+
+    
+    
+    
+    /////////////
+    //
+    // RENDER
+    //
+    
     public function render( $attributes , $value , $data , $prename = null ){
         if(!is_array($attributes)){
             $attributes = $this->getAttributes();
@@ -349,19 +383,18 @@ abstract class Element implements ElementInterface
     }
     protected abstract function _render( $attributes , $value , $data , $prename = null );
     
-    /**
-     * Returns the default attributes for the element
-     *
-     * @return array
-     */
-    public function getAttributes(){
-        if(is_array($this->_attributes) === false) {
-            return array();
-        }
 
-        return $this->_attributes;
-    }
 
+    
+    
+    
+    
+    
+    ///////////
+    //
+    // OPTION
+    //
+    
     /**
      * Sets an option for the element
      *
@@ -425,29 +458,36 @@ abstract class Element implements ElementInterface
 
 
 
-    /**
-     * Clears every element in the form to its default value
-     *
-     * @return \UForm\Forms\Element
-     */
-    public function clear()
-    {
-            Tag::setDefault($this->_name, null);
 
-            return $this;
-    }
-
-
-    public function prepareValidation($localValues,  ChainedValidation $cV , $prename = null){
+    public function prepareValidation($localValues,  ChainedValidation $cV){
         $validators = $this->getValidators();
-        $localName  = $this->getName();
-        $globalName = $this->getName($prename,true);
         $filters    = $this->getFilters();
-
-        $v = new \UForm\Validation($localName, $globalName, $localValues , $cV, $validators);
+        
+        $v = new \UForm\Validation($this, $localValues , $cV, $validators);
         $v->setFilters($filters);
         
-        $cV->addValidation($globalName, $v);
+        $cV->addValidation($v);
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /////////////////////////:
+    //
+    // ADDITIONAL LOGIC
+    //
+    
+    public function addRequiredValidator($message){
+        $validator = new Validation\Validator\Required(array("message"=>$message));
+        $this->addValidator($validator);
+    }
+    
+    
+    
 }

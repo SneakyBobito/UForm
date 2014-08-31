@@ -12,6 +12,15 @@ namespace UForm\Forms;
 abstract class ElementContainer extends Element {
 
     abstract public function getElement($name);
-    abstract public function getElements();
+    abstract public function getElements($values=null);
+    
+    public function setParent(ElementContainer $p, $iname = null) {
+        parent::setParent($p, $iname);
+        
+        foreach ($this->getElements() as $el){
+            $el->setParent($this);
+        }
+        
+    }
 
 }
