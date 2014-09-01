@@ -270,28 +270,29 @@ class Form extends ElementGroup {
         return $validation->isValid();
     }
     
-    /**
+        /**
      * check whether all the children of the element are valid
      * @param type $name
      * @return boolean
      */
     public function elementChildrenAreValid($name){
         
-        if(is_object($name) && $name instanceof Element){
-            $name = $name->getName(true, true);
+        if(is_string($name)){
+            $element = $this->getElement($name);
+        }else{
+            $element = $name;
         }
 
-        if (!$this->chainedValidation) {
-            return true;
+        if (!$element instanceof Element) {
+            throw new Exception("Element not valid for children validation");
         }
         
-        $validation = $this->chainedValidation->getValidation($name);
-
+        $validation = $this->chainedValidation;
+        
         if(!$validation){
             return true;
         }
-        
-        return $validation->getElement()->childrenAreValid($this->chainedValidation);
+        return $element->childrenAreValid($validation);
         
     }
 
