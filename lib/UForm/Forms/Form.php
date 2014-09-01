@@ -270,7 +270,7 @@ class Form extends ElementGroup {
         return $validation->isValid();
     }
     
-        /**
+    /**
      * check whether all the children of the element are valid
      * @param type $name
      * @return boolean
@@ -286,7 +286,7 @@ class Form extends ElementGroup {
         if (!$element instanceof Element) {
             throw new Exception("Element not valid for children validation");
         }
-        
+
         $validation = $this->chainedValidation;
         
         if(!$validation){

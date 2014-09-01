@@ -126,6 +126,8 @@ class Group extends ElementContainer{
             if(!$el->childrenAreValid($cV))
                 return false;
             
+            return true;
+            
         }
         
     }
