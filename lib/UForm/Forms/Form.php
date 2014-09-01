@@ -152,11 +152,21 @@ class Form extends ElementGroup {
         }
     }
         
+    /**
+     * set the data to the form
+     * @param array $data dataset to fill/validate the form
+     * @return \UForm\Forms\Form fluent : returns itself
+     */
     public function setData($data){
         $this->_data = $data;
         $this->chainedValidation = null;
+        return $this;
     }
 
+    /**
+     * validates the form with the current data set with setData()
+     * @return \UForm\Validation\ChainedValidation 
+     */
     public function validate(){
         $validation = new Validation\ChainedValidation(is_array($this->_data) ? $this->_data : array());
         $this->chainedValidation = $validation;
@@ -166,8 +176,12 @@ class Form extends ElementGroup {
     }
 
 
+    /**
+     * True if the form is valid (need to be validated before)
+     * @return type
+     */
     public function formIsValid(){
- 
+
         if(!$this->chainedValidation)
             $this->validate ();
         
@@ -256,6 +270,11 @@ class Form extends ElementGroup {
         return $validation->isValid();
     }
     
+    /**
+     * check whether all the children of the element are valid
+     * @param type $name
+     * @return boolean
+     */
     public function elementChildrenAreValid($name){
         
         if(is_object($name) && $name instanceof Element){
@@ -304,35 +323,40 @@ class Form extends ElementGroup {
      */
     public function get($name)
     {
-            return $this->getElement($name);
+        return $this->getElement($name);
     }
 
 	
 
-       /**
-        * Gets a value from the internal related entity or from the default value
-        *
-        * @param string $name
-        * @return mixed
-        * @throws Exception
-        */
-        public function getValue($name)
-        {
-           if(is_string($name) === false) {
-               throw new Exception('Invalid parameter type.');
-           }
-
-           if(is_array($this->_data) === true) {
-               //Check if the data is in the data array
-               if(isset($this->_data[$name]) === true) {
-                   return $this->_data[$name];
-               }
-           }
+    /**
+     * Gets a value from the internal related entity or from the default value
+     *
+     * @param string $name
+     * @return mixed
+     * @throws Exception
+     */
+     public function getValue($name)
+     {
+        if(is_string($name) === false) {
+            throw new Exception('Invalid parameter type.');
         }
 
-        public function getData(){
-           return $this->_data;
+        if(is_array($this->_data) === true) {
+            //Check if the data is in the data array
+            if(isset($this->_data[$name]) === true) {
+                return $this->_data[$name];
+            }
         }
+        return null;
+     }
+     
+     /**
+      * get the data in the form
+      * @return type
+      */
+     public function getData(){
+        return $this->_data;
+     }
 
 
 }
