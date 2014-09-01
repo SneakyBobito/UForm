@@ -44,6 +44,9 @@ class Form extends ElementGroup {
      * @access protected
     */
     protected $_messages;
+    
+    protected $_action;
+    protected $_method ="post";
 
 
     /**
@@ -65,7 +68,25 @@ class Form extends ElementGroup {
     public function add(Element $element) {
         parent::addElement($element);
     }
+    
+    
+    public function getAction() {
+        return $this->_action;
+    }
 
+    public function setAction($_action) {
+        $this->_action = $_action;
+    }
+
+    public function getMethod() {
+        return $this->_method;
+    }
+
+    public function setMethod($_method) {
+        $this->_method = $_method;
+    }
+
+    
             /**
      * Binds data to the entity
      *
