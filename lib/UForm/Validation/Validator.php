@@ -67,7 +67,7 @@ abstract class Validator
      * @return mixed
      * @throws Exception
      */
-    public function getOption($key)
+    public function getOption($key,$default = null)
     {
         if(is_string($key) === false) {
             throw new Exception('Invalid parameter type.');
@@ -79,7 +79,7 @@ abstract class Validator
             }
         }
 
-        return null;
+        return $default;
     }
 
     /**
