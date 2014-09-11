@@ -163,6 +163,17 @@ class Form extends ElementGroup {
         return $this;
     }
 
+    
+    public function mergeData($data){
+        $this->_data = array_merge_recursive($this->_data,$data);
+        return $this;
+    }
+    
+    public function insertData($data){
+        $this->_data = array_merge_recursive($data,  $this->_data);
+        return $this;
+    }
+    
     /**
      * validates the form with the current data set with setData()
      * @return \UForm\Validation\ChainedValidation 
