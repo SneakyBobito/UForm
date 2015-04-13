@@ -194,7 +194,7 @@ class Form extends ElementGroup {
     public function formIsValid(){
 
         if(!$this->chainedValidation)
-            $this->validate ();
+            return true;
         
         return $this->chainedValidation->isValid();
     }
