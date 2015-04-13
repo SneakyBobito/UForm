@@ -24,15 +24,15 @@ class Select extends Element
          * @param array|null $attributes
          * @throws Exception
          */
-        public function __construct($name, $options = null, $attributes = null)
+        public function __construct($name, $values = null, $attributes = null)
         {
-            if(is_object($options) === false &&
-                is_array($options) === false &&
-                is_null($options) === false) {
+            if(is_object($values) === false &&
+                is_array($values) === false &&
+                is_null($values) === false) {
                 throw new Exception('Invalid parameter type.');
             }
 
-            $this->_optionsValues = $options;
+            $this->_optionsValues = $values;
             parent::__construct($name, $attributes);
         }
         

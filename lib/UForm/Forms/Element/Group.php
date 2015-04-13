@@ -15,7 +15,7 @@ use UForm\Forms\ElementContainer;
 class Group extends ElementContainer{
     
     /**
-     * @var \UForm\Forms\ElementInterface[]
+     * @var \UForm\Forms\Element[]
      */
     protected $elements = array();
 
@@ -46,15 +46,23 @@ class Group extends ElementContainer{
 
     public function _render( $attributes , $values , $data , $prename = null ) {
         $render = "";
-        
-        foreach($this->elements as $v){
+
+        foreach($this->elements as $element){
             $newPrename = $this->getName($prename);
             $hasName = null !== $this->_name ;
-            
-            if($hasName)
-                $render .= $v->render( isset($attributes[$v->getName()]) ? $attributes[$v->getName()] : null , $values[$this->getName()] , $data, $newPrename);
-            else
-                $render .= $v->render( isset($attributes[$v->getName()]) ? $attributes[$v->getName()] : null , $values , $data, $newPrename);
+
+            $valuesLocal =  null;
+            if($hasName){
+                $valuesLocal = $values[$this->getName()];
+            }
+
+            $attributesLocal = null;
+
+            if(isset($attributes[$element->getName()])){
+                $attributesLocal = $attributes[$element->getName()];
+            }
+
+            $render .= $element->render(  $attributesLocal , $valuesLocal , $data, $newPrename);
         }
         
         return $render;

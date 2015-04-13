@@ -4,6 +4,7 @@
 */
 namespace UForm\Forms;
 
+use UForm\Filter;
 use UForm\Forms\Exception,
         UForm\Forms\Form,
         UForm\Validation\ChainedValidation,
@@ -85,7 +86,19 @@ abstract class Element
         }
     }
     
+    public function addClass($className){
 
+        $currentClass = $this->getAttribute("class");
+
+        if($currentClass){
+            $currentClass .= " ";
+        }
+
+        $currentClass .= $className;
+
+        $this->setAttribute("class",$className);
+
+    }
 
     /////////
     //
@@ -199,8 +212,7 @@ abstract class Element
     /**
      * Adds a filter to current list of filters
      *
-     * @param string $filter
-     * @return \UForm\Forms\ElementInterface
+     * @param callable|Filter $filter
      * @throws Exception
      */
     public function addFilter($filter){
@@ -265,23 +277,18 @@ abstract class Element
     /**
      * Adds a validator to the element
      *
-     * @param \UForm\Validation\ValidatorInterface $validator
-     * @return \UForm\Forms\ElementInterface
+     * @param \UForm\Validation\Validator $validator
      * @throws Exception
      */
-    public function addValidator($validator)
+    public function addValidator(Validation\Validator $validator)
     {
 
         if(is_callable($validator)){
             $validator = new Validation\DirectValidator($validator);
-        }
-
-        if(is_object($validator) === false ||
+        }else if(is_object($validator) === false ||
             $validator instanceof Validation\Validator === false) {
             throw new Exception('The validators parameter must be an object extending UForm\Validation\Validator ');
-        }
-
-        if(is_array($this->_validators) === false) {
+        }else if(is_array($this->_validators) === false) {
             $this->_validators = array();
         }
 
@@ -291,7 +298,7 @@ abstract class Element
     /**
      * Returns the validators registered for the element
      *
-     * @return \UForm\Validation\ValidatorInterface[]|null
+     * @return \UForm\Validation\Validator[]|null
      */
     public function getValidators()
     {
@@ -392,7 +399,7 @@ abstract class Element
         if(!is_array($attributes)){
             $attributes = $this->getAttributes();
         }else{
-            $attributes = array_merge($this->getAttributes(),$attributes);
+            $attributes = array_merge($this->getAttributes(), $attributes);
         }
         
         return $this->_render($attributes, $value, $data, $prename);
