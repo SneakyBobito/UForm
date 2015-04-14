@@ -4,6 +4,7 @@ namespace UForm\Builder;
 
 use UForm\Builder;
 use UForm\Forms\Element\Bootstrap\BootstrapText;
+use UForm\Forms\Group\Bootstrap\Panel;
 use UForm\Forms\Group\Column;
 
 class BootstrapBuilder extends Builder{
@@ -35,6 +36,8 @@ class BootstrapBuilder extends Builder{
 
         return $this;
     }
+
+
 
 
     /**
@@ -82,6 +85,15 @@ class BootstrapBuilder extends Builder{
 
         return $this;
 
+    }
+
+
+    public function panel($name){
+        $element = new Panel($name);
+        $this->_add($element);
+        $this->_stack($element);
+
+        return $this;
     }
 
 
