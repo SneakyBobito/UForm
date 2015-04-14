@@ -4,9 +4,9 @@ namespace UForm;
 
 
 use UForm\Forms\Element;
-use UForm\Forms\Group\Column;
 use UForm\Forms\Group\Row;
 use UForm\Forms\Group\Tab;
+use UForm\Forms\Group\TabGroup;
 use UForm\Validation\Validator;
 
 class Builder {
@@ -65,7 +65,7 @@ class Builder {
         if(count($this->stack) == 0){
             throw new \Exception("Group stack is empty, did you call close() too often ?");
         }
-        $this->currentGroup = array_shift($this->stack);
+        $this->currentGroup = array_pop($this->stack);
     }
 
     /**
@@ -83,9 +83,6 @@ class Builder {
      */
     public function row($name = null){
         $element = new Row($name);
-        if(isset($this->classes["row"])){
-            $element->addClass($this->classes["row"]);
-        }
 
         $this->_add($element);
         $this->_stack($element);
@@ -93,12 +90,21 @@ class Builder {
         return  $this;
     }
 
+    public function tabGroup($name = null){
+        $element = new TabGroup($name);
+
+        $this->_add($element);
+        $this->_stack($element);
+
+        return  $this;
+    }
 
     public function tab($name = null){
-        $element = new Tab($name);
-        if(isset($this->classes["tab"])){
-            $element->addClass($this->classes["tab"]);
+        if(!$this->currentGroup instanceof TabGroup){
+            throw new \Exception("Cant call builder::tab() outside of a tabgroup Element");
         }
+
+        $element = new Tab($name);
 
         $this->_add($element);
         $this->_stack($element);
@@ -132,7 +138,9 @@ class Builder {
         if(null === $text){
             $text = "Field Required";
         }
-        $this->last()->addRequiredValidator($text);
+        $last = $this->last();
+        $last->addRequiredValidator($text);
+        $last->setUserOption("required",true);
         return $this;
     }
 
@@ -183,6 +191,7 @@ class Builder {
         if(isset($this->classes["input-text"])){
             $element->addClass($this->classes["input-text"]);
         }
+
         return $this;
     }
 
@@ -198,6 +207,7 @@ class Builder {
         if(isset($this->classes["input-text"])){
             $element->addClass($this->classes["input-text"]);
         }
+
         return $this;
     }
 

@@ -20,7 +20,11 @@ class Tag {
     }
 
         
-    public function parseProperties($p){
+    public function parseProperties($p = null){
+
+        if(null === $p){
+            $p = [];
+        }
         
         $class = isset($this->baseProperties["class"]) ? $this->baseProperties["class"] : null;
         
@@ -58,7 +62,7 @@ class Tag {
         
     }
     
-    public function draw($p,$content = ""){
+    public function draw($p = null, $content = ""){
         $d = "<" . $this->name;
         $d .= $this->parseProperties($p);
         

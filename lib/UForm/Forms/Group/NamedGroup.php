@@ -14,11 +14,11 @@ abstract class NamedGroup extends Group {
 
     protected $tagName;
 
-    function __construct($tagName, $libelle = null, $elements = [] )
+    function __construct($tagName, $label = null, $elements = [] )
     {
-        $this->tagName = $tagName;
-        $this->libelle = $libelle;
         parent::__construct(null, $elements);
+        $this->tagName = $tagName;
+        $this->setUserOption("title", $label);
     }
 
     /**

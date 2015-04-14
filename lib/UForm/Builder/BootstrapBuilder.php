@@ -3,6 +3,7 @@
 namespace UForm\Builder;
 
 use UForm\Builder;
+use UForm\Forms\Element\Bootstrap\BootstrapText;
 use UForm\Forms\Group\Column;
 
 class BootstrapBuilder extends Builder{
@@ -18,6 +19,49 @@ class BootstrapBuilder extends Builder{
 
         ];
     }
+
+    /**
+     * @param $name
+     * @param $hname
+     * @return $this
+     */
+    public function text($name, $hname){
+        $element = new BootstrapText($name);
+        $this->_makeInput($element, $name, $hname);
+        $this->_add($element);
+        if(isset($this->classes["input-text"])){
+            $element->addClass($this->classes["input-text"]);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * add a left addon for input group (bootstrap inputs only)
+     * @param $text
+     * @return $this
+     * @throws \Exception
+     * @throws \UForm\Forms\Exception
+     */
+    public function leftAddon($text){
+        $this->last()->setUserOption("leftAddon", $text);
+        return $this;
+    }
+
+    /**
+     * add a right addon for input group (bootstrap inputs only)
+     * @param $text
+     * @return $this
+     * @throws \Exception
+     * @throws \UForm\Forms\Exception
+     */
+    public function rightAddon($text){
+        $this->last()->setUserOption("rightAddon", $text);
+        return $this;
+    }
+
+
 
     /**
      * @param null $name
