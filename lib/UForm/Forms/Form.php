@@ -232,6 +232,8 @@ class Form extends ElementGroup {
 	 * @throws Exception
 	 */
     public function renderElement($name, $attributes = null){
+
+        $n = null;
         if(is_string($name)) {
             $n = new Navigator();
             $element = $n->formGet($this,$name);
@@ -244,13 +246,15 @@ class Form extends ElementGroup {
 
 
         if( strpos($name,".") > 1){
+            if(!$n){
+                $n = new Navigator();
+            }
             $prename = substr($name, 0, strrpos( $name, '.') );
             $localValue = $n->arrayGet($this->getData(),$this->getData(),$name,1);
         }else{
             $prename = null;
             $localValue = $this->getData() ;
         }
-
 
 
         if(!$element){
