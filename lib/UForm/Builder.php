@@ -195,6 +195,13 @@ class Builder {
         return $this;
     }
 
+    public function textArea($name, $hname){
+        $element = new Element\TextArea($name);
+        $this->_makeInput($element, $name, $hname);
+        $this->_add($element);
+        return $this;
+    }
+
     /**
      * @param $name
      * @param $hname
