@@ -12,6 +12,7 @@ class Panel extends NamedGroup {
     {
         parent::__construct("div", $name, null);
         $this->addClass("panel");
+        $this->addSemanticType("bootstrap:panel");
     }
 
 }
