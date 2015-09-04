@@ -11,6 +11,13 @@ namespace UForm\Forms;
  */
 abstract class ElementContainer extends Element {
 
+    public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
+    {
+        parent::__construct($name, $attributes, $validators, $filters);
+        $this->addSemanticType("container");
+    }
+
+
     /**
      * @param $name
      * @return Element

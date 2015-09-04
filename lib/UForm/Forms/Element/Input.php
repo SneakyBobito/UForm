@@ -3,7 +3,6 @@
 namespace UForm\Forms\Element;
 
 use UForm\Forms\Element,
-    UForm\Forms\ElementInterface,
     UForm\Tag
 ;
 
@@ -14,18 +13,20 @@ use UForm\Forms\Element,
  */
 class Input extends Element {
     
-    protected $type;
+    private $inputType;
 
     public function __construct($type, $name, $attributes = null, $validators = null, $filters = null) {
         parent::__construct($name, $attributes, $validators, $filters);
-        $this->type = $type;
+        $this->inputType = $type;
+        $this->addSemanticType("input");
+        $this->addSemanticType("input:$type");
     }
 
     
     public function _render( $attributes , $value , $data , $prename = null ){
         
         $params = array(
-            "type" => $this->type,
+            "type" => $this->inputType,
             "name" => $this->getName(true)
         );
 

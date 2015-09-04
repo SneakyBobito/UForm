@@ -19,6 +19,7 @@ abstract class NamedGroup extends Group {
         parent::__construct(null, $elements);
         $this->tagName = $tagName;
         $this->setUserOption("title", $label);
+        $this->addSemanticType("namedGroup");
     }
 
     /**

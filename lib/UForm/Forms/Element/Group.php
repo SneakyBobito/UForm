@@ -28,6 +28,7 @@ class Group extends ElementContainer{
         }else if(is_object ($elements)){
             $this->addElement($elements);
         }
+        $this->addSemanticType("group");
     }
     
     public function addElement(\UForm\Forms\Element $element){

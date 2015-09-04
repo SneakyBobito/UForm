@@ -32,6 +32,7 @@ class Collection extends ElementContainer{
         $this->min = $min;
         $this->max = $max;
         $this->elementDefinition->setName(null);
+        $this->addSemanticType("collection");
     }
     
     public function setForm($form) {

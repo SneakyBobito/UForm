@@ -57,6 +57,13 @@ abstract class Element
     protected $_form;
 
 
+    /**
+     * list of type the elements belong
+     * for instance a TabGroup is a "tabGroup", a "group" and an "elementContainer"
+     * it's useful for custom rendering when used with "isType()"
+     * @var array
+     */
+    protected $semanticTypes = [];
 
 
     /**
@@ -84,8 +91,27 @@ abstract class Element
                 $this->addFilter($f);
             }
         }
+
     }
-    
+
+    /**
+     * add a semantic type that can check with isType()
+     * @param $type string the semantic type to add
+     */
+    public function addSemanticType($type){
+        $this->semanticTypes[] = $type;
+    }
+
+    /**
+     * check if the element has the specified type.
+     * types are set with addSemanticType()
+     * @param $type string the semantic type to check for existence
+     * @return bool
+     */
+    public function isType($type){
+        return in_array($type, $this->semanticTypes);
+    }
+
     public function addClass($className){
 
         $currentClass = $this->getAttribute("class");

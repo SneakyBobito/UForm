@@ -115,8 +115,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
         $foo = new \UForm\Forms\ElementWrapper($bar);
         $f->add($foo);
-        
-        
+
         // TESTS
         
         // 1
@@ -124,14 +123,16 @@ class CommonTest extends PHPUnit_Framework_TestCase
             "bar" => "rab"
         );
         $f->setData($data);
+        $f->validate();
         $this->assertEquals(true, $f->formIsValid());
-        
+
         
         // 2
         $data = array(
             "bar" => "bar"
         );
         $f->setData($data);
+        $f->validate();
         $this->assertEquals(false, $f->formIsValid());
         $messages =$f->getElementMessages("bar");
         $this->assertEquals("bar not valid", $messages[0]);
@@ -146,6 +147,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         $f2 = new \UForm\Forms\Form();
         $f2->add($bar);
         $f2->setData($data);
+        $f->validate();
         $barRender1 = $f->renderElement("bar");
         $barRender2 = $f2->renderElement("bar");
         

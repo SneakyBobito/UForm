@@ -12,6 +12,7 @@ class TabGroup extends Group{
             throw new \Exception("Cant add non-tab element into tab group");
         }
         parent::addElement($element);
+        $this->addSemanticType("tabGroup");
     }
 
 }

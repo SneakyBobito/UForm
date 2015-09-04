@@ -189,12 +189,13 @@ class Form extends ElementGroup {
 
     /**
      * True if the form is valid (need to be validated before)
-     * @return type
+     * @return bool
      */
     public function formIsValid(){
 
-        if(!$this->chainedValidation)
+        if(!$this->chainedValidation) {
             return true;
+        }
         
         return $this->chainedValidation->isValid();
     }
