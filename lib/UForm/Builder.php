@@ -145,6 +145,18 @@ class Builder {
     }
 
     /**
+     * Add a required validator
+     * @param string $text the  message to pass to the validator
+     * @return $this
+     */
+    public function addUserOption($option, $value){
+        $last = $this->last();
+        $last->setUserOption($option, $value);
+        return $this;
+    }
+
+
+    /**
      * @param callable|Validator $validator
      * @return $this
      * @throws Forms\Exception
