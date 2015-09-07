@@ -216,7 +216,13 @@ class Validation
      * @param \UForm\Validation\MessageInterface $message
      * @return \UForm\Validation
      */
-    public function appendMessage($message,$elementName = null){
+    public function appendMessage($message, $elementName = null, $variables = null){
+
+        if(is_array($variables)){
+            foreach($variables as $k=>$v){
+                $message = str_replace("%_${k}_%", $v, $message);
+            }
+        }
 
         if(null == $elementName){
             $this->_messages->appendMessage($message);
