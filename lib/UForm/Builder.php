@@ -216,10 +216,10 @@ class Builder {
 
     public function yesNo($name, $hname, $options = []){
 
-        $yesText  = $options["yesText"] ? $options["yestText"] : "Yes";
-        $yesValue = $options["yesValue"] ? $options["yesValue"] : 1;
-        $noText = $options["noText"] ? $options["noText"] : "No";
-        $noValue = $options["noValue"] ? $options["noValue"] : 0;
+        $yesText  = isset($options["yesText"]) ? $options["yestText"] : "Yes";
+        $yesValue = isset($options["yesValue"]) ? $options["yesValue"] : 1;
+        $noText = isset($options["noText"]) ? $options["noText"] : "No";
+        $noValue = isset($options["noValue"]) ? $options["noValue"] : 0;
 
         $element = new Element\RadioGroup($name, [
             $yesText => $yesValue,
