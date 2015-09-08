@@ -2,11 +2,9 @@ language: php
 
 php:
   - 5.4
-  - 5.5
-  - 5.6
 
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --dev
 
-script: (cd test && phpunit --verbose)
+script: ./test/bin/test.bash
