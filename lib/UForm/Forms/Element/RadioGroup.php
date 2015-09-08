@@ -17,6 +17,7 @@ class RadioGroup extends \UForm\Forms\Element{
     public function __construct($name, $values, $attributes = null, $validators = null, $filters = null) {
         parent::__construct($name, $attributes, $validators, $filters);
         $this->values = $values;
+        $this->addSemanticType("radioGroup");
     }
 
     
@@ -45,8 +46,9 @@ class RadioGroup extends \UForm\Forms\Element{
                 "value" => $v
             );
             
-            if( isset($value[$this->name]) && $value[$this->name] == $v )
+            if ( isset($value[$this->name]) && $value[$this->name] == $v ) {
                 $renderProp["checked"] = "checked";
+            }
             
             $renderHtml .= $cbTag->draw();
             

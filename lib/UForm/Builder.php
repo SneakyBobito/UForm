@@ -214,6 +214,25 @@ class Builder {
         return $this;
     }
 
+    public function yesNo($name, $hname, $options = []){
+
+        $yesText  = $options["yesText"] ? $options["yestText"] : "Yes";
+        $yesValue = $options["yesValue"] ? $options["yesValue"] : 1;
+        $noText = $options["noText"] ? $options["noText"] : "No";
+        $noValue = $options["noValue"] ? $options["noValue"] : 0;
+
+        $element = new Element\RadioGroup($name, [
+            $yesText => $yesValue,
+            $noText => $noValue
+        ]);
+
+        $this->_makeInput($element, $name, $hname);
+        $this->_add($element);
+
+        return $this;
+
+    }
+
     /**
      * @param $name
      * @param $hname
