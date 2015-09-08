@@ -226,6 +226,8 @@ class Builder {
             $noValue => $noText
         ]);
 
+        $element->validateOnSelfValues();
+
         $this->_makeInput($element, $name, $hname);
         $this->_add($element);
 
