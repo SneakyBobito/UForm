@@ -2,14 +2,14 @@
 
 namespace UForm\Forms\Element;
 
+use UForm\Forms\Element;
+use UForm\Validation;
+use UForm\Validation\Element\RangeValueValidationInterface;
+
 /**
- * Phalcon\Forms\Element\Check
  *
- * Component INPUT[type=check] for forms
- * 
- * @see https://github.com/phalcon/cphalcon/blob/1.2.6/ext/forms/element/check.c
  */
-class RadioGroup extends \UForm\Forms\Element{
+class RadioGroup extends Element implements RangeValueValidationInterface {
     
     protected $values;
 
@@ -20,6 +20,9 @@ class RadioGroup extends \UForm\Forms\Element{
         $this->addSemanticType("radioGroup");
     }
 
+    public function validateOnSelfValues($message = null){
+        $this->addValidator(new Validation\Validator\SelfValue(["message" => $message]));
+    }
     
     public function _render( $attributes , $value , $data , $prename = null ){
 
@@ -33,7 +36,7 @@ class RadioGroup extends \UForm\Forms\Element{
             $labelTag = new \UForm\Tag("label");
             $renderHtml .= $labelTag->draw(array(
                 "for" => $id
-            ), $k);
+            ), $v);
             
             $cbTag = new \UForm\Tag("input", array(
                 "type" => "radio",
@@ -43,7 +46,7 @@ class RadioGroup extends \UForm\Forms\Element{
             
             $renderProp = array(
                 "id" => $id,
-                "value" => $v
+                "value" => $k
             );
             
             if ( isset($value[$this->getName()]) && $value[$this->getName()] == $v ) {
@@ -58,8 +61,11 @@ class RadioGroup extends \UForm\Forms\Element{
         return $renderHtml;
         
     }
-    
 
+    public function getValueRange()
+    {
+        return $this->values;
+    }
 
 
 }

@@ -11,7 +11,7 @@ use UForm\Forms\Element,
  *
  * @author sghzal
  */
-class Input extends Element {
+class Input extends Element  {
     
     private $inputType;
 
@@ -51,5 +51,5 @@ class Input extends Element {
     protected function overidesParamsBeforeRender($params , $attributes , $value , $data , $prename = null){
         return $params;
     }
-    
+
 }

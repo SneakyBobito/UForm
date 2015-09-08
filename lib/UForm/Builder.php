@@ -222,8 +222,8 @@ class Builder {
         $noValue = isset($options["noValue"]) ? $options["noValue"] : 0;
 
         $element = new Element\RadioGroup($name, [
-            $yesText => $yesValue,
-            $noText => $noValue
+            $yesValue => $yesText,
+            $noValue => $noText
         ]);
 
         $this->_makeInput($element, $name, $hname);
