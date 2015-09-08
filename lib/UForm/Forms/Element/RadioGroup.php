@@ -50,7 +50,7 @@ class RadioGroup extends \UForm\Forms\Element{
                 $renderProp["checked"] = "checked";
             }
             
-            $renderHtml .= $cbTag->draw();
+            $renderHtml .= $cbTag->draw($renderProp);
             
             
         }
