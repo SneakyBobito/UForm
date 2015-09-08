@@ -46,7 +46,7 @@ class RadioGroup extends \UForm\Forms\Element{
                 "value" => $v
             );
             
-            if ( isset($value[$this->name]) && $value[$this->name] == $v ) {
+            if ( isset($value[$this->getName()]) && $value[$this->getName()] == $v ) {
                 $renderProp["checked"] = "checked";
             }
             
