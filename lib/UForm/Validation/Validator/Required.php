@@ -3,7 +3,6 @@
 namespace UForm\Validation\Validator;
 
 use \UForm\Validation\Validator,
-	\UForm\Validation\Exception,
 	\UForm\Validation;
 
 

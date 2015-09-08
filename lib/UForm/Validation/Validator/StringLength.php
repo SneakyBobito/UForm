@@ -3,7 +3,6 @@
 namespace UForm\Validation\Validator;
 
 use \UForm\Validation\Validator,
-	\UForm\Validation\Exception,
 	\UForm\Validation;
 
 
@@ -12,10 +11,12 @@ class StringLength extends Validator{
     private $_minLength;
     private $_maxLength;
 
-    function __construct($minLength = 0, $maxLength = 0, $messages = [])
+    function __construct($minLength = 0, $maxLength = 0, $options = [])
     {
         $this->_minLength = $minLength;
         $this->_maxLength = $maxLength;
+
+        parent::__construct($options);
     }
 
 
