@@ -45,16 +45,16 @@ class Tag {
             $properties["class"] = $class;
         
         $d = "";
-        
+
         foreach ($properties as $k=>$v){
-            
-            $vs = htmlentities($v);
-            $ks = htmlentities($k);
+
+            $vs = htmlspecialchars($v);
+            $ks = htmlspecialchars($k);
 
             if(is_bool($v) && true == $v){
-                $d .= " $ks";
+                $d .= ' ' . $ks;
             }else{
-                $d .= " $ks='$vs'";
+                $d .= ' ' . $ks . '="' . $vs . '"';
             }
         }
         
