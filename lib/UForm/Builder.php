@@ -256,7 +256,7 @@ class Builder {
      * @param $hname
      * @return $this
      */
-    public function select($name, $hname, $values = null){
+    public function select($name, $hname, $values = []){
         $element = new Element\Select($name, $values);
         $element->validateOnSelfValues();
         if($this->useLabel) {
