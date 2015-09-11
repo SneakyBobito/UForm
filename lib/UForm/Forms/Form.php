@@ -13,7 +13,6 @@ use
 	\UForm\Validation\Message\Group,
         UForm\Forms\Element\Group as ElementGroup;
 use UForm\Navigator;
-use UForm\RenderContext;
 
 /**
  * UForm\Forms\Form
@@ -175,20 +174,21 @@ class Form extends ElementGroup {
     }
     
     /**
-     * validates the form with the current data set with setData()
-     * @return \UForm\Validation\ChainedValidation 
+     * validates the form using either the data given in parameter or either the data set with setData method
+     * @var array|null $data the data used for the validation. If ommited the method will try to get the last data set with setData method
+     * @return FormContext
      */
-    public function validate(){
+    public function validate($data = null){
         $validation = new Validation\ChainedValidation(is_array($this->_data) ? $this->_data : array());
         $this->chainedValidation = $validation;
         $this->prepareValidation($validation->getData() , $validation);
         $this->_isValid = $validation->validate();
-        return $validation;
+        return new FormContext();
     }
 
 
     /**
-     * True if the form is valid (need to be validated before)
+     * A shortcut to check validation of the last call to validate method
      * @return bool
      */
     public function formIsValid(){
@@ -202,29 +202,25 @@ class Form extends ElementGroup {
 
 
     /**
-     *
-     * @param type $name
+     * get the last validation generated with validate method
+     * @param string $name
      * @return Validation
      * @throws Exception
      */
     public function getValidation($name = null){
-
         if (null == $name) {
             return $this->chainedValidation;
         }
-
         $validation =$this->chainedValidation->getValidation($name);
-
         if(!$validation){
             throw new Exception('Element with ID='.$name.' is not part of the form');
         }
-
         return $validation;
     }
 
 
 	/**
-	 * Renders a specific item with the form context
+	 * Renders a specific item with the current form context
 	 *
 	 * @param string $name
 	 * @param array|null $attributes
@@ -266,50 +262,28 @@ class Form extends ElementGroup {
 
 
     /**
-     * true if the element is valid
-     * @param $name
+     * Check if an element is valid using the current form context
+     * @param string $name name of the element to check
      * @return bool
      * @throws Exception
      */
     public function elementIsValid($name){
-
         if (!$this->chainedValidation) {
             return true;
         }
-
-        $validation =$this->chainedValidation->getValidation($name);
-
-        if(!$validation){
-            throw new Exception('Element with ID='.$name.' is not part of the form');
-        }
-
-        return $validation->isValid();
+        return $this->chainedValidation->elementIsValid($name);
     }
     
     /**
      * check whether all the children of the element are valid
-     * @param type $name
+     * @param string $name
      * @return boolean
      */
     public function elementChildrenAreValid($name){
-        
-        if(is_string($name)){
-            $element = $this->getElement($name);
-        }else{
-            $element = $name;
-        }
-
-        if (!$element instanceof Element) {
-            throw new Exception("Element not valid for children validation");
-        }
-
-        $validation = $this->chainedValidation;
-        
-        if(!$validation){
+        if(!$this->chainedValidation){
             return true;
         }
-        return $element->childrenAreValid($validation);
-        
+        return $this->elementChildrenAreValid($name);
     }
 
     /**

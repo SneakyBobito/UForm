@@ -75,7 +75,6 @@ abstract class Element
      */
     public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
     {
-
         $this->_name = $name;
 
         if(is_array($attributes) === true) {
@@ -96,10 +95,13 @@ abstract class Element
 
     /**
      * add a semantic type that can check with isType()
+     * order of semantic type is very important because it's used for form rendering
      * @param $type string the semantic type to add
+     * @return $this
      */
     public function addSemanticType($type){
         $this->semanticTypes[] = $type;
+        return $this;
     }
 
     /**
@@ -122,7 +124,7 @@ abstract class Element
 
         $currentClass .= $className;
 
-        $this->setAttribute("class",$className);
+        $this->setAttribute("class", $className);
 
     }
 
@@ -134,7 +136,7 @@ abstract class Element
     /**
      * Internal use only sets the parent
      * @param \UForm\Forms\Form $p
-     * @return \UForm\Forms\ElementInterface
+     * @return $this
      * @throws Exception
      */
     public function setParent(ElementContainer $p,$iname = null){
@@ -202,12 +204,7 @@ abstract class Element
     
     
     
-    
-    
-    
-    
-    
-    
+
     
     
     
@@ -220,7 +217,7 @@ abstract class Element
      * Sets the element's filters
      *
      * @param array|string $filters
-     * @return \UForm\Forms\ElementInterface
+     * @return \UForm\Forms\Element
      * @throws Exception
      */
     public function setFilters($filters)
@@ -274,7 +271,7 @@ abstract class Element
      *
      * @param \UForm\Validation\ValidatorInterface[] $validators
      * @param boolean|null $merge
-     * @return \UForm\Forms\ElementInterface
+     * @return $this
      * @throws Exception
      */
     public function addValidators($validators, $merge = true)
@@ -331,8 +328,6 @@ abstract class Element
         return $this->_validators ? $this->_validators : array();
     }
 
-    
-    
     
     
     
@@ -411,10 +406,7 @@ abstract class Element
         return $this->_attributes;
     }
     
-    
 
-    
-    
     
     /////////////
     //
@@ -435,10 +427,6 @@ abstract class Element
     protected abstract function _render( $attributes , $value , $data , $prename = null );
     
 
-
-    
-    
-    
     
     
     ///////////

@@ -10,7 +10,8 @@
 */
 namespace UForm;
 
-use 
+use UForm\Forms\Element;
+use
 	\UForm\Validation\Exception,
 	\UForm\Validation\Message\Group,
 	\UForm\Validation\ChainedValidation;
@@ -30,13 +31,13 @@ class Validation
 	*/
 	protected $_dataLocal = null;
 
-        /**
-         *
-         * @var Forms\Element
-         */
-        protected $_element;
-        
-        /**
+    /**
+     *
+     * @var Forms\Element
+     */
+    protected $_element;
+
+    /**
 	 * Entity
 	 * 
 	 * @var null|object
@@ -61,26 +62,25 @@ class Validation
 	protected $_messages = null;
 
         
-        protected $_value = null;
-        
-        protected $_valid = false;
+    protected $_value = null;
 
-    
-        
-        /**
-         *
-         * @var ChainedValidation
-         */
-        protected $chainedValidation;
+    protected $_valid = false;
+
 
 
     /**
-     * \UForm\Validation constructor
      *
-     * @param name with dotted syntaxe
-     * @throws Exception
+     * @var ChainedValidation
      */
-    public function __construct($elements , $localData , ChainedValidation $cV)
+    protected $chainedValidation;
+
+
+    /**
+     * @param Element $elements
+     * @param array $localData
+     * @param ChainedValidation $cV
+     */
+    public function __construct(Element $elements , $localData , ChainedValidation $cV)
     {
         $this->chainedValidation = $cV;
         $this->_element = $elements;

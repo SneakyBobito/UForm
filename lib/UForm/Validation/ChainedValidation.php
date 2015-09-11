@@ -1,6 +1,7 @@
 <?php
 
 namespace UForm\Validation;
+use UForm\Forms\Element;
 use UForm\Validation;
 
 /**
@@ -39,7 +40,7 @@ class ChainedValidation {
      * @param $name
      * @return null|Validation
      */
-    public function getValidation($name,$iname=false){
+    public function getValidation($name, $iname=false){
 
         if($iname){
             if(isset($this->validationsInternalName[$name])){
@@ -88,5 +89,41 @@ class ChainedValidation {
 
     public function isValid(){
         return $this->isValid;
+    }
+
+    /**
+     * Check if an element is valid
+     * @param string $name name of the element to check
+     * @return bool
+     * @throws Exception
+     */
+    public function elementIsValid($name){
+
+        $validation = $this->getValidation($name);
+        if(!$validation){
+            throw new Exception('Element with ID='.$name.' is not part of the form');
+        }
+        return $validation->isValid();
+    }
+
+    /**
+     * check whether all the children of the element are valid
+     * @param string $name
+     * @return boolean
+     */
+    public function elementChildrenAreValid($name){
+        $element = null;
+        if(is_string($name)){
+            $validation = $this->getValidation($name);
+            if($validation){
+                $element = $validation->getElement();
+            }
+        }else{
+            $element = $name;
+        }
+        if (!$element instanceof Element) {
+            throw new Exception("Element not valid for children validation");
+        }
+        return $element->childrenAreValid($this);
     }
 }
