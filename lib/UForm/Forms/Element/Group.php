@@ -98,8 +98,12 @@ class Group extends ElementContainer{
         }
         return null;
     }
-    
 
+
+    /**
+     * @param null $values
+     * @return \UForm\Forms\Element[]
+     */
     public function getElements($values = null){
         return $this->elements;
     }

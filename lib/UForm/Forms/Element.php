@@ -100,7 +100,7 @@ abstract class Element
      * @return $this
      */
     public function addSemanticType($type){
-        $this->semanticTypes[] = $type;
+        array_unshift($this->semanticTypes, $type);
         return $this;
     }
 
@@ -112,6 +112,10 @@ abstract class Element
      */
     public function isType($type){
         return in_array($type, $this->semanticTypes);
+    }
+
+    public function getSemanticTypes(){
+        return $this->semanticTypes;
     }
 
     public function addClass($className){

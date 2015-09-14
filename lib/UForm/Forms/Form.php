@@ -60,7 +60,9 @@ class Form extends ElementGroup {
         if(method_exists($this, 'initialize') === true) {
                 $this->initialize();
         }
-        
+
+        $this->addSemanticType("form");
+
         $this->_form = $this;
     }
 
