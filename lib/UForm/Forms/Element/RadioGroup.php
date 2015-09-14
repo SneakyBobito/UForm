@@ -49,7 +49,7 @@ class RadioGroup extends Element implements RangeValueValidationInterface {
                 "value" => $k
             );
             
-            if ( isset($value[$this->getName()]) && $value[$this->getName()] == $v ) {
+            if ( isset($value[$this->getName()]) && $value[$this->getName()] == $k ) {
                 $renderProp["checked"] = "checked";
             }
             
@@ -64,7 +64,7 @@ class RadioGroup extends Element implements RangeValueValidationInterface {
 
     public function getValueRange()
     {
-        return $this->values;
+        return array_keys($this->values);
     }
 
 
