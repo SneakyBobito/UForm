@@ -20,8 +20,8 @@ class ElementWrapper extends Element {
         $this->_wrapped = $element;
     }
     
-    public function _render($attributes, $value, $data, $prename = null) {
-        return $this->_wrapped->_render($attributes, $value, $data,$prename);
+    public function _render($attributes, $value, $data) {
+        return $this->_wrapped->_render($attributes, $value, $data);
     }
     
     public function setParent(ElementContainer $p,$iname = null){

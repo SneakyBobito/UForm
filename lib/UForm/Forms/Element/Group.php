@@ -46,11 +46,10 @@ class Group extends ElementContainer{
         return parent::getName($prenamed, $dottedNotation);
     }
 
-    public function _render( $attributes , $values , $data , $prename = null ) {
+    public function _render( $attributes , $values , $data ) {
         $render = "";
 
         foreach($this->elements as $element){
-            $newPrename = $this->getName($prename);
             $hasName = null !== $this->_name ;
 
             $valuesLocal =  null;
@@ -64,7 +63,7 @@ class Group extends ElementContainer{
                 $attributesLocal = $attributes[$element->getName()];
             }
 
-            $render .= $element->render(  $attributesLocal , $valuesLocal , $data, $newPrename);
+            $render .= $element->render(  $attributesLocal , $valuesLocal , $data);
         }
         
         return $render;

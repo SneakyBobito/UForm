@@ -24,7 +24,7 @@ class RadioGroup extends Element implements RangeValueValidationInterface {
         $this->addValidator(new Validation\Validator\SelfValue(["message" => $message]));
     }
     
-    public function _render( $attributes , $value , $data , $prename = null ){
+    public function _render( $attributes , $value , $data ){
 
         $renderHtml = "";
         

@@ -24,7 +24,7 @@ class Input extends Element  {
     }
 
     
-    public function _render( $attributes , $value , $data , $prename = null ){
+    public function _render( $attributes , $value , $data){
         
         $params = array(
             "type" => $this->inputType,
@@ -35,7 +35,7 @@ class Input extends Element  {
             $params["value"] = $value[$this->getName()];
         }
        
-        $render = new Tag("input", $this->overidesParamsBeforeRender($params , $attributes , $value , $data , $prename) , true);
+        $render = new Tag("input", $this->overidesParamsBeforeRender($params , $attributes , $value , $data) , true);
 
         return $render->draw($attributes, null);
     }

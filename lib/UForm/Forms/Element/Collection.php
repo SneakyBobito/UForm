@@ -42,13 +42,12 @@ class Collection extends ElementContainer{
     }
 
     
-    public function _render( $attributes , $values , $data , $prename = null ) {
+    public function _render( $attributes , $values , $data ) {
         $render = "";
         
         foreach($values[$this->getName()] as $k=>$v){
-            $newPrename = $this->getName($prename);
             $element = $this->__getElemement($k);
-            $render .= $element->render( $attributes , $values[$this->getName()] , $data, $newPrename);
+            $render .= $element->render( $attributes , $values[$this->getName()] , $data);
         }
         
         return $render;

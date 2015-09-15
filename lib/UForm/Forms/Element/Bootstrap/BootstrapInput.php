@@ -14,9 +14,9 @@ use UForm\Forms\Group\Tab;
  */
 class BootstrapInput extends Element\Input {
 
-    public function _render( $attributes , $value , $data , $prename = null ){
+    public function _render( $attributes , $value , $data ){
 
-        $inputHtml = parent::_render($attributes , $value , $data , $prename = null);
+        $inputHtml = parent::_render($attributes , $value , $data);
 
         $leftAddon = $this->getUserOption("leftAddon");
         $rightAddon = $this->getUserOption("rightAddon");
@@ -43,19 +43,6 @@ class BootstrapInput extends Element\Input {
         }
 
 
-    }
-
-    /**
-     * allows subclasses to redefine some params before the rendering (e.g checkbox will use 'checked' instead of 'value'
-     * @param $params
-     * @param $attributes
-     * @param $value
-     * @param $data
-     * @param null $prename
-     * @return mixed
-     */
-    protected function overidesParamsBeforeRender($params , $attributes , $value , $data , $prename = null){
-        return $params;
     }
     
 }

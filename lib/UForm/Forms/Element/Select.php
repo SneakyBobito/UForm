@@ -98,10 +98,10 @@ class Select extends Element implements RangeValueValidationInterface
     }
 
 
-    public function _render( $attributes , $value , $data , $prename = null ){
+    public function _render( $attributes , $value , $data){
 
         $params = array(
-            "name" => $this->getName($prename)
+            "name" => $this->getName(true)
         );
 
         if(isset($value[$this->getName()])){
