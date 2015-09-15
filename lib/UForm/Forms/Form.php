@@ -18,7 +18,7 @@ use UForm\Navigator;
  * UForm\Forms\Form
  *
  * This component allows to build forms using an object-oriented interface
- * 
+ * @semanticType form
  */
 class Form extends ElementGroup {
 
@@ -180,12 +180,15 @@ class Form extends ElementGroup {
      * @var array|null $data the data used for the validation. If ommited the method will try to get the last data set with setData method
      * @return FormContext
      */
-    public function validate($data = null){
-        $validation = new Validation\ChainedValidation(is_array($this->_data) ? $this->_data : array());
+    public function validate($inputData = null){
+
+        $data = is_array($this->_data) ? $this->_data : array();
+
+        $validation = new Validation\ChainedValidation($data);
         $this->chainedValidation = $validation;
         $this->prepareValidation($validation->getData() , $validation);
         $this->_isValid = $validation->validate();
-        return new FormContext();
+        return new FormContext($this, $validation);
     }
 
 

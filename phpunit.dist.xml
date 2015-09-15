@@ -15,5 +15,10 @@
         <testsuite name="RenderTest">
             <directory>test/RenderTest</directory>
         </testsuite>
+
+        <testsuite name="DocTest">
+            <directory>test/DocTest</directory>
+        </testsuite>
+
     </testsuites>
 </phpunit>

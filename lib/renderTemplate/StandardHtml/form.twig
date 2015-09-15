@@ -3,10 +3,7 @@
     action = "{{ current.element.getAction() }}"
     class  = "{{ current.element.getUserOption("class") }}{% if not current.isValid() %} invalid{% endif %}"
     id     = "{{ current.element.getUserOption("id") }}">
-
     {% for child in current.element.getElements() %}
         {{ current.renderElement(child) | raw }}
     {% endfor %}
-
-
 </form>

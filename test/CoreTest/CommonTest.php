@@ -303,7 +303,7 @@ class CommonTest extends PHPUnit_Framework_TestCase
         
         $render = $t->draw(array("id"=>"newId","class"=>"class2"), null);
         
-        $this->assertEquals("<input id='newId' required class='class1 class2'/>", $render);
+        $this->assertEquals('<input id="newId" required class="class1 class2"/>', $render);
         
     }
     

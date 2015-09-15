@@ -12,9 +12,14 @@ use UForm\Forms\Exception,
         UForm\Validation
         ;
 
+
+
 /**
- *
  * This is a base class for form elements
+ *
+ *
+ *
+ * @semanticType element
  */
 abstract class Element
 {
@@ -90,6 +95,8 @@ abstract class Element
                 $this->addFilter($f);
             }
         }
+
+        $this->addSemanticType("element");
 
     }
 

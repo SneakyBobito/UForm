@@ -5,6 +5,9 @@ namespace UForm\Forms\Group;
 use UForm\Forms\Element\Group;
 use UForm\Tag;
 
+/**
+ * @semanticType column
+ */
 class Column extends NamedGroup{
 
     public function __construct($name = null, $elements = null)

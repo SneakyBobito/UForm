@@ -7,7 +7,7 @@ use UForm\Validation;
 use UForm\Validation\Element\RangeValueValidationInterface;
 
 /**
- *
+ * @semanticType radioGroup
  */
 class RadioGroup extends Element implements RangeValueValidationInterface {
     

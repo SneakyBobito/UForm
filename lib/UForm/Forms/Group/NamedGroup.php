@@ -6,6 +6,10 @@ namespace UForm\Forms\Group;
 use UForm\Forms\Element\Group;
 use UForm\Tag;
 
+/**
+ * Class NamedGroup
+ * @semanticType namedGroup
+ */
 abstract class NamedGroup extends Group {
 
     protected $libelle;

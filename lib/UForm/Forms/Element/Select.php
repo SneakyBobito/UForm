@@ -8,6 +8,10 @@ use \UForm\Forms\Element,
 use UForm\Validation\Element\RangeValueValidationInterface;
 use UForm\Validation\Validator\SelfValue;
 
+/**
+ * Class Select
+ * @semanticType Select
+ */
 class Select extends Element implements RangeValueValidationInterface
 {
     /**

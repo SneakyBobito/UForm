@@ -8,6 +8,7 @@ namespace UForm\Forms;
  *
  * Class ElementContainer
  * @package UForm\Forms
+ * @semanticType container
  */
 abstract class ElementContainer extends Element {
 

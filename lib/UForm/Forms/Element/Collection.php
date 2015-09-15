@@ -12,6 +12,7 @@ use UForm\Forms\ElementContainer;
  * Collection
  *
  * @author sghzal
+ * @semanticType collection
  */
 class Collection extends ElementContainer{
     

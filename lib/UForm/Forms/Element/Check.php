@@ -2,6 +2,10 @@
 
 namespace UForm\Forms\Element;
 
+/**
+ * Class Check
+ * @semanticType input:checkbox
+ */
 class Check extends Input{
     
     protected $value;

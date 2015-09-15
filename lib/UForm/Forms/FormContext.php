@@ -17,13 +17,10 @@ class FormContext {
      */
     protected $chainValidation;
 
-    protected $data;
-
-    function __construct($form, $data = [], $chainValidation = null)
+    function __construct($form, $chainValidation = null)
     {
         $this->form = $form;
         $this->chainValidation = $chainValidation;
-        $this->data = $data;
     }
 
 
@@ -36,7 +33,10 @@ class FormContext {
     }
 
     public function getData(){
-        return $this->data;
+        if(!$this->chainValidation){
+            return [];
+        }
+        return $this->chainValidation->getData();
     }
 
     public function isValid(){

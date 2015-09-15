@@ -21,7 +21,7 @@ class RenderTest extends PHPUnit_Framework_TestCase
 
         $f = new \UForm\Forms\FormContext($f);
 
-        var_dump($render->render($f));
+        //var_dump($render->render($f));
 
     }
 }

@@ -6,15 +6,14 @@ use UForm\Forms\Element\Group;
 use UForm\Tag;
 
 /**
- * Class Row
- * @semanticType row
+ * @semanticType column
  */
-class Row extends NamedGroup{
+class ColumnGroup extends NamedGroup{
 
     public function __construct($name = null, $elements = null)
     {
         parent::__construct("div", $name, $elements);
-        $this->addSemanticType("row");
+        $this->addSemanticType("columnGroup");
     }
 
 }

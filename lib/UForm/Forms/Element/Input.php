@@ -10,6 +10,7 @@ use UForm\Forms\Element,
  * Input
  *
  * @author sghzal
+ * @semanticType input
  */
 class Input extends Element  {
     

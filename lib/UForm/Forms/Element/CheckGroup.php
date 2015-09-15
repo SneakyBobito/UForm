@@ -2,6 +2,10 @@
 
 namespace UForm\Forms\Element;
 
+/**
+ * Class CheckGroup
+ * @semanticType checkGroup
+ */
 class CheckGroup extends Group{
     
     protected $values;
@@ -33,7 +37,9 @@ class CheckGroup extends Group{
             }
             $i++;
         }
-        
+
+        $this->addSemanticType("checkGroup");
+
         parent::__construct($name, $elements);
     }
 

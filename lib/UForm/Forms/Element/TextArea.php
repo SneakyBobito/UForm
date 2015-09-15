@@ -11,7 +11,7 @@ use
 
 /**
  * Component TEXTAREA for forms
- *
+ * @semanticType textarea
  */
 class TextArea extends Element{
       

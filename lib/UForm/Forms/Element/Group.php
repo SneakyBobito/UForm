@@ -11,6 +11,7 @@ use UForm\Forms\ElementContainer;
  * Group that can contains many elements
  *
  * @author sghzal
+ * @semanticType group
  */
 class Group extends ElementContainer{
     
