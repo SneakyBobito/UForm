@@ -2,6 +2,7 @@
 
 namespace UForm\Validation;
 use UForm\Forms\Element;
+use UForm\Navigator;
 use UForm\Validation;
 
 /**
@@ -15,6 +16,9 @@ class ChainedValidation {
      * @var Validation[]
      */
     protected $validationsName = array();
+    /**
+     * @var Validation[]
+     */
     protected $validationsInternalName = array();
     
     protected $data;
@@ -33,6 +37,19 @@ class ChainedValidation {
         }
         $this->validationsInternalName[$validation->getElement()->getInternalName(true)] = $validation;
         
+    }
+
+    public function getDataFor($element){
+
+        if($element instanceof Element) {
+            $name = $element->getName(true, true);
+        }else{
+            $name = $element;
+        }
+
+        $navigator = new Navigator();
+        return $navigator->arrayGet($this->data, $this->data, $name);
+
     }
 
     /**

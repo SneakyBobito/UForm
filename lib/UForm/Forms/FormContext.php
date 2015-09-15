@@ -60,4 +60,11 @@ class FormContext {
         return $this->chainValidation->elementChildrenAreValid($elementName);
     }
 
+    public function getLocalValue(){
+        if(!$this->chainValidation){
+            return null;
+        }
+
+    }
+
 }

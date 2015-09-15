@@ -48,7 +48,7 @@ class Navigator {
      * @param int $rOffset  the reversed offset default 0. With the string "foo.bar.0" | $rOffset=0 will get "foo.bar.0"  |  $rOffset=1 will get "foo.bar" |  $rOffset=2 will get "foo"
      * @return null
      */
-    public function arrayGet($local,$global,$string,$rOffset = 0){
+    public function arrayGet($local, $global, $string, $rOffset = 0){
 
         if( is_null($string) || empty($string)){
             return $global;

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sghzal
- * Date: 9/15/15
- * Time: 11:43 AM
- */
 
 namespace UForm\Doc;
 

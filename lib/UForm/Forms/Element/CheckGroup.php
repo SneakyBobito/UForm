@@ -38,9 +38,8 @@ class CheckGroup extends Group{
             $i++;
         }
 
-        $this->addSemanticType("checkGroup");
-
         parent::__construct($name, $elements);
+        $this->addSemanticType("checkGroup");
     }
 
     

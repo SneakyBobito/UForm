@@ -5,6 +5,7 @@ namespace UForm\Forms\Element;
 use UForm\Forms\Element,
     UForm\Tag
 ;
+use UForm\Render\RenderContext;
 
 /**
  * Input
@@ -12,7 +13,7 @@ use UForm\Forms\Element,
  * @author sghzal
  * @semanticType input
  */
-class Input extends Element  {
+class Input extends FinalElement  {
     
     private $inputType;
 
@@ -24,8 +25,10 @@ class Input extends Element  {
     }
 
     
-    public function _render( $attributes , $value , $data){
-        
+    public function _render( RenderContext $context){
+
+        $value = $context->getValue();
+
         $params = array(
             "type" => $this->inputType,
             "name" => $this->getName(true)

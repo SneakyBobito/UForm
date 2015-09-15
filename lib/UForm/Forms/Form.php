@@ -57,13 +57,9 @@ class Form extends ElementGroup {
      */
     public function __construct()
     {
-        if(method_exists($this, 'initialize') === true) {
-                $this->initialize();
-        }
-
-        $this->addSemanticType("form");
-
         $this->_form = $this;
+        parent::__construct();
+        $this->addSemanticType("form");
     }
 
     public function add(Element $element) {
@@ -94,7 +90,7 @@ class Form extends ElementGroup {
      * @param array $data
      * @param object $entity
      * @param array|null $whitelist
-     * @return \Phalcon\Forms\Form
+     * @return \UForm\Forms\Form
      * @throws Exception
      */
     public function bind($entity , $data = null, $whitelist = null)

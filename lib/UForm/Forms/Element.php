@@ -332,7 +332,7 @@ abstract class Element
     /**
      * Returns the validators registered for the element
      *
-     * @return \UForm\Validation\Validator[]|null
+     * @return \UForm\Validation\Validator[]
      */
     public function getValidators()
     {
@@ -416,29 +416,6 @@ abstract class Element
 
         return $this->_attributes;
     }
-    
-
-    
-    /////////////
-    //
-    // RENDER
-    //
-    
-    public function render($attributes , $value , $data){
-        if(!is_array($attributes)){
-            $attributes = $this->getAttributes();
-        }else{
-            $attributes = array_merge($this->getAttributes(), $attributes);
-        }
-        
-        return $this->_render($attributes, $value, $data);
-        
-        
-    }
-    protected abstract function _render( $attributes , $value , $data  );
-    
-
-    
     
     ///////////
     //

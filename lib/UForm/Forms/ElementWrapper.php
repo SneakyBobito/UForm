@@ -2,13 +2,16 @@
 
 namespace UForm\Forms;
 
+use UForm\Forms\Element\Drawable;
+use UForm\Render\RenderContext;
+
 /**
  * ElementWrapper allows to wrap an element. The main goal is to 
  * - add your own parameters for rendering latter
  * - redefine the render method
  * @author sghzal
  */
-class ElementWrapper extends Element {
+class ElementWrapper extends Element implements Drawable {
     
     /**
      *
@@ -20,8 +23,8 @@ class ElementWrapper extends Element {
         $this->_wrapped = $element;
     }
     
-    public function _render($attributes, $value, $data) {
-        return $this->_wrapped->_render($attributes, $value, $data);
+    public function render(RenderContext $renderContext) {
+        return $this->_wrapped->_render($renderContext);
     }
     
     public function setParent(ElementContainer $p,$iname = null){

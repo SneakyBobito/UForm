@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sghzal
- * Date: 9/14/15
- * Time: 6:01 PM
- */
 
 namespace UForm\Render;
 

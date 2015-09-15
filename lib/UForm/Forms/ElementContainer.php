@@ -4,7 +4,8 @@ namespace UForm\Forms;
 
 /**
  *
- * Element that mays contain other elements
+ * Element that mays contain other elements.
+ * It only aims to be a common parent for Group and Collection
  *
  * Class ElementContainer
  * @package UForm\Forms
