@@ -2,15 +2,11 @@
 
 namespace UForm;
 
-use 
-	\Countable,
-	\Iterator,
-	\UForm\Form\Exception,
-	\UForm\Form\ElementInterface,
-	\UForm\Validation,
-	\UForm\Validation\Message\Group,
-        UForm\Form\Element\Group as ElementGroup;
+use UForm\Form\Element\Container\Group as ElementGroup;
+use UForm\Form\ElementInterface;
+use UForm\Form\Exception;
 use UForm\Navigator;
+use UForm\Validation;
 
 /**
  * UForm\Form\Form

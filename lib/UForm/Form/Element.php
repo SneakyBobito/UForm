@@ -1,22 +1,21 @@
 <?php
 /**
  * Element
-*/
+ */
 namespace UForm\Form;
 
+use UForm\DirectFilter;
 use UForm\Filter;
-use UForm\Form\Exception,
-        UForm\Form\Form,
-        UForm\Validation\ChainedValidation,
-        UForm\Tag,
-        UForm\Validation
-        ;
+use UForm\Form;
+use UForm\Form\Element\Container;
 use UForm\SemanticItem;
+use UForm\Validation;
+use UForm\Validation\ChainedValidation;
 
 
 /**
  * This is a base class for form elements
-
+ *
  * @semanticType element
  */
 abstract class Element
@@ -24,38 +23,35 @@ abstract class Element
     use SemanticItem;
 
     /**
-     * Form
-     *
-     * @var null|\UForm\Form\Form
-     * @access protected
-    */
+     * @var \UForm\Form\Element\Container
+     */
     protected $_parent;
 
     protected $_prename;
     protected $_name;
-    
+
     protected $_internalPrename;
     protected $_internalName;
-    
-    protected $_attributes;
-    protected $_options;
+
+    protected $_attributes = [];
+    protected $_options = [];
 
     /**
      * Validators
      *
      * @var Validation\Validator[]
      * @access protected
-    */
-    protected $_validators;
+     */
+    protected $_validators = [];
 
     /**
      * Filters
      *
      * @var \UForm\Filter[]
-    */
-    protected $_filters = array();
-    
-    
+     */
+    protected $_filters = [];
+
+
     /**
      *
      * @var Form
@@ -73,15 +69,15 @@ abstract class Element
     {
         $this->_name = $name;
 
-        if(is_array($attributes) === true) {
+        if (is_array($attributes) === true) {
             $this->_attributes = $attributes;
         }
 
-        if(null !== $validators){
+        if (null !== $validators) {
             $this->addValidators($validators);
         }
 
-        if(null !== $filters){
+        if (null !== $filters) {
             foreach ($filters as $f) {
                 $this->addFilter($f);
             }
@@ -91,18 +87,18 @@ abstract class Element
     }
 
 
-
-    public function addClass($className){
+    public function addClass($className)
+    {
 
         $currentClass = $this->getAttribute("class");
 
-        if($currentClass){
+        if ($currentClass) {
             $currentClass .= " ";
         }
 
         $currentClass .= $className;
 
-        $this->setAttribute("class", $className);
+        $this->setAttribute("class", $currentClass);
 
     }
 
@@ -110,53 +106,100 @@ abstract class Element
     //
     // PARENT
     //
-    
+
     /**
-     * Internal use only sets the parent
-     * @param \UForm\Form\Form $p
+     * Internal use only. Set a pointer to the parent element
+     * @param Form\Element\Container $parent
      * @return $this
      * @throws Exception
      */
-    public function setParent(ElementContainer $p,$iname = null){
-        $this->_form = $p->getForm();
-        $this->_parent = $p;
-        $this->_internalPrename = $p->getInternalName(true);
-        $this->_prename = $p->getName(true, true);
-        if ($iname) {
-            $this->_internalName = $iname;
-        }
+    public function setParent(Container $parent)
+    {
+        $this->_form = $parent->getForm();
+        $this->_parent = $parent;
+        $this->refreshParent();
         return $this;
     }
 
-    public function getForm() {
+    /**
+     * Should be called when a change occurs on the parents and the info related to the parent need to be updated
+     */
+    public function refreshParent(){
+        if($this->_parent) {
+            $this->setNamespace($this->_parent->getName(true, true));
+            $this->setInternalNamespace($this->_parent->getInternalName(true));
+        }
+    }
+
+    /**
+     * Internal use only. Set the namespace (parent dependant)
+     * @param $namespace
+     */
+    public function setNamespace($namespace){
+        $this->_prename = $namespace;
+    }
+
+    /**
+     * Internal use only. Set the internal namespace (parent dependant)
+     * @param $namespace
+     */
+    public function setInternalNamespace($namespace){
+        $this->_internalPrename = $namespace;
+    }
+
+    /**
+     * Internal use only. Set the internal name (parent dependant)
+     * @param $name
+     */
+    public function setInternalName($name){
+        $this->_internalName = $name;
+    }
+
+    /**
+     * Get the form the element belongs to
+     * @return Form the form the element belongs to
+     */
+    public function getForm()
+    {
         return $this->_form;
     }
 
-        
+
     /**
      * Get the parent Element
-     * @return ElementContainer
+     * @return Container the container that contains the element
      */
-    public function getParent() {
+    public function getParent()
+    {
         return $this->_parent;
     }
 
-    
-    
-    
-    
+
+
+
+
     /////////////
     //
     // NAME / INAME
     //
-    
+
     /**
-     * Returns the element's name
-     *
-     * @return string
+     * Change the name of the element
+     * @param $name
      */
-    public function getName($prenamed = false , $dottedNotation = false){
-        if ($prenamed && !empty($prenamed) && $this->_prename && !empty($this->_prename)) {
+    public function setName($name)
+    {
+        $this->_name = $name;
+    }
+
+    /**
+     * @param bool $namespaced if set to true it will return the name of the element with its namespace. The namespace it the name of all the parent elements
+     * @param bool $dottedNotation if set to true will return the nameme in a dotted notation, else it will use the html valid array notation
+     * @return mixed|null|string
+     */
+    public function getName($namespaced = false, $dottedNotation = false)
+    {
+        if ($namespaced && !empty($namespaced) && $this->_prename && !empty($this->_prename)) {
             if ($dottedNotation) {
                 return $this->_prename . "." . $this->_name;
             } else {
@@ -170,22 +213,23 @@ abstract class Element
             return $this->_name;
         }
     }
-    
-    public function getInternalName($prenamed = false) {
-        if ($prenamed && !empty($prenamed) && $this->_internalPrename && !empty($this->_internalPrename)) {
+
+    public function getInternalName($namespaced = false)
+    {
+        if ($namespaced && !empty($namespaced) && $this->_internalPrename && !empty($this->_internalPrename)) {
             return $this->_internalPrename . "." . $this->_internalName;
         } else {
             return $this->_internalName;
         }
     }
 
-    
-    
-    
 
-    
-    
-    
+
+
+
+
+
+
     /////////////
     //
     // FILTER
@@ -195,50 +239,64 @@ abstract class Element
      * Sets the element's filters
      *
      * @param array|string $filters
-     * @return \UForm\Form\Element
+     * @return $this
      * @throws Exception
      */
     public function setFilters($filters)
     {
-            if(is_string($filters) === false ||
-                    is_array($filters) === false) {
-                    throw new Exception('Invalid parameter type.');
-            }
+        if (is_string($filters) === false ||
+            is_array($filters) === false
+        ) {
+            throw new Exception('Invalid parameter type.');
+        }
 
-            $this->_filters = $filters;
+        $this->_filters = $filters;
 
-            return $this;
+        return $this;
     }
 
     /**
      * Adds a filter to current list of filters
      *
-     * @param callable|Filter $filter
+     * @param callable|Filter $filter the filter to add. It can also be a callback function that will be transformed in a @see DirectFilter
      * @throws Exception
+     * @return $this;
      */
-    public function addFilter($filter){
-        if(is_callable($filter)){
-            $filter = new \UForm\DirectFilter($filter);
+    public function addFilter($filter)
+    {
+        if (is_callable($filter)) {
+            $filter = new DirectFilter($filter);
         }
-
         $this->_filters[] = $filter;
+        return $this;
     }
 
     /**
      * Returns the element's filters
-     *
-     * @return null|string|array
+     * @return Filter[] the filters of the element
      */
     public function getFilters()
     {
-            return $this->_filters;
+        return $this->_filters;
     }
-    
-    
-    
-    
-    
-    
+
+    /**
+     * Apply filters of the element to sanitize the given data
+     * @param mixed $data the data to sanitize
+     * @return mixed the sanitized data
+     */
+    public function sanitizeData($data)
+    {
+        $filters = $this->getFilters();
+        foreach ($filters as $filter) {
+            $data = $filter->filter($data);
+        }
+        return $data;
+    }
+
+
+
+
     /////////////////
     //
     // VALIDATORS
@@ -247,53 +305,39 @@ abstract class Element
     /**
      * Adds a group of validators
      *
-     * @param \UForm\Validation\ValidatorInterface[] $validators
-     * @param boolean|null $merge
+     * @param \UForm\Validation\Validator[] $validators
      * @return $this
      * @throws Exception
      */
-    public function addValidators($validators, $merge = true)
+    public function addValidators($validators)
     {
-
-        if(is_array($validators) === false) {
+        if (is_array($validators) === false) {
             throw new Exception("The validators parameter must be an array");
         }
-
-        if(is_array($this->_validators) === false) {
-            $this->_validators = array();
+        foreach ($validators as $validator) {
+            $this->addValidator($validator);
         }
-
-        //@note nothing happens when $merge === false
-        if($merge === true) {
-            if(is_array($this->_validators) === true) {
-                $this->_validators = array_merge($this->_validators, $validators);
-            } else {
-                $this->_validators = $validators;
-            }
-        }
-
         return $this;
     }
 
     /**
      * Adds a validator to the element
      *
-     * @param \UForm\Validation\Validator $validator
+     * @param \UForm\Validation\Validator|callable $validator the validator to add, it can also be a callback that will be transformed in a @see DirectValidator
      * @throws Exception
+     * @return $this
      */
-    public function addValidator(Validation\Validator $validator)
+    public function addValidator($validator)
     {
-
-        if(is_callable($validator)){
+        if (is_callable($validator)) {
             $validator = new Validation\DirectValidator($validator);
-        }else if(is_object($validator) === false ||
-            $validator instanceof Validation\Validator === false) {
+        } else if (is_object($validator) === false ||
+            $validator instanceof Validation\Validator === false
+        ) {
             throw new Exception('The validators parameter must be an object extending UForm\Validation\Validator ');
-        }else if(is_array($this->_validators) === false) {
-            $this->_validators = array();
         }
-
         $this->_validators[] = $validator;
+        return $this;
     }
 
     /**
@@ -306,103 +350,100 @@ abstract class Element
         return $this->_validators ? $this->_validators : array();
     }
 
-    
-    
-    
-    /**
+
+
+
+    //////////////
+    // ATTRIBUTES
+    //
 
     /**
-     * Sets a default attribute for the element
+     * Sets a value for an attribute. Will replace the current one if it already exists
      *
-     * @param string $attribute
-     * @param mixed $value
-     * @return Element
+     * @param string $attribute name of the attribute
+     * @param string $value value of the attribute
+     * @return $this
      * @throws Exception
      */
-    public function setAttribute($attribute, $value){
-            if(is_string($attribute) === false) {
-                    throw new Exception('Invalid parameter type.');
-            }
+    public function setAttribute($attribute, $value)
+    {
+        if (is_string($attribute) === false) {
+            throw new Exception('Invalid parameter type.');
+        }
 
-            if(is_array($this->_attributes) === false) {
-                    $this->_attributes = array();
-            }
+        $this->_attributes[$attribute] = $value;
 
-            $this->_attributes[$attribute] = $value;
-
-            return $this;
+        return $this;
     }
 
     /**
      * Returns the value of an attribute if present
      *
-     * @param string $attribute
-     * @param mixed $defaultValue
-     * @return mixed
+     * You can specify a default value to return if the attribute does not exist
+     *
+     * @param string $attribute name of the attribute
+     * @param mixed $defaultValue value to return if the attribute does not exist
+     * @return string the value of the attribute
      * @throws Exception
      */
-    public function getAttribute($attribute, $defaultValue = null){
-            if(is_string($attribute) === false) {
-                    throw new Exception('Invalid parameter type.');
-            }
-
-            if(is_array($this->_attributes) === true &&
-                    isset($this->_attributes[$attribute]) === true) {
-                    return $this->_attributes[$attribute];
-            }
-
-            return $defaultValue;
+    public function getAttribute($attribute, $defaultValue = null)
+    {
+        if (is_string($attribute) === false) {
+            throw new Exception('Invalid parameter type.');
+        }
+        if (isset($this->_attributes[$attribute])) {
+            return $this->_attributes[$attribute];
+        }
+        return $defaultValue;
     }
 
     /**
-     * Sets default attributes for the element
+     * Sets values for many attributes
      *
-     * @param array $attributes
-     * @return \UForm\Form\Element
+     * @param array $attributes list of attributes to add ["name" => "value"]
+     * @return $this
      * @throws Exception
      */
-    public function setAttributes($attributes){
-            if(is_array($attributes) === false) {
-                    throw new Exception("Parameter 'attributes' must be an array");
-            }
-
-            $this->_attributes = $attributes;
-
-            return $this;
+    public function addAttributes($attributes)
+    {
+        if (is_array($attributes) === false) {
+            throw new Exception("Parameter 'attributes' must be an array");
+        }
+        foreach ($attributes as $attribute => $value) {
+            $this->addAttributes($attribute, $value);
+        }
+        return $this;
     }
 
     /**
-     * Returns the default attributes for the element
-     *
-     * @return array
+     * Returns the attributes for the element
+     * @return array attributes of the element
      */
-    public function getAttributes(){
-        if(is_array($this->_attributes) === false) {
+    public function getAttributes()
+    {
+        if (is_array($this->_attributes) === false) {
             return array();
         }
-
         return $this->_attributes;
     }
-    
+
     ///////////
     //
     // OPTION
     //
-    
+
     /**
      * Sets an option for the element
      *
-     * @param string $option
-     * @param mixed $value
-     * @return \UForm\Form\ElementInterface
+     * @param string $option name of the option
+     * @param mixed $value value of the option
+     * @return $this
      * @throws Exception
      */
-    public function setUserOption($option, $value){
-        if(is_string($option) === false) {
+    public function setUserOption($option, $value)
+    {
+        if (is_string($option) === false) {
             throw new Exception('Invalid parameter type.');
-        }
-        if(is_array($this->_options) === false) {
-            $this->_options = array();
         }
         $this->_options[$option] = $value;
         return $this;
@@ -411,86 +452,68 @@ abstract class Element
     /**
      * Returns the value of an option if present
      *
-     * @param string $option
-     * @param mixed $defaultValue
-     * @return mixed
+     * You can specify a default value to return if the option does not exist
+     *
+     * @param string $option name of the option
+     * @param mixed $defaultValue default value to return if option does not exist
+     * @return mixed value of the option or the default value
      * @throws Exception
      */
-    public function getUserOption($option, $defaultValue = null){
-        if(is_array($this->_options) === true &&
-            isset($this->_options[$option]) === true) {
+    public function getUserOption($option, $defaultValue = null)
+    {
+        if (is_array($this->_options) === true &&
+            isset($this->_options[$option]) === true
+        ) {
             return $this->_options[$option];
         }
         return $defaultValue;
     }
 
     /**
-     * Sets options for the element
+     * Set value of many options
      *
-     * @param array $options
-     * @return \UForm\Form\ElementInterface
+     * @param array $options list of the options ["optionName" => "value"]
+     * @return $this
      * @throws Exception
      */
-    public function setUserOptions($options){
-        if(is_array($options) === false) {
+    public function setUserOptions($options)
+    {
+        if (is_array($options) === false) {
             throw new Exception("Parameter 'options' must be an array");
         }
-        $this->_options = $options;
+        foreach ($options as $option => $value) {
+            $this->setUserOption($option, $value);
+        }
         return $this;
     }
 
     /**
      * Returns the options for the element
      *
-     * @return array|null
+     * @return array
      */
     public function getUserOptions()
     {
-            return $this->_options;
+        return $this->_options;
     }
 
-    public function setName($_name) {
-        $this->_name = $_name;
-    }
 
-    
-    public function isValid(ChainedValidation $cV){
-        return $cV->getValidation($this->getInternalName(true) , true);
-    }
-    
-    public function childrenAreValid(ChainedValidation $cV){
-        return $this->isValid($cV);
-    }
-
-    public function prepareValidation($localValues,  ChainedValidation $cV){
+    /**
+     * Internal use - prepare the validation object
+     *
+     * Intended to be overwritten
+     *
+     * @param $localValues
+     * @param ChainedValidation $cV
+     */
+    public function prepareValidation($localValues, ChainedValidation $cV)
+    {
         $validators = $this->getValidators();
-        $filters    = $this->getFilters();
-        
-        $v = new \UForm\Validation($this, $localValues , $cV, $validators);
+        $filters = $this->getFilters();
+
+        $v = new \UForm\Validation($this, $localValues, $cV, $validators);
         $v->setFilters($filters);
-        
+
         $cV->addValidation($v);
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /////////////////////////:
-    //
-    // ADDITIONAL LOGIC
-    //
-    
-    public function addRequiredValidator($message){
-        $validator = new Validation\Validator\Required(array("message"=>$message));
-        $this->addValidator($validator);
-    }
-    
-    
-    
 }

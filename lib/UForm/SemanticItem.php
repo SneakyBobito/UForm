@@ -16,7 +16,7 @@ namespace UForm;
  */
 trait SemanticItem {
 
-    protected $semanticTypes;
+    protected $semanticTypes = [];
 
     /**
      * add a semantic type that can check with isType()

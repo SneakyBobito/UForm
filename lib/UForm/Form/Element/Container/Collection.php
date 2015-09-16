@@ -3,10 +3,8 @@
 namespace UForm\Form\Element;
 
 use UForm\Form\Element;
-use UForm\Form\Exception;
-use UForm\Validation\ChainedValidation
-;
 use UForm\Form\ElementContainer;
+use UForm\Validation\ChainedValidation;
 
 /**
  * Collection
@@ -27,7 +25,7 @@ class Collection extends ElementContainer{
 
 
 
-    public function __construct($name, $elementDefinition, $min = 1, $max = -1) {
+    public function __construct($name, Element $elementDefinition, $min = 1, $max = -1) {
         parent::__construct($name);
         $this->elementDefinition = $elementDefinition;
         $this->min = $min;
@@ -79,7 +77,8 @@ class Collection extends ElementContainer{
         if(!isset($this->__internalElementClones[$index])){
             $element = clone $this->elementDefinition;
             $element->setName($index);
-            $element->setParent($this, $index);
+            $element->setParent($this);
+            $element->setInternalName($index);
             $this->__internalElementClones[$index] = $element;
         }
 

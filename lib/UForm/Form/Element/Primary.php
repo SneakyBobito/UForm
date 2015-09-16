@@ -7,8 +7,8 @@ namespace UForm\Form\Element;
 use UForm\Form\Element;
 
 /**
- * A final element is the opposite of a container.
- * It cant contain other elements and therefor it can be rendered
+ * A primary element is the opposite of a container.
+ * It cant contain other elements and therefor it can be rendered directly
  * Class FinalElement
  * @semanticType final
  */

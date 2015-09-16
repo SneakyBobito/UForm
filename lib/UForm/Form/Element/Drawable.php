@@ -1,6 +1,6 @@
 <?php
 
-namespace UForm\Form\Drawable;
+namespace UForm\Form\Element;
 
 /**
  * Elements that implement this interface have the ability to be rendered without template

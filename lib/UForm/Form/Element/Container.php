@@ -1,6 +1,7 @@
 <?php
 
 namespace UForm\Form\Element;
+use UForm\Form\Element;
 
 /**
  *
@@ -44,5 +45,15 @@ abstract class Container extends Element {
         }
         return false;
     }
+
+    public function setParent(Container $parent)
+    {
+        $r = parent::setParent($parent);
+        foreach($this->getElements() as $element){
+            $element->refreshParent();
+        }
+        return $r;
+    }
+
 
 }

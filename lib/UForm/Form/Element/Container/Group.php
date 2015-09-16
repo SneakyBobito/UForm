@@ -1,12 +1,10 @@
 <?php
 
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Container;
 
-use UForm\Form\Drawable;
-use UForm\Validation\ChainedValidation,
-    UForm\Form\Exception
-    ;
-use UForm\Form\ElementContainer;
+use UForm\Form\Element\Container;
+use UForm\Form\Element\Drawable;
+use UForm\Validation\ChainedValidation;
 
 /**
  * Group that can contains many elements
@@ -14,7 +12,7 @@ use UForm\Form\ElementContainer;
  * @author sghzal
  * @semanticType group
  */
-class Group extends ElementContainer implements Drawable{
+class Group extends Container implements Drawable{
     
     /**
      * @var \UForm\Form\Element[]
@@ -36,7 +34,9 @@ class Group extends ElementContainer implements Drawable{
     public function addElement(\UForm\Form\Element $element){
         $iname = "i" . count($this->elements);
         $this->elements[$iname] = $element;
-        $element->setParent($this, $iname);
+        $element->setParent($this);
+        var_dump($iname);
+        $element->setInternalName($iname);
     }
     
     public function getName($prenamed = null, $dottedNotation = false) {
