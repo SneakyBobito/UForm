@@ -1,6 +1,6 @@
 <?php
 
-namespace Uform\Validation;
+namespace UForm\Validation;
 
 class Exception extends \Exception
 {

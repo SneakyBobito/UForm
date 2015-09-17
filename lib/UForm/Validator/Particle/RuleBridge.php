@@ -3,7 +3,7 @@
  * @license see LICENSE
  */
 
-namespace UForm\Validator;
+namespace UForm\Validator\Particle;
 
 
 use Particle\Validator\Rule;
@@ -13,7 +13,7 @@ use UForm\Validator;
  * This is a bridge that allows to use classes from particle validator
  * @see https://github.com/particle-php/Validator
  */
-class ParticleRuleBridge extends Validator{
+class RuleBridge extends Validator{
 
     /**
      * @var Rule
@@ -32,6 +32,7 @@ class ParticleRuleBridge extends Validator{
      */
     public function validate(\UForm\ValidationItem $validationItem)
     {
+        $this->rule->setMessageStack(new MessageStackBridge($validationItem));
         return $this->rule->validate($validationItem->getValue());
     }
 

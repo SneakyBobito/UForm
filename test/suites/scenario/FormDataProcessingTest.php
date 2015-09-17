@@ -12,11 +12,11 @@ class FormDataProcessingTest extends PHPUnit_Framework_TestCase {
 
         $userName = new \UForm\Form\Element\Primary\Text("username");
         $userName->addFilter(new \UForm\Filter\Trim());
-        $userName->addValidator(new \UForm\Validator\ParticleRuleBridge(new \Particle\Validator\Rule\LengthBetween(2, 5)));
+        $userName->addValidator(new \UForm\Validator\Particle\RuleBridge(new \Particle\Validator\Rule\LengthBetween(2, 5)));
 
         $password = new \UForm\Form\Element\Primary\Password("password");
         $password->addFilter(new \UForm\Filter\Trim());
-        $password->addValidator(new \UForm\Validator\ParticleRuleBridge(new \Particle\Validator\Rule\LengthBetween(8, 10)));
+        $password->addValidator(new \UForm\Validator\Particle\RuleBridge(new \Particle\Validator\Rule\LengthBetween(8, 10)));
 
         $form->addElement($userName);
         $form->addElement($password);
@@ -34,10 +34,6 @@ class FormDataProcessingTest extends PHPUnit_Framework_TestCase {
         $this->assertSame($expected, $context->getData()->getArrayCopy());
         $this->assertTrue($context->isValid());
 
-
-
-        $this->markTestSkipped("Particle validator was failing must be fixed");
-        return;
 
         // TEST 2
         $context = $form->validate([
