@@ -10,8 +10,6 @@
 */
 namespace Uform\Validation;
 
-use \Uform\Validation\Exception;
-
 /**
  * Phalcon\Validation\Message
  *
@@ -55,17 +53,7 @@ class Message
 	 */
 	public function __construct($message, $field = null, $type = null)
 	{
-		if(is_string($message) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
 
-		if(is_string($field) === false && is_null($field) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		if(is_string($type) === false && is_null($type) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
 
 		$this->_message = $message;
 		$this->_field = $field;

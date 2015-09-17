@@ -5,11 +5,11 @@
  */
 namespace UForm\Validation\Message;
 
-use \UForm\Validation\Message,
-	\UForm\Validation\MessageInterface,
-	\Countable,
-	\ArrayAccess,
-	\Iterator;
+use ArrayAccess;
+use Countable;
+use Iterator;
+use UForm\Validation\Message;
+use UForm\Validation\MessageInterface;
 
 /**
  * Represents a group of validation messages
@@ -138,13 +138,8 @@ class Group implements Countable, ArrayAccess, Iterator
 	 * @param \UForm\Validation\MessageInterface $message
 	 * @throws Exception
 	 */
-	public function appendMessage($message)
+	public function appendMessage(Message $message)
 	{
-		if(is_object($message) === false &&
-			$message instanceof MessageInterface) {
-			throw new Exception('The message must be an object');
-		}
-
 		$this->_messages[] = $message;
 	}
 

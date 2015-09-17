@@ -1,11 +1,11 @@
 <?php
 
 
-namespace UForm\Validation\Validator;
+namespace UForm\Validator;
 
 
 use UForm\Validation;
-use UForm\Validation\Validator;
+use UForm\Validator;
 
 /**
  * Class SelfValue
@@ -14,7 +14,7 @@ use UForm\Validation\Validator;
  *
  * @see \UForm\Validation\Element\RangeValueValidationInterface
  *
- * @package UForm\Validation\Validator
+ * @package UForm\Validator
  */
 class SelfValue extends Validator{
 

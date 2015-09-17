@@ -1,20 +1,16 @@
 <?php
 
-namespace UForm\Validation;
+namespace UForm\Validator;
 
-use \UForm\Validation\Validator;
+use UForm\Validator;
 
-class DirectValidator extends Validator
+class DirectClosure extends Validator
 {
     
     protected $closure;
 
 
-    public function __construct( $closure , $options = null) {
-        
-        if(!is_callable($closure))
-            throw new Exception ("Param 1 must be a closure");
-        
+    public function __construct(callable $closure , $options = null) {
         $this->closure = $closure;
         parent::__construct($options);
     }

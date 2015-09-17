@@ -4,6 +4,7 @@
  */
 namespace UForm\Form;
 
+use UForm\DataContext;
 use UForm\FilterGroup;
 use UForm\Form;
 use UForm\Form\Element\Container;
@@ -11,6 +12,7 @@ use UForm\OptionGroup;
 use UForm\SemanticItem;
 use UForm\Validation;
 use UForm\Validation\ChainedValidation;
+use UForm\ValidationItem;
 use UForm\ValidatorGroup;
 
 
@@ -295,12 +297,11 @@ abstract class Element
      * @param $localValues
      * @param ChainedValidation $cV
      */
-    public function prepareValidation($localValues, ChainedValidation $cV)
+    public function prepareValidation(DataContext $localValues, FormContext $formContext)
     {
         $validators = $this->getValidators();
-
-        $v = new \UForm\Validation($this, $localValues, $cV, $validators);
-
-        $cV->addValidation($v);
+        $v = new ValidationItem($localValues, $this, $formContext);
+        $v->addValidators($validators);
+        $formContext->getChainedValidation()->addValidation($v);
     }
 }

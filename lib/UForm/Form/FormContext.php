@@ -2,7 +2,8 @@
 
 namespace UForm\Form;
 
-
+use UForm\DataContext;
+use UForm\Form;
 use UForm\Validation\ChainedValidation;
 
 class FormContext {
@@ -13,16 +14,35 @@ class FormContext {
     protected $form;
 
     /**
+     * @var DataContext
+     */
+    protected $data;
+
+    /**
      * @var ChainedValidation
      */
     protected $chainValidation;
 
-    function __construct($form, $chainValidation = null)
+    function __construct($form, DataContext $data)
     {
         $this->form = $form;
-        $this->chainValidation = $chainValidation;
+        $this->data = $data;
+        $this->chainValidation = new ChainedValidation($data);
     }
 
+    /**
+     * @return ChainedValidation
+     */
+    public function getChainedValidation()
+    {
+        return $this->chainValidation;
+    }
+
+    public function validate(){
+        $this->form->prepareValidation($this->data, $this);
+        $this->chainValidation->validate();
+        return $this->chainValidation->isValid();
+    }
 
     /**
      * @return Form
@@ -32,17 +52,15 @@ class FormContext {
         return $this->form;
     }
 
+    /**
+     *
+     * @return DataContext
+     */
     public function getData(){
-        if(!$this->chainValidation){
-            return [];
-        }
-        return $this->chainValidation->getData();
+        return $this->data;
     }
 
     public function isValid(){
-        if(!$this->chainValidation){
-            return true;
-        }
         return $this->chainValidation->isValid();
     }
 
@@ -64,7 +82,6 @@ class FormContext {
         if(!$this->chainValidation){
             return null;
         }
-
     }
 
 }

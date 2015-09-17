@@ -1,20 +1,15 @@
 <?php
 
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Primary;
 
-use UForm\Form\Element,
-    UForm\Tag
-;
-use UForm\Form\FinalElement;
-use UForm\Render\RenderContext;
+use UForm\Form\Element;
+use UForm\Tag;
 
 /**
- * Input
  *
- * @author sghzal
  * @semanticType input
  */
-class Input extends FinalElement  {
+class Input extends Element\Primary  {
     
     private $inputType;
 

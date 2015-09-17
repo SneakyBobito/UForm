@@ -3,9 +3,9 @@
 namespace UForm;
 
 
-use UForm\Forms\Element\Collection;
-use UForm\Forms\ElementContainer;
-use UForm\Forms\Form;
+use UForm\Form;
+use UForm\Form\Element\Collection;
+use UForm\Form\Element\Container;
 use UForm\Navigator\Exception;
 
 class Navigator {
@@ -25,11 +25,11 @@ class Navigator {
 
         $stringParts = explode("." , $string);
 
-        $actual = $form->get(array_shift($stringParts));
+        $actual = $form->getElement(array_shift($stringParts));
 
         while( !empty($stringParts) ){
 
-            if($actual instanceof ElementContainer || $actual instanceof Collection){
+            if($actual instanceof Container || $actual instanceof Collection){
                 $actual = $actual->getElement(array_shift($stringParts));
             }else{
                 throw new Exception("element should be a group (usualy collection or group)");
@@ -48,10 +48,10 @@ class Navigator {
      * @param int $rOffset  the reversed offset default 0. With the string "foo.bar.0" | $rOffset=0 will get "foo.bar.0"  |  $rOffset=1 will get "foo.bar" |  $rOffset=2 will get "foo"
      * @return null
      */
-    public function arrayGet($local, $global, $string, $rOffset = 0){
+    public function arrayGet($data, $string, $rOffset = 0){
 
         if( is_null($string) || empty($string)){
-            return $global;
+            return $data;
         }
 
         $stringParts = explode(".", $string);
@@ -61,23 +61,17 @@ class Navigator {
                 array_pop($stringParts);
             }
         }
-        
-        if( "." === $string{0} )
-            $actual = $local;
-        else
-            $actual = $global;
-        
-        
+
         while (!empty($stringParts)){
             $newName = array_shift($stringParts);
-            if(!isset($actual[$newName])){
+            if(!isset($data[$newName])){
                 return null;
             }else{
-                $actual = $actual[$newName];
+                $data = $data[$newName];
             }
         }
         
-        return $actual;
+        return $data;
         
     }
 

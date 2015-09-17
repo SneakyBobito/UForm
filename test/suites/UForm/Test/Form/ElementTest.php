@@ -28,7 +28,7 @@ class ElementTest extends \PHPUnit_Framework_TestCase {
 
         $elementName = "elementName";
         $attributes = ["at1" => "val1", "at2" => "val2"];
-        $validators = [$this->getMockForAbstractClass('UForm\Validation\Validator'), $this->getMockForAbstractClass('UForm\Validation\Validator')];
+        $validators = [$this->getMockForAbstractClass('UForm\Validator'), $this->getMockForAbstractClass('UForm\Validator')];
         $filters= [$this->getMockForAbstractClass('UForm\Filter'), $this->getMockForAbstractClass('UForm\Filter')];
 
         /* @var $element Element */

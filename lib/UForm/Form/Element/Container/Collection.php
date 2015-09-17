@@ -3,7 +3,6 @@
 namespace UForm\Form\Element;
 
 use UForm\Form\Element;
-use UForm\Form\ElementContainer;
 use UForm\Validation\ChainedValidation;
 
 /**
@@ -12,7 +11,7 @@ use UForm\Validation\ChainedValidation;
  * @author sghzal
  * @semanticType collection
  */
-class Collection extends ElementContainer{
+class Collection extends Container{
     
     /**
      * @var \UForm\Form\Element
@@ -52,11 +51,11 @@ class Collection extends ElementContainer{
     }
     
     
-    public function prepareValidation($localValues,  ChainedValidation $cV){
+    public function prepareValidation($localvalues, chainedvalidation $cV){
         
         parent::prepareValidation($localValues, $cV);
         
-        if( isset($localValues[$this->getName()]) && is_array($localValues[$this->getName()]) ){
+        if(isset($localValues[$this->getName()]) && is_array($localValues[$this->getName()])) {
             foreach ($localValues[$this->getName()] as $k=>$v){
                 $element = $this->__getElemement($k);
                 $element->prepareValidation($localValues[$this->getName()], $cV);

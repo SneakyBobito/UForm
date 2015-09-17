@@ -1,9 +1,9 @@
 <?php
 
-namespace UForm\Validation\Validator;
+namespace UForm\Validator;
 
-use \UForm\Validation\Validator,
-	\UForm\Validation;
+use UForm\Validation;
+use UForm\Validator;
 
 
 class AlphaNum extends Validator{

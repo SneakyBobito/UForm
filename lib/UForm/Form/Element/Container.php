@@ -37,9 +37,23 @@ abstract class Container extends Element {
      * @param string $className the name of the class to search for
      * @return bool
      */
-    public function hasDirectElementType($className){
+    public function hasDirectElementInstance($className){
         foreach($this->getElements() as $el){
             if(is_a($el, $className)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * check if this element contains an element with the given semantic type
+     * @param string $type the type to search for
+     * @return bool
+     */
+    public function hasDirectElementSemanticType($type){
+        foreach($this->getElements() as $el){
+            if($el->hasSemanticType($type)){
                 return true;
             }
         }
@@ -53,6 +67,25 @@ abstract class Container extends Element {
             $element->refreshParent();
         }
         return $r;
+    }
+
+    public function sanitizeData($data)
+    {
+        $data = parent::sanitizeData($data);
+        foreach($this->getElements($data) as $element){
+            $name = $element->getName();
+            if($name){
+                if(isset($data[$name])){
+                    $newData = $data[$name];
+                }else{
+                    $newData = null;
+                }
+                $data[$name] = $element->sanitizeData($newData);
+            }else{
+                $data = $element->sanitizeData($data);
+            }
+        }
+        return $data;
     }
 
 

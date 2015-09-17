@@ -3,8 +3,8 @@
 namespace UForm;
 
 use UForm\Form\Element\Container\Group as ElementGroup;
-use UForm\Form\ElementInterface;
 use UForm\Form\Exception;
+use UForm\Form\FormContext;
 use UForm\Navigator;
 use UForm\Validation;
 
@@ -120,9 +120,24 @@ class Form extends ElementGroup {
      * @return FormContext
      */
     public function validate($inputData){
-        $validation = new Validation\ChainedValidation($inputData);
-        $this->prepareValidation($validation->getData() , $validation);
-        $this->formContext = new FormContext($this, $validation);
-        return $this->context;
+        $formContext = $this->generateContext($inputData);
+        $formContext->validate();
+        return $formContext;
+    }
+
+    /**
+     * Generate a form context with the given data
+     * @param null $data
+     * @return FormContext
+     */
+    public function generateContext($data = null){
+        if(null === $data){
+            $data = new DataContext([]);
+        }else {
+            $data = new DataContext($this->sanitizeData($data));
+        }
+
+        $formContext = new FormContext($this, $data);
+        return $formContext;
     }
 }

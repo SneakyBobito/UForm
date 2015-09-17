@@ -1,15 +1,13 @@
 <?php
 
-namespace UForm;
+namespace UForm\Filter;
 
 use UForm\Filter;
 
 /**
- * Description of DirectFilter
- *
- * @author sghzal
+ * Usefull to create filter on the fly by only passing a callback function
  */
-class DirectFilter extends Filter {
+class DirectClosure extends Filter {
     
     public $closure;
     
@@ -21,6 +19,4 @@ class DirectFilter extends Filter {
         $closure = $this->closure;
         return $closure($v);
     }
-
-    
 }

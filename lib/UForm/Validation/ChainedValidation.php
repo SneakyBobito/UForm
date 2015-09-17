@@ -1,9 +1,10 @@
 <?php
 
 namespace UForm\Validation;
-use UForm\Forms\Element;
+use UForm\Form\Element;
 use UForm\Navigator;
 use UForm\Validation;
+use UForm\ValidationItem;
 
 /**
  * ChaineValidation
@@ -13,24 +14,23 @@ use UForm\Validation;
 class ChainedValidation {
 
     /**
-     * @var Validation[]
+     * @var ValidationItem[]
      */
     protected $validationsName = array();
     /**
-     * @var Validation[]
+     * @var ValidationItem[]
      */
     protected $validationsInternalName = array();
     
     protected $data;
     
-    protected $isValid;
+    protected $isValid = true;
             
     function __construct($data) {
         $this->data = $data;
     }
 
-    
-    public function addValidation(\UForm\Validation $validation){
+    public function addValidation(ValidationItem $validation){
         $el = $validation->getElement();
         if($el->getName()){
             $this->validationsName[$el->getName(true, true)] = $validation;
@@ -55,7 +55,7 @@ class ChainedValidation {
     /**
      * get the validation by its name
      * @param $name
-     * @return null|Validation
+     * @return null|ValidationItem
      */
     public function getValidation($name, $iname=false){
 
@@ -88,7 +88,7 @@ class ChainedValidation {
         
         // we init validation before (e.g we init messages to make them ready from everywhere)
         foreach($this->validationsInternalName as $v){
-            $v->initValidation();
+            $v->resetValidation();
         }
         
         foreach ($this->validationsInternalName as $v){

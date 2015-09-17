@@ -6,17 +6,19 @@
 namespace UForm;
 
 
+use UForm\Validator\DirectClosure;
+
 trait ValidatorGroup {
 
     /**
-     * @var Validation\Validator[]
+     * @var \UForm\Validator[]
      */
     protected $_validatorGroup = [];
 
     /**
      * Adds a group of validators
      *
-     * @param \UForm\Validation\Validator[] $validators
+     * @param \UForm\\UForm\Validator[] $validators
      * @return $this
      * @throws Exception
      */
@@ -34,16 +36,16 @@ trait ValidatorGroup {
     /**
      * Adds a validator
      *
-     * @param \UForm\Validation\Validator|callable $validator the validator to add, it can also be a callback that will be transformed in a @see DirectValidator
+     * @param \UForm\\UForm\Validator|callable $validator the validator to add, it can also be a callback that will be transformed in a @see DirectValidator
      * @throws Exception
      * @return $this
      */
     public function addValidator($validator)
     {
         if (is_callable($validator)) {
-            $validator = new Validation\DirectValidator($validator);
-        } else if (!is_object($validator) || !$validator instanceof Validation\Validator) {
-            throw new Exception('The validators parameter must be an object extending UForm\Validation\Validator ');
+            $validator = new DirectClosure($validator);
+        } else if (!is_object($validator) || !$validator instanceof \UForm\Validator) {
+            throw new Exception('The validators parameter must be an object extending UForm\\UForm\Validator ');
         }
         $this->_validatorGroup[] = $validator;
         return $this;
@@ -52,7 +54,7 @@ trait ValidatorGroup {
     /**
      * Returns the validators registered for the element
      *
-     * @return \UForm\Validation\Validator[]
+     * @return Validator[]
      */
     public function getValidators()
     {

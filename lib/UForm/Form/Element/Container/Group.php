@@ -2,8 +2,10 @@
 
 namespace UForm\Form\Element\Container;
 
+use UForm\DataContext;
 use UForm\Form\Element\Container;
 use UForm\Form\Element\Drawable;
+use UForm\Form\FormContext;
 use UForm\Validation\ChainedValidation;
 
 /**
@@ -110,20 +112,20 @@ class Group extends Container implements Drawable{
     }
 
 
-    public function prepareValidation($localValues,  ChainedValidation $cV){
-        
-        parent::prepareValidation($localValues, $cV);
-        $localValues = (array) $localValues;
+    /**
+     * @inheritdoc
+     */
+    public function prepareValidation(DataContext $localValues, FormContext $formContext){
+        parent::prepareValidation($localValues, $formContext);
+        $name = $this->getName();
         foreach ($this->getElements() as $k=>$v){
-            
-            if($this->getName()){
-                $values = isset($localValues[$this->getName()]) ? $localValues[$this->getName()] : null;
+            if($name){
+                $values = $localValues->getDirectValue($name);
             }else{
-                $values = $localValues;
+                $values = $localValues->getArrayCopy();
             }
-            $v->prepareValidation($values, $cV);
+            $v->prepareValidation(new DataContext($values), $formContext);
         }
-        
     }
     
     public function childrenAreValid(ChainedValidation $cV) {
