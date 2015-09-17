@@ -129,18 +129,15 @@ class ChainedValidation {
      * @return boolean
      */
     public function elementChildrenAreValid($name){
-        $element = null;
+        $validation = null;
         if(is_string($name)){
             $validation = $this->getValidation($name);
-            if($validation){
-                $element = $validation->getElement();
-            }
-        }else{
-            $element = $name;
+        }else if($name instanceof Element){
+            $validation = $this->getValidation($element->getName(true, true));
         }
-        if (!$element instanceof Element) {
+        if (!$validation instanceof ValidationItem) {
             throw new Exception("Element not valid for children validation");
         }
-        return $element->childrenAreValid($this);
+        return $validation->childrenAreValid($this);
     }
 }

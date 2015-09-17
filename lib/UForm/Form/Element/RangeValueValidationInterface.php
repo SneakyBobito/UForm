@@ -5,6 +5,6 @@ namespace UForm\Validation\Element;
 
 interface RangeValueValidationInterface {
 
-    public function getValueRange();
+    public function isInRange($value);
 
 }

@@ -65,23 +65,15 @@ class FormContext {
     }
 
     public function elementIsValid($elementName){
-        if(!$this->chainValidation){
-            return true;
-        }
         return $this->chainValidation->elementIsValid($elementName);
     }
 
     public function childrenAreValid($elementName){
-        if(!$this->chainValidation){
-            return true;
-        }
         return $this->chainValidation->elementChildrenAreValid($elementName);
     }
 
-    public function getLocalValue(){
-        if(!$this->chainValidation){
-            return null;
-        }
+    public function getValueFor($name){
+        return $this->getData()->findValue($name);
     }
 
 }

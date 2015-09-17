@@ -1,22 +1,8 @@
 <?php
-/**
- * Message
- *
- * @author Andres Gutierrez <andres@phalconphp.com>
- * @author Eduar Carvajal <eduar@phalconphp.com>
- * @author Wenzel Pünter <wenzel@phelix.me>
- * @version 1.2.6
- * @package Phalcon
-*/
+
 namespace Uform\Validation;
 
-/**
- * Phalcon\Validation\Message
- *
- * Encapsulates validation info generated in the validation process
- * 
- * @see https://github.com/phalcon/cphalcon/blob/1.2.6/ext/validation/message.c
- */
+
 class Message
 {
 	/**
@@ -25,7 +11,7 @@ class Message
 	 * @var null|string
 	 * @access protected
 	*/
-	protected $_type;
+	protected $type;
 
 	/**
 	 * Message
@@ -33,7 +19,7 @@ class Message
 	 * @var null|string
 	 * @access protected
 	*/
-	protected $_message;
+	protected $message;
 
 	/**
 	 * Field
@@ -41,39 +27,19 @@ class Message
 	 * @var null|string
 	 * @access protected
 	*/
-	protected $_field;
+	protected $variables;
 
 	/**
-	 * \Uform\Validation\Message constructor
-	 *
 	 * @param string $message
-	 * @param string|null $field
+	 * @param string|null $variables
 	 * @param string|null $type
 	 * @throws Exception
 	 */
-	public function __construct($message, $field = null, $type = null)
+	public function __construct($message, $variables = null, $type = null)
 	{
-
-
-		$this->_message = $message;
-		$this->_field = $field;
-		$this->_type = $type;
-	}
-
-	/**
-	 * Sets message type
-	 *
-	 * @param string $type
-	 * @return \Uform\Mvc\Model\Message
-	 * @throws Exception
-	 */
-	public function setType($type)
-	{
-		if(is_string($type) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		$this->_type = $type;
+		$this->message = $message;
+		$this->variables = $variables;
+		$this->type = $type;
 	}
 
 	/**
@@ -83,59 +49,31 @@ class Message
 	 */
 	public function getType()
 	{
-		return $this->_type;
+		return $this->type;
 	}
 
 	/**
-	 * Sets verbose message
-	 *
-	 * @param string $message
-	 * @return \Uform\Mvc\Model\Message
-	 * @throws Exception
-	 */
-	public function setMessage($message)
-	{
-		if(is_string($message) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		$this->_message = $message;
-	}
-
-	/**
-	 * Returns verbose message
+	 * gets the message without processing vars
 	 *
 	 * @return string
 	 */
-	public function getMessage()
+	public function getMessageRaw()
 	{
-		return $this->_message;
+		return $this->message;
 	}
 
 	/**
-	 * Sets field name related to message
-	 *
-	 * @param string $field
-	 * @return \Uform\Mvc\Model\Message
-	 * @throws Exception
+	 * get the message processed with the interval variables
+	 * @return string the message processed
 	 */
-	public function setField($field)
-	{
-		if(is_string($field) === false) {
-			throw new Exception('Invalid parameter type.');
+	public function getProcessedMessage(){
+		$message = $this->message;
+		foreach($this->variables as $variable){
+			foreach($this->variables as $k=>$v){
+				$message = str_replace("%_${k}_%", $v, $message);
+			}
 		}
-
-		$this->_field = $field;
-	}
-
-	/**
-	 * Returns field name related to message
-	 *
-	 * @return string|null
-	 */
-	public function getField()
-	{
-		return $this->_field;
+	    return $message;
 	}
 
 	/**
@@ -145,22 +83,6 @@ class Message
 	 */
 	public function __toString()
 	{
-		return $this->_message;
-	}
-
-	/**
-	 * Magic __set_state helps to recover messsages from serialization
-	 *
-	 * @param array $message
-	 * @return \Uform\Mvc\Model\Message
-	 * @throws Exception
-	 */
-	public static function __set_state($message)
-	{
-		if(is_array($message) === false) {
-			throw new Exception('Invalid parameter type.');
-		}
-
-		return new Message($message['_message'], $message['_field'], $message['_type']);
+		return $this->getProcessedMessage();
 	}
 }

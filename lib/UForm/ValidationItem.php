@@ -169,6 +169,20 @@ class ValidationItem {
             );
     }
 
+    public function childrenAreValid(){
+        if($this->element instanceof Element\Container){
+            foreach($this->element->getElements($this->getValue()) as $element){
+                if(!$this->formContext->elementIsValid($element)){
+                    return false;
+                }
+                if(!$this->formContext->childrenAreValid($element)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * Find a value for an element
      * @param $name
