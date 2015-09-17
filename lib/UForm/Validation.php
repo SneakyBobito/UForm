@@ -11,10 +11,9 @@
 namespace UForm;
 
 use UForm\Forms\Element;
-use
-	\UForm\Validation\Exception,
-	\UForm\Validation\Message\Group,
-	\UForm\Validation\ChainedValidation;
+use UForm\Validation\ChainedValidation;
+use UForm\Validation\Exception;
+use UForm\Validation\Message\Group;
 
 /**
  * Phalcon\Validation
@@ -36,22 +35,6 @@ class Validation
      * @var Forms\Element
      */
     protected $_element;
-
-    /**
-	 * Entity
-	 * 
-	 * @var null|object
-	 * @access protected
-	*/
-	protected $_entity = null;
-
-	/**
-	 * Filters
-	 * 
-	 * @var \UForm\Filter[]
-	 * @access protected
-	*/
-	protected $_filters = null;
 
 	/**
 	 * Messages
@@ -134,10 +117,7 @@ class Validation
                 if( false === $v->validate($this) ) {
                     
                     $this->_valid = false;
-                    if($v->getOption('cancelOnFail') === true) {
-                        break;
-                    }
-                    
+
                 }
             }
         }
@@ -162,30 +142,6 @@ class Validation
             }
 
             $this->_validators[] = $validator;
-    }
-
-    /**
-     * Adds filters to the field
-     *
-     * @param string $attribute
-     * @param array|string $filters
-     * @return \UForm\Validation
-     * @throws Exception
-     */
-    public function setFilters($filters)
-    {
-
-        $this->_filters = $filters;
-    }
-
-    /**
-     * Returns all the filters or a specific one
-     *
-     * @param string|null $attribute
-     * @return null|array|string
-     */
-    public function getFilters(){
-        return $this->_filters;
     }
 
     /**
@@ -255,31 +211,20 @@ class Validation
             $value = isset($value[$name]) ? 
                     $value[$name] 
                   : null;
-            $filters = $this->getFilters();
 
         }else{
-            if($name{0} === ".")
+            if($name{0} === ".") {
                 // we need to get element from the root,
                 // form->getValidation is not aware of localScope
                 $scopedAttribute = $this->getElement()->getName(true, true) . $name;
-            else
+            }else {
                 $scopedAttribute = $name;
-
+            }
             $validation = $this->chainedValidation->getValidation($scopedAttribute);
-
             $value   = $validation->getValue();
-            $filters = $validation->getFilters();
         }  
 
-        if( !is_null($value) ) {
-            if( is_array($filters)) {
-                foreach($filters as $f){
-                    $value = $f->filter($value);
-                }
-            }
-            return $value;
-        }
 
-        return null;
+        return $value;
     }
 }

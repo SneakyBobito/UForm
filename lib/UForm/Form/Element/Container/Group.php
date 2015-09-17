@@ -35,7 +35,6 @@ class Group extends Container implements Drawable{
         $iname = "i" . count($this->elements);
         $this->elements[$iname] = $element;
         $element->setParent($this);
-        var_dump($iname);
         $element->setInternalName($iname);
     }
     

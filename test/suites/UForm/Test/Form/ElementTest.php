@@ -107,12 +107,34 @@ class ElementTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(null, $this->elementStub->getInternalName(false));
         $this->assertEquals(null, $this->elementStub->getInternalName(true));
 
-
         $this->elementStub->setInternalName("internalName");
         $this->elementStub->setInternalNamespace("parentInternalName");
         $this->assertEquals("internalName", $this->elementStub->getInternalName(false));
         $this->assertEquals("parentInternalName.internalName", $this->elementStub->getInternalName(true));
     }
 
+    public function testSetAttribute(){
+        $this->elementStub->setAttribute("atr1", "value1");
+        $this->elementStub->setAttribute("atr2", "value2");
+        $this->assertEquals(["atr1" => "value1", "atr2" => "value2"], $this->elementStub->getAttributes());
+    }
+
+    public function testGetAttributes(){
+        $this->assertEquals([], $this->elementStub->getAttributes());
+    }
+
+    public function testAddAttributes(){
+        $this->elementStub->setAttribute("atr1", "value1");
+        $this->elementStub->addAttributes(["atr2" => "value2", "atr3" => "value3"]);
+        $this->assertEquals(["atr1" => "value1", "atr2" => "value2", "atr3" => "value3"], $this->elementStub->getAttributes());
+    }
+
+    public function testGetAttribute(){
+        $this->assertEquals("defaultValue", $this->elementStub->getAttribute("atr1", "defaultValue"));
+        $this->assertEquals(null, $this->elementStub->getAttribute("atr1"));
+
+        $this->elementStub->setAttribute("atr1", "value1");
+        $this->assertEquals("value1", $this->elementStub->getAttribute("atr1", "defaultValue"));
+    }
 
 }

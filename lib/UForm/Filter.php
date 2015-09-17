@@ -4,7 +4,6 @@
  */
 namespace UForm;
 
-use \UForm\FilterInterface;
 
 /**
  * UForm\Filter

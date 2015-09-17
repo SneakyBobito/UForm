@@ -4,13 +4,14 @@
  */
 namespace UForm\Form;
 
-use UForm\DirectFilter;
-use UForm\Filter;
+use UForm\FilterGroup;
 use UForm\Form;
 use UForm\Form\Element\Container;
+use UForm\OptionGroup;
 use UForm\SemanticItem;
 use UForm\Validation;
 use UForm\Validation\ChainedValidation;
+use UForm\ValidatorGroup;
 
 
 /**
@@ -21,6 +22,9 @@ use UForm\Validation\ChainedValidation;
 abstract class Element
 {
     use SemanticItem;
+    use FilterGroup;
+    use ValidatorGroup;
+    use OptionGroup;
 
     /**
      * @var \UForm\Form\Element\Container
@@ -34,22 +38,6 @@ abstract class Element
     protected $_internalName;
 
     protected $_attributes = [];
-    protected $_options = [];
-
-    /**
-     * Validators
-     *
-     * @var Validation\Validator[]
-     * @access protected
-     */
-    protected $_validators = [];
-
-    /**
-     * Filters
-     *
-     * @var \UForm\Filter[]
-     */
-    protected $_filters = [];
 
 
     /**
@@ -122,7 +110,7 @@ abstract class Element
     }
 
     /**
-     * Should be called when a change occurs on the parents and the info related to the parent need to be updated
+     * Internal use only. Should be called when a change occurs on the parents and the info related to the parent need to be updated
      */
     public function refreshParent(){
         if($this->_parent) {
@@ -224,135 +212,6 @@ abstract class Element
     }
 
 
-
-
-
-
-
-
-    /////////////
-    //
-    // FILTER
-    //
-
-    /**
-     * Sets the element's filters
-     *
-     * @param array|string $filters
-     * @return $this
-     * @throws Exception
-     */
-    public function setFilters($filters)
-    {
-        if (is_string($filters) === false ||
-            is_array($filters) === false
-        ) {
-            throw new Exception('Invalid parameter type.');
-        }
-
-        $this->_filters = $filters;
-
-        return $this;
-    }
-
-    /**
-     * Adds a filter to current list of filters
-     *
-     * @param callable|Filter $filter the filter to add. It can also be a callback function that will be transformed in a @see DirectFilter
-     * @throws Exception
-     * @return $this;
-     */
-    public function addFilter($filter)
-    {
-        if (is_callable($filter)) {
-            $filter = new DirectFilter($filter);
-        }
-        $this->_filters[] = $filter;
-        return $this;
-    }
-
-    /**
-     * Returns the element's filters
-     * @return Filter[] the filters of the element
-     */
-    public function getFilters()
-    {
-        return $this->_filters;
-    }
-
-    /**
-     * Apply filters of the element to sanitize the given data
-     * @param mixed $data the data to sanitize
-     * @return mixed the sanitized data
-     */
-    public function sanitizeData($data)
-    {
-        $filters = $this->getFilters();
-        foreach ($filters as $filter) {
-            $data = $filter->filter($data);
-        }
-        return $data;
-    }
-
-
-
-
-    /////////////////
-    //
-    // VALIDATORS
-    //
-
-    /**
-     * Adds a group of validators
-     *
-     * @param \UForm\Validation\Validator[] $validators
-     * @return $this
-     * @throws Exception
-     */
-    public function addValidators($validators)
-    {
-        if (is_array($validators) === false) {
-            throw new Exception("The validators parameter must be an array");
-        }
-        foreach ($validators as $validator) {
-            $this->addValidator($validator);
-        }
-        return $this;
-    }
-
-    /**
-     * Adds a validator to the element
-     *
-     * @param \UForm\Validation\Validator|callable $validator the validator to add, it can also be a callback that will be transformed in a @see DirectValidator
-     * @throws Exception
-     * @return $this
-     */
-    public function addValidator($validator)
-    {
-        if (is_callable($validator)) {
-            $validator = new Validation\DirectValidator($validator);
-        } else if (is_object($validator) === false ||
-            $validator instanceof Validation\Validator === false
-        ) {
-            throw new Exception('The validators parameter must be an object extending UForm\Validation\Validator ');
-        }
-        $this->_validators[] = $validator;
-        return $this;
-    }
-
-    /**
-     * Returns the validators registered for the element
-     *
-     * @return \UForm\Validation\Validator[]
-     */
-    public function getValidators()
-    {
-        return $this->_validators ? $this->_validators : array();
-    }
-
-
-
-
     //////////////
     // ATTRIBUTES
     //
@@ -406,11 +265,11 @@ abstract class Element
      */
     public function addAttributes($attributes)
     {
-        if (is_array($attributes) === false) {
-            throw new Exception("Parameter 'attributes' must be an array");
+        if (!is_array($attributes)) {
+            throw new Exception("Parameter 'attributes' must be an array. Variable of type " . gettype($attributes) . " used");
         }
         foreach ($attributes as $attribute => $value) {
-            $this->addAttributes($attribute, $value);
+            $this->setAttribute($attribute, $value);
         }
         return $this;
     }
@@ -427,76 +286,6 @@ abstract class Element
         return $this->_attributes;
     }
 
-    ///////////
-    //
-    // OPTION
-    //
-
-    /**
-     * Sets an option for the element
-     *
-     * @param string $option name of the option
-     * @param mixed $value value of the option
-     * @return $this
-     * @throws Exception
-     */
-    public function setUserOption($option, $value)
-    {
-        if (is_string($option) === false) {
-            throw new Exception('Invalid parameter type.');
-        }
-        $this->_options[$option] = $value;
-        return $this;
-    }
-
-    /**
-     * Returns the value of an option if present
-     *
-     * You can specify a default value to return if the option does not exist
-     *
-     * @param string $option name of the option
-     * @param mixed $defaultValue default value to return if option does not exist
-     * @return mixed value of the option or the default value
-     * @throws Exception
-     */
-    public function getUserOption($option, $defaultValue = null)
-    {
-        if (is_array($this->_options) === true &&
-            isset($this->_options[$option]) === true
-        ) {
-            return $this->_options[$option];
-        }
-        return $defaultValue;
-    }
-
-    /**
-     * Set value of many options
-     *
-     * @param array $options list of the options ["optionName" => "value"]
-     * @return $this
-     * @throws Exception
-     */
-    public function setUserOptions($options)
-    {
-        if (is_array($options) === false) {
-            throw new Exception("Parameter 'options' must be an array");
-        }
-        foreach ($options as $option => $value) {
-            $this->setUserOption($option, $value);
-        }
-        return $this;
-    }
-
-    /**
-     * Returns the options for the element
-     *
-     * @return array
-     */
-    public function getUserOptions()
-    {
-        return $this->_options;
-    }
-
 
     /**
      * Internal use - prepare the validation object
@@ -509,10 +298,8 @@ abstract class Element
     public function prepareValidation($localValues, ChainedValidation $cV)
     {
         $validators = $this->getValidators();
-        $filters = $this->getFilters();
 
         $v = new \UForm\Validation($this, $localValues, $cV, $validators);
-        $v->setFilters($filters);
 
         $cV->addValidation($v);
     }

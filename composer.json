@@ -4,8 +4,8 @@
     "type": "library",
 
     "autoload":{
-        "psr-0" : {
-            "UForm\\"   :   "lib/"
+        "psr-4" : {
+            "UForm\\"   :   "lib/UForm/"
         }
     },
 
