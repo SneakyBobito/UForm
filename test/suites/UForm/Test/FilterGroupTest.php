@@ -37,6 +37,12 @@ class FilterGroupTest extends \PHPUnit_Framework_TestCase {
         $this->filterGroupStub->setFilters([$filter, $filter]);
         $this->filterGroupStub->addFilter($filter);
         $this->assertSame([$filter, $filter, $filter], $this->filterGroupStub->getFilters());
+
+        // ADD FILTER CLOSURE
+        $closure = function($v){return $v;};
+        $newFilter = $this->filterGroupStub->addFilter($closure);
+        $this->assertInstanceOf("UForm\Filter\DirectClosure",$newFilter);
+        $this->assertSame($closure, $newFilter->getClosure());
     }
 
     public function testAddFilters()

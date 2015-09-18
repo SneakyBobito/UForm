@@ -3,6 +3,8 @@
 namespace UForm;
 
 
+use UForm\Filter\DirectClosure;
+
 trait FilterGroup {
 
     /**
@@ -33,17 +35,17 @@ trait FilterGroup {
      *
      * @param callable|Filter $filter the filter to add. It can also be a callback function that will be transformed in a @see DirectFilter
      * @throws Exception
-     * @return $this;
+     * @return Filter the filter added to the stack
      */
     public function addFilter($filter)
     {
         if (is_callable($filter)) {
-            $filter = new DirectFilter($filter);
+            $filter = new DirectClosure($filter);
         } else if (!is_object($filter) || !$filter instanceof Filter) {
             throw new Exception('The filter parameter must be an object extending UForm\Filter ');
         }
         $this->_filterGroup[] = $filter;
-        return $this;
+        return $filter;
     }
 
     /**
