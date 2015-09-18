@@ -47,7 +47,7 @@ class ValidationItem {
 	 * @var null|\UForm\Validation\Message\Group
 	 */
 	protected $messages = null;
-    protected $valid = false;
+    protected $valid = true;
 
     protected $formContext;
 
@@ -62,6 +62,7 @@ class ValidationItem {
         $this->formContext = $formContext;
         $this->element = $elements;
         $this->dataLocal = $data;
+        $this->messages = new Group();
     }
 
 
@@ -184,17 +185,28 @@ class ValidationItem {
     }
 
     /**
-     * Find a value for an element
+     * Find a value for an element in the full dataset
      * @param $name
      * @return
      */
-    public function getValueFor($name)
+    public function findValue($name)
     {
         return $this
             ->formContext
-            ->getChainedValidation()
-            ->getValidation($name)
-            ->getValue();
+            ->getData()
+            ->findValue($name);
+    }
+
+    /**
+     * Find a value for an element in the local dataset
+     * @param $name
+     * @return
+     */
+    public function findLocalValue($name)
+    {
+        return $this
+            ->dataLocal
+            ->findValue($name);
     }
 
 }

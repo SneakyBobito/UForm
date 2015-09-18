@@ -2,6 +2,7 @@
 
 namespace UForm\Validator;
 
+use UForm\ValidationItem;
 use UForm\Validator;
 
 class DirectClosure extends Validator
@@ -18,11 +19,11 @@ class DirectClosure extends Validator
     /**
      * Executes the validation
      *
-     * @param \UForm\Validation $validator
+     * @param ValidationItem $validator
      */
-   public function validate(\UForm\Validation $validator)
+   public function validate(ValidationItem $validationItem)
    {
        $closure = $this->closure;
-       return $closure($validator,$this);
+       return $closure($validationItem, $this);
    }
 }
