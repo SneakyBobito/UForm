@@ -16,13 +16,9 @@ trait OptionGroup {
      * @param string $option name of the option
      * @param mixed $value value of the option
      * @return $this
-     * @throws Exception
      */
     public function setOption($option, $value)
     {
-        if (is_string($option) === false) {
-            throw new Exception('Invalid parameter type.');
-        }
         $this->_optionGroup[$option] = $value;
         return $this;
     }
@@ -52,11 +48,8 @@ trait OptionGroup {
      * @return $this
      * @throws Exception
      */
-    public function addOptions($options)
+    public function addOptions(array $options)
     {
-        if (is_array($options) === false) {
-            throw new Exception("Parameter 'options' must be an array");
-        }
         foreach ($options as $option => $value) {
             $this->setOption($option, $value);
         }
@@ -72,7 +65,9 @@ trait OptionGroup {
      */
     public function setOptions($options){
         $this->_optionGroup = [];
-        return $this->addOptions($options);
+        if(null !== $options){
+            return $this->addOptions($options);
+        }
     }
 
     /**
