@@ -19,7 +19,7 @@ abstract class Validator
      */
     public function __construct($options = null)
     {
-        $this->_options = $options;
+        $this->setOptions($options);
     }
 
 
