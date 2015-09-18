@@ -4,42 +4,33 @@ namespace UForm;
 
 
 use UForm\Form;
-use UForm\Form\Element\Collection;
 use UForm\Form\Element\Container;
-use UForm\Navigator\Exception;
 
+/**
+ * Utility class to get data from an array by its path
+ *
+ * <code>
+ *
+ * $data = [
+ *      "subData" => [
+ *          ["name" : "john"],
+ *          ["name" : "bob"]
+ *      ]
+ * ];
+ *
+ * $navigator = new Navigator();
+ *
+ * $name = $navigator->arrayGet($data, "subData.1.name");
+ *
+ * var_dump($name);
+ *
+ * // > string(3) "bob"
+ *
+ * </code>
+ *
+ */
 class Navigator {
 
-
-    /**
-     *
-     * Gets an element from the form
-     *
-     * Usefull for doted notation eg : 'elm.subelm.0.name'
-     *
-     * @param Form $form
-     * @param $string
-     * @throws Navigator\Exception
-     */
-    public function formGet(Form $form,$string){
-
-        $stringParts = explode("." , $string);
-
-        $actual = $form->getElement(array_shift($stringParts));
-
-        while( !empty($stringParts) ){
-
-            if($actual instanceof Container || $actual instanceof Collection){
-                $actual = $actual->getElement(array_shift($stringParts));
-            }else{
-                throw new Exception("element should be a group (usualy collection or group)");
-            }
-
-        }
-
-        return $actual;
-
-    }
 
     /**
      * @param array $local  locals values (context aware). Most of time same as $global
