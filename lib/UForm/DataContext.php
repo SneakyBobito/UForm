@@ -37,7 +37,7 @@ class DataContext implements \IteratorAggregate {
      * @return mixed the value
      */
     public function findValue($path){
-        return $this->navigator->arrayGet($this->data, $this->data, $path);
+        return $this->navigator->arrayGet($this->data, $path);
     }
 
     /**
