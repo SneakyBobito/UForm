@@ -122,7 +122,7 @@ class Group extends Container implements Drawable{
             if($name){
                 $values = $localValues->getDirectValue($name);
             }else{
-                $values = $localValues->getArrayCopy();
+                $values = $localValues->getDataCopy();
             }
             $v->prepareValidation(new DataContext($values), $formContext);
         }

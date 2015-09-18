@@ -31,7 +31,7 @@ class FormDataProcessingTest extends PHPUnit_Framework_TestCase {
             "username" => "gsouf",
             "password" => "password"
         ];
-        $this->assertSame($expected, $context->getData()->getArrayCopy());
+        $this->assertSame($expected, $context->getData()->getDataCopy());
         $this->assertTrue($context->isValid());
         $this->assertSame(0, count($context->getMessages()));
 
@@ -46,7 +46,7 @@ class FormDataProcessingTest extends PHPUnit_Framework_TestCase {
             "password" => "verylongpassword"
         ];
 
-        $this->assertSame($expected, $context->getData()->getArrayCopy());
+        $this->assertSame($expected, $context->getData()->getDataCopy());
         $this->assertFalse($context->isValid());
 
         $messages = $context->getMessages();

@@ -6,8 +6,6 @@
 namespace UForm;
 
 
-use Traversable;
-
 class DataContext implements \IteratorAggregate {
 
     /**
@@ -21,6 +19,11 @@ class DataContext implements \IteratorAggregate {
     protected $navigator;
 
     /**
+     * @var bool
+     */
+    protected $isArray;
+
+    /**
      * @param Form $form
      * @param $data
      */
@@ -28,6 +31,7 @@ class DataContext implements \IteratorAggregate {
     {
         $this->data = $data;
         $this->navigator = new Navigator();
+        $this->isArray = is_array($data);
     }
 
     /**
@@ -37,6 +41,9 @@ class DataContext implements \IteratorAggregate {
      * @return mixed the value
      */
     public function findValue($path){
+        if(!$this->isArray()){
+            return null;
+        }
         return $this->navigator->arrayGet($this->data, $path);
     }
 
@@ -46,23 +53,34 @@ class DataContext implements \IteratorAggregate {
      * @return null
      */
     public function getDirectValue($name){
+        if(!$this->isArray()){
+            return null;
+        }
         return isset($this->data[$name]) ? $this->data[$name] : null;
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Retrieve an external iterator
-     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
-     * @return Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
+     * @return \ArrayIterator
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->data);
+        return new \ArrayIterator($this->isArray() ? $this->data : []);
     }
 
-    public function getArrayCopy(){
+    /**
+     * Get a copy of the internal data array
+     * @return array the data
+     */
+    public function getDataCopy(){
         return $this->data;
+    }
+
+    /**
+     * check if the internal data is an array
+     * @return bool true if the internal data is an array
+     */
+    public function isArray(){
+        return $this->isArray;
     }
 
 
