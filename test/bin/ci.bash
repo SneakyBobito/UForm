@@ -7,4 +7,7 @@ SCRIPTDIR=$(dirname "$SCRIPTFILE")
 
 phpunit --debug -c "$SCRIPTDIR/../../phpunit.dist.xml" --coverage-clover "$SCRIPTDIR/../../build/logs/clover.xml" --process-isolation
 
-[ "$PROCESS_CODECLIMAE" = true ] &&  ./vendor/bin/test-reporter
+if [ "$PROCESS_CODECLIMAE" = true ]
+then
+    ./vendor/bin/test-reporter
+fi
