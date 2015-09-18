@@ -56,5 +56,9 @@ class OptionGroupTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame([], $this->optionGroup->getOptions());
     }
 
+    public function testGetOptions(){
+        $this->assertEquals([], $this->optionGroup->getOptions());
+    }
+
 
 }
