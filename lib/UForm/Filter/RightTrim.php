@@ -9,7 +9,28 @@ namespace UForm\Filter;
 use UForm\Filter;
 
 /**
- * Performs a rtrim operation on the data
+ * Equivalent to the php rtrim function
+ *
+ * @link http://php.net/rtrim
+ * @see \UForm\Filter\Trim
+ * @see \UForm\Filter\LeftTrim
+ *
+ * <code>
+ * $filter = new RightTrim();
+ *
+ * var_dump($filter->filter(" foo "));
+ *
+ * // > string(4) " foo"
+ * </code>
+ *
+ * <code>
+ *  $filter = new RightTrim("-");
+ *
+ * var_dump($filter->filter("- foo -"));
+ *
+ * // > string(6) "- foo "
+ * </code>
+ *
  */
 class RightTrim extends Filter {
 
