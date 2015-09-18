@@ -19,8 +19,8 @@ trait SemanticItem {
     protected $semanticTypes = [];
 
     /**
-     * add a semantic type that can check with isType()
-     * order of semantic type is very important because it's used for form rendering
+     * add a semantic type to the stack that can check with isType()
+     * order (LIFO) of semantic type is very important because it's primarily used for form rendering
      * @param $type string the semantic type to add
      * @return $this
      */
@@ -39,6 +39,9 @@ trait SemanticItem {
         return in_array($type, $this->semanticTypes);
     }
 
+    /**
+     * @return array semantic types ordered in LIFO order
+     */
     public function getSemanticTypes(){
         return $this->semanticTypes;
     }
