@@ -36,6 +36,10 @@ class RightTrim extends Filter {
 
     protected $trimString;
 
+    /**
+     * characters to trim (default only whitespaces)
+     * @param string|null $trimString the characters to trim
+     */
     function __construct($trimString = null){
         $this->trimString = $trimString;
     }
