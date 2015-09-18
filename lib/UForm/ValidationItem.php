@@ -46,8 +46,8 @@ class ValidationItem {
 	 * 
 	 * @var null|\UForm\Validation\Message\Group
 	 */
-	protected $_messages = null;
-    protected $_valid = false;
+	protected $messages = null;
+    protected $valid = false;
 
     protected $formContext;
 
@@ -103,8 +103,8 @@ class ValidationItem {
      * reset validation to its initial state
      */
     public function resetValidation(){
-        $this->_valid = true;
-        $this->_messages = new Group();
+        $this->valid = true;
+        $this->messages = new Group();
     }
         
     /**
@@ -118,14 +118,14 @@ class ValidationItem {
 
         foreach($validators as $v) {
             if (false === $v->validate($this)) {
-                $this->_valid = false;
+                $this->valid = false;
             }
         }
-        return $this->_valid;
+        return $this->valid;
     }
 
     public function isValid(){
-        return $this->_valid == true;
+        return $this->valid == true;
     }
 
     /**
@@ -135,7 +135,7 @@ class ValidationItem {
      */
     public function getMessages()
     {
-        return $this->_messages;
+        return $this->messages;
     }
 
     /**
@@ -145,7 +145,7 @@ class ValidationItem {
      */
     public function appendMessage(Message $message, $elementName = null){
         if(null == $elementName){
-            $this->_messages->appendMessage($message);
+            $this->messages->appendMessage($message);
         }else{
             $v = $this->getChainedValidation()->getValidation($elementName);
             if(!$v){

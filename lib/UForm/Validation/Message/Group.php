@@ -22,7 +22,7 @@ class Group implements Countable, \IteratorAggregate
 	 * @var null|array
 	 * @access protected
 	*/
-	protected $_messages;
+	protected $messages = [];
 
 	/**
 	 * Appends a message to the group
@@ -30,7 +30,15 @@ class Group implements Countable, \IteratorAggregate
 	 */
 	public function appendMessage(Message $message)
 	{
-		$this->_messages[] = $message;
+		$this->messages[] = $message;
+	}
+
+	/**
+	 * @param $index
+	 * @return null|Message
+	 */
+	public function getAt($index){
+		return isset($this->messages[$index]) ? $this->messages[$index] : null;
 	}
 
 	/**
@@ -50,13 +58,13 @@ class Group implements Countable, \IteratorAggregate
 	 */
 	public function count()
 	{
-		return count($this->_messages);
+		return count($this->messages);
 	}
 
 
 	public function getIterator()
 	{
-		return new \ArrayIterator($this->_messages);
+		return new \ArrayIterator($this->messages);
 	}
 
 

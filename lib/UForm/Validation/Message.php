@@ -27,15 +27,15 @@ class Message
 	 * @var null|string
 	 * @access protected
 	*/
-	protected $variables;
+	protected $variables = [];
 
 	/**
 	 * @param string $message
-	 * @param string|null $variables
+	 * @param array|null $variables
 	 * @param string|null $type
 	 * @throws Exception
 	 */
-	public function __construct($message, $variables = null, $type = null)
+	public function __construct($message, array $variables = null, $type = null)
 	{
 		$this->message = $message;
 		$this->variables = $variables;
@@ -74,6 +74,13 @@ class Message
 			}
 		}
 	    return $message;
+	}
+
+	/**
+	 * @return []
+	 */
+	public function getVariables(){
+		return $this->variables;
 	}
 
 	/**

@@ -64,6 +64,14 @@ class FormContext {
         return $this->chainValidation->isValid();
     }
 
+    /**
+     * Get all the messages generated during the validation
+     * @return \UForm\Validation\Message\Group
+     */
+    public function getMessages(){
+        return $this->chainValidation->getMessages();
+    }
+
     public function elementIsValid($elementName){
         return $this->chainValidation->elementIsValid($elementName);
     }

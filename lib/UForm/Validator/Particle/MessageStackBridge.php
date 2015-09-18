@@ -24,7 +24,7 @@ class MessageStackBridge extends MessageStack{
 
     public function append($key, $reason, $message, array $parameters)
     {
-        $message = new Message($message, $parameters);
+        $message = new Message($message, $parameters, $reason);
         $this->validationItem->appendMessage($message);
     }
 

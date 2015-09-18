@@ -33,6 +33,7 @@ class FormDataProcessingTest extends PHPUnit_Framework_TestCase {
         ];
         $this->assertSame($expected, $context->getData()->getArrayCopy());
         $this->assertTrue($context->isValid());
+        $this->assertSame(0, count($context->getMessages()));
 
 
         // TEST 2
@@ -47,6 +48,10 @@ class FormDataProcessingTest extends PHPUnit_Framework_TestCase {
 
         $this->assertSame($expected, $context->getData()->getArrayCopy());
         $this->assertFalse($context->isValid());
+
+        $messages = $context->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertSame(\Particle\Validator\Rule\LengthBetween::TOO_LONG, $messages->getAt(0)->getType());
 
     }
 }

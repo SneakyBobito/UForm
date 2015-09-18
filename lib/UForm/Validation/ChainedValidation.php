@@ -104,6 +104,10 @@ class ChainedValidation {
         
     }
 
+    /**
+     * tells if the validation succeeded
+     * @return bool
+     */
     public function isValid(){
         return $this->isValid;
     }
@@ -139,5 +143,17 @@ class ChainedValidation {
             throw new Exception("Element not valid for children validation");
         }
         return $validation->childrenAreValid($this);
+    }
+
+    /**
+     * Get all the messages generated during the validation
+     * @return Message\Group
+     */
+    public function getMessages(){
+        $messages = new Validation\Message\Group();
+        foreach($this->validationsName as $validation){
+            $messages->appendMessages($validation->getMessages());
+        }
+        return $messages;
     }
 }
