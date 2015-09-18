@@ -17,8 +17,8 @@ use UForm\Validation;
 class Form extends ElementGroup {
 
 
-    protected $_action;
-    protected $_method = "post";
+    protected $action;
+    protected $method = "post";
 
     /**
      *
@@ -44,19 +44,19 @@ class Form extends ElementGroup {
     
     
     public function getAction() {
-        return $this->_action;
+        return $this->action;
     }
 
-    public function setAction($_action) {
-        $this->_action = $_action;
+    public function setAction($action) {
+        $this->action = $action;
     }
 
     public function getMethod() {
-        return $this->_method;
+        return $this->method;
     }
 
-    public function setMethod($_method) {
-        $this->_method = $_method;
+    public function setMethod($method) {
+        $this->method = $method;
     }
 
     
@@ -66,7 +66,7 @@ class Form extends ElementGroup {
      * @param array $data
      * @param object $entity
      * @param array|null $whitelist
-     * @return \UForm\Form\Form
+     * @return \UForm\Form
      * @throws Exception
      */
     public function bind($entity , $data , $whitelist = null)
