@@ -39,7 +39,7 @@ class DataContextTest extends \PHPUnit_Framework_TestCase {
 
                 [
                     "lastname" => "simpson",
-                    "firstname"=> "liza",
+                    "firstname"=> "lisa",
                     "age" => "10"
                 ]
 
@@ -54,10 +54,10 @@ class DataContextTest extends \PHPUnit_Framework_TestCase {
     public function testFindValue(){
         $homerAge = $this->dataContextArray->findValue("age");
         $bartAge = $this->dataContextArray->findValue("children.0.age");
-        $lizaInfo = $this->dataContextArray->findValue("children.1");
+        $lisaInfo = $this->dataContextArray->findValue("children.1");
         $this->assertEquals(40, $homerAge);
         $this->assertEquals(12, $bartAge);
-        $this->assertEquals($this->data["children"][1], $lizaInfo);
+        $this->assertEquals($this->data["children"][1], $lisaInfo);
 
 
         $this->assertNull($this->dataContextString->findValue("age"));
