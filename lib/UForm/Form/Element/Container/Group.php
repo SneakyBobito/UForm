@@ -76,7 +76,7 @@ class Group extends Container implements Drawable{
         }else{
             $namesP = $name;
         }
-        
+
         $finalElm = $this->getDirectElement($namesP[0]);
         
         if( $finalElm && count($namesP)>1){
@@ -84,22 +84,6 @@ class Group extends Container implements Drawable{
             return $finalElm->getElement(($namesP));
         }
         return $finalElm;
-    }
-
-
-    public function getDirectElement($name){
-        foreach($this->elements as $elm){
-            if( $name == $elm->getName()){
-                return $elm;
-            }else if( !$elm->getName() && $elm instanceof ElementContainer ){
-                /* @var $elm \UForm\Form\ElementContainer */
-                $element = $elm->getDirectElement($name);
-                if($element) {
-                    return $element;
-                }
-            }
-        }
-        return null;
     }
 
 

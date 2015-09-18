@@ -33,12 +33,6 @@ class Collection extends Container{
         $this->addSemanticType("collection");
     }
     
-    public function setForm($form) {
-        parent::setForm($form);
-        $this->elementDefinition->setForm($form);
-    }
-
-    
     public function _render( $attributes , $values , $data ) {
         $render = "";
         
@@ -92,15 +86,13 @@ class Collection extends Container{
 
     public function getElements($values = null){
         
-        if(!$values)
+        if(!$values) {
             return array();
+        }
         
         $el = array();
 
-      
-
         $realValues = $values[$this->getName()] ;
-
 
         foreach($realValues as $k=>$v){
             $el[] = $this->__getElemement($k);

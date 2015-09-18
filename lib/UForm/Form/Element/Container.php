@@ -32,6 +32,28 @@ abstract class Container extends Element {
      */
     abstract public function getElements($values=null);
 
+
+    /**
+     * Get an element located directly in this element. There is an exception for unnamed elements : we will search inside directElements of unnamed elements
+     * @param $name
+     * @param null $values
+     * @return null|Element|Container
+     */
+    public function getDirectElement($name, $values = null){
+        foreach($this->getElements($values) as $elm){
+            if ($name == $elm->getName()) {
+                return $elm;
+            } else if ( !$elm->getName() && $elm instanceof Container ) {
+                /* @var $elm \UForm\Form\Element\Container */
+                $element = $elm->getDirectElement($name);
+                if($element) {
+                    return $element;
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * check if this element contains an element that is an instance of the given type
      * @param string $className the name of the class to search for
