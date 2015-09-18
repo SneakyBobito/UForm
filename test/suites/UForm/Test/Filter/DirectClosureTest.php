@@ -10,7 +10,7 @@ use UForm\Filter\DirectClosure;
 
 class DirectClosureTest extends \PHPUnit_Framework_TestCase {
 
-    public function testDirectClosure(){
+    public function testFilter(){
         $closure = function($v){
             return "-$v-";
         };
@@ -19,6 +19,5 @@ class DirectClosureTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame($closure, $directClosure->getClosure());
 
         $this->assertEquals("-foo-", $directClosure->filter("foo"));
-
     }
 }
