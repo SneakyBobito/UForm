@@ -25,7 +25,7 @@ trait FluentElement {
      */
     protected $lastElement = null;
 
-    protected function add(Element $e){
+    public function add(Element $e){
         $this->currentGroup->addElement($e);
         $this->lastElement = $e;
     }

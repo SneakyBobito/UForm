@@ -7,6 +7,7 @@ namespace UForm\Builder;
 
 
 use UForm\Form\Element;
+use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Hidden;
 use UForm\Form\Element\Primary\Password;
 use UForm\Form\Element\Primary\RadioGroup;
@@ -16,7 +17,11 @@ use UForm\Form\Element\Primary\TextArea;
 
 trait InputBuilder {
 
-    use FluentElement;
+    abstract public function  add(Element $e);
+    abstract public function open(Group $e);
+    abstract public function close();
+    abstract public function  last();
+
 
     protected $useLabel = true;
     protected $usePlaceHolder = true;

@@ -1,0 +1,12 @@
+<?php
+/**
+ * @license see LICENSE
+ */
+
+class BuilderScenarioTest extends PHPUnit_Framework_TestCase {
+
+    public function testBuilder(){
+        $builder = new \UForm\Builder();
+    }
+
+}

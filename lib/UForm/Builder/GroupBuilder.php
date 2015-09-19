@@ -16,7 +16,10 @@ use UForm\Form\Element\Container\Group\TabGroup;
 
 trait GroupBuilder {
 
-    use FluentElement;
+    abstract public function  add(Element $e);
+    abstract public function open(Group $e);
+    abstract public function close();
+    abstract public function  last();
 
 
     /**
