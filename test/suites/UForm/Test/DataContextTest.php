@@ -5,10 +5,10 @@
 
 namespace UForm\Test;
 
-
 use UForm\DataContext;
 
-class DataContextTest extends \PHPUnit_Framework_TestCase {
+class DataContextTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var DataContext
@@ -21,7 +21,8 @@ class DataContextTest extends \PHPUnit_Framework_TestCase {
     protected $data;
 
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->data = [
 
             "lastname" => "simpson",
@@ -51,7 +52,8 @@ class DataContextTest extends \PHPUnit_Framework_TestCase {
         $this->dataContextString = new DataContext("stringData");
     }
 
-    public function testFindValue(){
+    public function testFindValue()
+    {
         $homerAge = $this->dataContextArray->findValue("age");
         $bartAge = $this->dataContextArray->findValue("children.0.age");
         $lisaInfo = $this->dataContextArray->findValue("children.1");
@@ -63,7 +65,8 @@ class DataContextTest extends \PHPUnit_Framework_TestCase {
         $this->assertNull($this->dataContextString->findValue("age"));
     }
 
-    public function testGetDirectValue(){
+    public function testGetDirectValue()
+    {
         $children = $this->dataContextArray->getDirectValue("children");
         $firstName = $this->dataContextArray->getDirectValue("firstname");
 
@@ -73,24 +76,26 @@ class DataContextTest extends \PHPUnit_Framework_TestCase {
         $this->assertNull($this->dataContextString->getDirectValue("age"));
     }
 
-    public function testGetDataCopy(){
+    public function testGetDataCopy()
+    {
         $this->assertInternalType("array", $this->dataContextArray->getDataCopy());
         $this->assertSame($this->data, $this->dataContextArray->getDataCopy());
 
         $this->assertEquals("stringData", $this->dataContextString->getDataCopy());
     }
 
-    public function testIsArray(){
+    public function testIsArray()
+    {
         $this->assertTrue($this->dataContextArray->isArray());
         $this->assertFalse($this->dataContextString->isArray());
     }
 
-    public function testGetIterator(){
+    public function testGetIterator()
+    {
         $this->assertInstanceOf("Iterator", $this->dataContextArray->getIterator());
         $this->assertEquals($this->data, $this->dataContextArray->getIterator()->getArrayCopy());
 
         $this->assertInstanceOf("Iterator", $this->dataContextString->getIterator());
         $this->assertEquals([], $this->dataContextString->getIterator()->getArrayCopy());
     }
-
 }

@@ -1,8 +1,8 @@
 <?php
 
 namespace UForm;
-use UForm\Validation\Message;
 
+use UForm\Validation\Message;
 
 /**
  * This is a base class for validators
@@ -30,5 +30,4 @@ abstract class Validator
      * @throws Exception
      */
     abstract public function validate(ValidationItem $validationItem);
-
 }

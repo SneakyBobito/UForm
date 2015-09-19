@@ -5,15 +5,15 @@
 
 namespace UForm;
 
-
 use UForm\Validator\DirectClosure;
 
-trait ValidatorGroup {
+trait ValidatorGroup
+{
 
     /**
      * @var \UForm\Validator[]
      */
-    protected $_validatorGroup = [];
+    protected $validatorGroup = [];
 
     /**
      * Adds a group of validators
@@ -36,7 +36,8 @@ trait ValidatorGroup {
     /**
      * Adds a validator
      *
-     * @param \UForm\\UForm\Validator|callable $validator the validator to add, it can also be a callback that will be transformed in a @see DirectValidator
+     * @param \UForm\\UForm\Validator|callable $validator the validator to add, it can also be a callback that
+     * will be transformed in a @see DirectValidator
      * @throws Exception
      * @return $this
      */
@@ -44,10 +45,10 @@ trait ValidatorGroup {
     {
         if (is_callable($validator)) {
             $validator = new DirectClosure($validator);
-        } else if (!is_object($validator) || !$validator instanceof \UForm\Validator) {
+        } elseif (!is_object($validator) || !$validator instanceof \UForm\Validator) {
             throw new Exception('The validators parameter must be an object extending UForm\\UForm\Validator ');
         }
-        $this->_validatorGroup[] = $validator;
+        $this->validatorGroup[] = $validator;
         return $this;
     }
 
@@ -58,29 +59,30 @@ trait ValidatorGroup {
      */
     public function getValidators()
     {
-        return $this->_validatorGroup;
+        return $this->validatorGroup;
     }
 
     /**
      * Resets the validators and set the given validators instead
      *
-     * @param array|null $validators array of the new validators to set. Can be null or an empty array to reset remove all validators
+     * @param array|null $validators array of the new validators to set.
+     * Can be null or an empty array to reset remove all validators
      * @return $this
      * @throws Exception
      */
     public function setValidators($validators)
     {
-        $this->_validatorGroup = [];
+        $this->validatorGroup = [];
 
-        if(null !== $validators) {
+        if (null !== $validators) {
             return $this->addValidators($validators);
-        }else{
+        } else {
             return $this;
         }
     }
 
-    public function validateData(){
+    public function validateData()
+    {
 
     }
-
 }

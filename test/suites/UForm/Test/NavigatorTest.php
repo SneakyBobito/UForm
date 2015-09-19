@@ -5,11 +5,11 @@
 
 namespace UForm\Test;
 
-
 use UForm\Form;
 use UForm\Navigator;
 
-class NavigatorTest extends \PHPUnit_Framework_TestCase {
+class NavigatorTest extends \PHPUnit_Framework_TestCase
+{
 
 
     public function testArrayGet()
@@ -42,5 +42,4 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("str3val", $navigator->arrayGet($data, "str3"));
         $this->assertEquals("arr1arr2str1val", $navigator->arrayGet($data, "arr1.arr1arr1.arr1arr1str2"));
     }
-
 }

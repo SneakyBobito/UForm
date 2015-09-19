@@ -10,7 +10,8 @@ use UForm\Form\Element\Group;
  * @semanticType column
  * @method ColumnGroup getParent()
  */
-class Column extends NamedGroup{
+class Column extends NamedGroup
+{
 
     protected $width;
 
@@ -19,7 +20,7 @@ class Column extends NamedGroup{
         parent::__construct("div", $name, $elements);
         $this->addSemanticType("column");
 
-        if($width < 0){
+        if ($width < 0) {
             throw new Exception("Column width cant be negative");
         }
         $this->width = $width;
@@ -38,7 +39,7 @@ class Column extends NamedGroup{
      */
     public function setParent(Container $parent)
     {
-        if(!($parent instanceof ColumnGroup)){
+        if (!($parent instanceof ColumnGroup)) {
             throw new \Exception("The column parent must be a column group");
         }
         return parent::setParent($parent);
@@ -47,12 +48,12 @@ class Column extends NamedGroup{
 
 
 
-    public function getAdaptiveWidth($factor){
+    public function getAdaptiveWidth($factor)
+    {
         $width = $this->getWidth();
-        if(!$this->getParent()){
+        if (!$this->getParent()) {
             return $width;
         }
         $this->getParent();
     }
-
 }

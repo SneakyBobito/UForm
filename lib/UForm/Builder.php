@@ -2,14 +2,14 @@
 
 namespace UForm;
 
-
 use UForm\Builder\FluentElement;
 use UForm\Builder\GroupBuilder;
 use UForm\Builder\InputBuilder;
 use UForm\Form\Element;
 use UForm\Validator;
 
-class Builder {
+class Builder
+{
 
     use FluentElement;
     use GroupBuilder;
@@ -20,7 +20,7 @@ class Builder {
      */
     protected $form;
 
-    function __construct()
+    public function __construct()
     {
         $this->form = new Form();
         $this->open($this->form);
@@ -46,13 +46,14 @@ class Builder {
      * @param string $text the  message to pass to the validator
      * @return $this
      */
-    public function required($text = null){
-        if(null === $text){
+    public function required($text = null)
+    {
+        if (null === $text) {
             $text = "Field Required";
         }
         $last = $this->last();
         $last->addRequiredValidator($text);
-        $last->setUserOption("required",true);
+        $last->setUserOption("required", true);
         return $this;
     }
 
@@ -61,7 +62,8 @@ class Builder {
      * @param string $text the  message to pass to the validator
      * @return $this
      */
-    public function setOption($option, $value){
+    public function setOption($option, $value)
+    {
         $last = $this->last();
         $last->setOption($option, $value);
         return $this;
@@ -73,7 +75,8 @@ class Builder {
      * @return $this
      * @throws \Exception
      */
-    public function validator($validator){
+    public function validator($validator)
+    {
         $this->last()->addValidator($validator);
         return $this;
     }
@@ -83,10 +86,9 @@ class Builder {
      * @return $this
      * @throws \Exception
      */
-    public function filter($filter){
+    public function filter($filter)
+    {
         $this->last()->addFilter($filter);
         return $this;
     }
-
-
 }

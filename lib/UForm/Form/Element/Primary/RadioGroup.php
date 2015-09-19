@@ -8,43 +8,45 @@ use UForm\Validation;
 /**
  * @semanticType radioGroup
  */
-class RadioGroup extends Element {
+class RadioGroup extends Element
+{
     
     protected $values;
 
 
-    public function __construct($name, $values, $attributes = null, $validators = null, $filters = null) {
+    public function __construct($name, $values, $attributes = null, $validators = null, $filters = null)
+    {
         parent::__construct($name, $attributes, $validators, $filters);
         $this->values = $values;
         $this->addSemanticType("radioGroup");
     }
     
-    public function _render( $attributes , $value , $data ){
+    public function __render($attributes, $value, $data)
+    {
 
         $renderHtml = "";
         
         $i=0;
         
-        foreach ($this->values as $k=>$v){
-            
+        foreach ($this->values as $k => $v) {
             $id = $this->getName() . $i . rand(1000, 9999);
             $labelTag = new \UForm\Tag("label");
-            $renderHtml .= $labelTag->draw(array(
+            $renderHtml .= $labelTag->draw([
                 "for" => $id
-            ), $v);
+            ], $v);
             
-            $cbTag = new \UForm\Tag("input", array(
+            $cbTag = new \UForm\Tag("input", [
                 "type" => "radio",
                 "name" => $this->getName()
-            ), true);
+            ], true);
             
             
-            $renderProp = array(
+            $renderProp = [
                 "id" => $id,
                 "value" => $k
-            );
+            ];
             
-            if ( isset($value[$this->getName()]) && $value[$this->getName()] == $k ) {
+            if (isset($value[$this->getName()]) && $value[$this->getName()] == $k) {
                 $renderProp["checked"] = "checked";
             }
             
@@ -61,6 +63,4 @@ class RadioGroup extends Element {
     {
         return array_keys($this->values);
     }
-
-
 }

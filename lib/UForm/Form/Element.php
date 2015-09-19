@@ -15,7 +15,6 @@ use UForm\Validation\ChainedValidation;
 use UForm\ValidationItem;
 use UForm\ValidatorGroup;
 
-
 /**
  * This is a base class for form elements
  *
@@ -31,22 +30,22 @@ abstract class Element
     /**
      * @var \UForm\Form\Element\Container
      */
-    protected $_parent;
+    protected $parent;
 
-    protected $_prename;
-    protected $_name;
+    protected $prename;
+    protected $name;
 
-    protected $_internalPrename;
-    protected $_internalName;
+    protected $internalPrename;
+    protected $internalName;
 
-    protected $_attributes = [];
+    protected $attributes = [];
 
 
     /**
      *
      * @var Form
      */
-    protected $_form;
+    protected $form;
 
     /**
      * \UForm\Form\Element constructor
@@ -57,10 +56,10 @@ abstract class Element
      */
     public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
     {
-        $this->_name = $name;
+        $this->name = $name;
 
         if (is_array($attributes) === true) {
-            $this->_attributes = $attributes;
+            $this->attributes = $attributes;
         }
 
         if (null !== $validators) {
@@ -105,19 +104,21 @@ abstract class Element
      */
     public function setParent(Container $parent)
     {
-        $this->_form = $parent->getForm();
-        $this->_parent = $parent;
+        $this->form = $parent->getForm();
+        $this->parent = $parent;
         $this->refreshParent();
         return $this;
     }
 
     /**
-     * Internal use only. Should be called when a change occurs on the parents and the info related to the parent need to be updated
+     * Internal use only. Should be called when a change occurs
+     * on the parents and the info related to the parent need to be updated
      */
-    public function refreshParent(){
-        if($this->_parent) {
-            $this->setNamespace($this->_parent->getName(true, true));
-            $this->setInternalNamespace($this->_parent->getInternalName(true));
+    public function refreshParent()
+    {
+        if ($this->parent) {
+            $this->setNamespace($this->parent->getName(true, true));
+            $this->setInternalNamespace($this->parent->getInternalName(true));
         }
     }
 
@@ -125,24 +126,27 @@ abstract class Element
      * Internal use only. Set the namespace (parent dependant)
      * @param $namespace
      */
-    public function setNamespace($namespace){
-        $this->_prename = $namespace;
+    public function setNamespace($namespace)
+    {
+        $this->prename = $namespace;
     }
 
     /**
      * Internal use only. Set the internal namespace (parent dependant)
      * @param $namespace
      */
-    public function setInternalNamespace($namespace){
-        $this->_internalPrename = $namespace;
+    public function setInternalNamespace($namespace)
+    {
+        $this->internalPrename = $namespace;
     }
 
     /**
      * Internal use only. Set the internal name (parent dependant)
      * @param $name
      */
-    public function setInternalName($name){
-        $this->_internalName = $name;
+    public function setInternalName($name)
+    {
+        $this->internalName = $name;
     }
 
     /**
@@ -151,7 +155,7 @@ abstract class Element
      */
     public function getForm()
     {
-        return $this->_form;
+        return $this->form;
     }
 
 
@@ -161,7 +165,7 @@ abstract class Element
      */
     public function getParent()
     {
-        return $this->_parent;
+        return $this->parent;
     }
 
 
@@ -179,37 +183,39 @@ abstract class Element
      */
     public function setName($name)
     {
-        $this->_name = $name;
+        $this->name = $name;
     }
 
     /**
-     * @param bool $namespaced if set to true it will return the name of the element with its namespace. The namespace it the name of all the parent elements
-     * @param bool $dottedNotation if set to true will return the nameme in a dotted notation, else it will use the html valid array notation
+     * @param bool $namespaced if set to true it will return the name of the element with its namespace.
+     * The namespace it the name of all the parent elements
+     * @param bool $dottedNotation if set to true will return the nameme in a dotted notation,
+     * else it will use the html valid array notation
      * @return mixed|null|string
      */
     public function getName($namespaced = false, $dottedNotation = false)
     {
-        if ($namespaced && !empty($namespaced) && $this->_prename && !empty($this->_prename)) {
+        if ($namespaced && !empty($namespaced) && $this->prename && !empty($this->prename)) {
             if ($dottedNotation) {
-                return $this->_prename . "." . $this->_name;
+                return $this->prename . "." . $this->name;
             } else {
-                $ppart = explode(".", $this->_prename);
-                $ppart[] = $this->_name;
+                $ppart = explode(".", $this->prename);
+                $ppart[] = $this->name;
                 $final = array_shift($ppart);
                 $final .= "[" . implode("][", $ppart) . "]";
                 return $final;
             }
         } else {
-            return $this->_name;
+            return $this->name;
         }
     }
 
     public function getInternalName($namespaced = false)
     {
-        if ($namespaced && !empty($namespaced) && $this->_internalPrename && !empty($this->_internalPrename)) {
-            return $this->_internalPrename . "." . $this->_internalName;
+        if ($namespaced && !empty($namespaced) && $this->internalPrename && !empty($this->internalPrename)) {
+            return $this->internalPrename . "." . $this->internalName;
         } else {
-            return $this->_internalName;
+            return $this->internalName;
         }
     }
 
@@ -232,7 +238,7 @@ abstract class Element
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_attributes[$attribute] = $value;
+        $this->attributes[$attribute] = $value;
 
         return $this;
     }
@@ -252,8 +258,8 @@ abstract class Element
         if (is_string($attribute) === false) {
             throw new Exception('Invalid parameter type.');
         }
-        if (isset($this->_attributes[$attribute])) {
-            return $this->_attributes[$attribute];
+        if (isset($this->attributes[$attribute])) {
+            return $this->attributes[$attribute];
         }
         return $defaultValue;
     }
@@ -268,7 +274,9 @@ abstract class Element
     public function addAttributes($attributes)
     {
         if (!is_array($attributes)) {
-            throw new Exception("Parameter 'attributes' must be an array. Variable of type " . gettype($attributes) . " used");
+            throw new Exception(
+                "Parameter 'attributes' must be an array. Variable of type " . gettype($attributes) . " used"
+            );
         }
         foreach ($attributes as $attribute => $value) {
             $this->setAttribute($attribute, $value);
@@ -282,10 +290,10 @@ abstract class Element
      */
     public function getAttributes()
     {
-        if (is_array($this->_attributes) === false) {
-            return array();
+        if (is_array($this->attributes) === false) {
+            return [];
         }
-        return $this->_attributes;
+        return $this->attributes;
     }
 
 

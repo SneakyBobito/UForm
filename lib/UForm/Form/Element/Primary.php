@@ -3,7 +3,6 @@
 
 namespace UForm\Form\Element;
 
-
 use UForm\Form\Element;
 
 /**
@@ -12,7 +11,8 @@ use UForm\Form\Element;
  * Class FinalElement
  * @semanticType final
  */
-abstract class Primary extends Element {
+abstract class Primary extends Element
+{
     public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
     {
         parent::__construct($name, $attributes, $validators, $filters);

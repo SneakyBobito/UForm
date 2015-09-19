@@ -3,18 +3,19 @@
 namespace UForm\Validator;
 
 use UForm\Validation;
+use UForm\ValidationItem;
 use UForm\Validator;
 
+class StringLength extends Validator
+{
 
-class StringLength extends Validator{
+    private $minLength;
+    private $maxLength;
 
-    private $_minLength;
-    private $_maxLength;
-
-    function __construct($minLength = 0, $maxLength = 0, $options = [])
+    public function __construct($minLength = 0, $maxLength = 0, $options = [])
     {
-        $this->_minLength = $minLength;
-        $this->_maxLength = $maxLength;
+        $this->minLength = $minLength;
+        $this->maxLength = $maxLength;
 
         parent::__construct($options);
     }
@@ -23,23 +24,24 @@ class StringLength extends Validator{
     /**
      * @inheritdoc
      */
-    public function validate(Validation $validator){
+    public function validate(ValidationItem $validationItem)
+    {
 
-        $value = $validator->getValue();
+        $value = $validationItem->getValue();
 
-        if($this->_minLength > 0 && strlen($value) < $this->_minLength){
-            $validator->appendMessage(
+        if ($this->minLength > 0 && strlen($value) < $this->minLength) {
+            $validationItem->appendMessage(
                 $this->getOption('string-too-short', 'String too short (less than %_length_% character)'),
                 null,
-                ["length" => $this->_minLength]
+                ["length" => $this->minLength]
             );
             return false;
         }
-        if($this->_maxLength > 0 && strlen($value) > $this->_maxLength){
-            $validator->appendMessage(
+        if ($this->maxLength > 0 && strlen($value) > $this->maxLength) {
+            $validationItem->appendMessage(
                 $this->getOption('string-too-short', 'String too long (more than %_length_% character)'),
                 null,
-                ["length" => $this->_maxLength]
+                ["length" => $this->maxLength]
             );
             return false;
         }

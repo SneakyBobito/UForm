@@ -5,11 +5,11 @@
 
 namespace UForm\Test\Form\Element\Container;
 
-
 use UForm\Form\Element\Container\Collection;
 use UForm\Form\Element\Primary\Text;
 
-class CollectionTest extends \PHPUnit_Framework_TestCase {
+class CollectionTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var Collection
@@ -18,13 +18,14 @@ class CollectionTest extends \PHPUnit_Framework_TestCase {
 
     protected $elementModel;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->elementModel =  new Text("textName");
         $this->collection = new Collection("collectionName", $this->elementModel);
     }
 
-    public function testCollection(){
+    public function testCollection()
+    {
         $this->assertSame($this->elementModel, $this->collection->getElement(""));
     }
-
 }

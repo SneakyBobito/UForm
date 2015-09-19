@@ -2,7 +2,6 @@
 
 namespace UForm\Form\Element\Container\Group;
 
-
 use UForm\Form\Element\Container\Group;
 use UForm\Tag;
 
@@ -10,7 +9,8 @@ use UForm\Tag;
  * Class NamedGroup
  * @semanticType namedGroup
  */
-abstract class NamedGroup extends Group {
+abstract class NamedGroup extends Group
+{
 
     protected $libelle;
 
@@ -18,7 +18,7 @@ abstract class NamedGroup extends Group {
 
     protected $tagName;
 
-    function __construct($tagName, $label = null, $elements = [] )
+    public function __construct($tagName, $label = null, $elements = [])
     {
         parent::__construct(null, $elements);
         $this->tagName = $tagName;
@@ -42,15 +42,15 @@ abstract class NamedGroup extends Group {
         $this->class = $class;
     }
 
-    public function _render($attributes, $values, $data, $prename = null) {
-        $prerender = parent::_render($attributes, $values, $data, $prename);
+    public function __render($attributes, $values, $data, $prename = null)
+    {
+        $prerender = parent::__render($attributes, $values, $data, $prename);
 
-        $sectionTag = new Tag($this->tagName, array(
+        $sectionTag = new Tag($this->tagName, [
             "class" => $this->class
-        ));
+        ]);
 
-        return $sectionTag->draw(array(), $prerender);
+        return $sectionTag->draw([], $prerender);
 
     }
-
 }

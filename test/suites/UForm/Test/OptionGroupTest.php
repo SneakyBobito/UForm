@@ -4,7 +4,8 @@ namespace UForm\Test;
 
 use UForm\OptionGroup;
 
-class OptionGroupTest extends \PHPUnit_Framework_TestCase {
+class OptionGroupTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var OptionGroup
@@ -22,7 +23,8 @@ class OptionGroupTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("bar", $this->optionGroup->getOption("foo"));
     }
 
-    public function testGetOption(){
+    public function testGetOption()
+    {
         $this->assertEquals("baz", $this->optionGroup->getOption("foo", "baz"));
         $this->assertNull($this->optionGroup->getOption("foo"));
         $this->optionGroup->setOption("foo", "bar");
@@ -30,7 +32,8 @@ class OptionGroupTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("bar", $this->optionGroup->getOption("foo", "baz"));
     }
 
-    public function testAddOptions(){
+    public function testAddOptions()
+    {
         $this->optionGroup->addOptions(["foo" => "bar", "qux" => "quux"]);
         $this->assertSame(["foo" => "bar", "qux" => "quux"], $this->optionGroup->getOptions());
 
@@ -42,7 +45,8 @@ class OptionGroupTest extends \PHPUnit_Framework_TestCase {
     }
 
 
-    public function testSetOptions(){
+    public function testSetOptions()
+    {
         $this->optionGroup->setOptions(["foo" => "bar", "qux" => "quux"]);
         $this->assertSame(["foo" => "bar", "qux" => "quux"], $this->optionGroup->getOptions());
 
@@ -56,9 +60,8 @@ class OptionGroupTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame([], $this->optionGroup->getOptions());
     }
 
-    public function testGetOptions(){
+    public function testGetOptions()
+    {
         $this->assertEquals([], $this->optionGroup->getOptions());
     }
-
-
 }

@@ -5,13 +5,14 @@
 
 namespace UForm\Test\Filter;
 
-
 use UForm\Filter\DirectClosure;
 
-class DirectClosureTest extends \PHPUnit_Framework_TestCase {
+class DirectClosureTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function testFilter(){
-        $closure = function($v){
+    public function testFilter()
+    {
+        $closure = function ($v) {
             return "-$v-";
         };
         $directClosure = new DirectClosure($closure);

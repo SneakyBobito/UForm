@@ -2,8 +2,8 @@
 
 namespace UForm\Render;
 
-
-class TwigLoaderFileSystem extends \Twig_Loader_Filesystem {
+class TwigLoaderFileSystem extends \Twig_Loader_Filesystem
+{
     public function normalizeName($name)
     {
         $name .= ".twig";

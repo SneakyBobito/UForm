@@ -7,13 +7,15 @@ namespace UForm;
  *
  * @author sghzal
  */
-class Tag {
+class Tag
+{
     
     protected $name;
     protected $baseProperties;
     protected $closed;
             
-    function __construct($name, $baseProperties = array(), $closed = false) {
+    public function __construct($name, $baseProperties = [], $closed = false)
+    {
         $this->name = $name;
         $this->baseProperties = $baseProperties ;
         $this->closed = $closed;
@@ -25,40 +27,42 @@ class Tag {
      * @param null $p
      * @return string
      */
-    private function __parseProperties($p = null){
+    private function __parseProperties($p = null)
+    {
 
-        if(null === $p){
+        if (null === $p) {
             $p = [];
         }
         
         $class = isset($this->baseProperties["class"]) ? $this->baseProperties["class"] : null;
         
-        if(isset($p["class"])){
-            if($class){
+        if (isset($p["class"])) {
+            if ($class) {
                 $class .= " " . $p["class"];
-            }  else {
+            } else {
                 $class = $p["class"];
             }
         }
         
-        if(is_array($p))
+        if (is_array($p)) {
             $properties = array_merge($this->baseProperties, $p);
-        else
+        } else {
             $properties = $this->baseProperties;
+        }
         
-        if($class)
+        if ($class) {
             $properties["class"] = $class;
+        }
         
         $d = "";
 
-        foreach ($properties as $k=>$v){
-
+        foreach ($properties as $k => $v) {
             $vs = htmlspecialchars($v);
             $ks = htmlspecialchars($k);
 
-            if(is_bool($v) && true == $v){
+            if (is_bool($v) && true == $v) {
                 $d .= ' ' . $ks;
-            }else{
+            } else {
                 $d .= ' ' . $ks . '="' . $vs . '"';
             }
         }
@@ -67,18 +71,17 @@ class Tag {
         
     }
     
-    public function draw($p = null, $content = ""){
+    public function draw($p = null, $content = "")
+    {
         $d = "<" . $this->name;
         $d .= $this->__parseProperties($p);
         
-        if($this->closed){
+        if ($this->closed) {
             $d .= "/>";
-        }else{
+        } else {
             $d .= ">$content</$this->name>";
         }
         
         return $d;
     }
-
-    
 }

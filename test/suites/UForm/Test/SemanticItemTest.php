@@ -4,7 +4,8 @@ namespace UForm\Test;
 
 use UForm\SemanticItem;
 
-class SemanticItemTest extends \PHPUnit_Framework_TestCase {
+class SemanticItemTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var SemanticItem
@@ -33,12 +34,12 @@ class SemanticItemTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->semanticItemStub->hasSemanticType("type1"));
     }
 
-    public function testGetSemanticTypes(){
+    public function testGetSemanticTypes()
+    {
         $this->assertSame([], $this->semanticItemStub->getSemanticTypes());
         $this->semanticItemStub->addSemanticType("type1");
         $this->semanticItemStub->addSemanticType("type2");
         // ORDER IS IMPORTANT
         $this->assertSame(["type2", "type1"], $this->semanticItemStub->getSemanticTypes());
     }
-
 }

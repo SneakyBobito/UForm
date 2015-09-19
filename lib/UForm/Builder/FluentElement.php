@@ -5,14 +5,14 @@
 
 namespace UForm\Builder;
 
-
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
 
 /**
  * That's the most basic builder. It allows to create elements in a fluent way
  */
-trait FluentElement {
+trait FluentElement
+{
 
     protected $stack = [];
     /**
@@ -25,7 +25,8 @@ trait FluentElement {
      */
     protected $lastElement = null;
 
-    public function add(Element $e){
+    public function add(Element $e)
+    {
         $this->currentGroup->addElement($e);
         $this->lastElement = $e;
     }
@@ -36,8 +37,9 @@ trait FluentElement {
      * @param Group $e
      * @return $this
      */
-    public function open(Group $e){
-        if($this->currentGroup) {
+    public function open(Group $e)
+    {
+        if ($this->currentGroup) {
             $this->stack[] = $this->currentGroup;
         }
         $this->currentGroup = $e;
@@ -49,8 +51,9 @@ trait FluentElement {
      * @return $this
      * @throws BuilderException
      */
-    public function close(){
-        if(count($this->stack) == 0){
+    public function close()
+    {
+        if (count($this->stack) == 0) {
             throw new BuilderException("Group stack is empty, call to close() requires a stack to be opened");
         }
         $this->currentGroup = array_pop($this->stack);
@@ -63,13 +66,11 @@ trait FluentElement {
      * @return Element the latest element
      * @throws BuilderException
      */
-    public function last(){
-        if(!$this->lastElement){
+    public function last()
+    {
+        if (!$this->lastElement) {
             throw new BuilderException("Call to last() requires you to have already created an element");
         }
         return $this->lastElement;
     }
-
-
-
 }

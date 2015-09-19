@@ -5,7 +5,6 @@
 
 namespace UForm\Test;
 
-
 use UForm\DataContext;
 use UForm\Form;
 use UForm\Form\Element\Primary\Password;
@@ -14,7 +13,8 @@ use UForm\Validation\Message;
 use UForm\ValidationItem;
 use UForm\Validator\DirectClosure;
 
-class ValidationItemTest extends \PHPUnit_Framework_TestCase {
+class ValidationItemTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var ValidationItem
@@ -40,7 +40,8 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase {
 
     protected $localData;
 
-    public function setUp(){
+    public function setUp()
+    {
 
         $this->dataSet = [
 
@@ -70,7 +71,7 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase {
         ];
 
         $this->element = new Text("firstname");
-        $this->element->addValidator(new DirectClosure(function(ValidationItem $v){
+        $this->element->addValidator(new DirectClosure(function (ValidationItem $v) {
             $message = new Message("invalid");
             $v->appendMessage($message);
             return false;
@@ -82,41 +83,53 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase {
 
         $this->localData = $this->formContext->getData()->findValue("children.0");
 
-        $this->validationItem = new ValidationItem(new DataContext($this->localData), $this->element, $this->formContext);
+        $this->validationItem = new ValidationItem(
+            new DataContext($this->localData),
+            $this->element,
+            $this->formContext
+        );
     }
 
-    public function testGetLocalData(){
+    public function testGetLocalData()
+    {
         $this->assertSame($this->dataSet["children"][0], $this->validationItem->getLocalData()->getDataCopy());
     }
 
-    public function testGetLocalName(){
+    public function testGetLocalName()
+    {
         $this->assertSame("firstname", $this->validationItem->getLocalName());
     }
 
-    public function testGetElement(){
+    public function testGetElement()
+    {
         $this->assertSame($this->element, $this->validationItem->getElement());
     }
 
-    public function testGetChainedValidation(){
+    public function testGetChainedValidation()
+    {
         $this->assertInstanceOf("UForm\Validation\ChainedValidation", $this->validationItem->getChainedValidation());
     }
 
-    public function testResetValidation(){
+    public function testResetValidation()
+    {
         $this->validationItem->validate();
         $this->assertFalse($this->validationItem->isValid());
         $this->validationItem->resetValidation();
         $this->assertTrue($this->validationItem->isValid());
     }
 
-    public function testValidate(){
+    public function testValidate()
+    {
         $this->assertFalse($this->validationItem->validate());
     }
 
-    public function testIsValid(){
+    public function testIsValid()
+    {
         $this->assertTrue($this->validationItem->isValid());
     }
 
-    public function testGetMessages(){
+    public function testGetMessages()
+    {
         $this->assertInstanceOf("UForm\Validation\Message\Group", $this->validationItem->getMessages());
         $this->assertCount(0, $this->validationItem->getMessages());
         $this->validationItem->validate();
@@ -124,18 +137,21 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase {
         $this->assertCount(1, $this->validationItem->getMessages());
     }
 
-    public function testAppendMessage(){
+    public function testAppendMessage()
+    {
         $message = new Message("message");
         $this->validationItem->appendMessage($message);
         $this->assertCount(1, $this->validationItem->getMessages());
         $this->assertSame($message, $this->validationItem->getMessages()->getAt(0));
     }
 
-    public function testGetValue(){
+    public function testGetValue()
+    {
         $this->assertEquals("bart", $this->validationItem->getValue());
     }
 
-    public function testChildrenAreValid(){
+    public function testChildrenAreValid()
+    {
         $this->assertTrue($this->validationItem->childrenAreValid());
         $this->validationItem->validate();
         $this->assertTrue($this->validationItem->childrenAreValid());
@@ -145,7 +161,10 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase {
         $form = new Form();
 
         $userName = new Text("username");
-        $userName->addValidator(function(ValidationItem $v){return $v->getValue() == "bart";});
+        $userName->addValidator(function (ValidationItem $v) {
+            return $v->getValue() == "bart";
+
+        });
         $password = new Password("password");
         $group = new Form\Element\Container\Group("user");
         $group->addElement($userName);
@@ -162,14 +181,15 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testFindValue(){
+    public function testFindValue()
+    {
         $this->assertEquals("homer", $this->validationItem->findValue("firstname"));
         $this->assertEquals("lisa", $this->validationItem->findValue("children.1.firstname"));
     }
 
-    public function testFindLocalValue(){
+    public function testFindLocalValue()
+    {
         $this->assertEquals("bart", $this->validationItem->findLocalValue("firstname"));
         $this->assertEquals("Santa's Little Helper", $this->validationItem->findLocalValue("dog.name"));
     }
-
 }

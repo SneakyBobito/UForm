@@ -5,8 +5,8 @@
 
 namespace UForm;
 
-
-class DataContext implements \IteratorAggregate {
+class DataContext implements \IteratorAggregate
+{
 
     /**
      * @var array
@@ -27,7 +27,7 @@ class DataContext implements \IteratorAggregate {
      * @param Form $form
      * @param $data
      */
-    function __construct($data)
+    public function __construct($data)
     {
         $this->data = $data;
         $this->navigator = new Navigator();
@@ -36,12 +36,14 @@ class DataContext implements \IteratorAggregate {
 
     /**
      * Find a value by it's name accepting dotted path.
-     * If you are sure that the value you want to get is a direct value, please consider using getDirectValue for performance purposes
+     * If you are sure that the value you want to get is a direct value,
+     * please consider using getDirectValue for performance purposes
      * @param string $path the path of the data, accepts dotted notation
      * @return mixed the value
      */
-    public function findValue($path){
-        if(!$this->isArray()){
+    public function findValue($path)
+    {
+        if (!$this->isArray()) {
             return null;
         }
         return $this->navigator->arrayGet($this->data, $path);
@@ -52,8 +54,9 @@ class DataContext implements \IteratorAggregate {
      * @param string $name
      * @return null
      */
-    public function getDirectValue($name){
-        if(!$this->isArray()){
+    public function getDirectValue($name)
+    {
+        if (!$this->isArray()) {
             return null;
         }
         return isset($this->data[$name]) ? $this->data[$name] : null;
@@ -71,7 +74,8 @@ class DataContext implements \IteratorAggregate {
      * Get a copy of the internal data array
      * @return array the data
      */
-    public function getDataCopy(){
+    public function getDataCopy()
+    {
         return $this->data;
     }
 
@@ -79,9 +83,8 @@ class DataContext implements \IteratorAggregate {
      * check if the internal data is an array
      * @return bool true if the internal data is an array
      */
-    public function isArray(){
+    public function isArray()
+    {
         return $this->isArray;
     }
-
-
 }

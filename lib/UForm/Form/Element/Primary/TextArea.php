@@ -11,24 +11,26 @@ use UForm\Tag;
  * Component TEXTAREA for forms
  * @semanticType textarea
  */
-class TextArea extends Element{
+class TextArea extends Element
+{
       
-    public function _render( $attributes , $value , $data){
+    public function __render($attributes, $value, $data)
+    {
 
-        $params = array(
+        $params = [
             "name" => $this->getName(true)
-        );
+        ];
 
-        if(isset($value[$this->getName()])){
+        if (isset($value[$this->getName()])) {
             $value = $value[$this->getName()];
-        }else
+        } else {
             $value = "";
+        }
     
         
-        $render = new Tag("textarea", $params , false);
+        $render = new Tag("textarea", $params, false);
 
 
         return $render->draw($attributes, $value);
     }
-    
 }

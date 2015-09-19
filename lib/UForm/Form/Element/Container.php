@@ -1,6 +1,7 @@
 <?php
 
 namespace UForm\Form\Element;
+
 use UForm\Form\Element;
 
 /**
@@ -15,7 +16,8 @@ use UForm\Form\Element;
 
  * @semanticType container
  */
-abstract class Container extends Element {
+abstract class Container extends Element
+{
 
     public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
     {
@@ -31,27 +33,30 @@ abstract class Container extends Element {
     abstract public function getElement($name);
 
     /**
-     * Get the elements contained in this container. Values are required because a collection requires values to be generated
+     * Get the elements contained in this container.
+     * Values are required because a collection requires values to be generated
      * @param mixed $values used for the "collection" element that is rendered according to a value set
      * @return Element[] the elements contained in this container
      */
-    abstract public function getElements($values=null);
+    abstract public function getElements($values = null);
 
 
     /**
-     * Get an element located directly in this element. There is an exception for unnamed elements : we will search inside directElements of unnamed elements
+     * Get an element located directly in this element. There is an exception for unnamed elements :
+     * we will search inside directElements of unnamed elements
      * @param string $name name of the element to get
      * @param mixed $values used for the "collection" element that is rendered according to a value set
      * @return null|Element|Container the element found or null if the element does not exist
      */
-    public function getDirectElement($name, $values = null){
-        foreach($this->getElements($values) as $elm){
+    public function getDirectElement($name, $values = null)
+    {
+        foreach ($this->getElements($values) as $elm) {
             if ($name == $elm->getName()) {
                 return $elm;
-            } else if ( !$elm->getName() && $elm instanceof Container ) {
+            } elseif (!$elm->getName() && $elm instanceof Container) {
                 /* @var $elm \UForm\Form\Element\Container */
                 $element = $elm->getDirectElement($name);
-                if($element) {
+                if ($element) {
                     return $element;
                 }
             }
@@ -64,9 +69,10 @@ abstract class Container extends Element {
      * @param string $className the name of the class to search for
      * @return bool true if the instance was found
      */
-    public function hasDirectElementInstance($className){
-        foreach($this->getElements() as $el){
-            if(is_a($el, $className)){
+    public function hasDirectElementInstance($className)
+    {
+        foreach ($this->getElements() as $el) {
+            if (is_a($el, $className)) {
                 return true;
             }
         }
@@ -78,9 +84,10 @@ abstract class Container extends Element {
      * @param string $type the type to search for
      * @return bool true if the semantic type was found
      */
-    public function hasDirectElementSemanticType($type){
-        foreach($this->getElements() as $el){
-            if($el->hasSemanticType($type)){
+    public function hasDirectElementSemanticType($type)
+    {
+        foreach ($this->getElements() as $el) {
+            if ($el->hasSemanticType($type)) {
                 return true;
             }
         }
@@ -93,7 +100,7 @@ abstract class Container extends Element {
     public function setParent(Container $parent)
     {
         $r = parent::setParent($parent);
-        foreach($this->getElements() as $element){
+        foreach ($this->getElements() as $element) {
             $element->refreshParent();
         }
         return $r;
@@ -105,18 +112,16 @@ abstract class Container extends Element {
     public function sanitizeData($data)
     {
         $data = parent::sanitizeData($data);
-        foreach($this->getElements($data) as $element){
+        foreach ($this->getElements($data) as $element) {
             $name = $element->getName();
-            if($name){
-                if(isset($data[$name])){
+            if ($name) {
+                if (isset($data[$name])) {
                     $data[$name] = $element->sanitizeData($data[$name]);
                 }
-            }else{
+            } else {
                 $data = $element->sanitizeData($data);
             }
         }
         return $data;
     }
-
-
 }

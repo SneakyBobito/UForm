@@ -7,8 +7,8 @@ namespace UForm\Form\Element;
  * Class Drawable
  * @package UForm\Form\Element
  */
-interface Drawable {
+interface Drawable
+{
 
     public function render($localValue, $data);
-
 }

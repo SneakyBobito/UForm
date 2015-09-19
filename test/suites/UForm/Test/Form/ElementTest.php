@@ -2,11 +2,11 @@
 
 namespace UForm\Test\Form;
 
-
 use UForm\Form;
 use UForm\Form\Element;
 
-class ElementTest extends \PHPUnit_Framework_TestCase {
+class ElementTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var Element
@@ -28,7 +28,10 @@ class ElementTest extends \PHPUnit_Framework_TestCase {
 
         $elementName = "elementName";
         $attributes = ["at1" => "val1", "at2" => "val2"];
-        $validators = [$this->getMockForAbstractClass('UForm\Validator'), $this->getMockForAbstractClass('UForm\Validator')];
+        $validators = [
+            $this->getMockForAbstractClass('UForm\Validator'),
+            $this->getMockForAbstractClass('UForm\Validator')
+        ];
         $filters= [$this->getMockForAbstractClass('UForm\Filter'), $this->getMockForAbstractClass('UForm\Filter')];
 
         /* @var $element Element */
@@ -66,15 +69,18 @@ class ElementTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testGetForm(){
+    public function testGetForm()
+    {
         $this->assertEquals(null, $this->elementStub->getForm());
     }
 
-    public function testGetParent(){
+    public function testGetParent()
+    {
         $this->assertEquals(null, $this->elementStub->getParent());
     }
 
-    public function testSetName(){
+    public function testSetName()
+    {
         $this->assertEquals(null, $this->elementStub->getName());
         $this->elementStub->setName("newName");
         $this->assertEquals("newName", $this->elementStub->getName());
@@ -82,7 +88,8 @@ class ElementTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("otherName", $this->elementStub->getName());
     }
 
-    public function testGetName(){
+    public function testGetName()
+    {
         $this->assertEquals(null, $this->elementStub->getName());
 
         $this->elementStub->setName("newName");
@@ -100,7 +107,8 @@ class ElementTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testGetInternalName(){
+    public function testGetInternalName()
+    {
         $this->assertEquals(null, $this->elementStub->getName());
 
         $this->elementStub->setName("newName");
@@ -113,28 +121,34 @@ class ElementTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("parentInternalName.internalName", $this->elementStub->getInternalName(true));
     }
 
-    public function testSetAttribute(){
+    public function testSetAttribute()
+    {
         $this->elementStub->setAttribute("atr1", "value1");
         $this->elementStub->setAttribute("atr2", "value2");
         $this->assertEquals(["atr1" => "value1", "atr2" => "value2"], $this->elementStub->getAttributes());
     }
 
-    public function testGetAttributes(){
+    public function testGetAttributes()
+    {
         $this->assertEquals([], $this->elementStub->getAttributes());
     }
 
-    public function testAddAttributes(){
+    public function testAddAttributes()
+    {
         $this->elementStub->setAttribute("atr1", "value1");
         $this->elementStub->addAttributes(["atr2" => "value2", "atr3" => "value3"]);
-        $this->assertEquals(["atr1" => "value1", "atr2" => "value2", "atr3" => "value3"], $this->elementStub->getAttributes());
+        $this->assertEquals(
+            ["atr1" => "value1", "atr2" => "value2", "atr3" => "value3"],
+            $this->elementStub->getAttributes()
+        );
     }
 
-    public function testGetAttribute(){
+    public function testGetAttribute()
+    {
         $this->assertEquals("defaultValue", $this->elementStub->getAttribute("atr1", "defaultValue"));
         $this->assertEquals(null, $this->elementStub->getAttribute("atr1"));
 
         $this->elementStub->setAttribute("atr1", "value1");
         $this->assertEquals("value1", $this->elementStub->getAttribute("atr1", "defaultValue"));
     }
-
 }

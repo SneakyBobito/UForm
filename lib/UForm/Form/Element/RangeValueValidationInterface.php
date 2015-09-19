@@ -2,9 +2,8 @@
 
 namespace UForm\Validation\Element;
 
-
-interface RangeValueValidationInterface {
+interface RangeValueValidationInterface
+{
 
     public function isInRange($value);
-
 }

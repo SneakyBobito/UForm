@@ -18,7 +18,7 @@ class Select extends Element
      * @var null|array|object
      * @access protected
      */
-    protected $_optionsValues;
+    protected $optionsValues;
 
     /**
      * \UForm\Form\Element constructor
@@ -30,17 +30,18 @@ class Select extends Element
      */
     public function __construct($name, $values = null, $attributes = null)
     {
-        if(is_object($values) === false &&
+        if (is_object($values) === false &&
             is_array($values) === false &&
             is_null($values) === false) {
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_optionsValues = $values;
+        $this->optionsValues = $values;
         parent::__construct($name, $attributes);
     }
 
-    public function validateOnSelfValues($message = null){
+    public function validateOnSelfValues($message = null)
+    {
         $this->addValidator(new SelfValue(["message" => $message]));
     }
 
@@ -59,11 +60,11 @@ class Select extends Element
      */
     public function setOptions($options)
     {
-        if(is_object($options) === false &&
+        if (is_object($options) === false &&
             is_array($options) === false) {
             throw new Exception('Invalid parameter type.');
         }
-        $this->_optionsValues = $options;
+        $this->optionsValues = $options;
         return $this;
     }
 
@@ -74,7 +75,7 @@ class Select extends Element
      */
     public function getOptions()
     {
-        return $this->_optionsValues;
+        return $this->optionsValues;
     }
 
     /**
@@ -86,37 +87,39 @@ class Select extends Element
      */
     public function addOption($option)
     {
-        if(is_array($option) === false) {
+        if (is_array($option) === false) {
             throw new Exception('Invalid parameter type.');
         }
 
-        $this->_optionsValues[] = $option;
+        $this->optionsValues[] = $option;
 
         return $this;
     }
 
 
-    public function _render( $attributes , $value , $data){
+    public function __render($attributes, $value, $data)
+    {
 
-        $params = array(
+        $params = [
             "name" => $this->getName(true)
-        );
+        ];
 
-        if(isset($value[$this->getName()])){
+        if (isset($value[$this->getName()])) {
             $value = $value[$this->getName()];
-        }  else {
+        } else {
             $value = null;
         }
 
-        $render = new Tag("select", $params , false);
+        $render = new Tag("select", $params, false);
 
         $options = "";
 
-        foreach ($this->_optionsValues as $k=>$v){
+        foreach ($this->optionsValues as $k => $v) {
             $oTag = new Tag("option");
-            $oattr = array("value"=>$k);
-            if($value == $k)
+            $oattr = ["value"=>$k];
+            if ($value == $k) {
                 $oattr["selected"] = "selected";
+            }
             $options .= $oTag->draw($oattr, $v);
         }
 

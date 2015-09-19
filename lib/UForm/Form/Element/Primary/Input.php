@@ -9,11 +9,13 @@ use UForm\Tag;
  *
  * @semanticType input
  */
-class Input extends Element\Primary  {
+class Input extends Element\Primary
+{
     
     private $inputType;
 
-    public function __construct($type, $name, $attributes = null, $validators = null, $filters = null) {
+    public function __construct($type, $name, $attributes = null, $validators = null, $filters = null)
+    {
         parent::__construct($name, $attributes, $validators, $filters);
         $this->inputType = $type;
         $this->addSemanticType("input");
@@ -21,25 +23,27 @@ class Input extends Element\Primary  {
     }
 
     
-    public function _render($localValue, $data){
+    public function __render($localValue, $data)
+    {
 
 
-        $params = array(
+        $params = [
             "type" => $this->inputType,
             "name" => $this->getName(true)
-        );
+        ];
 
-        if(is_array($localValue) && isset($localValue[$this->getName()])){
+        if (is_array($localValue) && isset($localValue[$this->getName()])) {
             $params["value"] = $localValue[$this->getName()];
         }
        
-        $render = new Tag("input", $this->overidesParamsBeforeRender($params , [] , $localValue , $data) , true);
+        $render = new Tag("input", $this->overidesParamsBeforeRender($params, [], $localValue, $data), true);
 
         return $render->draw([], null);
     }
 
     /**
-     * allows subclasses to redefine some params before the rendering (e.g checkbox will use 'checked' instead of 'value'
+     * allows subclasses to redefine some params before the rendering
+     * (e.g checkbox will use 'checked' instead of 'value')
      * @param $params
      * @param $attributes
      * @param $value
@@ -47,8 +51,8 @@ class Input extends Element\Primary  {
      * @param null $prename
      * @return mixed
      */
-    protected function overidesParamsBeforeRender($params , $attributes , $value , $data , $prename = null){
+    protected function overidesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
+    {
         return $params;
     }
-
 }

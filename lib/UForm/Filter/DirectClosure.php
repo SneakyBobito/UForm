@@ -21,7 +21,8 @@ use UForm\Filter;
  * </code>
  *
  */
-class DirectClosure extends Filter {
+class DirectClosure extends Filter
+{
 
     /**
      * @var callable
@@ -29,9 +30,11 @@ class DirectClosure extends Filter {
     public $closure;
 
     /**
-     * @param callable $closure the closure that will be called during filtering. The closure first parameter will be the filtered value
+     * @param callable $closure the closure that will be called during filtering.
+     * The closure first parameter will be the filtered value
      */
-    function __construct(callable $closure) {
+    public function __construct(callable $closure)
+    {
         $this->closure = $closure;
     }
 
@@ -39,14 +42,16 @@ class DirectClosure extends Filter {
      * get the internal closure
      * @return callable
      */
-    public function getClosure(){
+    public function getClosure()
+    {
         return $this->closure;
     }
 
     /**
      * @inheritdoc
      */
-    public function filter($v) {
+    public function filter($v)
+    {
         $closure = $this->closure;
         return $closure($v);
     }

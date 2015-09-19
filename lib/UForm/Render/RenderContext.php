@@ -14,7 +14,8 @@ use UForm\Forms\FormContext;
  * Class RenderContext
  * @package UForm\Render
  */
-class RenderContext {
+class RenderContext
+{
 
     /**
      * @var Element
@@ -32,7 +33,7 @@ class RenderContext {
 
     protected $parentTypes=[];
 
-    function __construct(Element $element, FormContext $formContext, AbstractRender $render, $parentTypes)
+    public function __construct(Element $element, FormContext $formContext, AbstractRender $render, $parentTypes)
     {
         $this->element = $element;
         $this->formContext = $formContext;
@@ -40,7 +41,8 @@ class RenderContext {
         $this->parentTypes = $parentTypes;
     }
 
-    public function renderElement(Element $element){
+    public function renderElement(Element $element)
+    {
         return $this->render->renderElement($element, $this->formContext);
     }
 
@@ -48,26 +50,31 @@ class RenderContext {
      * Render the next parent semantic type available
      * @return string
      */
-    public function parentRender(){
+    public function parentRender()
+    {
         return $this->render->renderElementAs($this->element, $this->formContext, $this->parentTypes);
     }
 
-    public function isValid(){
+    public function isValid()
+    {
         return $this->formContext->elementIsValid($this->element->getName(true, true));
     }
 
-    public function elementrefaultRender(Element $element){
+    public function elementrefaultRender(Element $element)
+    {
 
-        if($element instanceof Element\Drawable){
+        if ($element instanceof Element\Drawable) {
             $element->render($this);
-        }else{
-            throw new Exception("Trying to render an invalid element. Element not implementing Drawable cant be rendered");
+        } else {
+            throw new \UForm\Exception(
+                "Trying to render an invalid element. Element not implementing Drawable cant be rendered"
+            );
         }
 
     }
 
-    public function getLocalValue(){
+    public function getLocalValue()
+    {
         return $this->formContext->getLocalValue();
     }
-
 }

@@ -5,17 +5,17 @@
 
 namespace UForm\Test\Filter;
 
-
 use UForm\Filter\LeftTrim;
 
-class LeftTrimTest extends \PHPUnit_Framework_TestCase {
+class LeftTrimTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function testFilter(){
+    public function testFilter()
+    {
         $filter = new LeftTrim();
         $this->assertEquals("foo ", $filter->filter(" foo "));
 
         $filter = new LeftTrim("-+");
         $this->assertEquals("foo+-+", $filter->filter("+-+foo+-+"));
     }
-
 }

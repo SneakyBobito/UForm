@@ -4,12 +4,11 @@
  */
 namespace UForm;
 
-
 /**
  * UForm\Filter
  *
  * Base class for user defined filters.
- * 
+ *
  */
 abstract class Filter
 {
@@ -20,5 +19,4 @@ abstract class Filter
      * @return mixed
      */
     abstract public function filter($v);
-	
 }

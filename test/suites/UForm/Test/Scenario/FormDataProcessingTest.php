@@ -3,20 +3,28 @@
  * @license see LICENSE
  */
 
-class FormDataProcessingTest extends PHPUnit_Framework_TestCase {
+namespace UForm\Test\Scenario;
+
+use Particle\Validator\Rule\LengthBetween;
+use UForm\Form\Element\Primary\Password;
+use UForm\Form\Element\Primary\Text;
+use UForm\Validator\Particle\RuleBridge;
+
+class FormDataProcessingTest extends \PHPUnit_Framework_TestCase
+{
 
 
     public function testSimpleFormDataValidation()
     {
         $form = new \UForm\Form();
 
-        $userName = new \UForm\Form\Element\Primary\Text("username");
+        $userName = new Text("username");
         $userName->addFilter(new \UForm\Filter\Trim());
-        $userName->addValidator(new \UForm\Validator\Particle\RuleBridge(new \Particle\Validator\Rule\LengthBetween(2, 5)));
+        $userName->addValidator(new RuleBridge(new LengthBetween(2, 5)));
 
-        $password = new \UForm\Form\Element\Primary\Password("password");
+        $password = new Password("password");
         $password->addFilter(new \UForm\Filter\Trim());
-        $password->addValidator(new \UForm\Validator\Particle\RuleBridge(new \Particle\Validator\Rule\LengthBetween(8, 10)));
+        $password->addValidator(new RuleBridge(new LengthBetween(8, 10)));
 
         $form->addElement($userName);
         $form->addElement($password);

@@ -14,54 +14,59 @@ use UForm\Validation\ChainedValidation;
  * @author sghzal
  * @semanticType group
  */
-class Group extends Container implements Drawable{
+class Group extends Container implements Drawable
+{
     
     /**
      * @var \UForm\Form\Element[]
      */
-    protected $elements = array();
+    protected $elements = [];
 
-    public function __construct($name = null, $elements = null) {
+    public function __construct($name = null, $elements = null)
+    {
         parent::__construct($name);
-        if(is_array($elements)){
-            foreach ($elements as $el){
+        if (is_array($elements)) {
+            foreach ($elements as $el) {
                 $this->addElement($el);
             }
-        }else if(is_object($elements)){
+        } elseif (is_object($elements)) {
             $this->addElement($elements);
         }
         $this->addSemanticType("group");
     }
     
-    public function addElement(\UForm\Form\Element $element){
+    public function addElement(\UForm\Form\Element $element)
+    {
         $iname = "i" . count($this->elements);
         $this->elements[$iname] = $element;
         $element->setParent($this);
         $element->setInternalName($iname);
     }
     
-    public function getName($prenamed = null, $dottedNotation = false) {
-        if (null === $this->_name) {
-            return $this->_prename;
+    public function getName($prenamed = null, $dottedNotation = false)
+    {
+        if (null === $this->name) {
+            return $this->prename;
         }
 
         return parent::getName($prenamed, $dottedNotation);
     }
 
-    public function render($values, $data) {
+    public function render($values, $data)
+    {
         $render = "";
 
-        foreach($this->elements as $element){
-            $hasName = null !== $this->_name ;
+        foreach ($this->elements as $element) {
+            $hasName = null !== $this->name ;
 
             $valuesLocal =  null;
-            if($hasName){
+            if ($hasName) {
                 $valuesLocal = $values[$this->getName()];
             }
 
             $attributesLocal = null;
 
-            $render .= $element->render($valuesLocal , $data);
+            $render .= $element->render($valuesLocal, $data);
         }
         
         return $render;
@@ -70,16 +75,17 @@ class Group extends Container implements Drawable{
     /**
      * @inheritdoc
      */
-    public function getElement($name){
+    public function getElement($name)
+    {
         if (!is_array($name)) {
             $namesP = explode(".", $name);
-        }else{
+        } else {
             $namesP = $name;
         }
 
         $finalElm = $this->getDirectElement($namesP[0]);
         
-        if( $finalElm && count($namesP)>1){
+        if ($finalElm && count($namesP)>1) {
             array_shift($namesP);
             return $finalElm->getElement(($namesP));
         }
@@ -91,7 +97,8 @@ class Group extends Container implements Drawable{
      * @param null $values
      * @return \UForm\Form\Element[]
      */
-    public function getElements($values = null){
+    public function getElements($values = null)
+    {
         return $this->elements;
     }
 
@@ -99,35 +106,35 @@ class Group extends Container implements Drawable{
     /**
      * @inheritdoc
      */
-    public function prepareValidation(DataContext $localValues, FormContext $formContext){
+    public function prepareValidation(DataContext $localValues, FormContext $formContext)
+    {
         parent::prepareValidation($localValues, $formContext);
         $name = $this->getName();
-        foreach ($this->getElements() as $k=>$v){
-            if($name){
+        foreach ($this->getElements() as $k => $v) {
+            if ($name) {
                 $values = $localValues->getDirectValue($name);
-            }else{
+            } else {
                 $values = $localValues->getDataCopy();
             }
             $v->prepareValidation(new DataContext($values), $formContext);
         }
     }
     
-    public function childrenAreValid(ChainedValidation $cV) {
+    public function childrenAreValid(ChainedValidation $cV)
+    {
         
-        foreach($this->getElements() as $el){
-            
-            $v = $cV->getValidation($el->getInternalName(true),true);
+        foreach ($this->getElements() as $el) {
+            $v = $cV->getValidation($el->getInternalName(true), true);
      
-            if(!$v->isValid()) {
+            if (!$v->isValid()) {
                 return false;
             }
             
-            if(!$el->childrenAreValid($cV)) {
+            if (!$el->childrenAreValid($cV)) {
                 return false;
             }
         }
         
         return true;
     }
-
 }

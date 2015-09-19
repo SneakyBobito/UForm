@@ -5,7 +5,6 @@
 
 namespace UForm\Filter;
 
-
 use UForm\Filter;
 
 /**
@@ -32,7 +31,8 @@ use UForm\Filter;
  * </code>
  *
  */
-class LeftTrim extends Filter {
+class LeftTrim extends Filter
+{
 
     protected $trimString;
 
@@ -40,7 +40,8 @@ class LeftTrim extends Filter {
      * characters to trim (default only whitespaces)
      * @param string|null $trimString the characters to trim
      */
-    function __construct($trimString = null){
+    public function __construct($trimString = null)
+    {
         $this->trimString = $trimString;
     }
 
@@ -49,16 +50,14 @@ class LeftTrim extends Filter {
      */
     public function filter($v)
     {
-        if(null === $v){
+        if (null === $v) {
             return $v;
         }
 
-        if(null == $this->trimString){
+        if (null == $this->trimString) {
             return ltrim($v);
-        }else{
+        } else {
             return ltrim($v, $this->trimString);
         }
     }
-
-
 }

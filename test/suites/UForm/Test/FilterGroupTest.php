@@ -6,7 +6,8 @@ use UForm\Filter\LeftTrim;
 use UForm\Filter\RightTrim;
 use UForm\FilterGroup;
 
-class FilterGroupTest extends \PHPUnit_Framework_TestCase {
+class FilterGroupTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var FilterGroup
@@ -39,9 +40,12 @@ class FilterGroupTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame([$filter, $filter, $filter], $this->filterGroupStub->getFilters());
 
         // ADD FILTER CLOSURE
-        $closure = function($v){return $v;};
+        $closure = function ($v) {
+            return $v;
+
+        };
         $newFilter = $this->filterGroupStub->addFilter($closure);
-        $this->assertInstanceOf("UForm\Filter\DirectClosure",$newFilter);
+        $this->assertInstanceOf("UForm\Filter\DirectClosure", $newFilter);
         $this->assertSame($closure, $newFilter->getClosure());
     }
 
@@ -55,11 +59,13 @@ class FilterGroupTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame([$filter, $filter, $filter], $this->filterGroupStub->getFilters());
     }
 
-    public function testGetFilters(){
+    public function testGetFilters()
+    {
         $this->assertSame([], $this->filterGroupStub->getFilters());
     }
 
-    public function testSanitizeData(){
+    public function testSanitizeData()
+    {
         $data = " string ";
         $this->assertSame($data, $this->filterGroupStub->sanitizeData($data));
         $this->filterGroupStub->addFilter(new RightTrim());
@@ -67,6 +73,4 @@ class FilterGroupTest extends \PHPUnit_Framework_TestCase {
         $this->filterGroupStub->addFilter(new LeftTrim());
         $this->assertSame("string", $this->filterGroupStub->sanitizeData($data));
     }
-
-
 }

@@ -1,37 +1,39 @@
 <?php
 
 namespace UForm\Form\Element;
+
 use UForm\Form\Element\Primary\Input;
 
 /**
  * Class Check
  * @semanticType input:checkbox
  */
-class Check extends Input{
+class Check extends Input
+{
     
     protected $value;
 
 
-    public function __construct($name,$value = null, $attributes = null, $validators = null, $filters = null) {
+    public function __construct($name, $value = null, $attributes = null, $validators = null, $filters = null)
+    {
         parent::__construct("checkbox", $name, $attributes, $validators, $filters);
-        $this->value = $value; 
+        $this->value = $value;
     }
     
-    protected function overidesParamsBeforeRender($params, $attributes, $value, $data, $prename = null) {
+    protected function overidesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
+    {
         
-        if(isset($value[$this->getName()]) && $value[$this->getName()] == $this->value  ){
+        if (isset($value[$this->getName()]) && $value[$this->getName()] == $this->value) {
             $params["checked"] = "checked";
         }
         
-        if($this->value)
+        if ($this->value) {
             $params["value"] = $this->value;
-        else
+        } else {
             unset($params["value"]);
+        }
         
         return $params;
         
     }
-
-
-
 }

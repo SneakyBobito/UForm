@@ -2,10 +2,7 @@
 
 namespace UForm\Render;
 
-use Twig_Token;
-use Twig_TokenParser;
 use UForm\Forms\Element;
-
 
 class TwigExtension extends \Twig_Extension
 {
@@ -21,13 +18,14 @@ class TwigExtension extends \Twig_Extension
     }
 
 
-    public function getFunctions(){
+    public function getFunctions()
+    {
 
         return [
 
             // RenderParentType
             // will render the parent semantic type for the current render context
-            new \Twig_SimpleFunction('RenderParentType', function($context){
+            new \Twig_SimpleFunction('RenderParentType', function ($context) {
                 return $context["current"]->parentRender();
             }, [
                 "needs_context" => true,
@@ -37,7 +35,7 @@ class TwigExtension extends \Twig_Extension
 
             // RenderElement
             // shortcut to render the given element
-            new \Twig_SimpleFunction('renderElement', function($context, Element $element){
+            new \Twig_SimpleFunction('renderElement', function ($context, Element $element) {
                 return $context["current"]->renderElement($element);
             }, [
                 "needs_context" => true,
@@ -48,7 +46,7 @@ class TwigExtension extends \Twig_Extension
             // defaultRenderFor
             // shortcut to render the current element with its default render method.
             // The element must implement Drawable interface
-            new \Twig_SimpleFunction('defaultRenderFor', function($context, Element $element){
+            new \Twig_SimpleFunction('defaultRenderFor', function ($context, Element $element) {
                 return $context["current"]->elementrDefaultRender($element);
             }, [
                 "needs_context" => true,
@@ -58,6 +56,4 @@ class TwigExtension extends \Twig_Extension
         ];
 
     }
-
-
 }

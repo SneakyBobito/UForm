@@ -5,23 +5,27 @@
 
 namespace UForm\Test;
 
-
 use UForm\Filter\Trim;
 use UForm\Form;
 use UForm\ValidationItem;
 
-class FormTest extends \PHPUnit_Framework_TestCase {
+class FormTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var Form
      */
     protected $form;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->form = new Form();
 
         $userName = new Form\Element\Primary\Text("username");
-        $userName->addValidator(function(ValidationItem $v){return $v->getValue() == "bart";});
+        $userName->addValidator(function (ValidationItem $v) {
+            return $v->getValue() == "bart";
+
+        });
         $userName->addFilter(new Trim());
         $password = new Form\Element\Primary\Password("password");
         $group = new Form\Element\Container\Group("user");
@@ -32,7 +36,8 @@ class FormTest extends \PHPUnit_Framework_TestCase {
     }
 
 
-    public function testGetAction(){
+    public function testGetAction()
+    {
         $form = new Form();
         $this->assertNull($form->getAction());
 
@@ -40,7 +45,8 @@ class FormTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("someAction", $form->getAction());
     }
 
-    public function testGetMethod(){
+    public function testGetMethod()
+    {
         $form = new Form();
         $this->assertEquals(Form::METHOD_POST, $form->getMethod());
 
@@ -48,19 +54,22 @@ class FormTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("FancyMethod", $form->getMethod());
     }
 
-    public function testSetAction(){
+    public function testSetAction()
+    {
         $form = new Form();
         $form->setAction("action");
         $this->assertEquals("action", $form->getAction());
     }
 
-    public function testSetMethod(){
+    public function testSetMethod()
+    {
         $form = new Form();
         $form->setMethod("method");
         $this->assertEquals("method", $form->getMethod());
     }
 
-    public function testGenerateContext(){
+    public function testGenerateContext()
+    {
         $context = $this->form->generateContext(["data" => "value"]);
         $this->assertInstanceOf("UForm\Form\FormContext", $context);
         $this->assertSame(["data" => "value"], $context->getData()->getDataCopy());
@@ -70,11 +79,15 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 
         $context = $this->form->generateContext(["user" => ["username" => "bart ", "password" => "pass "]]);
         $this->assertInstanceOf("UForm\Form\FormContext", $context);
-        $this->assertSame(["user" => ["username" => "bart", "password" => "pass "]], $context->getData()->getDataCopy());
+        $this->assertSame(
+            ["user" => ["username" => "bart", "password" => "pass "]],
+            $context->getData()->getDataCopy()
+        );
         $this->assertTrue($context->isValid());
     }
 
-    public function testValidate(){
+    public function testValidate()
+    {
         $context = $this->form->validate(["data" => "value"]);
         $this->assertInstanceOf("UForm\Form\FormContext", $context);
         $this->assertSame(["data" => "value"], $context->getData()->getDataCopy());
@@ -84,11 +97,15 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 
         $context = $this->form->validate(["user" => ["username" => "bart ", "password" => "pass "]]);
         $this->assertInstanceOf("UForm\Form\FormContext", $context);
-        $this->assertSame(["user" => ["username" => "bart", "password" => "pass "]], $context->getData()->getDataCopy());
+        $this->assertSame(
+            ["user" => ["username" => "bart", "password" => "pass "]],
+            $context->getData()->getDataCopy()
+        );
         $this->assertTrue($context->isValid());
     }
 
-    public function testBind(){
+    public function testBind()
+    {
 
         $o = new \stdClass();
         $this->form->bind($o, [
@@ -124,5 +141,4 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 
 
     }
-
 }

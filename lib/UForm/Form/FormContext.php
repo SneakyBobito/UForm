@@ -6,7 +6,8 @@ use UForm\DataContext;
 use UForm\Form;
 use UForm\Validation\ChainedValidation;
 
-class FormContext {
+class FormContext
+{
 
     /**
      * @var Form
@@ -23,7 +24,7 @@ class FormContext {
      */
     protected $chainValidation;
 
-    function __construct($form, DataContext $data)
+    public function __construct($form, DataContext $data)
     {
         $this->form = $form;
         $this->data = $data;
@@ -38,7 +39,8 @@ class FormContext {
         return $this->chainValidation;
     }
 
-    public function validate(){
+    public function validate()
+    {
         $this->form->prepareValidation($this->data, $this);
         $this->chainValidation->validate();
         return $this->chainValidation->isValid();
@@ -56,11 +58,13 @@ class FormContext {
      *
      * @return DataContext
      */
-    public function getData(){
+    public function getData()
+    {
         return $this->data;
     }
 
-    public function isValid(){
+    public function isValid()
+    {
         return $this->chainValidation->isValid();
     }
 
@@ -68,20 +72,23 @@ class FormContext {
      * Get all the messages generated during the validation
      * @return \UForm\Validation\Message\Group
      */
-    public function getMessages(){
+    public function getMessages()
+    {
         return $this->chainValidation->getMessages();
     }
 
-    public function elementIsValid($elementName){
+    public function elementIsValid($elementName)
+    {
         return $this->chainValidation->elementIsValid($elementName);
     }
 
-    public function childrenAreValid($elementName){
+    public function childrenAreValid($elementName)
+    {
         return $this->chainValidation->elementChildrenAreValid($elementName);
     }
 
-    public function getValueFor($name){
+    public function getValueFor($name)
+    {
         return $this->getData()->findValue($name);
     }
-
 }

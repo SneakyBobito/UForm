@@ -5,7 +5,6 @@
 
 namespace UForm\Builder;
 
-
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Container\Group\Column;
@@ -14,12 +13,13 @@ use UForm\Form\Element\Container\Group\Row;
 use UForm\Form\Element\Container\Group\Tab;
 use UForm\Form\Element\Container\Group\TabGroup;
 
-trait GroupBuilder {
+trait GroupBuilder
+{
 
-    abstract public function  add(Element $e);
+    abstract public function add(Element $e);
     abstract public function open(Group $e);
     abstract public function close();
-    abstract public function  last();
+    abstract public function last();
 
 
     /**
@@ -31,7 +31,7 @@ trait GroupBuilder {
     public function column($width, $name = null, $hname = null)
     {
 
-        if(!$this->currentGroup instanceof ColumnGroup){
+        if (!$this->currentGroup instanceof ColumnGroup) {
             throw new BuilderException("Cant call builder::tab() outside of a tabgroup Element");
         }
         $element = new Column($name);
@@ -46,7 +46,8 @@ trait GroupBuilder {
     }
 
 
-    public function panel($name){
+    public function panel($name)
+    {
         $element = new Panel($name);
         $this->add($element);
         $this->open($element);
@@ -59,7 +60,8 @@ trait GroupBuilder {
      */
     
     
-    public function row($name = null){
+    public function row($name = null)
+    {
         $element = new Row($name);
 
         $this->add($element);
@@ -68,7 +70,8 @@ trait GroupBuilder {
         return  $this;
     }
 
-    public function tabGroup($name = null){
+    public function tabGroup($name = null)
+    {
         $element = new TabGroup($name);
 
         $this->add($element);
@@ -77,8 +80,9 @@ trait GroupBuilder {
         return  $this;
     }
 
-    public function tab($name = null){
-        if(!$this->currentGroup instanceof TabGroup){
+    public function tab($name = null)
+    {
+        if (!$this->currentGroup instanceof TabGroup) {
             throw new BuilderException("Cant call builder::tab() outside of a tabgroup Element");
         }
 
@@ -89,7 +93,4 @@ trait GroupBuilder {
 
         return  $this;
     }
-    
-
-
 }

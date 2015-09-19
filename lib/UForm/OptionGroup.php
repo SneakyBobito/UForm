@@ -5,10 +5,10 @@
 
 namespace UForm;
 
+trait OptionGroup
+{
 
-trait OptionGroup {
-
-    protected $_optionGroup = [];
+    protected $optionGroup = [];
 
     /**
      * Sets an option
@@ -19,7 +19,7 @@ trait OptionGroup {
      */
     public function setOption($option, $value)
     {
-        $this->_optionGroup[$option] = $value;
+        $this->optionGroup[$option] = $value;
         return $this;
     }
 
@@ -35,8 +35,8 @@ trait OptionGroup {
      */
     public function getOption($option, $defaultValue = null)
     {
-        if (isset($this->_optionGroup[$option])) {
-            return $this->_optionGroup[$option];
+        if (isset($this->optionGroup[$option])) {
+            return $this->optionGroup[$option];
         }
         return $defaultValue;
     }
@@ -59,13 +59,15 @@ trait OptionGroup {
     /**
      * Resets the options and set the given options instead
      *
-     * @param array|null $options array of the new options to set. Can be null or an empty array to reset remove all options
+     * @param array|null $options array of the new options to set.
+     * Can be null or an empty array to reset remove all options
      * @return $this
      * @throws Exception
      */
-    public function setOptions($options){
-        $this->_optionGroup = [];
-        if(null !== $options){
+    public function setOptions($options)
+    {
+        $this->optionGroup = [];
+        if (null !== $options) {
             return $this->addOptions($options);
         }
     }
@@ -77,7 +79,6 @@ trait OptionGroup {
      */
     public function getOptions()
     {
-        return $this->_optionGroup;
+        return $this->optionGroup;
     }
-
 }

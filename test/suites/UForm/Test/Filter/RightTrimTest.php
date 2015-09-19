@@ -5,17 +5,17 @@
 
 namespace UForm\Test\Filter;
 
-
 use UForm\Filter\RightTrim;
 
-class RightTrimTest extends \PHPUnit_Framework_TestCase {
+class RightTrimTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function testFilter(){
+    public function testFilter()
+    {
         $filter = new RightTrim();
         $this->assertEquals(" foo", $filter->filter(" foo "));
 
         $filter = new RightTrim("-+");
         $this->assertEquals("+-+foo", $filter->filter("+-+foo+-+"));
     }
-
 }

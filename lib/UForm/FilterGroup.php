@@ -2,30 +2,31 @@
 
 namespace UForm;
 
-
 use UForm\Filter\DirectClosure;
 
-trait FilterGroup {
+trait FilterGroup
+{
 
     /**
      * @var Filter[]
      */
-    protected $_filterGroup = [];
+    protected $filterGroup = [];
 
     /**
      * Resets the internal filters and set the given filters instead
      *
-     * @param array|null $filters array of the new filters to set. Can be null or an empty array to reset remove all filters
+     * @param array|null $filters array of the new filters to set.
+     * Can be null or an empty array to reset remove all filters
      * @return $this
      * @throws Exception
      */
     public function setFilters($filters)
     {
-        $this->_filterGroup = [];
+        $this->filterGroup = [];
 
-        if(null !== $filters) {
+        if (null !== $filters) {
             return $this->addFilters($filters);
-        }else{
+        } else {
             return $this;
         }
     }
@@ -33,7 +34,8 @@ trait FilterGroup {
     /**
      * Adds a filter to current list of filters
      *
-     * @param callable|Filter $filter the filter to add. It can also be a callback function that will be transformed in a @see DirectFilter
+     * @param callable|Filter $filter the filter to add.
+     * It can also be a callback function that will be transformed in a @see DirectFilter
      * @throws Exception
      * @return Filter the filter added to the stack
      */
@@ -41,10 +43,10 @@ trait FilterGroup {
     {
         if (is_callable($filter)) {
             $filter = new DirectClosure($filter);
-        } else if (!is_object($filter) || !$filter instanceof Filter) {
+        } elseif (!is_object($filter) || !$filter instanceof Filter) {
             throw new Exception('The filter parameter must be an object extending UForm\Filter ');
         }
-        $this->_filterGroup[] = $filter;
+        $this->filterGroup[] = $filter;
         return $filter;
     }
 
@@ -55,11 +57,12 @@ trait FilterGroup {
      * @return $this
      * @throws Exception
      */
-    public function addFilters($filters){
+    public function addFilters($filters)
+    {
         if (!is_array($filters)) {
             throw new Exception('Invalid parameter type.');
         }
-        foreach($filters as $filter){
+        foreach ($filters as $filter) {
             $this->addFilter($filter);
         }
         return $this;
@@ -71,7 +74,7 @@ trait FilterGroup {
      */
     public function getFilters()
     {
-        return $this->_filterGroup;
+        return $this->filterGroup;
     }
 
     /**
@@ -87,5 +90,4 @@ trait FilterGroup {
         }
         return $data;
     }
-
 }

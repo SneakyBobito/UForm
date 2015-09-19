@@ -2,36 +2,38 @@
 
 namespace UForm\Render;
 
+use UForm\Form\Element;
+use UForm\Form\Element\Container;
+use UForm\Form\Form;
+use UForm\Form\FormContext;
 
-use UForm\Forms\Element;
-use UForm\Forms\ElementContainer;
-use UForm\Forms\Form;
-use UForm\Forms\FormContext;
-
-abstract class AbstractRender {
+abstract class AbstractRender
+{
 
     /**
      * @var \Twig_Environment
      */
-    protected $_te = null;
+    protected $te = null;
 
 
     /**
      * @return \Twig_Environment
      */
-    public function getTwigEnvironment(){
-        if(null == $this->_te){
+    public function getTwigEnvironment()
+    {
+        if (null == $this->te) {
             $loader = new TwigLoaderFileSystem($this->getTemplatesPath());
-            $this->_te = new \Twig_Environment($loader);
-            $this->_te->addExtension(new TwigExtension());
+            $this->te = new \Twig_Environment($loader);
+            $this->te->addExtension(new TwigExtension());
         }
-        return $this->_te;
+        return $this->te;
     }
 
     abstract public function getTemplatesPath();
 
 
-    public function render(FormContext $formContext){
+    public function render(FormContext $formContext)
+    {
         return $this->renderElement($formContext->getForm(), $formContext);
     }
 
@@ -42,7 +44,8 @@ abstract class AbstractRender {
      * @throws \Exception
      * @throws \Twig_Error_Loader
      */
-    public function renderElement(Element $element, FormContext $formContext){
+    public function renderElement(Element $element, FormContext $formContext)
+    {
         $semanticTypes = $element->getSemanticTypes();
         return $this->renderElementAs($element, $formContext, $semanticTypes);
     }
@@ -60,21 +63,23 @@ abstract class AbstractRender {
      * @throws \Exception
      * @throws \Twig_Error_Loader
      */
-    public function renderElementAs(Element $element, FormContext $formContext, $semanticTypes){
-        $template = $this->_resolveTemplate($semanticTypes);
+    public function renderElementAs(Element $element, FormContext $formContext, $semanticTypes)
+    {
+        $template = $this->__resolveTemplate($semanticTypes);
         $renderContext = new RenderContext($element, $formContext, $this, $semanticTypes);
         return $template->render(["current" => $renderContext]);
     }
 
-    private function _resolveTemplate(&$names){
+    private function __resolveTemplate(&$names)
+    {
 
         if (!is_array($names)) {
-            $names = array($names);
+            $names = [$names];
         }
 
         $failedNames = [];
 
-        while(count($names) > 0) {
+        while (count($names) > 0) {
             $name = array_shift($names);
             $failedNames[] = $name;
 
@@ -88,8 +93,9 @@ abstract class AbstractRender {
             throw $e;
         }
 
-        throw new \Twig_Error_Loader(sprintf('Unable to find one of the following templates: "%s".', implode('", "', $failedNames)));
+        throw new \Twig_Error_Loader(
+            sprintf('Unable to find one of the following templates: "%s".', implode('", "', $failedNames))
+        );
 
     }
-
 }

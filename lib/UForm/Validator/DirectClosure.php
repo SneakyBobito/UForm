@@ -11,7 +11,8 @@ class DirectClosure extends Validator
     protected $closure;
 
 
-    public function __construct(callable $closure , $options = null) {
+    public function __construct(callable $closure, $options = null)
+    {
         $this->closure = $closure;
         parent::__construct($options);
     }
@@ -21,9 +22,9 @@ class DirectClosure extends Validator
      *
      * @param ValidationItem $validator
      */
-   public function validate(ValidationItem $validationItem)
-   {
-       $closure = $this->closure;
-       return $closure($validationItem, $this);
-   }
+    public function validate(ValidationItem $validationItem)
+    {
+        $closure = $this->closure;
+        return $closure($validationItem, $this);
+    }
 }

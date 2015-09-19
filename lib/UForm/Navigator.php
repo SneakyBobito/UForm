@@ -2,7 +2,6 @@
 
 namespace UForm;
 
-
 use UForm\Form;
 use UForm\Form\Element\Container;
 
@@ -29,35 +28,41 @@ use UForm\Form\Element\Container;
  * </code>
  *
  */
-class Navigator {
+class Navigator
+{
 
 
     /**
      * @param array $local  locals values (context aware). Most of time same as $global
      * @param array $global   the whole data (not context aware)
-     * @param string $string  the navigation string. e.g : "foo.bar.0". If begins with a dot e.g ".bar.0" the local context context will be use or else we use the global one.
-     * @param int $rOffset  the reversed offset default 0. With the string "foo.bar.0" | $rOffset=0 will get "foo.bar.0"  |  $rOffset=1 will get "foo.bar" |  $rOffset=2 will get "foo"
+     * @param string $string  the navigation string. e.g :
+     * "foo.bar.0". If begins with a dot e.g ".bar.0"
+     * the local context context will be use or else we use the global one.
+     * @param int $rOffset  the reversed offset default 0.
+     * With the string "foo.bar.0" | $rOffset=0 will get "foo.bar.0"
+     * |  $rOffset=1 will get "foo.bar" |  $rOffset=2 will get "foo"
      * @return null
      */
-    public function arrayGet($data, $string, $rOffset = 0){
+    public function arrayGet($data, $string, $rOffset = 0)
+    {
 
-        if( is_null($string) || empty($string)){
+        if (is_null($string) || empty($string)) {
             return $data;
         }
 
         $stringParts = explode(".", $string);
 
-        if($rOffset>0){
-            for($i=0;$i<$rOffset;$i++){
+        if ($rOffset>0) {
+            for ($i=0; $i<$rOffset; $i++) {
                 array_pop($stringParts);
             }
         }
 
-        while (!empty($stringParts)){
+        while (!empty($stringParts)) {
             $newName = array_shift($stringParts);
-            if(!isset($data[$newName])){
+            if (!isset($data[$newName])) {
                 return null;
-            }else{
+            } else {
                 $data = $data[$newName];
             }
         }
@@ -65,6 +70,4 @@ class Navigator {
         return $data;
         
     }
-
-
-} 
+}

@@ -8,7 +8,8 @@ use UForm\Form\Element;
  * @semanticType column
  * @method Column[] getElements($values=null)
  */
-class ColumnGroup extends NamedGroup{
+class ColumnGroup extends NamedGroup
+{
 
     public function __construct($name = null, $elements = null)
     {
@@ -18,7 +19,7 @@ class ColumnGroup extends NamedGroup{
 
     public function addElement(Element $element)
     {
-        if(!($element instanceof Column)){
+        if (!($element instanceof Column)) {
             throw new \Exception("Cant add non-column element into column group");
         }
         parent::addElement($element);
@@ -37,5 +38,4 @@ class ColumnGroup extends NamedGroup{
             return ($width / $widthTotal) * 100;
         }
     }
-
 }

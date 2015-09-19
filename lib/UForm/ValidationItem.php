@@ -19,19 +19,20 @@ use UForm\Validation\Message\Group;
 
 /**
  * That an object that helps to achieve one and only one validation schema through validators
- * It wraps that validated element and the currently validated form context. Validators can add messages that will serve
- * for error outputting
+ * It wraps that validated element and the currently validated form context.
+ * Validators can add messages that will serve for error outputting
  */
-class ValidationItem {
+class ValidationItem
+{
 
     use ValidatorGroup;
 
-	/**
-	 * The local value being validated
-	 * 
-	 * @var DataContext
-	*/
-	protected $dataLocal = null;
+    /**
+     * The local value being validated
+     *
+     * @var DataContext
+    */
+    protected $dataLocal = null;
 
     /**
      *
@@ -41,12 +42,12 @@ class ValidationItem {
      */
     protected $element;
 
-	/**
-	 * Messages added by the validators
-	 * 
-	 * @var null|\UForm\Validation\Message\Group
-	 */
-	protected $messages = null;
+    /**
+     * Messages added by the validators
+     *
+     * @var null|\UForm\Validation\Message\Group
+     */
+    protected $messages = null;
     protected $valid = true;
 
     protected $formContext;
@@ -72,7 +73,8 @@ class ValidationItem {
      * use getValue() instead
      * @return DataContext the local data
      */
-    public function getLocalData() {
+    public function getLocalData()
+    {
         return $this->dataLocal;
     }
 
@@ -80,7 +82,8 @@ class ValidationItem {
      * The local name, it matches the name of the data in the local data
      * @return mixed|null|string
      */
-    public function getLocalName() {
+    public function getLocalName()
+    {
         return $this->element->getName();
     }
 
@@ -88,7 +91,8 @@ class ValidationItem {
      * The element being validated
      * @return Element
      */
-    public function getElement() {
+    public function getElement()
+    {
         return $this->element;
     }
 
@@ -96,14 +100,16 @@ class ValidationItem {
      * The chainedValidation it belongs to
      * @return ChainedValidation
      */
-    public function getChainedValidation() {
+    public function getChainedValidation()
+    {
         return $this->formContext->getChainedValidation();
     }
 
     /**
      * reset validation to its initial state
      */
-    public function resetValidation(){
+    public function resetValidation()
+    {
         $this->valid = true;
         $this->messages = new Group();
     }
@@ -114,10 +120,11 @@ class ValidationItem {
      * @return boolean
      * @throws Exception
      */
-    public function validate(){
+    public function validate()
+    {
         $validators = $this->element->getValidators();
 
-        foreach($validators as $v) {
+        foreach ($validators as $v) {
             if (false === $v->validate($this)) {
                 $this->valid = false;
             }
@@ -125,7 +132,8 @@ class ValidationItem {
         return $this->valid;
     }
 
-    public function isValid(){
+    public function isValid()
+    {
         return $this->valid == true;
     }
 
@@ -144,13 +152,16 @@ class ValidationItem {
      *
      * @param string $message
      */
-    public function appendMessage(Message $message, $elementName = null){
-        if(null == $elementName){
+    public function appendMessage(Message $message, $elementName = null)
+    {
+        if (null == $elementName) {
             $this->messages->appendMessage($message);
-        }else{
+        } else {
             $v = $this->getChainedValidation()->getValidation($elementName);
-            if(!$v){
-                throw new \Uform\Exception('Unable to append message : element with ID='.$elementName.' is not part of the form.');
+            if (!$v) {
+                throw new \Uform\Exception(
+                    'Unable to append message : element with ID='.$elementName.' is not part of the form.'
+                );
             }
             $v->appendMessage($message);
         }
@@ -170,13 +181,14 @@ class ValidationItem {
             );
     }
 
-    public function childrenAreValid(){
-        if($this->element instanceof Element\Container){
-            foreach($this->element->getElements($this->getValue()) as $element){
-                if(!$this->formContext->elementIsValid($element)){
+    public function childrenAreValid()
+    {
+        if ($this->element instanceof Element\Container) {
+            foreach ($this->element->getElements($this->getValue()) as $element) {
+                if (!$this->formContext->elementIsValid($element)) {
                     return false;
                 }
-                if(!$this->formContext->childrenAreValid($element)){
+                if (!$this->formContext->childrenAreValid($element)) {
                     return false;
                 }
             }
@@ -208,5 +220,4 @@ class ValidationItem {
             ->dataLocal
             ->findValue($name);
     }
-
 }
