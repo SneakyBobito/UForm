@@ -8,6 +8,7 @@ namespace UForm\Test;
 
 use UForm\DataContext;
 use UForm\Form;
+use UForm\Form\Element\Primary\Password;
 use UForm\Form\Element\Primary\Text;
 use UForm\Validation\Message;
 use UForm\ValidationItem;
@@ -139,7 +140,26 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase {
         $this->validationItem->validate();
         $this->assertTrue($this->validationItem->childrenAreValid());
 
-        $this->markTestIncomplete("TODO : test children are valid with real valid/invalid children (container element)");
+
+        // test children are valid with deeper form structure
+        $form = new Form();
+
+        $userName = new Text("username");
+        $userName->addValidator(function(ValidationItem $v){return $v->getValue() == "bart";});
+        $password = new Password("password");
+        $group = new Form\Element\Container\Group("user");
+        $group->addElement($userName);
+        $group->addElement($password);
+        $form->addElement($group);
+
+        $formContext = $form->validate(["user" => ["username" => "bart"]]);
+        $validationItem = $formContext->getChainedValidation()->getValidation("user");
+        $this->assertTrue($validationItem->childrenAreValid());
+
+        $formContext = $form->validate(["user" => ["username" => "lisa"]]);
+        $validationItem = $formContext->getChainedValidation()->getValidation("user");
+        $this->assertFalse($validationItem->childrenAreValid());
+
     }
 
     public function testFindValue(){

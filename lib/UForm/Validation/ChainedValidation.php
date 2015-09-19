@@ -1,6 +1,7 @@
 <?php
 
 namespace UForm\Validation;
+use UForm\Exception;
 use UForm\Form\Element;
 use UForm\Navigator;
 use UForm\Validation;
@@ -59,6 +60,10 @@ class ChainedValidation {
      */
     public function getValidation($name, $iname=false){
 
+        if(!is_string($name)){
+            throw new Exception('Invalid type for parameter $name. String expected, ' . gettype($name) . ' used');
+        }
+
         if($iname){
             if(isset($this->validationsInternalName[$name])){
                 return $this->validationsInternalName[$name];
@@ -114,11 +119,15 @@ class ChainedValidation {
 
     /**
      * Check if an element is valid
-     * @param string $name name of the element to check
+     * @param string|Element $name name of the element to check. It can also be the element instance
      * @return bool
      * @throws Exception
      */
     public function elementIsValid($name){
+
+        if($name instanceof Element){
+            $name = $name->getName(true, true);
+        }
 
         $validation = $this->getValidation($name);
         if(!$validation){
@@ -137,7 +146,7 @@ class ChainedValidation {
         if(is_string($name)){
             $validation = $this->getValidation($name);
         }else if($name instanceof Element){
-            $validation = $this->getValidation($element->getName(true, true));
+            $validation = $this->getValidation($name->getName(true, true));
         }
         if (!$validation instanceof ValidationItem) {
             throw new Exception("Element not valid for children validation");
