@@ -1,18 +1,17 @@
 <?php
 
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Primary;
 
-use \UForm\Form\Element,
-        \UForm\Form\Exception,
-        UForm\Tag;
-use UForm\Validation\Element\RangeValueValidationInterface;
+use UForm\Form\Element;
+use UForm\Form\Exception;
+use UForm\Tag;
 use UForm\Validation\Validator\SelfValue;
 
 /**
  * Class Select
  * @semanticType Select
  */
-class Select extends Element implements RangeValueValidationInterface
+class Select extends Element
 {
     /**
      * Options Values

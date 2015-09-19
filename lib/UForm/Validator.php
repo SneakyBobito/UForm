@@ -1,6 +1,7 @@
 <?php
 
 namespace UForm;
+use UForm\Validation\Message;
 
 
 /**
@@ -21,8 +22,6 @@ abstract class Validator
     {
         $this->setOptions($options);
     }
-
-
     /**
      * Executes the validation
      *

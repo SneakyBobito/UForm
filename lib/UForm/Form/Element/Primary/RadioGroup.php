@@ -1,15 +1,14 @@
 <?php
 
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Primary;
 
 use UForm\Form\Element;
 use UForm\Validation;
-use UForm\Validation\Element\RangeValueValidationInterface;
 
 /**
  * @semanticType radioGroup
  */
-class RadioGroup extends Element implements RangeValueValidationInterface {
+class RadioGroup extends Element {
     
     protected $values;
 
@@ -18,10 +17,6 @@ class RadioGroup extends Element implements RangeValueValidationInterface {
         parent::__construct($name, $attributes, $validators, $filters);
         $this->values = $values;
         $this->addSemanticType("radioGroup");
-    }
-
-    public function validateOnSelfValues($message = null){
-        $this->addValidator(new Validation\Validator\SelfValue(["message" => $message]));
     }
     
     public function _render( $attributes , $value , $data ){
