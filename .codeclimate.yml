@@ -36,3 +36,13 @@ exclude_paths:
 - vendor/**/*
 - .git/**/*
 - test/**/*
+- script/**/*
+- phpunit.dist.xml
+- doc/**/*
+- composer.json
+- README.md
+- LICENSE
+- CONTRIBUTING.md
+- .codeclimate.yml
+- .gitignore
+- .travis.yml
