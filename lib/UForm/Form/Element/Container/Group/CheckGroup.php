@@ -1,6 +1,9 @@
 <?php
 
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Container\Group;
+
+use UForm\Form\Element\Check;
+use UForm\Form\Element\Container\Group;
 
 /**
  * Class CheckGroup

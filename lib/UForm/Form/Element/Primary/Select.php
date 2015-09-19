@@ -5,7 +5,6 @@ namespace UForm\Form\Element\Primary;
 use UForm\Form\Element;
 use UForm\Form\Exception;
 use UForm\Tag;
-use UForm\Validation\Validator\SelfValue;
 
 /**
  * Class Select

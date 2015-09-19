@@ -18,9 +18,11 @@ class Form extends ElementGroup {
 
     const METHOD_POST = "POST";
     const METHOD_GET = "GET";
+    const ENCTYPE_MULTIPART_FORMDATA = "multipart/form-data";
 
     protected $action;
     protected $method;
+    protected $enctype;
 
     /**
      * @param string $action form action
@@ -40,7 +42,6 @@ class Form extends ElementGroup {
         }else{
             $this->setMethod(self::METHOD_POST);
         }
-
     }
 
     
@@ -60,6 +61,24 @@ class Form extends ElementGroup {
     public function setMethod($method) {
         $this->method = $method;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEnctype()
+    {
+        return $this->enctype;
+    }
+
+    /**
+     * @param mixed $enctype
+     */
+    public function setEnctype($enctype)
+    {
+        $this->enctype = $enctype;
+    }
+
+
 
 
     /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace UForm\Form\Group;
+namespace UForm\Form\Element\Container\Group;
 
 
-use UForm\Form\Element\Group;
+use UForm\Form\Element\Container\Group;
 use UForm\Tag;
 
 /**

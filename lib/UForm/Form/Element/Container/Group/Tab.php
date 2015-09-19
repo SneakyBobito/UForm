@@ -1,9 +1,6 @@
 <?php
 
-namespace UForm\Form\Group;
-
-use UForm\Form\Element\Group;
-use UForm\Tag;
+namespace UForm\Form\Element\Container\Group;
 
 /**
  * Class Tab

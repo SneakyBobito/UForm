@@ -2,12 +2,10 @@
 /**
  * Textarea
  */
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Primary;
 
-use 
-    UForm\Form\Element,
-    UForm\Tag
-;
+use UForm\Form\Element;
+use UForm\Tag;
 
 /**
  * Component TEXTAREA for forms

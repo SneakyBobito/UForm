@@ -1,6 +1,6 @@
 <?php
 
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Primary;
 
 /**
  * Class File

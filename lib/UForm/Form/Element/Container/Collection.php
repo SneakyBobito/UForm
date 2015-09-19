@@ -1,8 +1,9 @@
 <?php
 
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Container;
 
 use UForm\Form\Element;
+use UForm\Form\Element\Container;
 use UForm\Validation\ChainedValidation;
 
 /**
