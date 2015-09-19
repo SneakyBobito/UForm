@@ -3,7 +3,6 @@
 namespace UForm;
 
 use UForm\Form\Element\Container\Group as ElementGroup;
-use UForm\Form\Exception;
 use UForm\Form\FormContext;
 use UForm\Navigator;
 use UForm\Validation;

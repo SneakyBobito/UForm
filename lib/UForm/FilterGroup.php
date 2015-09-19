@@ -44,7 +44,7 @@ trait FilterGroup
         if (is_callable($filter)) {
             $filter = new DirectClosure($filter);
         } elseif (!is_object($filter) || !$filter instanceof Filter) {
-            throw new Exception('The filter parameter must be an object extending UForm\Filter ');
+            throw new InvalidArgumentException('filter', 'intance of UForm\Filter or closure', $filter);
         }
         $this->filterGroup[] = $filter;
         return $filter;
@@ -57,11 +57,8 @@ trait FilterGroup
      * @return $this
      * @throws Exception
      */
-    public function addFilters($filters)
+    public function addFilters(array $filters)
     {
-        if (!is_array($filters)) {
-            throw new Exception('Invalid parameter type.');
-        }
         foreach ($filters as $filter) {
             $this->addFilter($filter);
         }
