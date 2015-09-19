@@ -96,8 +96,7 @@ class Form extends ElementGroup {
             throw new Exception('Invalid parameter type.');
         }
 
-        if(is_array($whitelist) === false &&
-            is_null($whitelist) === false) {
+        if(!is_array($whitelist)  && !is_null($whitelist)) {
             throw new Exception('Invalid type for whitelist.');
         }
 

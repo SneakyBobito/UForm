@@ -90,7 +90,38 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 
     public function testBind(){
 
-        // TODO
+        $o = new \stdClass();
+        $this->form->bind($o, [
+            "user" => ["username" => "bart", "password" => "pass"],
+            "username" => "homer"
+        ]);
+        $this->assertCount(1, (array)$o);
+        $this->assertObjectHasAttribute("user", $o);
+        $this->assertSame(["username" => "bart", "password" => "pass"], $o->user);
+
+        $o = new \stdClass();
+        $this->form->bind($o, [
+            "user" => ["username" => "bart", "password" => "pass"],
+            "username" => "homer"
+        ], ["user"]);
+        $this->assertCount(1, (array)$o);
+        $this->assertObjectHasAttribute("user", $o);
+        $this->assertSame(["username" => "bart", "password" => "pass"], $o->user);
+
+        $o = new \stdClass();
+        $this->form->bind($o, [
+            "user" => ["username" => "bart", "password" => "pass"],
+            "username" => "homer"
+        ], ["username"]);
+        $this->assertCount(0, (array)$o);
+
+        $o = new \stdClass();
+        $this->form->bind($o, [
+            "user" => ["username" => "bart", "password" => "pass"],
+            "username" => "homer"
+        ], []);
+        $this->assertCount(0, (array)$o);
+
 
     }
 
