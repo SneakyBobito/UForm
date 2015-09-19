@@ -13,7 +13,6 @@ namespace UForm;
 use UForm\Form\Element;
 use UForm\Form\FormContext;
 use UForm\Validation\ChainedValidation;
-use UForm\Validation\Exception;
 use Uform\Validation\Message;
 use UForm\Validation\Message\Group;
 
