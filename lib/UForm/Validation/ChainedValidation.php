@@ -135,7 +135,6 @@ class ChainedValidation
      */
     public function elementIsValid($name)
     {
-
         if ($name instanceof Element) {
             $name = $name->getName(true, true);
         }
