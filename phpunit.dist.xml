@@ -17,8 +17,14 @@
 
 
     <filter>
+        <blacklist>
+            <directory>./vendor</directory>
+            <directory>./doc</directory>
+            <directory>./script</directory>
+            <directory>./test</directory>
+        </blacklist>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">/lib/UForm</directory>
+            <directory suffix=".php">./lib/UForm</directory>
         </whitelist>
     </filter>
 
