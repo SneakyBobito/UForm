@@ -4,12 +4,15 @@ namespace UForm\Form\Element;
 use UForm\Form\Element;
 
 /**
- *
- * Element that mays contain other elements.
+ * Element that intends to contain other elements.
  * It only aims to be a common parent for Group and Collection
  *
- * Class ElementContainer
- * @package UForm\Form
+ * In some ways it is opposed to the Primary element that cant contain other elements
+ *
+ * @see UForm\Form\Element\Container\Group
+ * @see UForm\Form\Element\Container\Collection
+ * @see UForm\Form\Element\Container\Primary
+
  * @semanticType container
  */
 abstract class Container extends Element {
@@ -21,23 +24,25 @@ abstract class Container extends Element {
     }
 
     /**
+     * Get an element by its name
      * @param $name
      * @return Element
      */
     abstract public function getElement($name);
 
     /**
-     * @param null|array $values used for the "collection" element that is rendered according to a value set
-     * @return Element[]
+     * Get the elements contained in this container. Values are required because a collection requires values to be generated
+     * @param mixed $values used for the "collection" element that is rendered according to a value set
+     * @return Element[] the elements contained in this container
      */
     abstract public function getElements($values=null);
 
 
     /**
      * Get an element located directly in this element. There is an exception for unnamed elements : we will search inside directElements of unnamed elements
-     * @param $name
-     * @param null $values
-     * @return null|Element|Container
+     * @param string $name name of the element to get
+     * @param mixed $values used for the "collection" element that is rendered according to a value set
+     * @return null|Element|Container the element found or null if the element does not exist
      */
     public function getDirectElement($name, $values = null){
         foreach($this->getElements($values) as $elm){
@@ -55,9 +60,9 @@ abstract class Container extends Element {
     }
 
     /**
-     * check if this element contains an element that is an instance of the given type
+     * check if this element contains at least one element that is an instance of the given type
      * @param string $className the name of the class to search for
-     * @return bool
+     * @return bool true if the instance was found
      */
     public function hasDirectElementInstance($className){
         foreach($this->getElements() as $el){
@@ -69,9 +74,9 @@ abstract class Container extends Element {
     }
 
     /**
-     * check if this element contains an element with the given semantic type
+     * Check if this element contains at least one element with the given semantic type
      * @param string $type the type to search for
-     * @return bool
+     * @return bool true if the semantic type was found
      */
     public function hasDirectElementSemanticType($type){
         foreach($this->getElements() as $el){
@@ -82,6 +87,9 @@ abstract class Container extends Element {
         return false;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setParent(Container $parent)
     {
         $r = parent::setParent($parent);
@@ -91,6 +99,9 @@ abstract class Container extends Element {
         return $r;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function sanitizeData($data)
     {
         $data = parent::sanitizeData($data);
@@ -98,11 +109,8 @@ abstract class Container extends Element {
             $name = $element->getName();
             if($name){
                 if(isset($data[$name])){
-                    $newData = $data[$name];
-                }else{
-                    $newData = null;
+                    $data[$name] = $element->sanitizeData($data[$name]);
                 }
-                $data[$name] = $element->sanitizeData($newData);
             }else{
                 $data = $element->sanitizeData($data);
             }
