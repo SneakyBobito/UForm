@@ -8,10 +8,10 @@ use UForm\DataContext;
 use UForm\FilterGroup;
 use UForm\Form;
 use UForm\Form\Element\Container;
+use UForm\InvalidArgumentException;
 use UForm\OptionGroup;
 use UForm\SemanticItem;
 use UForm\Validation;
-use UForm\Validation\ChainedValidation;
 use UForm\ValidationItem;
 use UForm\ValidatorGroup;
 
@@ -235,7 +235,7 @@ abstract class Element
     public function setAttribute($attribute, $value)
     {
         if (is_string($attribute) === false) {
-            throw new Exception('Invalid parameter type.');
+            throw new InvalidArgumentException("attribute", "string", $attribute);
         }
 
         $this->attributes[$attribute] = $value;
@@ -248,18 +248,18 @@ abstract class Element
      *
      * You can specify a default value to return if the attribute does not exist
      *
-     * @param string $attribute name of the attribute
+     * @param string $attributeName name of the attribute
      * @param mixed $defaultValue value to return if the attribute does not exist
      * @return string the value of the attribute
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
-    public function getAttribute($attribute, $defaultValue = null)
+    public function getAttribute($attributeName, $defaultValue = null)
     {
-        if (is_string($attribute) === false) {
-            throw new Exception('Invalid parameter type.');
+        if (is_string($attributeName) === false) {
+            throw new InvalidArgumentException("attributeName", "string", $attributeName);
         }
-        if (isset($this->attributes[$attribute])) {
-            return $this->attributes[$attribute];
+        if (isset($this->attributes[$attributeName])) {
+            return $this->attributes[$attributeName];
         }
         return $defaultValue;
     }
@@ -274,9 +274,7 @@ abstract class Element
     public function addAttributes($attributes)
     {
         if (!is_array($attributes)) {
-            throw new Exception(
-                "Parameter 'attributes' must be an array. Variable of type " . gettype($attributes) . " used"
-            );
+            throw new InvalidArgumentException("attributes", "array", $attributes);
         }
         foreach ($attributes as $attribute => $value) {
             $this->setAttribute($attribute, $value);
@@ -290,9 +288,6 @@ abstract class Element
      */
     public function getAttributes()
     {
-        if (is_array($this->attributes) === false) {
-            return [];
-        }
         return $this->attributes;
     }
 
@@ -300,10 +295,9 @@ abstract class Element
     /**
      * Internal use - prepare the validation object
      *
-     * Intended to be overwritten
-     *
-     * @param $localValues
-     * @param ChainedValidation $cV
+     * @param DataContext $localValues
+     * @param FormContext $formContext
+     * @throws \UForm\Exception
      */
     public function prepareValidation(DataContext $localValues, FormContext $formContext)
     {

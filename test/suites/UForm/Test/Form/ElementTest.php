@@ -126,11 +126,17 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $this->elementStub->setAttribute("atr1", "value1");
         $this->elementStub->setAttribute("atr2", "value2");
         $this->assertEquals(["atr1" => "value1", "atr2" => "value2"], $this->elementStub->getAttributes());
+
+        $this->setExpectedException("UForm\InvalidArgumentException");
+        $this->elementStub->setAttribute([], "val");
     }
 
     public function testGetAttributes()
     {
         $this->assertEquals([], $this->elementStub->getAttributes());
+
+        $this->setExpectedException("UForm\InvalidArgumentException");
+        $this->elementStub->getAttribute([]);
     }
 
     public function testAddAttributes()
@@ -141,6 +147,9 @@ class ElementTest extends \PHPUnit_Framework_TestCase
             ["atr1" => "value1", "atr2" => "value2", "atr3" => "value3"],
             $this->elementStub->getAttributes()
         );
+
+        $this->setExpectedException("UForm\InvalidArgumentException");
+        $this->elementStub->addAttributes("fake");
     }
 
     public function testGetAttribute()
