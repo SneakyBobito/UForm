@@ -17,5 +17,7 @@ class TrimTest extends \PHPUnit_Framework_TestCase
 
         $filter = new Trim("-+");
         $this->assertEquals("foo", $filter->filter("+-+foo+-+"));
+
+        $this->assertNull($filter->filter(null));
     }
 }

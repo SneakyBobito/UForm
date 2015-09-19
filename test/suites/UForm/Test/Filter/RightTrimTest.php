@@ -17,5 +17,7 @@ class RightTrimTest extends \PHPUnit_Framework_TestCase
 
         $filter = new RightTrim("-+");
         $this->assertEquals("+-+foo", $filter->filter("+-+foo+-+"));
+
+        $this->assertNull($filter->filter(null));
     }
 }
