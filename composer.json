@@ -35,8 +35,8 @@
         "phpunit/phpunit": "4.1.2",
         "codeclimate/php-test-reporter": "dev-master",
         "minime/annotations": "~2.0",
-        "particle/filter" : ">=1.0.0",
-        "particle/validator": ">=1.0.0"
+        "particle/validator": ">=1.0.0",
+        "squizlabs/php_codesniffer": "~2"
     },
 
     "suggest" : {

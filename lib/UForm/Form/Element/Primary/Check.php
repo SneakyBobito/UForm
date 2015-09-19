@@ -1,6 +1,7 @@
 <?php
 
 namespace UForm\Form\Element;
+use UForm\Form\Element\Primary\Input;
 
 /**
  * Class Check

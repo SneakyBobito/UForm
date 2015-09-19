@@ -2,9 +2,10 @@
 
 namespace UForm\Form\Element\Container;
 
+use UForm\DataContext;
 use UForm\Form\Element;
 use UForm\Form\Element\Container;
-use UForm\Validation\ChainedValidation;
+use UForm\Form\FormContext;
 
 /**
  * Collection
@@ -46,14 +47,14 @@ class Collection extends Container{
     }
     
     
-    public function prepareValidation($localvalues, chainedvalidation $cV){
+    public function prepareValidation(DataContext $localValues, FormContext $formContext){
         
-        parent::prepareValidation($localValues, $cV);
+        parent::prepareValidation($localValues, $formContext);
         
         if(isset($localValues[$this->getName()]) && is_array($localValues[$this->getName()])) {
             foreach ($localValues[$this->getName()] as $k=>$v){
                 $element = $this->__getElemement($k);
-                $element->prepareValidation($localValues[$this->getName()], $cV);
+                $element->prepareValidation($localValues->getDirectValue($this->getName), $formContext);
             }
         }
 
