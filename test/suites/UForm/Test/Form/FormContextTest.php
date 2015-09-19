@@ -5,14 +5,14 @@
 
 namespace UForm\Test\Form;
 
-
 use UForm\Form;
 use UForm\Form\Element\Primary\Text;
 use UForm\Validation\Message;
 use UForm\ValidationItem;
 use UForm\Validator\DirectClosure;
 
-class FormContextTest extends \PHPUnit_Framework_TestCase {
+class FormContextTest extends \PHPUnit_Framework_TestCase
+{
 
 
 
@@ -77,38 +77,46 @@ class FormContextTest extends \PHPUnit_Framework_TestCase {
         $this->formContext = $this->form->generateContext($this->dataSet);
     }
 
-    public function testGetChainedValidation(){
+    public function testGetChainedValidation()
+    {
         $this->assertInstanceOf("UForm\Validation\ChainedValidation", $this->formContext->getChainedValidation());
     }
 
-    public function testValidate(){
+    public function testValidate()
+    {
         $this->assertFalse($this->formContext->validate());
     }
 
-    public function testGetForm(){
+    public function testGetForm()
+    {
         $this->assertSame($this->form, $this->formContext->getForm());
     }
 
-    public function testGetData(){
+    public function testGetData()
+    {
         $this->assertSame($this->dataSet, $this->formContext->getData()->getDataCopy());
     }
 
-    public function testIsValid(){
+    public function testIsValid()
+    {
         $this->assertTrue($this->formContext->isValid());
         $this->formContext->validate();
         $this->assertFalse($this->formContext->isValid());
     }
 
-    public function testGetMessages(){
+    public function testGetMessages()
+    {
         $this->assertInstanceOf("UForm\Validation\Message\Group", $this->formContext->getMessages());
         $this->assertCount(0, $this->formContext->getMessages());
     }
 
-    public function testElementIsValid(){
+    public function testElementIsValid()
+    {
         $this->assertTrue($this->formContext->elementIsValid("firstname"));
     }
 
-    public function testChildrenAreValid(){
+    public function testChildrenAreValid()
+    {
         $this->assertTrue($this->formContext->childrenAreValid("firstname"));
 
         // test children are valid with deeper form structure
@@ -136,9 +144,9 @@ class FormContextTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testGetValueFor(){
+    public function testGetValueFor()
+    {
         $this->assertEquals("homer", $this->formContext->getValueFor("firstname"));
         $this->assertEquals("simpson", $this->formContext->getValueFor("lastname"));
     }
-
 }
