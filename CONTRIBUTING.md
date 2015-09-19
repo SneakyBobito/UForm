@@ -27,4 +27,6 @@ Please make sure to check that your modifications are not breaking the unit test
 
 And make sure your code respects the coding standards 
 
-``./test/bin/phpcs.bash``
+``./test/bin/phpcs.bash emacs``
+
+You can fix some errors automatically by running ``./test/bin/phpcbf.bash``
