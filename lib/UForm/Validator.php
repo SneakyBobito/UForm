@@ -25,10 +25,10 @@ abstract class Validator
     /**
      * Executes the validation
      *
-     * @param \UForm\ValidationItem $validator
+     * @param \UForm\ValidationItem $validationItem
      * @return boolean true if validation was successful
      * @throws Exception
      */
-    abstract public function validate(\UForm\ValidationItem $validationItem);
+    abstract public function validate(ValidationItem $validationItem);
 
 }
