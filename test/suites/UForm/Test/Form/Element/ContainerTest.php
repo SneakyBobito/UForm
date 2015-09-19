@@ -25,6 +25,11 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     protected $userName;
 
+    /**
+     * @var Text
+     */
+    protected $item2;
+
     public function setUp()
     {
         $this->container = $this->getMockForAbstractClass("UForm\Form\Element\Container");
@@ -35,9 +40,11 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         });
         $password = new Password("password");
 
+        $this->item2 = new Text("item2");
+
         $ungamedGroup = new Group();
         $ungamedGroup->addElement(new Text("item1"));
-        $ungamedGroup->addElement(new Text("item2"));
+        $ungamedGroup->addElement($this->item2);
 
         $namedGroup = new Group("namedGroup");
         $namedGroup->addElement(new Text("item1"));
@@ -65,6 +72,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($this->userName, $this->container->getDirectElement("username"));
         $this->assertEquals(null, $this->container->getDirectElement("fake"));
+
+        // test direct element with children in an unnamed element
+        $this->assertEquals($this->item2, $this->container->getDirectElement("item2"));
     }
 
     public function testHasDirectElementInstance()
