@@ -106,7 +106,6 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     public function testBind()
     {
-
         $o = new \stdClass();
         $this->form->bind($o, [
             "user" => ["username" => "bart", "password" => "pass"],
@@ -138,7 +137,18 @@ class FormTest extends \PHPUnit_Framework_TestCase
             "username" => "homer"
         ], []);
         $this->assertCount(0, (array)$o);
+    }
 
+    public function testSetEncType()
+    {
+        $form = new Form();
+        $form->setEnctype("fancyEncType");
+        $this->assertSame("fancyEncType", $form->getEnctype());
+    }
 
+    public function testGetEncType()
+    {
+        $form = new Form();
+        $this->assertNull($form->getEnctype());
     }
 }
