@@ -16,15 +16,15 @@ use UForm\Validation;
  */
 class Form extends ElementGroup {
 
+    const METHOD_POST = "POST";
+    const METHOD_GET = "GET";
 
     protected $action;
-    protected $method = "post";
+    protected $method;
 
     /**
-     *
-     * @param object|null $entity
-     * @param array|null $userOptions
-     * @throws Exception
+     * @param string $action form action
+     * @param string $method form method
      */
     public function __construct($action = null, $method = null)
     {
@@ -37,6 +37,8 @@ class Form extends ElementGroup {
         }
         if($method){
             $this->setMethod($method);
+        }else{
+            $this->setMethod(self::METHOD_POST);
         }
 
     }
@@ -59,12 +61,26 @@ class Form extends ElementGroup {
         $this->method = $method;
     }
 
-    
+
     /**
-     * Binds data to the entity
+     * validates the form using either the data given in parameter or either the data set with setData method
+     * @var array|null $data the data used for the validation. If ommited the method will try to get the last data set with setData method
+     * @return FormContext
+     */
+    public function validate($inputData){
+        $formContext = $this->generateContext($inputData);
+        $formContext->validate();
+        return $formContext;
+    }
+
+    /**
+     * Binds data to the entity.
+     * It does not apply the filter if you want to apply form filters please use sanitizeData instead
      *
-     * @param array $data
+     * @see sanitizeData();
+     *
      * @param object $entity
+     * @param array $data
      * @param array|null $whitelist
      * @return \UForm\Form
      * @throws Exception
@@ -102,27 +118,8 @@ class Form extends ElementGroup {
                 continue;
             }
 
-            //Apply filters
-            $filters = $element->getFilters();
-            if(is_array($filters)) {
-                foreach ($filters as $filter){
-                    $value = $filter->filter($value);
-                }
-            }
-
             $entity->$key = $value;
         }
-    }
-
-    /**
-     * validates the form using either the data given in parameter or either the data set with setData method
-     * @var array|null $data the data used for the validation. If ommited the method will try to get the last data set with setData method
-     * @return FormContext
-     */
-    public function validate($inputData){
-        $formContext = $this->generateContext($inputData);
-        $formContext->validate();
-        return $formContext;
     }
 
     /**
