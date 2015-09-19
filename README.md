@@ -4,7 +4,7 @@ UForm
 [![Build Status](https://travis-ci.org/gsouf/UForm.svg)](https://travis-ci.org/gsouf/UForm)
 [![Test Coverage](https://codeclimate.com/github/SneakyBobito/UForm/badges/coverage.svg)](https://codeclimate.com/github/SneakyBobito/UForm/coverage)
 [![Code Climate](https://codeclimate.com/github/SneakyBobito/UForm/badges/gpa.svg)](https://codeclimate.com/github/SneakyBobito/UForm)
-[![Latest Stable Version](https://poser.pugx.org/phpunit/phpunit/version)](https://packagist.org/packages/gsouf/uform)
+[![Latest Stable Version](https://poser.pugx.org/gsouf/uform/version)](https://packagist.org/packages/gsouf/uform)
 
 
 UForm is a form validation/filtering/rendering library that solve all the problems you encounter with web forms.
