@@ -19,8 +19,13 @@ class Tag {
         $this->closed = $closed;
     }
 
-        
-    public function parseProperties($p = null){
+
+    /**
+     * Process the properties to an html tag attributes valid string
+     * @param null $p
+     * @return string
+     */
+    private function __parseProperties($p = null){
 
         if(null === $p){
             $p = [];
@@ -64,7 +69,7 @@ class Tag {
     
     public function draw($p = null, $content = ""){
         $d = "<" . $this->name;
-        $d .= $this->parseProperties($p);
+        $d .= $this->__parseProperties($p);
         
         if($this->closed){
             $d .= "/>";

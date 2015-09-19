@@ -3,43 +3,34 @@
 namespace UForm;
 
 
-use UForm\Forms\Element\Collection;
-use UForm\Forms\ElementContainer;
-use UForm\Forms\Form;
-use UForm\Navigator\Exception;
+use UForm\Form;
+use UForm\Form\Element\Container;
 
+/**
+ * Utility class to get data from an array by its path
+ *
+ * <code>
+ *
+ * $data = [
+ *      "subData" => [
+ *          ["name" : "john"],
+ *          ["name" : "bob"]
+ *      ]
+ * ];
+ *
+ * $navigator = new Navigator();
+ *
+ * $name = $navigator->arrayGet($data, "subData.1.name");
+ *
+ * var_dump($name);
+ *
+ * // > string(3) "bob"
+ *
+ * </code>
+ *
+ */
 class Navigator {
 
-
-    /**
-     *
-     * Gets an element from the form
-     *
-     * Usefull for doted notation eg : 'elm.subelm.0.name'
-     *
-     * @param Form $form
-     * @param $string
-     * @throws Navigator\Exception
-     */
-    public function formGet(Form $form,$string){
-
-        $stringParts = explode("." , $string);
-
-        $actual = $form->get(array_shift($stringParts));
-
-        while( !empty($stringParts) ){
-
-            if($actual instanceof ElementContainer || $actual instanceof Collection){
-                $actual = $actual->getElement(array_shift($stringParts));
-            }else{
-                throw new Exception("element should be a group (usualy collection or group)");
-            }
-
-        }
-
-        return $actual;
-
-    }
 
     /**
      * @param array $local  locals values (context aware). Most of time same as $global
@@ -48,10 +39,10 @@ class Navigator {
      * @param int $rOffset  the reversed offset default 0. With the string "foo.bar.0" | $rOffset=0 will get "foo.bar.0"  |  $rOffset=1 will get "foo.bar" |  $rOffset=2 will get "foo"
      * @return null
      */
-    public function arrayGet($local, $global, $string, $rOffset = 0){
+    public function arrayGet($data, $string, $rOffset = 0){
 
         if( is_null($string) || empty($string)){
-            return $global;
+            return $data;
         }
 
         $stringParts = explode(".", $string);
@@ -61,23 +52,17 @@ class Navigator {
                 array_pop($stringParts);
             }
         }
-        
-        if( "." === $string{0} )
-            $actual = $local;
-        else
-            $actual = $global;
-        
-        
+
         while (!empty($stringParts)){
             $newName = array_shift($stringParts);
-            if(!isset($actual[$newName])){
+            if(!isset($data[$newName])){
                 return null;
             }else{
-                $actual = $actual[$newName];
+                $data = $data[$newName];
             }
         }
         
-        return $actual;
+        return $data;
         
     }
 

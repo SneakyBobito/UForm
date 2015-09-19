@@ -1,11 +1,22 @@
 {
     
-    "name": "sneakybobito/uform",
+    "name": "gsouf/uform",
+    "description": "Form library that fits all your needing, even with bootstrap or foundation!",
     "type": "library",
+    "keywords": ["form", "validation", "filter", "bootstrap", "foundation"],
+    "homepage": "https://github.com/gsouf/UForm",
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "Soufiane GHZAL",
+            "homepage": "https://github.com/gsouf"
+        }
+    ],
 
     "autoload":{
-        "psr-0" : {
-            "UForm\\"   :   "lib/"
+        "psr-4" : {
+            "UForm\\"   :   "lib/UForm/"
         }
     },
 
@@ -17,12 +28,19 @@
 
     "require": {
         "php": ">=5.4.0",
-        "twig/twig": "~1,>=1.13"
+        "twig/twig": "~1,>=1.12"
     },
 
     "require-dev":{
         "phpunit/phpunit": "4.1.2",
         "codeclimate/php-test-reporter": "dev-master",
-        "minime/annotations": "~2.0"
+        "minime/annotations": "~2.0",
+        "particle/filter" : ">=1.0.0",
+        "particle/validator": ">=1.0.0"
+    },
+
+    "suggest" : {
+        "particle/validator" : "Augments builtin filtering when used with the ParticleRuleBridge validator",
+        "particle/filter"    : "Augments builtin filtering when used with the ParticleFilterBridge filter"
     }
 }

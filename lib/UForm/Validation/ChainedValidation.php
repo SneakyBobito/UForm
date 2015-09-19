@@ -1,9 +1,11 @@
 <?php
 
 namespace UForm\Validation;
-use UForm\Forms\Element;
+use UForm\Exception;
+use UForm\Form\Element;
 use UForm\Navigator;
 use UForm\Validation;
+use UForm\ValidationItem;
 
 /**
  * ChaineValidation
@@ -13,24 +15,23 @@ use UForm\Validation;
 class ChainedValidation {
 
     /**
-     * @var Validation[]
+     * @var ValidationItem[]
      */
     protected $validationsName = array();
     /**
-     * @var Validation[]
+     * @var ValidationItem[]
      */
     protected $validationsInternalName = array();
     
     protected $data;
     
-    protected $isValid;
+    protected $isValid = true;
             
     function __construct($data) {
         $this->data = $data;
     }
 
-    
-    public function addValidation(\UForm\Validation $validation){
+    public function addValidation(ValidationItem $validation){
         $el = $validation->getElement();
         if($el->getName()){
             $this->validationsName[$el->getName(true, true)] = $validation;
@@ -55,9 +56,13 @@ class ChainedValidation {
     /**
      * get the validation by its name
      * @param $name
-     * @return null|Validation
+     * @return null|ValidationItem
      */
     public function getValidation($name, $iname=false){
+
+        if(!is_string($name)){
+            throw new Exception('Invalid type for parameter $name. String expected, ' . gettype($name) . ' used');
+        }
 
         if($iname){
             if(isset($this->validationsInternalName[$name])){
@@ -88,7 +93,7 @@ class ChainedValidation {
         
         // we init validation before (e.g we init messages to make them ready from everywhere)
         foreach($this->validationsInternalName as $v){
-            $v->initValidation();
+            $v->resetValidation();
         }
         
         foreach ($this->validationsInternalName as $v){
@@ -104,17 +109,25 @@ class ChainedValidation {
         
     }
 
+    /**
+     * tells if the validation succeeded
+     * @return bool
+     */
     public function isValid(){
         return $this->isValid;
     }
 
     /**
      * Check if an element is valid
-     * @param string $name name of the element to check
+     * @param string|Element $name name of the element to check. It can also be the element instance
      * @return bool
      * @throws Exception
      */
     public function elementIsValid($name){
+
+        if($name instanceof Element){
+            $name = $name->getName(true, true);
+        }
 
         $validation = $this->getValidation($name);
         if(!$validation){
@@ -129,18 +142,27 @@ class ChainedValidation {
      * @return boolean
      */
     public function elementChildrenAreValid($name){
-        $element = null;
+        $validation = null;
         if(is_string($name)){
             $validation = $this->getValidation($name);
-            if($validation){
-                $element = $validation->getElement();
-            }
-        }else{
-            $element = $name;
+        }else if($name instanceof Element){
+            $validation = $this->getValidation($name->getName(true, true));
         }
-        if (!$element instanceof Element) {
+        if (!$validation instanceof ValidationItem) {
             throw new Exception("Element not valid for children validation");
         }
-        return $element->childrenAreValid($this);
+        return $validation->childrenAreValid($this);
+    }
+
+    /**
+     * Get all the messages generated during the validation
+     * @return Message\Group
+     */
+    public function getMessages(){
+        $messages = new Validation\Message\Group();
+        foreach($this->validationsName as $validation){
+            $messages->appendMessages($validation->getMessages());
+        }
+        return $messages;
     }
 }

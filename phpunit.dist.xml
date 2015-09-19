@@ -1,24 +1,17 @@
-<phpunit bootstrap="test/bootstrap.php">
+<phpunit bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+
     <testsuites>
-        <testsuite name="CoreTest">
-            <directory>test/CoreTest</directory>
+        <testsuite>
+            <directory>test/suites</directory>
         </testsuite>
-        
-        <testsuite name="ElementTest">
-            <directory>test/ElementTest</directory>
-        </testsuite>
-        
-        <testsuite name="ValidationTest">
-            <directory>test/ValidationTest</directory>
-        </testsuite>
-
-        <testsuite name="RenderTest">
-            <directory>test/RenderTest</directory>
-        </testsuite>
-
-        <testsuite name="DocTest">
-            <directory>test/DocTest</directory>
-        </testsuite>
-
     </testsuites>
 </phpunit>
