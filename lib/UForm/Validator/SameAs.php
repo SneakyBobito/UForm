@@ -3,6 +3,7 @@
 namespace UForm\Validator;
 
 use UForm\Validation;
+use UForm\ValidationItem;
 use UForm\Validator;
 
 /**
@@ -25,14 +26,14 @@ class SameAs extends Validator
     /**
      * @inheritdoc
      */
-    public function validate(Validation $validator)
+    public function validate(ValidationItem $validationItem)
     {
         
-        $value1 = $validator->getValue();
-        $value2 = $validator->getValue($this->sameElement);
+        $value1 = $validationItem->getValue();
+        $value2 = $validationItem->getValue($this->sameElement);
         
         if ($value2 !== $value1) {
-            $validator->appendMessage($this->getOption('message'));
+            $validationItem->appendMessage($this->getOption('message'));
             return false;
         }
 
