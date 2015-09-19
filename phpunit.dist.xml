@@ -14,4 +14,12 @@
             <directory>test/suites</directory>
         </testsuite>
     </testsuites>
+
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">/lib/UForm</directory>
+        </whitelist>
+    </filter>
+
 </phpunit>
