@@ -19,18 +19,16 @@ trait ValidatorGroup
      * Adds a group of validators
      *
      * @param \UForm\\UForm\Validator[] $validators
-     * @return $this
+     * @return Validator[]
      * @throws Exception
      */
-    public function addValidators($validators)
+    public function addValidators(array $validators)
     {
-        if (!is_array($validators)) {
-            throw new Exception("The validators parameter must be an array");
-        }
+        $created = [];
         foreach ($validators as $validator) {
-            $this->addValidator($validator);
+            $created[] = $this->addValidator($validator);
         }
-        return $this;
+        return $created;
     }
 
     /**
@@ -39,17 +37,17 @@ trait ValidatorGroup
      * @param \UForm\\UForm\Validator|callable $validator the validator to add, it can also be a callback that
      * will be transformed in a @see DirectValidator
      * @throws Exception
-     * @return $this
+     * @return Validator the validator that was added
      */
     public function addValidator($validator)
     {
         if (is_callable($validator)) {
             $validator = new DirectClosure($validator);
         } elseif (!is_object($validator) || !$validator instanceof \UForm\Validator) {
-            throw new Exception('The validators parameter must be an object extending UForm\\UForm\Validator ');
+            throw new InvalidArgumentException('validator', "instance of UForm\\UForm\Validator", $validator);
         }
         $this->validatorGroup[] = $validator;
-        return $this;
+        return $validator;
     }
 
     /**
@@ -67,7 +65,7 @@ trait ValidatorGroup
      *
      * @param array|null $validators array of the new validators to set.
      * Can be null or an empty array to reset remove all validators
-     * @return $this
+     * @return Validator[]
      * @throws Exception
      */
     public function setValidators($validators)
@@ -79,10 +77,5 @@ trait ValidatorGroup
         } else {
             return $this;
         }
-    }
-
-    public function validateData()
-    {
-
     }
 }
