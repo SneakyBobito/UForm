@@ -33,5 +33,6 @@ DOC INCOMING...
 Thanks
 ------
 
-Thanks to @andresgutierrez for the [Phalcon form component](https://github.com/phalcon/cphalcon/tree/master/phalcon/forms)  
+Thanks to @andresgutierrez for the 
+[Phalcon form component](https://github.com/phalcon/cphalcon/tree/master/phalcon/forms) 
 that served as inspiration for this one.
