@@ -21,6 +21,7 @@ trait InputBuilder
     abstract public function open(Group $e);
     abstract public function close();
     abstract public function last();
+    abstract public function current();
 
 
     protected $useLabel = true;
