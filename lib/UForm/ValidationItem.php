@@ -154,7 +154,7 @@ class ValidationItem
         } else {
             $v = $this->getChainedValidation()->getValidation($elementName);
             if (!$v) {
-                throw new \Uform\Exception(
+                throw new \UForm\Exception(
                     'Unable to append message : element with ID='.$elementName.' is not part of the form.'
                 );
             }
