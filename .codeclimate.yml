@@ -46,3 +46,4 @@ exclude_paths:
 - .codeclimate.yml
 - .gitignore
 - .travis.yml
+- /**/*.twig
