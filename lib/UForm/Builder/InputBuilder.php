@@ -7,11 +7,11 @@ namespace UForm\Builder;
 
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Primary\Hidden;
-use UForm\Form\Element\Primary\Password;
-use UForm\Form\Element\Primary\RadioGroup;
+use UForm\Form\Element\Primary\Input\File;
+use UForm\Form\Element\Primary\Input\Hidden;
+use UForm\Form\Element\Primary\Input\Password;
+use UForm\Form\Element\Primary\Input\Text;
 use UForm\Form\Element\Primary\Select;
-use UForm\Form\Element\Primary\Text;
 use UForm\Form\Element\Primary\TextArea;
 
 trait InputBuilder
@@ -23,17 +23,15 @@ trait InputBuilder
     abstract public function last();
     abstract public function current();
 
-
-    protected $useLabel = true;
-    protected $usePlaceHolder = true;
-
-    protected function _makeInput(Element $element, $hname)
+    /**
+     * Binds the given input with its title 
+     * @param Element $element
+     * @param $title
+     */
+    protected function _makeInput(Element $element, $title)
     {
-        if ($this->useLabel) {
-            $element->setOption("label", $hname);
-        }
-        if ($this->usePlaceHolder) {
-            $element->setAttribute("placeholder", $hname);
+        if(null !== $title){
+            $element->setOption("title", $title);
         }
     }
 
@@ -41,13 +39,13 @@ trait InputBuilder
      * creates an input text
      * @see UForm\Form\Element\Primary\Text
      * @param $name
-     * @param $hname
+     * @param $title
      * @return $this
      */
-    public function text($name, $hname)
+    public function text($name, $title = null)
     {
         $element = new Text($name);
-        $this->_makeInput($element, $hname);
+        $this->_makeInput($element, $title);
         $this->add($element);
 
         return $this;
@@ -55,60 +53,30 @@ trait InputBuilder
 
     /**
      * creates a textarea
-     * @see UForm\Form\Element\Primary\Text
+     * @see UForm\Form\Element\Primary\Input\Text
      * @param $name
-     * @param $hname
+     * @param $title
      * @return $this
      */
-    public function textArea($name, $hname)
+    public function textArea($name, $title = null)
     {
         $element = new TextArea($name);
-        $this->_makeInput($element, $hname);
+        $this->_makeInput($element, $title);
         $this->add($element);
         return $this;
     }
 
 
     /**
-     * Shortcut to create a yes/no radiogroup
-     *
-     * @see UForm\Form\Element\Primary\RadioGroup
+     * @see UForm\Form\Element\Primary\Input\Password
      * @param $name
-     * @param $hname
-     * @param array $options
+     * @param $title
      * @return $this
      */
-    public function yesNo($name, $hname, $options = [])
-    {
-
-        $yesText  = isset($options["yesText"]) ? $options["yestText"] : "Yes";
-        $yesValue = isset($options["yesValue"]) ? $options["yesValue"] : 1;
-        $noText = isset($options["noText"]) ? $options["noText"] : "No";
-        $noValue = isset($options["noValue"]) ? $options["noValue"] : 0;
-
-        $element = new RadioGroup($name, [
-            $yesValue => $yesText,
-            $noValue => $noText
-        ]);
-
-        $this->_makeInput($element, $hname);
-        $this->add($element);
-
-        return $this;
-    }
-
-
-
-    /**
-     * @see UForm\Form\Element\Primary\Password
-     * @param $name
-     * @param $hname
-     * @return $this
-     */
-    public function password($name, $hname)
+    public function password($name, $title = null)
     {
         $element = new Password($name);
-        $this->_makeInput($element, $hname);
+        $this->_makeInput($element, $title);
         $this->add($element);
 
         return $this;
@@ -117,24 +85,23 @@ trait InputBuilder
     /**
      * @see UForm\Form\Element\Primary\Select
      * @param $name
-     * @param $hname
+     * @param $title
      * @return $this
      */
-    public function select($name, $hname, $values = [])
+    public function select($name, $title, $values = [])
     {
         $element = new Select($name, $values);
-        $this->_makeInput($element, $hname);
+        $this->_makeInput($element, $title);
         $this->add($element);
         return $this;
     }
 
     /**
-     * @see UForm\Form\Element\Primary\Hidden
+     * @see UForm\Form\Element\Primary\Input\Hidden
      * @param $name
-     * @param $hname
      * @return $this
      */
-    public function hidden($name, $hname)
+    public function hidden($name)
     {
         $element = new Hidden($name);
         $this->add($element);
@@ -142,15 +109,15 @@ trait InputBuilder
     }
 
     /**
-     * @see UForm\Form\Element\Primary\File
+     * @see UForm\Form\Element\Primary\Input\File
      * @param $name
-     * @param $hname
+     * @param $title
      * @return $this
      */
-    public function file($name, $hname)
+    public function file($name, $title = null)
     {
-        $element = new Hidden($name);
-        $this->_makeInput($element, $hname);
+        $element = new File($name);
+        $this->_makeInput($element, $title);
         $this->add($element);
         return $this;
     }
