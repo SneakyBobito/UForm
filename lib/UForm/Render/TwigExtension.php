@@ -25,7 +25,7 @@ class TwigExtension extends \Twig_Extension
 
             // RenderParentType
             // will render the parent semantic type for the current render context
-            new \Twig_SimpleFunction('RenderParentType', function ($context) {
+            new \Twig_SimpleFunction('renderParentType', function ($context) {
                 return $context["current"]->parentRender();
             }, [
                 "needs_context" => true,

@@ -53,7 +53,8 @@ abstract class AbstractRender
     /**
      * Allows to render an element as any other element.
      *
-     * Internally it always used with safety. If you use it manually make sure to check the context of the rendering OR
+     * Internally it is always used with safety.
+     * If you use it manually make sure to check the context of the rendering or
      * you may encounter unexisting method usage
      *
      * @param Element $element
@@ -70,12 +71,9 @@ abstract class AbstractRender
         return $template->render(["current" => $renderContext]);
     }
 
-    private function __resolveTemplate(&$names)
+    private function __resolveTemplate(array &$names)
     {
 
-        if (!is_array($names)) {
-            $names = [$names];
-        }
 
         $failedNames = [];
 
@@ -89,13 +87,17 @@ abstract class AbstractRender
             }
         }
 
+
         if (1 === count($failedNames)) {
+            // MESSAGE FOR 1 FAIL
             throw $e;
+        }else{
+            // MESSAGE FOR MANY FAILS
+            throw new \Twig_Error_Loader(
+                sprintf('Unable to find one of the following templates: "%s".', implode('", "', $failedNames))
+            );
         }
 
-        throw new \Twig_Error_Loader(
-            sprintf('Unable to find one of the following templates: "%s".', implode('", "', $failedNames))
-        );
 
     }
 }

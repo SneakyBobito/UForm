@@ -3,9 +3,8 @@
 
 namespace UForm\Render;
 
-use UForm\Forms\Element;
-use UForm\Forms\Exception;
-use UForm\Forms\FormContext;
+use UForm\Form\Element;
+use UForm\Form\FormContext;
 
 /**
  *
@@ -60,11 +59,11 @@ class RenderContext
         return $this->formContext->elementIsValid($this->element->getName(true, true));
     }
 
-    public function elementrefaultRender(Element $element)
+    public function elementDefaultRender(Element $element)
     {
 
         if ($element instanceof Element\Drawable) {
-            $element->render($this);
+            $element->render($this->getLocalValue(), $this->getLocalValue());
         } else {
             throw new \UForm\Exception(
                 "Trying to render an invalid element. Element not implementing Drawable cant be rendered"

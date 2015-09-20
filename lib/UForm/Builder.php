@@ -23,9 +23,9 @@ class Builder
      */
     protected $form;
 
-    public function __construct()
+    public function __construct($action = null, $method = null)
     {
-        $this->form = new Form();
+        $this->form = new Form($action, $method);
         $this->open($this->form);
     }
 
@@ -36,5 +36,14 @@ class Builder
     public function getForm()
     {
         return $this->form;
+    }
+
+    /**
+     * @param null $action
+     * @param null $method
+     * @return self
+     */
+    public static function init($action = null, $method = null){
+        return new self($action, $method);
     }
 }
