@@ -41,5 +41,19 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $navigator->arrayGet($data, "arr2"));
         $this->assertEquals("str3val", $navigator->arrayGet($data, "str3"));
         $this->assertEquals("arr1arr2str1val", $navigator->arrayGet($data, "arr1.arr1arr1.arr1arr1str2"));
+
+
+        // Test with offset
+        $this->assertEquals(
+            [
+            "arr1arr1str1" => "arr1arr1str1val",
+            "arr1arr1str2" => "arr1arr2str1val"
+            ],
+            $navigator->arrayGet($data, "arr1.arr1arr1.arr1arr1str2", 1)
+        );
+
+        //Test unexisting
+        $this->assertNull($navigator->arrayGet($data, "arr1.fake"));
+
     }
 }
