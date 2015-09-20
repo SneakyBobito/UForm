@@ -12,9 +12,15 @@ use UForm\Tag;
  * Textarea element
  * @semanticType textarea
  */
-class TextArea extends Element implements Drawable
+class TextArea extends Element\Primary implements Drawable
 {
-      
+    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    {
+        parent::__construct($name, $attributes, $validators, $filters);
+        $this->addSemanticType("textarea");
+    }
+
+
     public function render($value, $data)
     {
 
@@ -27,10 +33,8 @@ class TextArea extends Element implements Drawable
         } else {
             $value = "";
         }
-    
-        
-        $render = new Tag("textarea", $params, false);
 
+        $render = new Tag("textarea", $params, false);
 
         return $render->draw([], $value);
     }
