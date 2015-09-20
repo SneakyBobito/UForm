@@ -120,6 +120,8 @@ class ValidationItem
         foreach ($validators as $v) {
             if (false === $v->validate($this)) {
                 $this->valid = false;
+            }else{
+                $this->valid = true;
             }
         }
         return $this->valid;
