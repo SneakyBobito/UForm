@@ -24,10 +24,10 @@ class Tag
 
     /**
      * Process the properties to an html tag attributes valid string
-     * @param null $p
+     * @param array|null $p
      * @return string
      */
-    private function __parseProperties($p = null)
+    private function __parseProperties(array $p = null)
     {
 
         if (null === $p) {
@@ -43,12 +43,9 @@ class Tag
                 $class = $p["class"];
             }
         }
-        
-        if (is_array($p)) {
-            $properties = array_merge($this->baseProperties, $p);
-        } else {
-            $properties = $this->baseProperties;
-        }
+
+        $properties = array_merge($this->baseProperties, $p);
+
         
         if ($class) {
             $properties["class"] = $class;
