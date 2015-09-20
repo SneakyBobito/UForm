@@ -84,6 +84,12 @@ class FormTest extends \PHPUnit_Framework_TestCase
             $context->getData()->getDataCopy()
         );
         $this->assertTrue($context->isValid());
+
+
+        // test empty context
+        $context = $this->form->generateContext();
+        $this->assertEquals(null, $context->getData()->getDataCopy());
+
     }
 
     public function testValidate()
@@ -137,6 +143,9 @@ class FormTest extends \PHPUnit_Framework_TestCase
             "username" => "homer"
         ], []);
         $this->assertCount(0, (array)$o);
+
+        $this->setExpectedException("UForm\InvalidArgumentException");
+        $this->form->bind([], ["username" => "bart"]);
     }
 
     public function testSetEncType()

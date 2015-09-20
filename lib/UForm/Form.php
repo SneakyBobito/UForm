@@ -110,23 +110,10 @@ class Form extends ElementGroup
      * @return \UForm\Form
      * @throws Exception
      */
-    public function bind($entity, $data, $whitelist = null)
+    public function bind($entity, array $data,array $whitelist = null)
     {
-
-        if (is_array($data) === false) {
-            throw new Exception('The data must be an array');
-        }
-
-        if (is_object($entity) === false) {
-            throw new Exception('Invalid parameter type.');
-        }
-
-        if (!is_array($whitelist)  && !is_null($whitelist)) {
-            throw new Exception('Invalid type for whitelist.');
-        }
-
-        if (is_array($this->getElements()) === false) {
-            throw new Exception('There are no elements in the form');
+        if (!is_object($entity)) {
+            throw new InvalidArgumentException('entity', 'object', $entity);
         }
 
         foreach ($data as $key => $value) {
@@ -137,7 +124,7 @@ class Form extends ElementGroup
             }
 
             //Check if the item is in the whitelist
-            if (is_array($whitelist) === true && !in_array($key, $whitelist)) {
+            if (is_array($whitelist) && !in_array($key, $whitelist)) {
                 continue;
             }
 
@@ -153,7 +140,7 @@ class Form extends ElementGroup
     public function generateContext($data = null)
     {
         if (null === $data) {
-            $data = new DataContext([]);
+            $data = new DataContext(null);
         } else {
             $data = new DataContext($this->sanitizeData($data));
         }
