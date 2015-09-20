@@ -110,7 +110,7 @@ class Form extends ElementGroup
      * @return \UForm\Form
      * @throws Exception
      */
-    public function bind($entity, array $data,array $whitelist = null)
+    public function bind($entity, array $data, array $whitelist = null)
     {
         if (!is_object($entity)) {
             throw new InvalidArgumentException('entity', 'object', $entity);
