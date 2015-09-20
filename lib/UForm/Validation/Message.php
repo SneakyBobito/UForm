@@ -4,6 +4,10 @@ namespace UForm\Validation;
 
 class Message
 {
+
+    protected $variablePlaceholderBefore = "%_";
+    protected $variablePlaceholderAfter  = "_%";
+
     /**
      * Type
      *
@@ -23,7 +27,7 @@ class Message
     /**
      * Field
      *
-     * @var null|string
+     * @var []
      * @access protected
     */
     protected $variables = [];
@@ -52,6 +56,28 @@ class Message
     }
 
     /**
+     * changes the variableplaceholder before
+     * Default to %_
+     * @param string $variablePlaceholderBefore
+     */
+    public function setVariablePlaceholderBefore($variablePlaceholderBefore)
+    {
+        $this->variablePlaceholderBefore = $variablePlaceholderBefore;
+    }
+
+    /**
+     * changes the variableplaceholder after
+     * Default to _%
+     * @param string $variablePlaceholderAfter
+     */
+    public function setVariablePlaceholderAfter($variablePlaceholderAfter)
+    {
+        $this->variablePlaceholderAfter = $variablePlaceholderAfter;
+    }
+
+
+
+    /**
      * gets the message without processing vars
      *
      * @return string
@@ -70,14 +96,25 @@ class Message
         $message = $this->message;
         foreach ($this->variables as $variable) {
             foreach ($this->variables as $k => $v) {
-                $message = str_replace("%_${k}_%", $v, $message);
+                $message = str_replace($this->makePlaceholder($k), $v, $message);
             }
         }
         return $message;
     }
 
     /**
-     * @return []
+     * create a variable name
+     * @param $variableName
+     * @return string
+     */
+    private function makePlaceholder($variableName)
+    {
+        return $this->variablePlaceholderBefore . $variableName . $this->variablePlaceholderAfter;
+    }
+
+    /**
+     * get the variables of the message
+     * @return array
      */
     public function getVariables()
     {
