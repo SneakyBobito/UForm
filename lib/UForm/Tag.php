@@ -3,9 +3,7 @@
 namespace UForm;
 
 /**
- * Tag
- *
- * @author sghzal
+ * Tag class allows to generate html tags. It's used for elements base rendering
  */
 class Tag
 {
