@@ -43,7 +43,8 @@ class Builder
      * @param null $method
      * @return self
      */
-    public static function init($action = null, $method = null){
+    public static function init($action = null, $method = null)
+    {
         return new self($action, $method);
     }
 }

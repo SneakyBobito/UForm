@@ -91,7 +91,7 @@ abstract class AbstractRender
         if (1 === count($failedNames)) {
             // MESSAGE FOR 1 FAIL
             throw $e;
-        }else{
+        } else {
             // MESSAGE FOR MANY FAILS
             throw new \Twig_Error_Loader(
                 sprintf('Unable to find one of the following templates: "%s".', implode('", "', $failedNames))
