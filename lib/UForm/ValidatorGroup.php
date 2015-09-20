@@ -65,7 +65,7 @@ trait ValidatorGroup
      *
      * @param array|null $validators array of the new validators to set.
      * Can be null or an empty array to reset remove all validators
-     * @return Validator[]
+     * @return Validator[] the validator that were added to the group
      * @throws Exception
      */
     public function setValidators($validators)
@@ -75,7 +75,7 @@ trait ValidatorGroup
         if (null !== $validators) {
             return $this->addValidators($validators);
         } else {
-            return $this;
+            return [];
         }
     }
 }

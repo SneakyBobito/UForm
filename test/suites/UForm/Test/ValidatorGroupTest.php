@@ -30,6 +30,9 @@ class ValidatorGroupTest extends \PHPUnit_Framework_TestCase
         $output = $this->validatorGroupStub->addValidator($validator2);
         $this->assertSame([$validator, $validator2], $this->validatorGroupStub->getValidators());
         $this->assertSame($validator2, $output);
+
+        $this->setExpectedException("UForm\InvalidArgumentException");
+        $this->validatorGroupStub->addValidator([]);
     }
 
     public function testAddValidators()
@@ -61,5 +64,9 @@ class ValidatorGroupTest extends \PHPUnit_Framework_TestCase
         $output = $this->validatorGroupStub->setValidators([$validator2, $validator3]);
         $this->assertSame([$validator2, $validator3], $this->validatorGroupStub->getValidators());
         $this->assertSame([$validator2, $validator3], $output);
+
+        $output = $this->validatorGroupStub->setValidators(null);
+        $this->assertSame([], $output);
+        $this->assertSame([], $this->validatorGroupStub->getValidators());
     }
 }
