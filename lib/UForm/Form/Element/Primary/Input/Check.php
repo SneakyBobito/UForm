@@ -4,7 +4,7 @@
  * @license see LICENSE
  */
 
-namespace UForm\Form\Element;
+namespace UForm\Form\Element\Primary\Input;
 
 use UForm\Form\Element\Primary\Input;
 
@@ -26,7 +26,6 @@ class Check extends Input
     
     protected function overridesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
     {
-        
         if (isset($value[$this->getName()]) && $value[$this->getName()] == $this->value) {
             $params["checked"] = "checked";
         }
@@ -36,8 +35,7 @@ class Check extends Input
         } else {
             unset($params["value"]);
         }
-        
+
         return $params;
-        
     }
 }
