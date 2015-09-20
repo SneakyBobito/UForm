@@ -34,7 +34,7 @@ trait FluentElement
     public function add(Element $element)
     {
 
-        if(!$this->currentGroup){
+        if (!$this->currentGroup) {
             throw new BuilderException(
                 "Call to add() impossible, no group opened," .
                 "you probably didn't open a group or you closed to many groups"
@@ -80,7 +80,8 @@ trait FluentElement
      * get the currently opened group
      * @return Group
      */
-    public function current(){
+    public function current()
+    {
         return $this->currentGroup;
     }
 

@@ -5,12 +5,12 @@
 
 namespace UForm\Test\Builder;
 
-
 use UForm\Builder\FluentElement;
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Text;
 
-class FluentElementTest extends \PHPUnit_Framework_TestCase {
+class FluentElementTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var FluentElement
@@ -22,13 +22,15 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase {
      */
     protected $parentGroup;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->fluentElementStub = $this->getMockForTrait("UForm\Builder\FluentElement");
         $this->parentGroup = new Group();
         $this->fluentElementStub->open($this->parentGroup);
     }
 
-    public function testAdd(){
+    public function testAdd()
+    {
         $element = new Text("t");
         $output = $this->fluentElementStub->add($element);
         $this->assertSame($element, $this->fluentElementStub->last());
@@ -45,7 +47,8 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testOpen(){
+    public function testOpen()
+    {
         $group = new Group();
         $output = $this->fluentElementStub->open($group);
         $this->assertSame($group, $this->fluentElementStub->current());
@@ -56,7 +59,8 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame($group2, $this->fluentElementStub->current());
     }
 
-    public function testClose(){
+    public function testClose()
+    {
         $group = new Group();
         $output = $this->fluentElementStub->open($group);
         $this->assertSame($this->fluentElementStub, $output);
@@ -70,15 +74,16 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase {
         $this->fluentElementStub->close();
     }
 
-    public function testCurrent(){
+    public function testCurrent()
+    {
         $this->assertSame($this->parentGroup, $this->fluentElementStub->current());
     }
 
-    public function testLast(){
+    public function testLast()
+    {
         $this->assertNull($this->fluentElementStub->last());
         $element = new Text("test");
         $this->fluentElementStub->add($element);
         $this->assertSame($element, $this->fluentElementStub->last());
     }
-
 }
