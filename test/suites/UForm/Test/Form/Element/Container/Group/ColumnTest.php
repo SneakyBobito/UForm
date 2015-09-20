@@ -5,14 +5,15 @@
 
 namespace UForm\Test\Form\Element\Container\Group;
 
-
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Container\Group\Column;
 use UForm\Form\Element\Container\Group\ColumnGroup;
 
-class ColumnTest extends \PHPUnit_Framework_TestCase {
+class ColumnTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function testConstruct(){
+    public function testConstruct()
+    {
         $column = new Column(5);
 
         $this->assertSame(5, $column->getWidth());
@@ -22,7 +23,8 @@ class ColumnTest extends \PHPUnit_Framework_TestCase {
         new Column(-2);
     }
 
-    public function testSetParent(){
+    public function testSetParent()
+    {
         $columnGroup = new ColumnGroup();
         $column = new Column(5);
         $column->setParent($columnGroup);
@@ -33,7 +35,8 @@ class ColumnTest extends \PHPUnit_Framework_TestCase {
         $column->setParent(new Group());
     }
 
-    public function testGetAdaptiveWidth(){
+    public function testGetAdaptiveWidth()
+    {
 
         // No parent
         $column = new Column(5);
@@ -62,6 +65,4 @@ class ColumnTest extends \PHPUnit_Framework_TestCase {
         $this->setExpectedException("UForm\InvalidArgumentException");
         $column->getAdaptiveWidth("fake");
     }
-
-
 }

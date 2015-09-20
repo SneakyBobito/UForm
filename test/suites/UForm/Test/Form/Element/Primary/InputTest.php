@@ -7,9 +7,11 @@ namespace UForm\Test\Form\Element\Primary;
 
 use UForm\Form\Element\Primary\Input;
 
-class InputTest extends \PHPUnit_Framework_TestCase {
+class InputTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function testConstruct(){
+    public function testConstruct()
+    {
         /* @var $input Input */
         $input = $this->getMockForAbstractClass("UForm\Form\Element\Primary\Input", ["inputType", "inputName"]);
 
@@ -17,7 +19,8 @@ class InputTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($input->hasSemanticType("input:inputType"));
     }
 
-    public function testRender(){
+    public function testRender()
+    {
         /* @var $input Input */
         $input = $this->getMockForAbstractClass("UForm\Form\Element\Primary\Input", ["inputType", "inputName"]);
         $expected = '<input type="inputType" name="inputName" value="someValue"/>';

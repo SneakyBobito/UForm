@@ -29,7 +29,8 @@ trait GroupBuilder
      * @param string $name name of the group that will serve as key in the data array
      * @return $this
      */
-    public function group($name){
+    public function group($name)
+    {
         $element = new Group($name);
         $this->add($element);
         $this->open($element);
@@ -57,7 +58,8 @@ trait GroupBuilder
      * Adds a column group to the form
      * @return $this
      */
-    public function columnGroup(){
+    public function columnGroup()
+    {
         $element = new ColumnGroup();
         $this->add($element);
         $this->open($element);

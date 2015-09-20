@@ -49,7 +49,7 @@ class Column extends Group
 
     public function getAdaptiveWidth($factor)
     {
-        if(!is_integer($factor)){
+        if (!is_integer($factor)) {
             throw new InvalidArgumentException("factor", "int", $factor);
         }
 

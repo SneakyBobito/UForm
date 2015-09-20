@@ -23,7 +23,7 @@ class File extends Input
     public function refreshParent()
     {
         parent::refreshParent();
-        if($this->form){
+        if ($this->form) {
             $this->form->setEnctype(Form::ENCTYPE_MULTIPART_FORMDATA);
         }
     }

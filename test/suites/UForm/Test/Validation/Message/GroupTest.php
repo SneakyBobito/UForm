@@ -5,23 +5,25 @@
 
 namespace UForm\Test\Validation\Message;
 
-
 use UForm\Validation\Message;
 use UForm\Validation\Message\Group;
 
-class GroupTest extends \PHPUnit_Framework_TestCase {
+class GroupTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var Group
      */
     protected $group;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->group = new Group();
     }
 
 
-    public function testAppendMessage(){
+    public function testAppendMessage()
+    {
         $message = new Message("test");
         $this->group->appendMessage($message);
         $this->assertSame($message, $this->group->getAt(0));
@@ -32,11 +34,13 @@ class GroupTest extends \PHPUnit_Framework_TestCase {
     }
 
 
-    public function testGetAt(){
+    public function testGetAt()
+    {
         $this->assertNull($this->group->getAt(0));
     }
 
-    public function testAppendMessages(){
+    public function testAppendMessages()
+    {
         $message = new Message("test");
         $this->group->appendMessage($message);
         $this->assertSame($message, $this->group->getAt(0));
@@ -49,7 +53,8 @@ class GroupTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame($message3, $this->group->getAt(2));
     }
 
-    public function testCount(){
+    public function testCount()
+    {
         $this->assertCount(0, $this->group);
 
         $message = new Message("test");
@@ -61,7 +66,8 @@ class GroupTest extends \PHPUnit_Framework_TestCase {
         $this->assertCount(2, $this->group);
     }
 
-    public function testGetIterator(){
+    public function testGetIterator()
+    {
         $message = new Message("test");
         $this->group->appendMessage($message);
         $this->assertInstanceOf("ArrayIterator", $this->group->getIterator());
