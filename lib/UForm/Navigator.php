@@ -33,8 +33,7 @@ class Navigator
 
 
     /**
-     * @param array $local  locals values (context aware). Most of time same as $global
-     * @param array $global   the whole data (not context aware)
+     * @param array $data  locals values (context aware). Most of time same as $global
      * @param string $string  the navigation string. e.g :
      * "foo.bar.0". If begins with a dot e.g ".bar.0"
      * the local context context will be use or else we use the global one.
@@ -43,12 +42,13 @@ class Navigator
      * |  $rOffset=1 will get "foo.bar" |  $rOffset=2 will get "foo"
      * @return null
      */
-    public function arrayGet($data, $string, $rOffset = 0)
+    public function arrayGet(array $data, $string, $rOffset = 0)
     {
 
         if (is_null($string) || empty($string)) {
             return $data;
         }
+
 
         $stringParts = explode(".", $string);
 
