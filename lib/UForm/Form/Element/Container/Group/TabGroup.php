@@ -5,6 +5,7 @@ namespace UForm\Form\Element\Container\Group;
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Container\Group\NamedGroup\Tab;
+use UForm\InvalidArgumentException;
 
 /**
  * Class TabGroup
@@ -23,7 +24,12 @@ class TabGroup extends Group
     public function addElement(Element $element)
     {
         if (!($element instanceof Tab)) {
-            throw new \Exception("Cant add non-tab element into tab group");
+            throw new InvalidArgumentException(
+                "element",
+                "Instance of Tab",
+                $element,
+                "Cannot add non-tab element into TabGroup"
+            );
         }
         parent::addElement($element);
     }
