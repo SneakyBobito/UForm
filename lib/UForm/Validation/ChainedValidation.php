@@ -2,8 +2,10 @@
 
 namespace UForm\Validation;
 
+use UForm\DataContext;
 use UForm\Exception;
 use UForm\Form\Element;
+use UForm\InvalidArgumentException;
 use UForm\Navigator;
 use UForm\Validation;
 use UForm\ValidationItem;
@@ -24,12 +26,15 @@ class ChainedValidation
      * @var ValidationItem[]
      */
     protected $validationsInternalName = [];
-    
+
+    /**
+     * @var DataContext
+     */
     protected $data;
     
     protected $isValid = true;
             
-    public function __construct($data)
+    public function __construct(DataContext $data)
     {
         $this->data = $data;
     }
@@ -44,8 +49,17 @@ class ChainedValidation
         
     }
 
+    /**
+     * Get the data for an element in the chained validation
+     * @param $element
+     * @return null
+     */
     public function getDataFor($element)
     {
+        $data = $this->data->getDataCopy();
+        if(!is_array($data)){
+            return null;
+        }
 
         if ($element instanceof Element) {
             $name = $element->getName(true, true);
@@ -54,20 +68,23 @@ class ChainedValidation
         }
 
         $navigator = new Navigator();
-        return $navigator->arrayGet($this->data, $this->data, $name);
+        return $navigator->arrayGet($data, $name);
 
     }
 
     /**
-     * get the validation by its name
-     * @param $name
-     * @return null|ValidationItem
+     * gets the validation by its name
+     * @param string $name name of the validation
+     * @param bool $iname default the function will search for the real name of the element, passe $iname to true
+     * to search by its internalName
+     * @return null|ValidationItem the validation item
+     * @throws InvalidArgumentException
      */
     public function getValidation($name, $iname = false)
     {
 
         if (!is_string($name)) {
-            throw new Exception('Invalid type for parameter $name. String expected, ' . gettype($name) . ' used');
+            throw new InvalidArgumentException("name", "string", $name);
         }
 
         if ($iname) {
@@ -83,18 +100,30 @@ class ChainedValidation
         return null;
 
     }
-    
+
+    /**
+     * get the validations in the chainedValidation
+     * @return ValidationItem[]
+     */
     public function getValidations()
     {
-        return $this->validationsInternalName;
+        return array_values($this->validationsInternalName);
     }
 
-    
+    /**
+     * Gets the internal data
+     * @return DataContext
+     */
     public function getData()
     {
         return $this->data;
     }
-    
+
+    /**
+     * Starts to validate every validation.
+     * No filtering is made. All filtering should be made before setting the data
+     * @return bool true if the validation passed
+     */
     public function validate()
     {
         
@@ -106,7 +135,7 @@ class ChainedValidation
         }
         
         foreach ($this->validationsInternalName as $v) {
-            if (false === $v->validate($this->data, $this->data)) {
+            if (false === $v->validate()) {
                 $passed = false;
             }
         }
@@ -120,6 +149,7 @@ class ChainedValidation
 
     /**
      * tells if the validation succeeded
+     * isValid will always return true before we call validate()
      * @return bool
      */
     public function isValid()
