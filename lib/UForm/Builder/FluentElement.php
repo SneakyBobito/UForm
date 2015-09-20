@@ -25,10 +25,26 @@ trait FluentElement
      */
     protected $lastElement = null;
 
-    public function add(Element $e)
+    /**
+     * an element to add to the form
+     * @param Element $element
+     * @throws BuilderException
+     * @return $this;
+     */
+    public function add(Element $element)
     {
-        $this->currentGroup->addElement($e);
-        $this->lastElement = $e;
+
+        if(!$this->currentGroup){
+            throw new BuilderException(
+                "Call to add() impossible, no group opened," .
+                "you probably didn't open a group or you closed to many groups"
+            );
+        }
+
+        $this->currentGroup->addElement($element);
+        $this->lastElement = $element;
+
+        return $this;
     }
 
 
@@ -53,7 +69,7 @@ trait FluentElement
      */
     public function close()
     {
-        if (count($this->stack) == 0) {
+        if (!$this->currentGroup) {
             throw new BuilderException("Group stack is empty, call to close() requires a stack to be opened");
         }
         $this->currentGroup = array_pop($this->stack);
@@ -61,15 +77,22 @@ trait FluentElement
     }
 
     /**
+     * get the currently opened group
+     * @return Group
+     */
+    public function current(){
+        return $this->currentGroup;
+    }
+
+    /**
      * Get the last created element
      *
      * @return Element the latest element
-     * @throws BuilderException
      */
     public function last()
     {
         if (!$this->lastElement) {
-            throw new BuilderException("Call to last() requires you to have already created an element");
+            return null;
         }
         return $this->lastElement;
     }
