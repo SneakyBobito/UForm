@@ -4,6 +4,7 @@ namespace UForm\Form\Element\Container\Group;
 
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Container\Group\NamedGroup\Tab;
 
 /**
  * Class TabGroup
