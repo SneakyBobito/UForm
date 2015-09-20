@@ -89,11 +89,12 @@ trait FluentElement
      * Get the last created element
      *
      * @return Element the latest element
+     * @throws BuilderException
      */
     public function last()
     {
         if (!$this->lastElement) {
-            return null;
+            throw new BuilderException("No last element");
         }
         return $this->lastElement;
     }

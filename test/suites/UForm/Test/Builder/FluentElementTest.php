@@ -81,10 +81,13 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase
 
     public function testLast()
     {
-        $this->assertNull($this->fluentElementStub->last());
         $element = new Text("test");
         $this->fluentElementStub->add($element);
         $this->assertSame($element, $this->fluentElementStub->last());
+
+        $this->setUp();
+        $this->setExpectedException("UForm\Builder\BuilderException");
+        $this->assertNull($this->fluentElementStub->last());
     }
 
     public function testOption()

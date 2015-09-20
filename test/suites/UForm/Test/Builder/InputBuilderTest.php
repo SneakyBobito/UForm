@@ -78,6 +78,11 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
             ->text("text")
             ->leftAddon("left");
         $this->assertEquals("left", $this->inputBuilderStub->last()->getOption("leftAddon"));
+
+        $this->setUp();
+        $this->setExpectedException("UForm\Builder\BuilderException");
+        $this->inputBuilderStub->leftAddon("leftAddon");
+
     }
 
     public function testRightAddon()
@@ -86,5 +91,9 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
             ->text("text")
             ->rightAddon("right");
         $this->assertEquals("right", $this->inputBuilderStub->last()->getOption("rightAddon"));
+
+        $this->setUp();
+        $this->setExpectedException("UForm\Builder\BuilderException");
+        $this->inputBuilderStub->rightAddon("rightAddon");
     }
 }
