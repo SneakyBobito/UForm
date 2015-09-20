@@ -34,5 +34,15 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $render = $t->draw();
         $this->assertEquals('<select></select>', $render);
 
+        // base properties but no draw properties
+        $t = new \UForm\Tag("select", ["id" => "myId"]);
+        $render = $t->draw();
+        $this->assertEquals('<select id="myId"></select>', $render);
+
+        // draw properties (class) but no base properties
+        $t = new \UForm\Tag("select");
+        $render = $t->draw(["class" => "class1"]);
+        $this->assertEquals('<select class="class1"></select>', $render);
+
     }
 }
