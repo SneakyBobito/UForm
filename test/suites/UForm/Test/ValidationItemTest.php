@@ -143,6 +143,18 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase
         $this->validationItem->appendMessage($message);
         $this->assertCount(1, $this->validationItem->getMessages());
         $this->assertSame($message, $this->validationItem->getMessages()->getAt(0));
+
+        // Test append to another element
+        $this->form->addElement(new Text("email"));
+        $context = $this->form->generateContext();
+        $message = new Message("bad email");
+        $validation = $context->getChainedValidation()->getValidation("firstname");
+        $validation->appendMessage($message, "email");
+        $this->assertSame($message, $context->getChainedValidation()->getValidation("email")->getMessages()->getAt(0));
+
+        // Test unexisting element
+        $this->setExpectedException("UForm\Exception");
+        $this->validationItem->appendMessage(new Message("message"), "unknown");
     }
 
     public function testGetValue()
@@ -176,6 +188,22 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($validationItem->childrenAreValid());
 
         $formContext = $form->validate(["user" => ["username" => "lisa"]]);
+        $validationItem = $formContext->getChainedValidation()->getValidation("user");
+        $this->assertFalse($validationItem->childrenAreValid());
+
+
+        // Test parent valid but bot children
+        $phoneGroup = new Form\Element\Container\Group("phones");
+        $phoneGroup->addElement(new Text("phone1"));
+        $phone2 = new Text("phone2");
+        $phone2->addValidator(function () {
+            return false;
+
+        });
+        $phoneGroup->addElement($phone2);
+        $group->addElement($phoneGroup);
+
+        $formContext = $form->validate(["user" => ["username" => "bart"]]);
         $validationItem = $formContext->getChainedValidation()->getValidation("user");
         $this->assertFalse($validationItem->childrenAreValid());
 

@@ -1,13 +1,7 @@
 <?php
 /**
- * Validation
- *
- * @author Andres Gutierrez <andres@phalconphp.com>
- * @author Eduar Carvajal <eduar@phalconphp.com>
- * @author Wenzel Pünter <wenzel@phelix.me>
- * @version 1.2.6
- * @package Phalcon
-*/
+ * @license see LICENSE
+ */
 namespace UForm;
 
 use UForm\Form\Element;
@@ -17,7 +11,7 @@ use Uform\Validation\Message;
 use UForm\Validation\Message\Group;
 
 /**
- * That an object that helps to achieve one and only one validation schema through validators
+ * That's an object that helps to achieve one and only one validation schema through validators
  * It wraps that validated element and the currently validated form context.
  * Validators can add messages that will serve for error outputting
  */
