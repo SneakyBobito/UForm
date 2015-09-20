@@ -5,6 +5,7 @@
 
 namespace UForm\Test\Validation;
 
+use UForm\DataContext;
 use UForm\Form;
 use UForm\Validation\ChainedValidation;
 use UForm\Validation\Message;
@@ -88,6 +89,9 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
 
         $data = $this->chainedValidation->getDataFor("firstname");
         $this->assertEquals("homer", $data);
+
+        $chainedValidation = new ChainedValidation(new DataContext(null));
+        $this->assertNull($chainedValidation->getDataFor("firstname"));
 
     }
 
