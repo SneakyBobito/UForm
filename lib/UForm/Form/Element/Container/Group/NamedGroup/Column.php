@@ -1,10 +1,13 @@
 <?php
 
-namespace UForm\Form\Element\Container\Group;
+namespace UForm\Form\Element\Container\Group\NamedGroup;
 
 use UForm\Exception;
 use UForm\Form\Element\Container;
-use UForm\Form\Element\Group;
+use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Container\Group\ColumnGroup;
+use UForm\Form\Element\Container\Group\NamedGroup;
+use UForm\InvalidArgumentException;
 
 /**
  * @semanticType column
@@ -15,9 +18,9 @@ class Column extends NamedGroup
 
     protected $width;
 
-    public function __construct($width, $name = null, $elements = null)
+    public function __construct($width, $title = null, $name = null, $elements = null)
     {
-        parent::__construct("div", $name, $elements);
+        parent::__construct($title, $name, $elements);
         $this->addSemanticType("column");
 
         if ($width < 0) {
@@ -40,20 +43,22 @@ class Column extends NamedGroup
     public function setParent(Container $parent)
     {
         if (!($parent instanceof ColumnGroup)) {
-            throw new \Exception("The column parent must be a column group");
+            throw new Exception("The column parent must be a column group");
         }
         return parent::setParent($parent);
     }
 
-
-
-
     public function getAdaptiveWidth($factor)
     {
+        if(!is_integer($factor)){
+            throw new InvalidArgumentException("factor", "int", $factor);
+        }
+
         $width = $this->getWidth();
         if (!$this->getParent()) {
-            return $width;
+            return $factor;
         }
-        $this->getParent();
+        $percent = $this->getParent()->getWidthInPercent($width);
+        return $factor * ($percent / 100);
     }
 }

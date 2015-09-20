@@ -3,19 +3,21 @@
 namespace UForm\Form\Element\Container\Group;
 
 use UForm\Form\Element;
+use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Container\Group\NamedGroup\Column;
 
 /**
- * @semanticType column
  * @method Column[] getElements($values=null)
+ * @semanticType columnGroup
  */
-class ColumnGroup extends NamedGroup
+class ColumnGroup extends Group
 {
-
     public function __construct($name = null, $elements = null)
     {
-        parent::__construct("div", $name, $elements);
+        parent::__construct($name, $elements);
         $this->addSemanticType("columnGroup");
     }
+
 
     public function addElement(Element $element)
     {
