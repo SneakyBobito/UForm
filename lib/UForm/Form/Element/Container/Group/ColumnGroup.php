@@ -4,7 +4,6 @@ namespace UForm\Form\Element\Container\Group;
 
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Container\Group\NamedGroup\Column;
 
 /**
  * @method Column[] getElements($values=null)

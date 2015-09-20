@@ -3,12 +3,12 @@
  * @license see LICENSE
  */
 
-namespace UForm\Test\Form\Element\Container\Group\NamedGroup;
+namespace UForm\Test\Form\Element\Container\Group;
 
 
 use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Container\Group\Column;
 use UForm\Form\Element\Container\Group\ColumnGroup;
-use UForm\Form\Element\Container\Group\NamedGroup\Column;
 
 class ColumnTest extends \PHPUnit_Framework_TestCase {
 

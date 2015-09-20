@@ -1,11 +1,10 @@
 <?php
 
-namespace UForm\Form\Element\Container\Group\NamedGroup;
+namespace UForm\Form\Element\Container\Group;
 
 use UForm\Exception;
 use UForm\Form\Element\Container;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Container\Group\ColumnGroup;
 use UForm\Form\Element\Container\Group\NamedGroup;
 use UForm\InvalidArgumentException;
 
@@ -13,14 +12,14 @@ use UForm\InvalidArgumentException;
  * @semanticType column
  * @method ColumnGroup getParent()
  */
-class Column extends NamedGroup
+class Column extends Group
 {
 
     protected $width;
 
-    public function __construct($width, $title = null, $name = null, $elements = null)
+    public function __construct($width, $name = null, $elements = null)
     {
-        parent::__construct($title, $name, $elements);
+        parent::__construct($name, $elements);
         $this->addSemanticType("column");
 
         if ($width < 0) {
