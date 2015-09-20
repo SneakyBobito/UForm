@@ -1,7 +1,7 @@
 {
     
     "name": "gsouf/uform",
-    "description": "Form library that fits all your needing, even with bootstrap or foundation!",
+    "description": "Form library, flexible and concret including filtering/validation/render with Bootstrap and Foundation adapters ",
     "type": "library",
     "keywords": ["form", "validation", "filter", "bootstrap", "foundation"],
     "homepage": "https://github.com/gsouf/UForm",
