@@ -91,10 +91,8 @@ class ChainedValidation
             if (isset($this->validationsInternalName[$name])) {
                 return $this->validationsInternalName[$name];
             }
-        } else {
-            if (isset($this->validationsName[$name])) {
-                return $this->validationsName[$name];
-            }
+        } elseif (isset($this->validationsName[$name])) {
+            return $this->validationsName[$name];
         }
         
         return null;
