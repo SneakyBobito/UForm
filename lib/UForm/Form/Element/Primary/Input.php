@@ -52,7 +52,7 @@ class Input extends Primary implements Drawable
             $params["value"] = $localValue[$this->getName()];
         }
        
-        $render = new Tag("input", $this->overidesParamsBeforeRender($params, [], $localValue, $data), true);
+        $render = new Tag("input", $this->overridesParamsBeforeRender($params, [], $localValue, $data), true);
 
         return $render->draw([], null);
     }
