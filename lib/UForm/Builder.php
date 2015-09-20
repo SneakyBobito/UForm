@@ -2,18 +2,21 @@
 
 namespace UForm;
 
+use UForm\Builder\FilterBuilder;
 use UForm\Builder\FluentElement;
 use UForm\Builder\GroupBuilder;
 use UForm\Builder\InputBuilder;
+use UForm\Builder\ValidatorBuilder;
 use UForm\Form\Element;
 use UForm\Validator;
 
 class Builder
 {
-
     use FluentElement;
     use GroupBuilder;
     use InputBuilder;
+    use FilterBuilder;
+    use ValidatorBuilder;
 
     /**
      * @var Form
@@ -33,62 +36,5 @@ class Builder
     public function getForm()
     {
         return $this->form;
-    }
-
-
-
-
-
-
-
-    /**
-     * Add a required validator
-     * @param string $text the  message to pass to the validator
-     * @return $this
-     */
-    public function required($text = null)
-    {
-        if (null === $text) {
-            $text = "Field Required";
-        }
-        $last = $this->last();
-        $last->addRequiredValidator($text);
-        $last->setUserOption("required", true);
-        return $this;
-    }
-
-    /**
-     * Add a required validator
-     * @param string $text the  message to pass to the validator
-     * @return $this
-     */
-    public function setOption($option, $value)
-    {
-        $last = $this->last();
-        $last->setOption($option, $value);
-        return $this;
-    }
-
-
-    /**
-     * @param callable|Validator $validator
-     * @return $this
-     * @throws \Exception
-     */
-    public function validator($validator)
-    {
-        $this->last()->addValidator($validator);
-        return $this;
-    }
-
-    /**
-     * @param callable|Filter $filter
-     * @return $this
-     * @throws \Exception
-     */
-    public function filter($filter)
-    {
-        $this->last()->addFilter($filter);
-        return $this;
     }
 }

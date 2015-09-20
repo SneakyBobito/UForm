@@ -9,18 +9,13 @@ use UForm\Builder;
 use UForm\Builder\GroupBuilder;
 use UForm\Form\Element\Container\Group;
 
-class GroupbuilderTest extends \PHPUnit_Framework_TestCase
+class GroupBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      * @var GroupBuilder
      */
     protected $groupBuilderStub;
-
-    /**
-     * @var Group
-     */
-    protected $parentGroup;
 
     public function setUp()
     {

@@ -97,4 +97,17 @@ trait FluentElement
         }
         return $this->lastElement;
     }
+
+    /**
+     * Set option to the last element
+     * @param string $option name of the option
+     * @param string $value value of the option
+     * @return $this
+     */
+    public function option($option, $value)
+    {
+        $last = $this->last();
+        $last->setOption($option, $value);
+        return $this;
+    }
 }

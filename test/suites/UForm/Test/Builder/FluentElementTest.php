@@ -86,4 +86,12 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase
         $this->fluentElementStub->add($element);
         $this->assertSame($element, $this->fluentElementStub->last());
     }
+
+    public function testOption()
+    {
+        $element = new Text("test");
+        $this->fluentElementStub->add($element);
+        $this->fluentElementStub->option("testOption", "value");
+        $this->assertEquals("value", $element->getOption("testOption"));
+    }
 }
