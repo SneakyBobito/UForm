@@ -1,17 +1,23 @@
 <?php
+/**
+ * @license see LICENSE
+ */
 
 namespace UForm\Form\Element\Container;
 
 use UForm\DataContext;
+use UForm\Form\Element;
 use UForm\Form\Element\Container;
 use UForm\Form\Element\Drawable;
 use UForm\Form\FormContext;
-use UForm\Validation\ChainedValidation;
+use UForm\InvalidArgumentException;
 
 /**
- * Group that can contains many elements
+ * Group that can contains many elements.
  *
- * @author sghzal
+ * A group can be used for namespacing form values or for grouping
+ * elements into columns, tabs...
+ *
  * @semanticType group
  */
 class Group extends Container implements Drawable
@@ -22,6 +28,10 @@ class Group extends Container implements Drawable
      */
     protected $elements = [];
 
+    /**
+     * @param null|string $name name of the group. A group name can be null to allow transparent grouping
+     * @param Element|Element[] $elements one or many elements to add to the group
+     */
     public function __construct($name = null, $elements = null)
     {
         parent::__construct($name);
@@ -34,24 +44,32 @@ class Group extends Container implements Drawable
         }
         $this->addSemanticType("group");
     }
-    
-    public function addElement(\UForm\Form\Element $element)
+
+    /**
+     * adds an element to the group
+     * @param Element $element the element to add
+     */
+    public function addElement(Element $element)
     {
         $iname = "i" . count($this->elements);
         $this->elements[$iname] = $element;
         $element->setParent($this);
         $element->setInternalName($iname);
     }
-    
+
+    /**
+     * @inheritdoc
+     */
     public function getName($prenamed = null, $dottedNotation = false)
     {
         if (null === $this->name) {
             return $this->prename;
         }
 
-        return parent::getName($prenamed, $dottedNotation);
+        return  parent::getName($prenamed, $dottedNotation);
     }
 
+    // TODO
     public function render($values, $data)
     {
         $render = "";
@@ -68,7 +86,7 @@ class Group extends Container implements Drawable
 
             $render .= $element->render($valuesLocal, $data);
         }
-        
+
         return $render;
     }
 
@@ -77,11 +95,15 @@ class Group extends Container implements Drawable
      */
     public function getElement($name)
     {
-        if (!is_array($name)) {
+
+        if (is_array($name)) {
+            $namesP = $name;
+        } elseif (is_string($name)) {
             $namesP = explode(".", $name);
         } else {
-            $namesP = $name;
+            throw new InvalidArgumentException('name', 'string', $name);
         }
+
 
         $finalElm = $this->getDirectElement($namesP[0]);
         
@@ -94,12 +116,13 @@ class Group extends Container implements Drawable
 
 
     /**
+     * Get elements in the group
      * @param null $values
      * @return \UForm\Form\Element[]
      */
     public function getElements($values = null)
     {
-        return $this->elements;
+        return array_values($this->elements);
     }
 
 
@@ -118,23 +141,5 @@ class Group extends Container implements Drawable
             }
             $v->prepareValidation(new DataContext($values), $formContext);
         }
-    }
-    
-    public function childrenAreValid(ChainedValidation $cV)
-    {
-        
-        foreach ($this->getElements() as $el) {
-            $v = $cV->getValidation($el->getInternalName(true), true);
-     
-            if (!$v->isValid()) {
-                return false;
-            }
-            
-            if (!$el->childrenAreValid($cV)) {
-                return false;
-            }
-        }
-        
-        return true;
     }
 }
