@@ -5,14 +5,14 @@
 
 namespace UForm\Test\Validation;
 
-
 use UForm\Form;
 use UForm\Validation\ChainedValidation;
 use UForm\Validation\Message;
 use UForm\ValidationItem;
 use UForm\Validator\DirectClosure;
 
-class ChainedValidationTest extends \PHPUnit_Framework_TestCase {
+class ChainedValidationTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var ChainedValidation
@@ -91,7 +91,8 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testGetValidation(){
+    public function testGetValidation()
+    {
 
         $validation = $this->chainedValidation->getValidation("firstname");
         $this->assertEquals($this->firstName, $validation->getElement());
@@ -105,27 +106,32 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase {
         $this->chainedValidation->getValidation([]);
     }
 
-    public function testGetValidations(){
+    public function testGetValidations()
+    {
         $this->assertInternalType("array", $this->chainedValidation->getValidations());
         $this->assertCount(2, $this->chainedValidation->getValidations());
     }
 
-    public function testGetData(){
+    public function testGetData()
+    {
         $this->assertSame($this->dataSet, $this->chainedValidation->getData()->getDataCopy());
     }
 
-    public function testValidate(){
+    public function testValidate()
+    {
         $isValid = $this->chainedValidation->validate();
         $this->assertFalse($isValid);
     }
 
-    public function isValid(){
+    public function isValid()
+    {
         $this->assertTrue($this->chainedValidation->isValid());
         $this->chainedValidation->validate();
         $this->assertFalse($this->chainedValidation->isValid());
     }
 
-    public function testElementIsValid(){
+    public function testElementIsValid()
+    {
         $this->assertTrue($this->chainedValidation->elementIsValid("firstname"));
         $this->chainedValidation->validate();
         $this->assertFalse($this->chainedValidation->elementIsValid("firstname"));
@@ -134,7 +140,8 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase {
         $this->chainedValidation->elementIsValid("fake");
     }
 
-    public function testElementChildrenAreValid(){
+    public function testElementChildrenAreValid()
+    {
 
         $this->assertTrue($this->chainedValidation->elementChildrenAreValid("firstname"));
         $this->chainedValidation->validate();

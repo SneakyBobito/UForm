@@ -57,7 +57,7 @@ class ChainedValidation
     public function getDataFor($element)
     {
         $data = $this->data->getDataCopy();
-        if(!is_array($data)){
+        if (!is_array($data)) {
             return null;
         }
 
