@@ -72,19 +72,19 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("inputName", $this->inputBuilderStub->last()->getName());
     }
 
-    public function testLeftAddon(){
+    public function testLeftAddon()
+    {
         $this->inputBuilderStub
             ->text("text")
             ->leftAddon("left");
         $this->assertEquals("left", $this->inputBuilderStub->last()->getOption("leftAddon"));
     }
 
-    public function testRightAddon(){
+    public function testRightAddon()
+    {
         $this->inputBuilderStub
             ->text("text")
             ->rightAddon("right");
         $this->assertEquals("right", $this->inputBuilderStub->last()->getOption("rightAddon"));
     }
-
-
 }

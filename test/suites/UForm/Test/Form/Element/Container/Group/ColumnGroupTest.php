@@ -5,12 +5,12 @@
 
 namespace UForm\Test\Form\Element\Container\Group;
 
-
 use UForm\Form\Element\Container\Group\Column;
 use UForm\Form\Element\Container\Group\ColumnGroup;
 use UForm\Form\Element\Primary\Input\Text;
 
-class ColumnGroupTest extends \PHPUnit_Framework_TestCase {
+class ColumnGroupTest extends \PHPUnit_Framework_TestCase
+{
 
     public function testConstruct()
     {
@@ -31,7 +31,8 @@ class ColumnGroupTest extends \PHPUnit_Framework_TestCase {
         $group->addElement(new Text("name"));
     }
 
-    public function testGetWidthInPercent(){
+    public function testGetWidthInPercent()
+    {
         $group = new ColumnGroup();
 
         $this->assertEquals(100, $group->getWidthInPercent(20));
@@ -44,5 +45,4 @@ class ColumnGroupTest extends \PHPUnit_Framework_TestCase {
         $group->addElement(new Column(50));
         $this->assertEquals(4, $group->getWidthInPercent(10));
     }
-
 }

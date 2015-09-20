@@ -24,13 +24,13 @@ trait InputBuilder
     abstract public function current();
 
     /**
-     * Binds the given input with its title 
+     * Binds the given input with its title
      * @param Element $element
      * @param $title
      */
     protected function _makeInput(Element $element, $title)
     {
-        if(null !== $title){
+        if (null !== $title) {
             $element->setOption("title", $title);
         }
     }

@@ -26,7 +26,12 @@ class ColumnGroup extends Group
     public function addElement(Element $element)
     {
         if (!($element instanceof Column)) {
-            throw new InvalidArgumentException("element", "Instance of Column", $element, "Cant add non-column element into columnGroup");
+            throw new InvalidArgumentException(
+                "element",
+                "Instance of Column",
+                $element,
+                "Cant add non-column element into columnGroup"
+            );
         }
         parent::addElement($element);
     }
