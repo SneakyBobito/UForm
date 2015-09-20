@@ -7,6 +7,8 @@ namespace UForm\Test;
 
 use UForm\Filter\Trim;
 use UForm\Form;
+use UForm\Form\Element\Primary\Input\Password;
+use UForm\Form\Element\Primary\Input\Text;
 use UForm\ValidationItem;
 
 class FormTest extends \PHPUnit_Framework_TestCase
@@ -21,13 +23,13 @@ class FormTest extends \PHPUnit_Framework_TestCase
     {
         $this->form = new Form();
 
-        $userName = new Form\Element\Primary\Text("username");
+        $userName = new Text("username");
         $userName->addValidator(function (ValidationItem $v) {
             return $v->getValue() == "bart";
 
         });
         $userName->addFilter(new Trim());
-        $password = new Form\Element\Primary\Password("password");
+        $password = new Password("password");
         $group = new Form\Element\Container\Group("user");
         $group->addElement($userName);
         $group->addElement($password);

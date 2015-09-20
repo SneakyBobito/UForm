@@ -1,6 +1,11 @@
 <?php
+/**
+ * @license see LICENSE
+ */
 
-namespace UForm\Form\Element\Primary;
+namespace UForm\Form\Element\Primary\Input;
+
+use UForm\Form\Element\Primary\Input;
 
 /**
  * Class Password

@@ -7,8 +7,8 @@ namespace UForm\Test;
 
 use UForm\DataContext;
 use UForm\Form;
-use UForm\Form\Element\Primary\Password;
-use UForm\Form\Element\Primary\Text;
+use UForm\Form\Element\Primary\Input\Password;
+use UForm\Form\Element\Primary\Input\Text;
 use UForm\Validation\Message;
 use UForm\ValidationItem;
 use UForm\Validator\DirectClosure;

@@ -67,7 +67,7 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
 
         ];
 
-        $this->firstName = new Form\Element\Primary\Text("firstname");
+        $this->firstName = new Form\Element\Primary\Input\Text("firstname");
         $this->firstName->addValidator(new DirectClosure(function (ValidationItem $v) {
             $message = new Message("invalid");
             $v->appendMessage($message);

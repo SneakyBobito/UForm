@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @license see LICENSE
+ */
+
 namespace UForm\Form;
 
 use UForm\DataContext;

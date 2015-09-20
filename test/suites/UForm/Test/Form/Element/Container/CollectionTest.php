@@ -6,7 +6,7 @@
 namespace UForm\Test\Form\Element\Container;
 
 use UForm\Form\Element\Container\Collection;
-use UForm\Form\Element\Primary\Text;
+use UForm\Form\Element\Primary\Input\Text;
 
 class CollectionTest extends \PHPUnit_Framework_TestCase
 {

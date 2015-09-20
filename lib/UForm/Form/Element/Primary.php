@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @license see LICENSE
+ */
 
 namespace UForm\Form\Element;
 

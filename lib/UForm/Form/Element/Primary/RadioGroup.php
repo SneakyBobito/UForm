@@ -8,7 +8,7 @@ use UForm\Validation;
 /**
  * @semanticType radioGroup
  */
-class RadioGroup extends Element
+class RadioGroup extends Element implements Element\Drawable
 {
     
     protected $values;
@@ -21,9 +21,8 @@ class RadioGroup extends Element
         $this->addSemanticType("radioGroup");
     }
     
-    public function __render($attributes, $value, $data)
+    public function render($value, $data)
     {
-
         $renderHtml = "";
         
         $i=0;

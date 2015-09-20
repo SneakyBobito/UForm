@@ -6,8 +6,8 @@
 namespace UForm\Test\Scenario;
 
 use Particle\Validator\Rule\LengthBetween;
-use UForm\Form\Element\Primary\Password;
-use UForm\Form\Element\Primary\Text;
+use UForm\Form\Element\Primary\Input\Password;
+use UForm\Form\Element\Primary\Input\Text;
 use UForm\Validator\Particle\RuleBridge;
 
 class FormDataProcessingTest extends \PHPUnit_Framework_TestCase

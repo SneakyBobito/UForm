@@ -1,11 +1,15 @@
 <?php
 
+/**
+ * @license see LICENSE
+ */
+
 namespace UForm\Form\Element;
 
 use UForm\Form\Element\Primary\Input;
 
 /**
- * Class Check
+ * input checkbox
  * @semanticType input:checkbox
  */
 class Check extends Input
@@ -20,7 +24,7 @@ class Check extends Input
         $this->value = $value;
     }
     
-    protected function overidesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
+    protected function overridesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
     {
         
         if (isset($value[$this->getName()]) && $value[$this->getName()] == $this->value) {

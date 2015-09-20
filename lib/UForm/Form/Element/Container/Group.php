@@ -8,7 +8,6 @@ namespace UForm\Form\Element\Container;
 use UForm\DataContext;
 use UForm\Form\Element;
 use UForm\Form\Element\Container;
-use UForm\Form\Element\Drawable;
 use UForm\Form\FormContext;
 use UForm\InvalidArgumentException;
 
@@ -20,7 +19,7 @@ use UForm\InvalidArgumentException;
  *
  * @semanticType group
  */
-class Group extends Container implements Drawable
+class Group extends Container
 {
     
     /**
@@ -67,27 +66,6 @@ class Group extends Container implements Drawable
         }
 
         return  parent::getName($prenamed, $dottedNotation);
-    }
-
-    // TODO
-    public function render($values, $data)
-    {
-        $render = "";
-
-        foreach ($this->elements as $element) {
-            $hasName = null !== $this->name ;
-
-            $valuesLocal =  null;
-            if ($hasName) {
-                $valuesLocal = $values[$this->getName()];
-            }
-
-            $attributesLocal = null;
-
-            $render .= $element->render($valuesLocal, $data);
-        }
-
-        return $render;
     }
 
     /**

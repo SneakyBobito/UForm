@@ -6,7 +6,8 @@
 namespace UForm\Test\Form;
 
 use UForm\Form;
-use UForm\Form\Element\Primary\Text;
+use UForm\Form\Element\Primary\Input\Password;
+use UForm\Form\Element\Primary\Input\Text;
 use UForm\Validation\Message;
 use UForm\ValidationItem;
 use UForm\Validator\DirectClosure;
@@ -127,7 +128,7 @@ class FormContextTest extends \PHPUnit_Framework_TestCase
             return $v->getValue() == "bart";
 
         });
-        $password = new Form\Element\Primary\Password("password");
+        $password = new Password("password");
         $group = new Form\Element\Container\Group("user");
         $group->addElement($userName);
         $group->addElement($password);

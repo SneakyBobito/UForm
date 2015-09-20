@@ -7,9 +7,9 @@ namespace UForm\Test\Form\Element;
 
 use UForm\Form\Element\Container;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Primary\Hidden;
-use UForm\Form\Element\Primary\Password;
-use UForm\Form\Element\Primary\Text;
+use UForm\Form\Element\Primary\Input\Hidden;
+use UForm\Form\Element\Primary\Input\Password;
+use UForm\Form\Element\Primary\Input\Text;
 use UForm\ValidationItem;
 
 class ContainerTest extends \PHPUnit_Framework_TestCase
@@ -79,14 +79,14 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
     public function testHasDirectElementInstance()
     {
-        $this->assertTrue($this->container->hasDirectElementInstance("UForm\Form\Element\Primary\Text"));
-        $this->assertTrue($this->container->hasDirectElementInstance("UForm\Form\Element\Primary\Password"));
+        $this->assertTrue($this->container->hasDirectElementInstance("UForm\Form\Element\Primary\Input\Text"));
+        $this->assertTrue($this->container->hasDirectElementInstance("UForm\Form\Element\Primary\Input\Password"));
         $this->assertTrue($this->container->hasDirectElementInstance("UForm\Form\Element\Container\Group"));
-        $this->assertFalse($this->container->hasDirectElementInstance("UForm\Form\Element\Primary\Hidden"));
+        $this->assertFalse($this->container->hasDirectElementInstance("UForm\Form\Element\Primary\Input\Hidden"));
         $this->assertTrue(
             $this->container
                 ->getDirectElement("namedGroup")
-                ->hasDirectElementInstance("UForm\Form\Element\Primary\Hidden")
+                ->hasDirectElementInstance("UForm\Form\Element\Primary\Input\Hidden")
         );
     }
 

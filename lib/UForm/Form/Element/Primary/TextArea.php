@@ -5,16 +5,17 @@
 namespace UForm\Form\Element\Primary;
 
 use UForm\Form\Element;
+use UForm\Form\Element\Drawable;
 use UForm\Tag;
 
 /**
- * Component TEXTAREA for forms
+ * Textarea element
  * @semanticType textarea
  */
-class TextArea extends Element
+class TextArea extends Element implements Drawable
 {
       
-    public function __render($attributes, $value, $data)
+    public function render($value, $data)
     {
 
         $params = [
@@ -31,6 +32,6 @@ class TextArea extends Element
         $render = new Tag("textarea", $params, false);
 
 
-        return $render->draw($attributes, $value);
+        return $render->draw([], $value);
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @license see LICENSE
+ */
+
 namespace UForm\Form\Element\Primary;
 
 use UForm\Form\Element;
@@ -24,17 +28,13 @@ class Select extends Element
      * \UForm\Form\Element constructor
      *
      * @param string $name
-     * @param object|array|null $options
+     * @param array|null $values
      * @param array|null $attributes
      * @throws Exception
      */
-    public function __construct($name, $values = null, $attributes = null)
+    public function __construct($name, array $values = null, $attributes = null)
     {
-        if (is_object($values) === false &&
-            is_array($values) === false &&
-            is_null($values) === false) {
-            throw new Exception('Invalid parameter type.');
-        }
+
 
         $this->optionsValues = $values;
         parent::__construct($name, $attributes);

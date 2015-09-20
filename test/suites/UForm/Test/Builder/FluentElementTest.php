@@ -7,7 +7,7 @@ namespace UForm\Test\Builder;
 
 use UForm\Builder\FluentElement;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Primary\Text;
+use UForm\Form\Element\Primary\Input\Text;
 
 class FluentElementTest extends \PHPUnit_Framework_TestCase
 {

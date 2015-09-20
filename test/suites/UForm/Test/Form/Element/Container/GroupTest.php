@@ -6,7 +6,7 @@
 namespace UForm\Test\Form\Element\Container;
 
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Primary\Text;
+use UForm\Form\Element\Primary\Input\Text;
 
 class GroupTest extends \PHPUnit_Framework_TestCase
 {
