@@ -46,7 +46,8 @@ class Option extends AbstractOption
      * check if the option is enabled
      * @return bool tru if enabled
      */
-    public function isEnabled(){
+    public function isEnabled()
+    {
         return $this->enabled == true;
     }
 
@@ -73,15 +74,13 @@ class Option extends AbstractOption
         ];
 
 
-        if($this->enabled) {
-            if (
-                (is_array($value) && in_array($this->getValue(), $value))
+        if ($this->enabled) {
+            if ((is_array($value) && in_array($this->getValue(), $value))
                 || (!is_array($value) && $value == $this->getValue())
             ) {
                 $params["selected"] = "selected";
             }
         } else {
-
             if ($this->enabled === false) {
                 $params["disabled"] = "disabled";
             }
