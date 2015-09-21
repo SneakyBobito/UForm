@@ -5,14 +5,16 @@
 
 namespace UForm\Form\Element\Primary\Select;
 
+use UForm\Tag;
+
 /**
  * Option is aimed to to help select to render
  */
-class Option
+class Option extends AbstractOption
 {
 
     protected $value;
-    protected $label;
+    protected $enabled = true;
 
     /**
      * @param string $value the value of the option (used for value="$value")
@@ -21,7 +23,17 @@ class Option
     public function __construct($value, $label = null)
     {
         $this->value = $value;
-        $this->label = $label;
+        parent::__construct($label);
+    }
+
+    public function disable()
+    {
+        $this->enabled = false;
+    }
+
+    public function enable()
+    {
+        $this->enabled = true;
     }
 
     /**
@@ -33,12 +45,26 @@ class Option
         return $this->value;
     }
 
-    /**
-     * get the label of the option
-     * @return string
-     */
-    public function getLabel()
+    public function render($local, $data)
     {
-        return $this->label;
+
+        $tag = new Tag("option");
+
+        $params = [
+            "value" => $this->getValue()
+        ];
+
+        if ($this->select) {
+            $selectName = $this->getSelect()->getName();
+            if (isset($local[$selectName]) && $local[$selectName] == $this->getValue()) {
+                $params["selected"] = "selected";
+            }
+        }
+        if ($this->enabled === false) {
+            $params["disabled"] = "disabled";
+        }
+
+        return $tag->draw($params, $this->getLabel());
+
     }
 }

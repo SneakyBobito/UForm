@@ -7,22 +7,19 @@
 namespace UForm\Form\Element\Primary;
 
 use UForm\Form\Element;
-use UForm\Form\Exception;
+use UForm\Form\Element\Primary\Select\OptionGroup;
 use UForm\Tag;
 
 /**
  * Class Select
  * @semanticType Select
  */
-class Select extends Element
+class Select extends Element\Primary implements Element\Drawable
 {
     /**
-     * Options Values
-     *
-     * @var null|array|object
-     * @access protected
+     * @var OptionGroup
      */
-    protected $optionsValues;
+    protected $rootGroup;
 
     /**
      * \UForm\Form\Element constructor
@@ -30,29 +27,28 @@ class Select extends Element
      * @param string $name
      * @param array|null $values
      * @param array|null $attributes
-     * @throws Exception
      */
     public function __construct($name, array $values = null, $attributes = null)
     {
         parent::__construct($name, $attributes);
+
+        $this->rootGroup = new OptionGroup("");
+        $this->rootGroup->setSelect($this);
+
         if (null !== $values) {
             $this->setOptionValues($values);
         }
     }
 
 
-
-
     /**
      * Set the choice's options
      *
      * @param array|object $options
-     * @return \UForm\Form\Element
      */
     public function setOptionValues(array $options)
     {
-        $this->optionsValues = $options;
-        return $this;
+        $this->rootGroup->addOptions($options);
     }
 
     /**
@@ -60,14 +56,14 @@ class Select extends Element
      *
      * @return array|object|null
      */
-    public function getOptionValues()
-    {
-        return $this->optionsValues;
-    }
+//    public function getOptionValues()
+//    {
+//        return $this->optionsValues;
+//    }
 
 
 
-    public function __render($attributes, $value, $data)
+    public function render($value, $data)
     {
 
         $params = [
@@ -84,15 +80,10 @@ class Select extends Element
 
         $options = "";
 
-        foreach ($this->optionsValues as $k => $v) {
-            $oTag = new Tag("option");
-            $oattr = ["value"=>$k];
-            if ($value == $k) {
-                $oattr["selected"] = "selected";
-            }
-            $options .= $oTag->draw($oattr, $v);
+        foreach ($this->rootGroup->getOptions() as $v) {
+            $options .= $v->render($value, $data);
         }
 
-        return $render->draw($attributes, $options);
+        return $render->draw([], $options);
     }
 }

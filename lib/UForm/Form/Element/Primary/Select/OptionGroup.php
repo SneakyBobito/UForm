@@ -6,28 +6,39 @@
 namespace UForm\Form\Element\Primary\Select;
 
 use UForm\Exception;
+use UForm\Form\Element\Primary\Select;
+use UForm\Tag;
 
-class OptionGroup
+class OptionGroup extends AbstractOption
 {
 
     /**
      * @var Option[]
      */
     protected $options = [];
-    protected $label;
 
     public function __construct($label, array $options = null)
     {
         if (null !== $options) {
             $this->addOptions($options);
         }
-
-        $this->label = $label;
+        parent::__construct($label);
     }
 
-    public function addOption(Option $option)
+    public function addOption(AbstractOption $option)
     {
         $this->options[] = $option;
+
+        if ($this->select) {
+            $option->setSelect($this->getSelect());
+        }
+    }
+
+    public function setSelect(Select $select)
+    {
+        foreach ($this->options as $option) {
+            $option->setSelect($select);
+        }
     }
 
     public function addOptions(array $options)
@@ -40,6 +51,17 @@ class OptionGroup
                         . "instead an instance of " . get_class($option) . " was given"
                     );
                 }
+            } elseif (is_array($option)) {
+                if (!is_string($key)) {
+                    throw new Exception(
+                        "An option is not valid for option factory.When the value is an array "
+                        . "then the key should be a string that represents the name of the optgroup"
+                    );
+                } else {
+                    $option = new OptionGroup($key, $option);
+                }
+
+
             } else {
                 if (!is_string($option)) {
                     throw new Exception(
@@ -60,18 +82,23 @@ class OptionGroup
     }
 
     /**
-     * @return Option[]
+     * @return AbstractOption[]
      */
     public function getOptions()
     {
         return $this->options;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLabel()
+    public function render($local, $data)
     {
-        return $this->label;
+        $tag = new Tag("optgroup");
+        $params = [
+            "label" => $this->getLabel()
+        ];
+        $optionsRender = '';
+        foreach ($this->getOptions() as $option) {
+            $optionsRender .= $option->render($local, $data);
+        }
+        return $tag->draw($params, $optionsRender);
     }
 }

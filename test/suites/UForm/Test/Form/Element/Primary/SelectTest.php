@@ -18,10 +18,35 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->select = new Select("mySelect");
+        $this->select = new Select("familly");
     }
 
     public function testSetOptionValues()
     {
+
+        $this->select->setOptionValues([
+            "Homer" => "simpson",
+            "Ned" => "flanders",
+
+            "Kids" => [
+                "Bart" => "simpson",
+                "Rod" => "flanders"
+            ]
+        ]);
+
+        $expected =
+            '<select name="familly">'
+
+                . '<option value="simpson">Homer</option>'
+                . '<option value="flanders">Ned</option>'
+                . '<optgroup label="Kids">'
+                    . '<option value="simpson">Bart</option>'
+                    . '<option value="flanders">Rod</option>'
+                . '</optgroup>'
+
+            . '</select>';
+
+        $this->assertEquals($expected, $this->select->render([], []));
+
     }
 }
