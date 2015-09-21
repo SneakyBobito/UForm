@@ -26,15 +26,30 @@ class Option extends AbstractOption
         parent::__construct($label);
     }
 
+    /**
+     * disables the option
+     */
     public function disable()
     {
         $this->enabled = false;
     }
 
+    /**
+     * enables the option
+     */
     public function enable()
     {
         $this->enabled = true;
     }
+
+    /**
+     * check if the option is enabled
+     * @return bool tru if enabled
+     */
+    public function isEnabled(){
+        return $this->enabled == true;
+    }
+
 
     /**
      * get the value of the option
@@ -45,7 +60,10 @@ class Option extends AbstractOption
         return $this->value;
     }
 
-    public function render($local, $data)
+    /**
+     * @inheritdoc
+     */
+    public function render($value)
     {
 
         $tag = new Tag("option");
@@ -54,15 +72,21 @@ class Option extends AbstractOption
             "value" => $this->getValue()
         ];
 
-        if ($this->select) {
-            $selectName = $this->getSelect()->getName();
-            if (isset($local[$selectName]) && $local[$selectName] == $this->getValue()) {
+
+        if($this->enabled) {
+            if (
+                (is_array($value) && in_array($this->getValue(), $value))
+                || (!is_array($value) && $value == $this->getValue())
+            ) {
                 $params["selected"] = "selected";
             }
+        } else {
+
+            if ($this->enabled === false) {
+                $params["disabled"] = "disabled";
+            }
         }
-        if ($this->enabled === false) {
-            $params["disabled"] = "disabled";
-        }
+
 
         return $tag->draw($params, $this->getLabel());
 

@@ -5,13 +5,12 @@
 
 namespace UForm\Form\Element\Primary\Select;
 
-use UForm\Form\Element\Drawable;
 use UForm\Form\Element\Primary\Select;
 
 /**
  * Common class for option and optionGroup
  */
-abstract class AbstractOption implements Drawable
+abstract class AbstractOption
 {
 
     protected $label;
@@ -51,4 +50,12 @@ abstract class AbstractOption implements Drawable
     {
         return $this->select;
     }
+
+    /**
+     * Render the option that can check if the given value matches its value.
+     * Be aware that this render method differs from the Drawable::render method
+     * @param $value
+     * @return mixed
+     */
+    abstract public function render($value);
 }

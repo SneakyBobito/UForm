@@ -7,7 +7,7 @@
 namespace UForm\Form\Element\Primary;
 
 use UForm\Form\Element;
-use UForm\Form\Element\Primary\Select\OptionGroup;
+use UForm\Form\Element\Primary\Select\OptGroup;
 use UForm\Tag;
 
 /**
@@ -17,7 +17,7 @@ use UForm\Tag;
 class Select extends Element\Primary implements Element\Drawable
 {
     /**
-     * @var OptionGroup
+     * @var OptGroup
      */
     protected $rootGroup;
 
@@ -32,7 +32,7 @@ class Select extends Element\Primary implements Element\Drawable
     {
         parent::__construct($name, $attributes);
 
-        $this->rootGroup = new OptionGroup("");
+        $this->rootGroup = new OptGroup("");
         $this->rootGroup->setSelect($this);
 
         if (null !== $values) {
@@ -81,7 +81,7 @@ class Select extends Element\Primary implements Element\Drawable
         $options = "";
 
         foreach ($this->rootGroup->getOptions() as $v) {
-            $options .= $v->render($value, $data);
+            $options .= $v->render($value);
         }
 
         return $render->draw([], $options);

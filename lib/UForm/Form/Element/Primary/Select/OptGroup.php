@@ -9,7 +9,7 @@ use UForm\Exception;
 use UForm\Form\Element\Primary\Select;
 use UForm\Tag;
 
-class OptionGroup extends AbstractOption
+class OptGroup extends AbstractOption
 {
 
     /**
@@ -58,7 +58,7 @@ class OptionGroup extends AbstractOption
                         . "then the key should be a string that represents the name of the optgroup"
                     );
                 } else {
-                    $option = new OptionGroup($key, $option);
+                    $option = new OptGroup($key, $option);
                 }
 
 
@@ -89,7 +89,7 @@ class OptionGroup extends AbstractOption
         return $this->options;
     }
 
-    public function render($local, $data)
+    public function render($value)
     {
         $tag = new Tag("optgroup");
         $params = [
@@ -97,7 +97,7 @@ class OptionGroup extends AbstractOption
         ];
         $optionsRender = '';
         foreach ($this->getOptions() as $option) {
-            $optionsRender .= $option->render($local, $data);
+            $optionsRender .= $option->render($value);
         }
         return $tag->draw($params, $optionsRender);
     }
