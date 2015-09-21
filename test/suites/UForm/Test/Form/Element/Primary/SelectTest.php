@@ -5,10 +5,10 @@
 
 namespace UForm\Test\Form\Element\Primary;
 
-
 use UForm\Form\Element\Primary\Select;
 
-class SelectTest extends \PHPUnit_Framework_TestCase {
+class SelectTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var Select
@@ -16,11 +16,12 @@ class SelectTest extends \PHPUnit_Framework_TestCase {
     protected $select;
 
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->select = new Select("mySelect");
     }
 
-    public function testSetOptionValues(){
+    public function testSetOptionValues()
+    {
     }
-
 }

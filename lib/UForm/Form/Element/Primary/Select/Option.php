@@ -8,7 +8,8 @@ namespace UForm\Form\Element\Primary\Select;
 /**
  * Option is aimed to to help select to render
  */
-class Option {
+class Option
+{
 
     protected $value;
     protected $label;
@@ -17,7 +18,7 @@ class Option {
      * @param string $value the value of the option (used for value="$value")
      * @param string $label label of the option (used for <option>$label</option>
      */
-    function __construct($value, $label = null)
+    public function __construct($value, $label = null)
     {
         $this->value = $value;
         $this->label = $label;
@@ -40,7 +41,4 @@ class Option {
     {
         return $this->label;
     }
-
-
-
 }

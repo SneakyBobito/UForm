@@ -35,7 +35,7 @@ class Select extends Element
     public function __construct($name, array $values = null, $attributes = null)
     {
         parent::__construct($name, $attributes);
-        if(null !== $values) {
+        if (null !== $values) {
             $this->setOptionValues($values);
         }
     }
