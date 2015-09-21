@@ -34,21 +34,13 @@ class Select extends Element
      */
     public function __construct($name, array $values = null, $attributes = null)
     {
-
-
-        $this->optionsValues = $values;
         parent::__construct($name, $attributes);
+        if(null !== $values) {
+            $this->setOptionValues($values);
+        }
     }
 
-    public function validateOnSelfValues($message = null)
-    {
-        $this->addValidator(new SelfValue(["message" => $message]));
-    }
 
-    public function getValueRange()
-    {
-        return $this->getOptions();
-    }
 
 
     /**
@@ -56,14 +48,9 @@ class Select extends Element
      *
      * @param array|object $options
      * @return \UForm\Form\Element
-     * @throws Exception
      */
-    public function setOptions($options)
+    public function setOptionValues(array $options)
     {
-        if (is_object($options) === false &&
-            is_array($options) === false) {
-            throw new Exception('Invalid parameter type.');
-        }
         $this->optionsValues = $options;
         return $this;
     }
@@ -73,28 +60,11 @@ class Select extends Element
      *
      * @return array|object|null
      */
-    public function getOptions()
+    public function getOptionValues()
     {
         return $this->optionsValues;
     }
 
-    /**
-     * Adds an option to the current options
-     *
-     * @param array $option
-     * @return $this
-     * @throws Exception
-     */
-    public function addOption($option)
-    {
-        if (is_array($option) === false) {
-            throw new Exception('Invalid parameter type.');
-        }
-
-        $this->optionsValues[] = $option;
-
-        return $this;
-    }
 
 
     public function __render($attributes, $value, $data)
