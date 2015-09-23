@@ -21,5 +21,8 @@ class TextAreaTest extends \PHPUnit_Framework_TestCase
         $textArea = new TextArea("textarea");
         $expected = '<textarea name="textarea">some text</textarea>';
         $this->assertEquals($expected, $textArea->render(["textarea" => "some text"], ["textarea" => "some text"]));
+
+        $expected = '<textarea name="textarea"></textarea>';
+        $this->assertEquals($expected, $textArea->render(["fake" => "some text"], ["fake" => "some text"]));
     }
 }
