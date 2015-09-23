@@ -34,6 +34,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
+        // No selection
         $expected =
             '<select name="familly">'
 
@@ -45,8 +46,21 @@ class SelectTest extends \PHPUnit_Framework_TestCase
                 . '</optgroup>'
 
             . '</select>';
-
         $this->assertEquals($expected, $this->select->render([], []));
+
+        // selection
+        $expected =
+            '<select name="familly">'
+
+            . '<option value="simpson" selected="selected">Homer</option>'
+            . '<option value="flanders">Ned</option>'
+            . '<optgroup label="Kids">'
+            . '<option value="simpson" selected="selected">Bart</option>'
+            . '<option value="flanders">Rod</option>'
+            . '</optgroup>'
+
+            . '</select>';
+        $this->assertEquals($expected, $this->select->render(["familly" => "simpson"], ["familly" => "simpson"]));
 
     }
 }
