@@ -5,6 +5,7 @@
 
 namespace UForm\Test\Form\Element\Primary\Select;
 
+use UForm\Form\Element\Primary\Select;
 use UForm\Form\Element\Primary\Select\OptGroup;
 use UForm\Form\Element\Primary\Select\Option;
 
@@ -20,10 +21,24 @@ class OptGroupTest extends \PHPUnit_Framework_TestCase
 
     public function testAddOption()
     {
+        $select = new Select("selectName");
         $option = new Option("name");
         $optionGroup = new OptGroup("groupName");
+        $optionGroup->setSelect($select);
         $optionGroup->addOption($option);
         $this->assertSame($option, $optionGroup->getOptions()[0]);
+        $this->assertSame($select, $option->getSelect());
+    }
+
+    public function testSetSelect(){
+        $select = new Select("selectName");
+        $option = new Option("optionName");
+        $optionGroup = new OptGroup("groupName");
+        $optionGroup->addOption($option);
+        $this->assertNull($option->getSelect());
+        $optionGroup->setSelect($select);
+        // test that setSelect also set select to children
+        $this->assertSame($select, $option->getSelect());
     }
 
     public function testAddOptions()
@@ -67,6 +82,13 @@ class OptGroupTest extends \PHPUnit_Framework_TestCase
 
         try {
             $optionGroup->addOptions([[]]);
+            $this->fail("Exception not thrown");
+        } catch (\UForm\Exception $e) {
+            $this->assertTrue(true);
+        }
+
+        try {
+            $optionGroup->addOptions([true]);
             $this->fail("Exception not thrown");
         } catch (\UForm\Exception $e) {
             $this->assertTrue(true);

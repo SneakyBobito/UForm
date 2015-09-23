@@ -36,6 +36,7 @@ class OptGroup extends AbstractOption
 
     public function setSelect(Select $select)
     {
+        $this->select = $select;
         foreach ($this->options as $option) {
             $option->setSelect($select);
         }
