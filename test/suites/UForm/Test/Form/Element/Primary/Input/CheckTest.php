@@ -20,8 +20,13 @@ class CheckTest extends \PHPUnit_Framework_TestCase
     {
         $input = new Check("inputname", "yes");
         $render = $input->render(["inputname" => "yes"], ["inputname" => "yes"]);
-
         $expected = '<input type="checkbox" name="inputname" value="yes" checked="checked"/>';
+        $this->assertEquals($expected, $render);
+
+        // no value
+        $input = new Check("inputname");
+        $render = $input->render(["inputname" => "yes"], ["inputname" => "yes"]);
+        $expected = '<input type="checkbox" name="inputname"/>';
         $this->assertEquals($expected, $render);
     }
 }
