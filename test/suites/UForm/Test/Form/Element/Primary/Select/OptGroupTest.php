@@ -30,7 +30,8 @@ class OptGroupTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($select, $option->getSelect());
     }
 
-    public function testSetSelect(){
+    public function testSetSelect()
+    {
         $select = new Select("selectName");
         $option = new Option("optionName");
         $optionGroup = new OptGroup("groupName");
