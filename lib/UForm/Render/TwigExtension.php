@@ -2,7 +2,7 @@
 
 namespace UForm\Render;
 
-use UForm\Forms\Element;
+use UForm\Form\Element;
 
 class TwigExtension extends \Twig_Extension
 {
@@ -47,7 +47,7 @@ class TwigExtension extends \Twig_Extension
             // shortcut to render the current element with its default render method.
             // The element must implement Drawable interface
             new \Twig_SimpleFunction('defaultRenderFor', function ($context, Element $element) {
-                return $context["current"]->elementrDefaultRender($element);
+                return $context["current"]->elementDefaultRender($element);
             }, [
                 "needs_context" => true,
                 "is_safe" => ["html"]

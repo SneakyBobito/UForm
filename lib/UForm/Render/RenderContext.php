@@ -63,7 +63,7 @@ class RenderContext
     {
 
         if ($element instanceof Element\Drawable) {
-            $element->render($this->getLocalValue(), $this->getLocalValue());
+            return $element->render($this->getLocalValue(), $this->getLocalValue());
         } else {
             throw new \UForm\Exception(
                 "Trying to render an invalid element. Element not implementing Drawable cant be rendered"
@@ -74,6 +74,6 @@ class RenderContext
 
     public function getLocalValue()
     {
-        return $this->formContext->getLocalValue();
+        return $this->formContext->getData()->getDataCopy();
     }
 }
