@@ -67,8 +67,13 @@ abstract class AbstractRender
     public function renderElementAs(Element $element, FormContext $formContext, $semanticTypes)
     {
         $template = $this->__resolveTemplate($semanticTypes);
-        $renderContext = new RenderContext($element, $formContext, $this, $semanticTypes);
+        $renderContext = $this->generateRenderContext($element, $formContext, $semanticTypes);
         return $template->render(["current" => $renderContext]);
+    }
+
+    public function generateRenderContext(Element $element, FormContext $formContext, $semanticTypes)
+    {
+        return new RenderContext($element, $formContext, $this, $semanticTypes);
     }
 
     private function __resolveTemplate(array &$names)
