@@ -5,12 +5,13 @@
 
 namespace UForm\Test\Render;
 
-
 use UForm\Render\StandardHtmlRender;
 
-class StandardHtmlRenderTest extends \PHPUnit_Framework_TestCase {
+class StandardHtmlRenderTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function testDirectoryExistance(){
+    public function testDirectoryExistance()
+    {
         $standardHtmlRender = new StandardHtmlRender();
 
         $this->assertTrue(file_exists($standardHtmlRender->getTemplatesPath()));
@@ -18,5 +19,4 @@ class StandardHtmlRenderTest extends \PHPUnit_Framework_TestCase {
 
 
     }
-
 }
