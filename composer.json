@@ -22,7 +22,8 @@
 
     "autoload-dev":{
         "psr-4" : {
-            "UForm\\Doc\\"   :   "doc/"
+            "UForm\\Doc\\"   :   "doc/",
+            "UForm\\Test\\"   :   "test/suites/UForm/Test"
         }
     },
 
