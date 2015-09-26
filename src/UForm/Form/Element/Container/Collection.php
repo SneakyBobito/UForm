@@ -19,7 +19,7 @@ use UForm\Form\FormContext;
  */
 class Collection extends Container
 {
-    
+
     /**
      * @var \UForm\Form\Element
      */
@@ -40,38 +40,28 @@ class Collection extends Container
         $this->elementDefinition->setName(null);
         $this->addSemanticType("collection");
     }
-    
-    public function __render($attributes, $values, $data)
-    {
-        $render = "";
-        
-        foreach ($values[$this->getName()] as $k => $v) {
-            $element = $this->__getElemement($k);
-            $render .= $element->render($attributes, $values[$this->getName()], $data);
-        }
-        
-        return $render;
-    }
-    
-    
+
+
     public function prepareValidation(DataContext $localValues, FormContext $formContext)
     {
-        
         parent::prepareValidation($localValues, $formContext);
-        
-        if (isset($localValues[$this->getName()]) && is_array($localValues[$this->getName()])) {
-            foreach ($localValues[$this->getName()] as $k => $v) {
+        $value = $localValues->getDirectValue($this->getName());
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
                 $element = $this->__getElemement($k);
-                $element->prepareValidation($localValues->getDirectValue($this->getName), $formContext);
+                $element->prepareValidation(new DataContext($value), $formContext);
             }
         }
-
     }
 
 
     // CLONED INSTANCES CONTAINER
     private $internalElementClones;
 
+    /**
+     * @param $index
+     * @return Element|null
+     */
     private function __getElemement($index)
     {
         if (!$this->internalElementClones) {
@@ -89,26 +79,32 @@ class Collection extends Container
         return $this->internalElementClones[$index];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getElement($name)
     {
         return $this->elementDefinition;
     }
 
 
-
+    /**
+     * @inheritdoc
+     */
     public function getElements($values = null)
     {
-        
+
         if (!$values) {
             return [];
         }
-        
+
         $el = [];
 
-        $realValues = $values[$this->getName()] ;
-
-        foreach ($realValues as $k => $v) {
-            $el[] = $this->__getElemement($k);
+        if (isset($values[$this->getName()]) && is_array($values[$this->getName()])) {
+            $realValues = $values[$this->getName()];
+            foreach ($realValues as $k => $v) {
+                $el[] = $this->__getElemement($k);
+            }
         }
         return $el;
     }

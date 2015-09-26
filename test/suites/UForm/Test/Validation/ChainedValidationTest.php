@@ -82,7 +82,8 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
         $this->chainedValidation = $this->formContext->getChainedValidation();
     }
 
-    public function testAddValidation(){
+    public function testAddValidation()
+    {
         $chainedValidation = new ChainedValidation(new DataContext([]));
         $this->assertCount(0, $chainedValidation->getValidations());
 
