@@ -12,9 +12,10 @@ use UForm\Validator;
  */
 class SameAs extends Validator
 {
-    
-    protected $sameElement = null;
 
+    const DIFFERENT = "SameAs::DIFFERENT";
+
+    protected $sameElement = null;
 
     public function __construct($sameAs, $options = null)
     {
@@ -30,10 +31,19 @@ class SameAs extends Validator
     {
         
         $value1 = $validationItem->getValue();
-        $value2 = $validationItem->getValue($this->sameElement);
-        
+        $value2 = $validationItem->findValue($this->sameElement);
+
         if ($value2 !== $value1) {
-            $validationItem->appendMessage($this->getOption('message'));
+            $message = new Validation\Message(
+                "Fields %_tested-field_% and %_compare-field_% have different values",
+                [
+                    "tested-field" => $validationItem->getElement()->getName(true, true),
+                    "compare-field" => $this->sameElement
+                ],
+                self::DIFFERENT
+            );
+
+            $validationItem->appendMessage($message);
             return false;
         }
 

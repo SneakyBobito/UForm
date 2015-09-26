@@ -38,8 +38,10 @@ class StringLengthTest extends ValidatorTestCase
         $validation = $this->generateValidationItem(["firstname" => "verylongstring"]);
         $this->assertFalse($validator->validate($validation));
 
-        $this->assertSame(StringLength::TOO_LONG, $validation->getMessages()->getAt(0)->getType());
-        $this->assertSame(5, $validation->getMessages()->getAt(0)->getVariables()["max-length"]);
-        $this->assertSame(14, $validation->getMessages()->getAt(0)->getVariables()["string-length"]);
+        $this->assertCount(1, $validation->getMessages());
+        $message =  $validation->getMessages()->getAt(0);
+        $this->assertSame(StringLength::TOO_LONG, $message->getType());
+        $this->assertSame(5, $message->getVariables()["max-length"]);
+        $this->assertSame(14, $message->getVariables()["string-length"]);
     }
 }

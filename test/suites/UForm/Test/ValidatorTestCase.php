@@ -15,15 +15,17 @@ class ValidatorTestCase extends \PHPUnit_Framework_TestCase
 
     public function generateValidationItem($data)
     {
-        $element = new Text("firstname");
+        $firstname = new Text("firstname");
+        $lastname  = new Text("lastname");
 
         $form = new Form();
-        $form->addElement($element);
+        $form->addElement($firstname);
+        $form->addElement($lastname);
         $formContext = $form->generateContext($data);
 
         return new ValidationItem(
             new DataContext($data),
-            $element,
+            $firstname,
             $formContext
         );
     }
