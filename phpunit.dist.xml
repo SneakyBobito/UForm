@@ -24,7 +24,7 @@
             <directory>./test</directory>
         </blacklist>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./lib/UForm</directory>
+            <directory suffix=".php">./src/UForm</directory>
         </whitelist>
     </filter>
 
