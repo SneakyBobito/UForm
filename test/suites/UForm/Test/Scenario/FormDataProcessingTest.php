@@ -5,10 +5,9 @@
 
 namespace UForm\Test\Scenario;
 
-use Particle\Validator\Rule\LengthBetween;
 use UForm\Form\Element\Primary\Input\Password;
 use UForm\Form\Element\Primary\Input\Text;
-use UForm\Validator\Particle\RuleBridge;
+use UForm\Validator\StringLength;
 
 class FormDataProcessingTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,11 +19,11 @@ class FormDataProcessingTest extends \PHPUnit_Framework_TestCase
 
         $userName = new Text("username");
         $userName->addFilter(new \UForm\Filter\Trim());
-        $userName->addValidator(new RuleBridge(new LengthBetween(2, 5)));
+        $userName->addValidator(new StringLength(2, 5));
 
         $password = new Password("password");
         $password->addFilter(new \UForm\Filter\Trim());
-        $password->addValidator(new RuleBridge(new LengthBetween(8, 10)));
+        $password->addValidator(new StringLength(8, 10));
 
         $form->addElement($userName);
         $form->addElement($password);
@@ -59,7 +58,7 @@ class FormDataProcessingTest extends \PHPUnit_Framework_TestCase
 
         $messages = $context->getMessages();
         $this->assertEquals(1, count($messages));
-        $this->assertSame(\Particle\Validator\Rule\LengthBetween::TOO_LONG, $messages->getAt(0)->getType());
+        $this->assertSame(StringLength::TOO_LONG, $messages->getAt(0)->getType());
 
     }
 }
