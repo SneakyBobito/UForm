@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo -en "\e[32m"
-read -p "Dont you want to fix code standard automatically? [y/N] " -n 1 -r
-echo -e "\e[0m"
+echo -e "Do you want to fix code standard automatically?\e[32m [y/N] \e[0m"
+read -n 1 -r
+echo ""
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     echo "Aborting..."
