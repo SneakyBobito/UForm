@@ -31,22 +31,27 @@ class ChainedValidation
      * @var DataContext
      */
     protected $data;
-    
+
     protected $isValid = true;
-            
+
     public function __construct(DataContext $data)
     {
         $this->data = $data;
     }
 
+    /**
+     * Adds a validationItem to the internal validation list
+     * @param ValidationItem $validation
+     */
     public function addValidation(ValidationItem $validation)
     {
         $el = $validation->getElement();
-        if ($el->getName()) {
+        $name = $el->getName();
+        if (null !== $name) {
             $this->validationsName[$el->getName(true, true)] = $validation;
         }
         $this->validationsInternalName[$validation->getElement()->getInternalName(true)] = $validation;
-        
+
     }
 
     /**
@@ -83,8 +88,8 @@ class ChainedValidation
     public function getValidation($name, $iname = false)
     {
 
-        if (!is_string($name)) {
-            throw new InvalidArgumentException("name", "string", $name);
+        if (!is_string($name) && !is_int($name)) {
+            throw new InvalidArgumentException("name", "string or int", $name);
         }
 
         if ($iname) {
@@ -94,7 +99,7 @@ class ChainedValidation
         } elseif (isset($this->validationsName[$name])) {
             return $this->validationsName[$name];
         }
-        
+
         return null;
 
     }
@@ -124,25 +129,25 @@ class ChainedValidation
      */
     public function validate()
     {
-        
+
         $passed = true;
-        
+
         // we init validation before (e.g we init messages to make them ready from everywhere)
         foreach ($this->validationsInternalName as $v) {
             $v->resetValidation();
         }
-        
+
         foreach ($this->validationsInternalName as $v) {
             if (false === $v->validate()) {
                 $passed = false;
             }
         }
-        
-        
+
+
         $this->isValid = $passed;
-        
+
         return $passed;
-        
+
     }
 
     /**

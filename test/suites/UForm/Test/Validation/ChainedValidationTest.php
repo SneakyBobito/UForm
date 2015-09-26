@@ -82,6 +82,26 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
         $this->chainedValidation = $this->formContext->getChainedValidation();
     }
 
+    public function testAddValidation(){
+        $chainedValidation = new ChainedValidation(new DataContext([]));
+        $this->assertCount(0, $chainedValidation->getValidations());
+
+        $validationItem = $this->chainedValidation->getValidation("firstname");
+        $chainedValidation->addValidation($validationItem);
+
+        $this->assertCount(1, $chainedValidation->getValidations());
+        $this->assertSame($validationItem, $chainedValidation->getValidations()[0]);
+
+
+        // Element with a name (int)0 (was causing issue because 0 was considered as null)
+        $element = new Form\Element\Primary\Input\Text(0);
+        $validationItem = new ValidationItem(new DataContext([]), $element, $this->formContext);
+        $chainedValidation->addValidation($validationItem);
+        $this->assertCount(2, $chainedValidation->getValidations());
+        $this->assertSame($chainedValidation->getValidation(0), $chainedValidation->getValidations()[1]);
+
+    }
+
     public function testGetDataFor()
     {
         $data = $this->chainedValidation->getDataFor($this->firstName);
