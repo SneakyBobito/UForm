@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ruleset name="UForm">
 
-    <file>./lib/UForm</file>
+    <file>./src/UForm</file>
     <file>./test/suites</file>
 
     <!--The complete PSR-2 ruleset-->
