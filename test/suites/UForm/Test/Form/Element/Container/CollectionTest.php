@@ -45,9 +45,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->collection->prepareValidation($context->getData(), $context);
-
         $chainedValidation = $context->getChainedValidation();
-
         $validations = $chainedValidation->getValidations();
 
         $this->assertCount(4, $validations);
@@ -61,5 +59,28 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             $chainedValidation->getValidation("simpsons.1")->getElement()
         );
 
+    }
+
+    public function testGetElements()
+    {
+        $elements = $this->collection->getElements([
+            "simpsons" => [
+                ["firstname" => "bart"],
+                ["firstname" => "lisa"],
+                ["firstname" => "homer"],
+                ["firstname" => "marge"]
+            ]
+        ]);
+
+        $this->assertCount(4, $elements);
+
+        foreach ($elements as $element) {
+            $this->assertInstanceOf("UForm\Form\Element\Primary\Input\Text", $element);
+        }
+
+        $this->assertEquals("0", $elements[0]->getName());
+        $this->assertEquals("1", $elements[1]->getName());
+        $this->assertEquals("2", $elements[2]->getName());
+        $this->assertEquals("3", $elements[3]->getName());
     }
 }
