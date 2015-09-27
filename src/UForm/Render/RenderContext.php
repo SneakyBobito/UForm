@@ -56,7 +56,7 @@ class RenderContext
 
     public function isValid()
     {
-        return $this->formContext->elementIsValid($this->element->getName(true, true));
+        return $this->formContext->elementIsValid($this->element);
     }
 
     public function elementDefaultRender(Element $element)

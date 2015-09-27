@@ -72,6 +72,7 @@ abstract class Element
             }
         }
 
+        $this->internalName = 0;
         $this->addSemanticType("element");
     }
 

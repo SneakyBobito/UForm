@@ -169,10 +169,13 @@ class ChainedValidation
     public function elementIsValid($name)
     {
         if ($name instanceof Element) {
-            $name = $name->getName(true, true);
+            $name = $name->getInternalName(true);
+            $validation = $this->getValidation($name, true);
+        }else{
+            $validation = $this->getValidation($name);
         }
 
-        $validation = $this->getValidation($name);
+
         if (!$validation) {
             throw new Exception('Element with ID='.$name.' is not part of the form');
         }

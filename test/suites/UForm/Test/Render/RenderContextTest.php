@@ -31,7 +31,7 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
         $this->render
             ->method("getTemplatesPath")
             ->willReturn(__DIR__ . "/../../../../Fixtures/templates/AbstractRender");
-        
+
         $this->form = Builder::init()->text("firstname")->text("lastname")->getForm();
         $this->form->getElement("firstname")->addValidator(function () {
             return false;
@@ -43,8 +43,14 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
      */
     public function generateContext($elementName, $data)
     {
+        if($elementName instanceof Form\Element){
+            $element = $elementName;
+        }else{
+            $element = $this->form->getElement($elementName);
+        }
+
         return $this->render->generateRenderContext(
-            $this->form->getElement($elementName),
+            $element,
             $this->form->validate([]),
             $data
         );
@@ -55,6 +61,8 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->generateContext('lastname', [])->isValid());
         $this->assertFalse($this->generateContext('firstname', [])->isValid());
+
+        $this->assertTrue($this->generateContext($this->form, [])->isValid());
 
     }
 

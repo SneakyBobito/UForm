@@ -97,7 +97,8 @@ class FormContext
     /**
      * Check if an element is valid
      * A element will always be valid before the formContext is validated
-     * @param $elementName
+     * @param string|Element $elementName
+     * @param bool $iname true to use the internal name
      * @return bool
      * @throws \UForm\Exception
      */
