@@ -21,12 +21,54 @@ Top Features
 - Structure aware form : you can structure your inputs in columns, tabs, panels... with no impact of the data processing
 - Flexible and extensible rendering : you are free to you the native html render, the bootstrap render, 
 the foundation render, or to write your one render from scratch or by extending an existing one.
+- Validation message translation (wip)
 
 
 Usage
 -----
 
-DOC INCOMING...
+**Project is under heavy development** and doc will come when the api will be frozen or more stable.
+
+Here is an example of how the library works :
+
+```php
+
+use UForm\Builder;
+
+
+$form = 
+     // initialize the form with aciton and method
+    Builder::init("action", "POST")
+     // Add some input text with some validation rules
+    ->text("firstname", "Firstname")->required()->stringLength(2, 20) 
+    ->text("lastname", "Lastname")->required()->stringLength(2, 20)
+    ->text("login", "Login")->required()->stringLength(2, 20)
+    // Add an input password
+    ->password("password", "Password")->required()->stringLength(2, 20)
+    // Get the form instance
+    ->getForm();
+
+
+
+if (isset($_POST)) {
+    //If its a post query we validate the form with the post data
+    $formContext = $form->validate($_POST);
+    if ($formContext->isValid()) {
+        $filteredData = $formContext->getData();
+        // Do some logic with data
+    }
+} else {
+    // Or else we just generate a context with empty values
+    $formContext = $form->generateContext([]);
+}
+
+// We want to render some html for bootstrap 3
+$render = new Bootstrap3Render();
+$html = $render->render($formContext);
+
+echo $html;
+
+```
 
 
 

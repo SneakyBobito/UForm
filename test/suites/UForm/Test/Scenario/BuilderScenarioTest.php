@@ -33,6 +33,7 @@ class BuilderScenarioTest extends \PHPUnit_Framework_TestCase
         $render = new Bootstrap3Render();
         $html = $render->render($formContext);
 
-        echo $html;
+        $this->assertInternalType("string", $html);
+
     }
 }

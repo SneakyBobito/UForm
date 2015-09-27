@@ -27,7 +27,7 @@ abstract class AbstractRender
             $this->te->addExtension(new TwigExtension());
 
             $pathes = $this->getTemplatesPathes();
-            foreach($pathes as $namespace => $path){
+            foreach ($pathes as $namespace => $path) {
                 $loader->addPath($path, $namespace); // allow to find a template by its namespace
                 $loader->addPath($path); // allow to use twig multi-pathes feature
             }

@@ -171,7 +171,7 @@ class ChainedValidation
         if ($name instanceof Element) {
             $name = $name->getInternalName(true);
             $validation = $this->getValidation($name, true);
-        }else{
+        } else {
             $validation = $this->getValidation($name);
         }
 

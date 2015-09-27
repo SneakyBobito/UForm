@@ -43,9 +43,9 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
      */
     public function generateContext($elementName, $data)
     {
-        if($elementName instanceof Form\Element){
+        if ($elementName instanceof Form\Element) {
             $element = $elementName;
-        }else{
+        } else {
             $element = $this->form->getElement($elementName);
         }
 
