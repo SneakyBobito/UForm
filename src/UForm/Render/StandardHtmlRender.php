@@ -4,8 +4,8 @@ namespace UForm\Render;
 
 class StandardHtmlRender extends AbstractRender
 {
-    public function getTemplatesPath()
+    public function getTemplatesPathes()
     {
-        return __DIR__ . "/../../renderTemplate/StandardHtml";
+        return ["StandarHtml" => __DIR__ . "/../../renderTemplate/StandardHtml"];
     }
 }

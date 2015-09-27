@@ -22,8 +22,8 @@ class AbstractRenderTest extends \PHPUnit_Framework_TestCase
     {
         $this->render = $this->getMockForAbstractClass("UForm\Render\AbstractRender");
         $this->render
-            ->method("getTemplatesPath")
-            ->willReturn(__DIR__ . "/../../../../Fixtures/templates/AbstractRender");
+            ->method("getTemplatesPathes")
+            ->willReturn([ "test" => __DIR__ . "/../../../../Fixtures/templates/AbstractRender"]);
     }
 
     public function testGetTwigEnvironment()

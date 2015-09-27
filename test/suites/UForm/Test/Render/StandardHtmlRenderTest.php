@@ -14,8 +14,10 @@ class StandardHtmlRenderTest extends \PHPUnit_Framework_TestCase
     {
         $standardHtmlRender = new StandardHtmlRender();
 
-        $this->assertTrue(file_exists($standardHtmlRender->getTemplatesPath()));
-        $this->assertTrue(is_dir($standardHtmlRender->getTemplatesPath()));
+        $file = current($standardHtmlRender->getTemplatesPathes());
+
+        $this->assertTrue(file_exists($file));
+        $this->assertTrue(is_dir($file));
 
 
     }

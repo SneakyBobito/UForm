@@ -22,14 +22,20 @@ abstract class AbstractRender
     public function getTwigEnvironment()
     {
         if (null == $this->te) {
-            $loader = new TwigLoaderFileSystem($this->getTemplatesPath());
+            $loader = new TwigLoaderFileSystem();
             $this->te = new \Twig_Environment($loader);
             $this->te->addExtension(new TwigExtension());
+
+            $pathes = $this->getTemplatesPathes();
+            foreach($pathes as $namespace => $path){
+                $loader->addPath($path, $namespace); // allow to find a template by its namespace
+                $loader->addPath($path); // allow to use twig multi-pathes feature
+            }
         }
         return $this->te;
     }
 
-    abstract public function getTemplatesPath();
+    abstract public function getTemplatesPathes();
 
 
     public function render(FormContext $formContext)
