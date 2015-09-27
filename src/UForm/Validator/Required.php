@@ -8,17 +8,24 @@ use UForm\Validator;
 
 class Required extends Validator
 {
-    
+
+    const REQUIRED = "Required::Required";
+
     /**
      * @inheritdoc
      */
     public function validate(ValidationItem $validationItem)
     {
-        
-        $value = $validationItem->getLocalData();
 
-        if (!isset($value[$validationItem->getLocalName()]) || null === $value[$validationItem->getLocalName()]) {
-            $validationItem->appendMessage($this->getOption('message'));
+        $value = $validationItem->getLocalData()->getDataCopy();
+
+
+        if (!is_array($value)
+            || !isset($value[$validationItem->getLocalName()])
+            || null === $value[$validationItem->getLocalName()]
+        ) {
+            $message = new Validation\Message("Field is required", [], self::REQUIRED);
+            $validationItem->appendMessage($message);
             return false;
         }
 
