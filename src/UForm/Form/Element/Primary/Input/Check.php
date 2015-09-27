@@ -14,7 +14,7 @@ use UForm\Form\Element\Primary\Input;
  */
 class Check extends Input
 {
-    
+
     protected $value;
 
 
@@ -23,13 +23,13 @@ class Check extends Input
         parent::__construct("checkbox", $name, $attributes, $validators, $filters);
         $this->value = $value;
     }
-    
+
     protected function overridesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
     {
         if (isset($value[$this->getName()]) && $value[$this->getName()] == $this->value) {
             $params["checked"] = "checked";
         }
-        
+
         if ($this->value) {
             $params["value"] = $this->value;
         } else {
@@ -37,5 +37,14 @@ class Check extends Input
         }
 
         return $params;
+    }
+
+    /**
+     * Get the checkbox value
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 }

@@ -65,8 +65,9 @@ class RadioGroup extends Element implements Element\Drawable
      * @param int $index to generate an id for
      * @return string
      */
-    public function getId($index){
-        if(!isset($this->generatedIds[$index])){
+    public function getId($index)
+    {
+        if (!isset($this->generatedIds[$index])) {
             $this->generatedIds[$index] = $this->getName() . $index . rand(1000, 9999);
         }
         return $this->generatedIds[$index];
