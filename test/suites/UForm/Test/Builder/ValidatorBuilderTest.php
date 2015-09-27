@@ -36,8 +36,18 @@ class ValidatorBuilderTest extends \PHPUnit_Framework_TestCase
     public function testRequired()
     {
         $this->validatorBuilder->text("text");
-        $this->validatorBuilder->required();
+        $output = $this->validatorBuilder->required();
 
+        $this->assertSame($this->validatorBuilder, $output);
         $this->assertInstanceOf("UForm\Validator\Required", $this->validatorBuilder->last()->getValidators()[0]);
+    }
+
+    public function testStringLength()
+    {
+        $this->validatorBuilder->text("text");
+        $output = $this->validatorBuilder->stringLength(5, 10);
+
+        $this->assertSame($this->validatorBuilder, $output);
+        $this->assertInstanceOf("UForm\Validator\StringLength", $this->validatorBuilder->last()->getValidators()[0]);
     }
 }
