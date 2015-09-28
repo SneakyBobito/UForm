@@ -2,6 +2,9 @@
 
 namespace UForm\Validation;
 
+use UForm\Validation\Message\DefaultTranslator;
+use UForm\Validation\Message\TranslationInterface;
+
 class Message
 {
 
@@ -9,41 +12,63 @@ class Message
     protected $variablePlaceholderAfter  = "_%";
 
     /**
-     * Type
-     *
      * @var null|string
-     * @access protected
-    */
+     */
     protected $type;
 
     /**
-     * Message
-     *
      * @var null|string
-     * @access protected
-    */
+     */
     protected $message;
 
     /**
-     * Field
-     *
      * @var []
-     * @access protected
-    */
+     */
     protected $variables = [];
+
+    /**
+     * @var TranslationInterface
+     */
+    protected $translator;
 
     /**
      * @param string $message
      * @param array|null $variables
      * @param string|null $type
-     * @throws Exception
-     */
+=     */
     public function __construct($message, array $variables = null, $type = null)
     {
         $this->message = $message;
         $this->variables = $variables;
         $this->type = $type;
     }
+
+    /**
+     * Set a translationInterface that will be used to translate message in method getProcessedMessage
+     * @see Message::getProcessedMessage()
+     * @param TranslationInterface $translator
+     */
+    public function setTranslator(TranslationInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * Gets the internal translator
+     * if no translator was set, then an instance of DefaultTranslator will be returned
+     * @see UForm\Validation\Message\DefaultTranslator
+     * @return TranslationInterface
+     */
+    public function getTranslator()
+    {
+        if ($this->translator) {
+            $translator = $this->translator;
+        } else {
+            $translator = DefaultTranslator::defaultTranslator();
+        }
+        return $translator;
+    }
+
 
     /**
      * Returns message type
@@ -88,18 +113,14 @@ class Message
     }
 
     /**
-     * get the message processed with the interval variables
+     * Gets the message processed with the internal variables
+     * If a translator was set, the message will be passed to the translator
+     * @see Message::setTranslator()
      * @return string the message processed
      */
     public function getProcessedMessage()
     {
-        $message = $this->message;
-        foreach ($this->variables as $variable) {
-            foreach ($this->variables as $k => $v) {
-                $message = str_replace($this->makePlaceholder($k), $v, $message);
-            }
-        }
-        return $message;
+        return $this->getTranslator()->translate($this);
     }
 
     /**
@@ -107,7 +128,7 @@ class Message
      * @param $variableName
      * @return string
      */
-    private function makePlaceholder($variableName)
+    public function makePlaceholder($variableName)
     {
         return $this->variablePlaceholderBefore . $variableName . $this->variablePlaceholderAfter;
     }

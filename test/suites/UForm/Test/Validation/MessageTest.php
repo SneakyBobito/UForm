@@ -70,4 +70,15 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $message->setVariablePlaceholderAfter("}}");
         $this->assertEquals("message width: 10; height: %_height_%", $message->getProcessedMessage());
     }
+
+    public function testSetTranslator()
+    {
+        $message = new Message("Some message");
+        $this->assertInstanceOf("UForm\Validation\Message\DefaultTranslator", $message->getTranslator());
+
+        $translator = new Message\DefaultTranslator();
+        $message->setTranslator($translator);
+
+        $this->assertSame($translator, $message->getTranslator());
+    }
 }
