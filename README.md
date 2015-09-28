@@ -9,25 +9,23 @@ UForm
 
 UForm is a form validation/filtering/rendering library that solve all the problems you encounter with web forms.
 
-Why another form library ? Because the other I tryed had limitations. This library is an effort to make something more flexible and at the 
-same time very concrete. 
+Why another form library? Because the other I tried had limitations. This library is an effort to make something more flexible and at the same time very concrete. 
 
-Why concrete ? Because a form library should be as simple as possible in many aspects : creation, validation, data binding, rendering, etc...
+Why concrete? Because a form library should be as simple as possible in many aspects : creation, validation, data binding, rendering, etc...
 
 Top Features
 ------------
 
 - Fluent form builder to make form creation as painless as possible
-- Structure aware form : you can structure your inputs in columns, tabs, panels... with no impact of the data processing
-- Flexible and extensible rendering : you are free to you the native html render, the bootstrap render, 
-the foundation render, or to write your one render from scratch or by extending an existing one.
-- Validation message translation (wip)
+- Structure aware form: you can structure your inputs in columns, tabs, panels... with no impact of the data processing
+- Flexible and extensible rendering: you are free to use the native html render, the bootstrap render, the foundation render, or to write your one render from scratch or by extending an existing one.
+- Validation message translation (WIP)
 
 
 Usage
 -----
 
-**Project is under heavy development** and doc will come when the api will be frozen or more stable.
+**Project is under heavy development** and doc will come when the API is frozen or more stable.
 
 Here is an example of how the library works :
 
