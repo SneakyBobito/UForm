@@ -4,7 +4,6 @@ namespace UForm;
 
 use UForm\Form\Element\Container\Group as ElementGroup;
 use UForm\Form\FormContext;
-use UForm\Navigator;
 use UForm\Validation;
 
 /**
@@ -44,8 +43,8 @@ class Form extends ElementGroup
         }
     }
 
-    
-    
+
+
     public function getAction()
     {
         return $this->action;

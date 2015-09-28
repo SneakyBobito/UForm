@@ -2,7 +2,7 @@
 
 namespace UForm\Validation;
 
-use UForm\Validation\Message\DefaultTranslator;
+use UForm\Environment;
 use UForm\Validation\Message\TranslationInterface;
 
 class Message
@@ -55,7 +55,7 @@ class Message
 
     /**
      * Gets the internal translator
-     * if no translator was set, then an instance of DefaultTranslator will be returned
+     * if no translator was set, then a translator from environment will be returned
      * @see UForm\Validation\Message\DefaultTranslator
      * @return TranslationInterface
      */
@@ -64,7 +64,7 @@ class Message
         if ($this->translator) {
             $translator = $this->translator;
         } else {
-            $translator = DefaultTranslator::defaultTranslator();
+            $translator = Environment::getTranslator();
         }
         return $translator;
     }
