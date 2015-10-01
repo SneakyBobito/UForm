@@ -9,7 +9,8 @@ phpunit -c "$SCRIPTDIR/../../phpunit.dist.xml" --coverage-clover "$SCRIPTDIR/../
 
 $SCRIPTDIR/phpcs.bash $1
 
-if [ "$PROCESS_CODECLIMAE" = true ]
+
+if [ "$PROCESS_CODECLIMAE" = true ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ]
 then
     ./vendor/bin/test-reporter
 fi
