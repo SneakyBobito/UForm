@@ -40,6 +40,8 @@ abstract class Element
 
     protected $attributes = [];
 
+    protected $id;
+
 
     /**
      *
@@ -52,7 +54,6 @@ abstract class Element
      *
      * @param string $name
      * @param array|null $attributes
-     * @throws Exception
      */
     public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
     {
@@ -101,7 +102,6 @@ abstract class Element
      * Internal use only. Set a pointer to the parent element
      * @param Form\Element\Container $parent
      * @return $this
-     * @throws Exception
      */
     public function setParent(Container $parent)
     {
@@ -270,7 +270,6 @@ abstract class Element
      *
      * @param array $attributes list of attributes to add ["name" => "value"]
      * @return $this
-     * @throws Exception
      */
     public function addAttributes($attributes)
     {
@@ -306,5 +305,29 @@ abstract class Element
         $v = new ValidationItem($localValues, $this, $formContext);
         $v->addValidators($validators);
         $formContext->getChainedValidation()->addValidation($v);
+    }
+
+
+    /**
+     * Set an id for the element that will serve for the rendering (html id attribute)
+     * @see UForm\Form\Element::getId()
+     * @param string $id the id to set
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Get the internal id of the element, if no id was set an unique id will be generated and stored
+     * @see UForm\Form\Element::setId()
+     * @return string the id of the element
+     */
+    public function getId()
+    {
+        if (null === $this->id) {
+            $this->id = uniqid("uform_");
+        }
+        return $this->id;
     }
 }

@@ -74,6 +74,25 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(null, $this->elementStub->getForm());
     }
 
+    public function testSetId()
+    {
+        $id = "someid";
+        $this->elementStub->setId($id);
+        $this->assertSame("someid", $this->elementStub->getId());
+    }
+
+    public function testGetId()
+    {
+        $id = $this->elementStub->getId();
+        $this->assertNotNull($this->elementStub->getId());
+        $this->assertSame($id, $this->elementStub->getId());
+
+        $this->elementStub->setId(null);
+        $id = $this->elementStub->getId();
+        $this->assertNotNull($this->elementStub->getId());
+        $this->assertSame($id, $this->elementStub->getId());
+    }
+
     public function testGetParent()
     {
         $this->assertEquals(null, $this->elementStub->getParent());

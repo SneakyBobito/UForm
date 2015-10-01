@@ -28,7 +28,6 @@ class RadioGroup extends Element implements Element\Drawable
         $i=0;
 
         foreach ($this->values as $k => $v) {
-            $id = $this->getId($i);
             $labelTag = new \UForm\Tag("label");
             $renderHtml .= $labelTag->draw([
                 "for" => $id
@@ -55,22 +54,6 @@ class RadioGroup extends Element implements Element\Drawable
 
         return $renderHtml;
 
-    }
-
-    /**
-     * It will generate and store an html id for the given index. The generated id is stored for the index
-     * and the second call with the same index wont generate a new id, instead it will return
-     * the previously generated one
-     * Useful for rendering label's for attribute and input's id attribute.
-     * @param int $index to generate an id for
-     * @return string
-     */
-    public function getId($index)
-    {
-        if (!isset($this->generatedIds[$index])) {
-            $this->generatedIds[$index] = $this->getName() . $index . rand(1000, 9999);
-        }
-        return $this->generatedIds[$index];
     }
 
     public function getValueRange()

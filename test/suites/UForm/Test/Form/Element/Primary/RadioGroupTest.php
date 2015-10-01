@@ -30,27 +30,18 @@ class RadioGroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([1, 0], $this->radioGroup->getValueRange());
     }
 
-    public function testGetId()
-    {
-        $id = $this->radioGroup->getId(1);
-        $this->assertEquals($id, $this->radioGroup->getId(1));
-        $this->assertNotEquals($id, $this->radioGroup->getId(2));
-        $this->assertNotEquals($id, $this->radioGroup->getId(0));
-    }
-
-    public function testRender()
-    {
-        $render = $this->radioGroup->render(["remember" => 1], ["remember" => 1]);
-
-        $id1 = $this->radioGroup->getId(0);
-        $id2 = $this->radioGroup->getId(1);
-
-        $expected =   '<label for="' . $id1 . '">yes</label>'
-                    . '<input type="radio" name="remember" id="' . $id1 . '" value="1" checked="checked"/>'
-                    . '<label for="' . $id2 . '">no</label>'
-                    . '<input type="radio" name="remember" id="' . $id2 . '" value="0"/>';
-
-        $this->assertEquals($expected, $render);
-
-    }
+//
+//    public function testRender()
+//    {
+//        $render = $this->radioGroup->render(["remember" => 1], ["remember" => 1]);
+//
+//
+//        $expected =   '<label for="' . $id1 . '">yes</label>'
+//                    . '<input type="radio" name="remember" id="' . $id1 . '" value="1" checked="checked"/>'
+//                    . '<label for="' . $id2 . '">no</label>'
+//                    . '<input type="radio" name="remember" id="' . $id2 . '" value="0"/>';
+//
+//        $this->assertEquals($expected, $render);
+//
+//    }
 }
