@@ -17,5 +17,7 @@ class Text extends Input
     public function __construct($name, $attributes = null, $validators = null, $filters = null)
     {
         parent::__construct("text", $name, $attributes, $validators, $filters);
+        $this->addSemanticType("input:textfield");
+        $this->addSemanticType("input:text");
     }
 }

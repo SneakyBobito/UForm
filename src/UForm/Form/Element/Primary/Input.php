@@ -19,7 +19,7 @@ use UForm\Tag;
  */
 class Input extends Primary implements Drawable
 {
-    
+
     private $inputType;
 
     /**
@@ -34,7 +34,6 @@ class Input extends Primary implements Drawable
         parent::__construct($name, $attributes, $validators, $filters);
         $this->inputType = $type;
         $this->addSemanticType("input");
-        $this->addSemanticType("input:$type");
     }
 
 
@@ -51,7 +50,7 @@ class Input extends Primary implements Drawable
         if (is_array($localValue) && isset($localValue[$this->getName()])) {
             $params["value"] = $localValue[$this->getName()];
         }
-       
+
         $render = new Tag("input", $this->overridesParamsBeforeRender($params, [], $localValue, $data), true);
 
         return $render->draw([], null);

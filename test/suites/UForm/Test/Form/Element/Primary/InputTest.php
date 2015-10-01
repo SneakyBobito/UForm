@@ -16,7 +16,6 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $input = $this->getMockForAbstractClass("UForm\Form\Element\Primary\Input", ["inputType", "inputName"]);
 
         $this->assertTrue($input->hasSemanticType("input"));
-        $this->assertTrue($input->hasSemanticType("input:inputType"));
     }
 
     public function testRender()

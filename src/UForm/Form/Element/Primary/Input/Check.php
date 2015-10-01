@@ -22,6 +22,7 @@ class Check extends Input
     {
         parent::__construct("checkbox", $name, $attributes, $validators, $filters);
         $this->value = $value;
+        $this->addSemanticType("input:checkbox");
     }
 
     protected function overridesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
