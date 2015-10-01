@@ -32,7 +32,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->inputBuilderStub->text("inputName", "inputTitle");
         $this->assertInstanceOf("UForm\Form\Element\Primary\Input\Text", $this->inputBuilderStub->last());
         $this->assertEquals("inputName", $this->inputBuilderStub->last()->getName());
-        $this->assertEquals("inputTitle", $this->inputBuilderStub->last()->getOption("title"));
+        $this->assertEquals("inputTitle", $this->inputBuilderStub->last()->getOption("label"));
     }
 
     public function testTextArea()
@@ -40,7 +40,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->inputBuilderStub->textArea("inputName", "inputTitle");
         $this->assertInstanceOf("UForm\Form\Element\Primary\TextArea", $this->inputBuilderStub->last());
         $this->assertEquals("inputName", $this->inputBuilderStub->last()->getName());
-        $this->assertEquals("inputTitle", $this->inputBuilderStub->last()->getOption("title"));
+        $this->assertEquals("inputTitle", $this->inputBuilderStub->last()->getOption("label"));
     }
 
     public function testPassword()
@@ -48,7 +48,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->inputBuilderStub->password("inputName", "inputTitle");
         $this->assertInstanceOf("UForm\Form\Element\Primary\Input\Password", $this->inputBuilderStub->last());
         $this->assertEquals("inputName", $this->inputBuilderStub->last()->getName());
-        $this->assertEquals("inputTitle", $this->inputBuilderStub->last()->getOption("title"));
+        $this->assertEquals("inputTitle", $this->inputBuilderStub->last()->getOption("label"));
     }
 
     public function testSelect()
@@ -56,7 +56,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->inputBuilderStub->select("inputName", "inputTitle");
         $this->assertInstanceOf("UForm\Form\Element\Primary\Select", $this->inputBuilderStub->last());
         $this->assertEquals("inputName", $this->inputBuilderStub->last()->getName());
-        $this->assertEquals("inputTitle", $this->inputBuilderStub->last()->getOption("title"));
+        $this->assertEquals("inputTitle", $this->inputBuilderStub->last()->getOption("label"));
     }
 
     public function testHidden()

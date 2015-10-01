@@ -26,12 +26,12 @@ trait InputBuilder
     /**
      * Binds the given input with its title
      * @param Element $element
-     * @param $title
+     * @param $label
      */
-    protected function _makeInput(Element $element, $title)
+    protected function _makeInput(Element $element, $label)
     {
-        if (null !== $title) {
-            $element->setOption("title", $title);
+        if (null !== $label) {
+            $element->setOption("label", $label);
         }
     }
 
@@ -39,13 +39,13 @@ trait InputBuilder
      * creates an input text
      * @see UForm\Form\Element\Primary\Text
      * @param $name
-     * @param $title
+     * @param $label
      * @return $this
      */
-    public function text($name, $title = null)
+    public function text($name, $label = null)
     {
         $element = new Text($name);
-        $this->_makeInput($element, $title);
+        $this->_makeInput($element, $label);
         $this->add($element);
 
         return $this;
@@ -55,13 +55,13 @@ trait InputBuilder
      * creates a textarea
      * @see UForm\Form\Element\Primary\Input\Text
      * @param $name
-     * @param $title
+     * @param $label
      * @return $this
      */
-    public function textArea($name, $title = null)
+    public function textArea($name, $label = null)
     {
         $element = new TextArea($name);
-        $this->_makeInput($element, $title);
+        $this->_makeInput($element, $label);
         $this->add($element);
         return $this;
     }
@@ -70,13 +70,13 @@ trait InputBuilder
     /**
      * @see UForm\Form\Element\Primary\Input\Password
      * @param $name
-     * @param $title
+     * @param $label
      * @return $this
      */
-    public function password($name, $title = null)
+    public function password($name, $label = null)
     {
         $element = new Password($name);
-        $this->_makeInput($element, $title);
+        $this->_makeInput($element, $label);
         $this->add($element);
 
         return $this;
@@ -85,13 +85,13 @@ trait InputBuilder
     /**
      * @see UForm\Form\Element\Primary\Select
      * @param $name
-     * @param $title
+     * @param $label
      * @return $this
      */
-    public function select($name, $title, $values = [])
+    public function select($name, $label, $values = [])
     {
         $element = new Select($name, $values);
-        $this->_makeInput($element, $title);
+        $this->_makeInput($element, $label);
         $this->add($element);
         return $this;
     }
@@ -111,13 +111,13 @@ trait InputBuilder
     /**
      * @see UForm\Form\Element\Primary\Input\File
      * @param $name
-     * @param $title
+     * @param $label
      * @return $this
      */
-    public function file($name, $title = null)
+    public function file($name, $label = null)
     {
         $element = new File($name);
-        $this->_makeInput($element, $title);
+        $this->_makeInput($element, $label);
         $this->add($element);
         return $this;
     }
