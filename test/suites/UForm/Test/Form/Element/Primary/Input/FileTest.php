@@ -30,9 +30,10 @@ class FileTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $this->input = new File("inputname");
+        $id = $this->input->getId();
         $render = $this->input->render([], []);
 
-        $expected = '<input type="file" name="inputname"/>';
+        $expected = '<input type="file" name="inputname" id="' . $id . '"/>';
         $this->assertEquals($expected, $render);
     }
 

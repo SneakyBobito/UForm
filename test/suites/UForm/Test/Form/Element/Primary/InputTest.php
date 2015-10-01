@@ -22,7 +22,12 @@ class InputTest extends \PHPUnit_Framework_TestCase
     {
         /* @var $input Input */
         $input = $this->getMockForAbstractClass("UForm\Form\Element\Primary\Input", ["inputType", "inputName"]);
-        $expected = '<input type="inputType" name="inputName" value="someValue"/>';
-        $this->assertEquals($expected, $input->render(["inputName" => "someValue"], ["inputName" => "someValue"]));
+        $id = $input->getId();
+        $expected = '<input type="inputType" name="inputName" id="' . $id . '" value="someValue"/>';
+        $this->assertEquals($expected, $input->render(["inputName" => "someValue"]));
+
+        // Render with a class
+        $expected = '<input type="inputType" name="inputName" id="' . $id . '" class="customClass" value="someValue"/>';
+        $this->assertEquals($expected, $input->render(["inputName" => "someValue"], ["class" => "customClass"]));
     }
 }

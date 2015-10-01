@@ -1,0 +1,7 @@
+<div class="input-single{% if not current.isValid() %} invalid{% endif %}">
+    {% if current.element.getOption("label") %}
+        <label for="{{ current.element.getId() }}">{{ current.element.getOption("label") }}</label>
+    {% endif %}
+    {% block input  %}
+    {% endblock %}
+</div>

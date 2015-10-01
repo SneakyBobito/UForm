@@ -21,7 +21,7 @@ class TextArea extends Element\Primary implements Drawable
     }
 
 
-    public function render($value)
+    public function render($value, array $options = [])
     {
 
         $params = [

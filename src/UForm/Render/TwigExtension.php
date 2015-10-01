@@ -46,8 +46,8 @@ class TwigExtension extends \Twig_Extension
             // defaultRenderFor
             // shortcut to render the current element with its default render method.
             // The element must implement Drawable interface
-            new \Twig_SimpleFunction('defaultRenderFor', function ($context, Element $element) {
-                return $context["current"]->elementDefaultRender($element);
+            new \Twig_SimpleFunction('defaultRenderFor', function ($context, Element $element, $options = []) {
+                return $context["current"]->elementDefaultRender($element, $options);
             }, [
                 "needs_context" => true,
                 "is_safe" => ["html"]

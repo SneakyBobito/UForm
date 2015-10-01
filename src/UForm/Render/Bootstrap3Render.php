@@ -7,6 +7,10 @@ namespace UForm\Render;
 
 class Bootstrap3Render extends StandardHtmlRender
 {
+    public function __construct($options = [])
+    {
+        $this->setOptions($options);
+    }
 
     public function getTemplatesPathes()
     {

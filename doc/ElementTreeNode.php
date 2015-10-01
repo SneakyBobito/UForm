@@ -3,9 +3,6 @@
 namespace UForm\Doc;
 
 
-use RecursiveIterator;
-use Traversable;
-
 class ElementTreeNode implements NodeContainer{
 
     protected $className;
@@ -97,6 +94,11 @@ class ElementTreeNode implements NodeContainer{
             }
         }
         return $found;
+    }
+
+    public function implementsDrawable(){
+        $implements = class_implements($this->className);
+        return in_array("UForm\Form\Element\Drawable", $implements);
     }
 
 }

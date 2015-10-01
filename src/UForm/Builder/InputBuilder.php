@@ -17,10 +17,34 @@ use UForm\Form\Element\Primary\TextArea;
 trait InputBuilder
 {
 
+    /**
+     * @see FluentElement::add()
+     * @return $this
+     */
     abstract public function add(Element $e);
+
+    /**
+     * @see FluentElement::open()
+     * @return $this
+     */
     abstract public function open(Group $e);
+
+    /**
+     * @see FluentElement::close()
+     * @return $this
+     */
     abstract public function close();
+
+    /**
+     * @see FluentElement::last()
+     * @return $this
+     */
     abstract public function last();
+
+    /**
+     * @see FluentElement::current()
+     * @return $this
+     */
     abstract public function current();
 
     /**

@@ -5,6 +5,9 @@ namespace UForm\Doc;
 
 class NodeInfo {
 
+    /**
+     * @var ElementTreeNode
+     */
     public $node;
 
     protected $hasNext = false;

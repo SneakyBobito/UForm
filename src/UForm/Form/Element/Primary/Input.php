@@ -40,12 +40,19 @@ class Input extends Primary implements Drawable
     /**
      * @inheritdoc
      */
-    public function render($localValue)
+    public function render($localValue, array $options = [])
     {
+
+
         $params = [
             "type" => $this->inputType,
-            "name" => $this->getName(true)
+            "name" => $this->getName(true),
+            "id"   => $this->getId()
         ];
+
+        if (isset($options["class"])) {
+            $params["class"] = $options["class"];
+        }
 
         if (is_array($localValue) && isset($localValue[$this->getName()])) {
             $params["value"] = $localValue[$this->getName()];

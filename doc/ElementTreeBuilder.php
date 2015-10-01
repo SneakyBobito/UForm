@@ -11,14 +11,14 @@ namespace UForm\Doc;
  */
 class ElementTreeBuilder {
 
-    const BASE_CLASS = 'UForm\Forms\Element';
+    const BASE_CLASS = 'UForm\Form\Element';
 
     /**
      * an array of directory with as key the directory name and the namespace as a value
      *
      * <pre>
      * new ElementTreeView([
-     *  "/path/to/lib/UForm/Forms" => "UForm\Forms"
+     *  "/path/to/lib/UForm/Form" => "UForm\Form"
      * ]);
      * </pre>
      * @var array|\string[]

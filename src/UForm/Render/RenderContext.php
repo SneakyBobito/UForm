@@ -59,11 +59,11 @@ class RenderContext
         return $this->formContext->elementIsValid($this->element);
     }
 
-    public function elementDefaultRender(Element $element)
+    public function elementDefaultRender(Element $element, $options = [])
     {
 
         if ($element instanceof Element\Drawable) {
-            return $element->render($this->getLocalValue(), $this->getLocalValue());
+            return $element->render($this->getLocalValue(), $options);
         } else {
             throw new \UForm\Exception(
                 "Trying to render an invalid element. Element not implementing Drawable cant be rendered"

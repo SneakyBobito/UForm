@@ -45,8 +45,10 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultRenderFor()
     {
-        $expected = '<defaultRenderFor><input type="text" name="textName"/></defaultRenderFor>';
         $form = Builder::init("someAction")->text("textName")->getForm();
+        $id = $form->getElement("textName")->getId();
+
+        $expected = '<defaultRenderFor><input type="text" name="textName" id="' . $id . '"/></defaultRenderFor>';
         $actual = $this->render->renderElementAs($form, $form->generateContext(), ["defaultRenderFor"]);
         $this->assertEquals($expected, $actual);
     }

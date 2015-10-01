@@ -1,0 +1,11 @@
+{% embed "layout/input-single.twig" %}
+    {% block input  %}
+        {% if current.element.getOption("leftAddon") %}
+            <span class="left-addon">{{ current.element.getOption("leftAddon") | raw }}</span>
+        {% endif %}
+        <span class="input">{{ defaultRenderFor(current.element) }}</span>
+        {% if current.element.getOption("rightAddon") %}
+            <span class="right-addon">{{ current.element.getOption("rightAddon") | raw }}</span>
+        {% endif %}
+    {% endblock %}
+{% endembed %}

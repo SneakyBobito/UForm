@@ -6,9 +6,12 @@ use UForm\Form\Element;
 use UForm\Form\Element\Container;
 use UForm\Form\Form;
 use UForm\Form\FormContext;
+use UForm\OptionGroup;
 
 abstract class AbstractRender
 {
+
+    use OptionGroup;
 
     /**
      * @var \Twig_Environment
@@ -74,7 +77,12 @@ abstract class AbstractRender
     {
         $template = $this->__resolveTemplate($semanticTypes);
         $renderContext = $this->generateRenderContext($element, $formContext, $semanticTypes);
-        return $template->render(["current" => $renderContext]);
+        return $template->render(
+            [
+                "current" => $renderContext,
+                "render"  => $this
+            ]
+        );
     }
 
     public function generateRenderContext(Element $element, FormContext $formContext, $semanticTypes)

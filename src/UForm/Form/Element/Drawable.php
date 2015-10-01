@@ -11,5 +11,5 @@ namespace UForm\Form\Element;
  */
 interface Drawable
 {
-    public function render($localData);
+    public function render($localData, array $options = []);
 }
