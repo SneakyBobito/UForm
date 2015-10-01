@@ -63,7 +63,7 @@ class Select extends Element\Primary implements Element\Drawable
 
 
 
-    public function render($value, $data)
+    public function render($value)
     {
 
         $params = [

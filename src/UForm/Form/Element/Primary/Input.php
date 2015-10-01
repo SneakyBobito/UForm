@@ -40,7 +40,7 @@ class Input extends Primary implements Drawable
     /**
      * @inheritdoc
      */
-    public function render($localValue, $data)
+    public function render($localValue)
     {
         $params = [
             "type" => $this->inputType,
@@ -51,7 +51,7 @@ class Input extends Primary implements Drawable
             $params["value"] = $localValue[$this->getName()];
         }
 
-        $render = new Tag("input", $this->overridesParamsBeforeRender($params, [], $localValue, $data), true);
+        $render = new Tag("input", $this->overridesParamsBeforeRender($params, [], $localValue), true);
 
         return $render->draw([], null);
     }
@@ -66,7 +66,7 @@ class Input extends Primary implements Drawable
      * @param null $prename
      * @return mixed
      */
-    protected function overridesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
+    protected function overridesParamsBeforeRender($params, $attributes, $value, $prename = null)
     {
         return $params;
     }

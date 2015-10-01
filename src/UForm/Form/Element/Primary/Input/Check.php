@@ -25,7 +25,7 @@ class Check extends Input
         $this->addSemanticType("input:checkbox");
     }
 
-    protected function overridesParamsBeforeRender($params, $attributes, $value, $data, $prename = null)
+    protected function overridesParamsBeforeRender($params, $attributes, $value, $prename = null)
     {
         if (isset($value[$this->getName()]) && $value[$this->getName()] == $this->value) {
             $params["checked"] = "checked";

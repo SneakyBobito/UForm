@@ -21,7 +21,7 @@ class RadioGroup extends Element implements Element\Drawable
         $this->addSemanticType("radioGroup");
     }
 
-    public function render($value, $data)
+    public function render($value)
     {
         $renderHtml = "";
 
