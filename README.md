@@ -73,7 +73,7 @@ Known Issues
 
 ### Bootstrap3 Render
 
-- Some additional css may be need to render bootstrap3 correctly. See : link TODO
+- Some additional css may be need to render bootstrap3 correctly : [additional css](https://github.com/gsouf/UForm/blob/gh-pages/render/Bootstrap3.md#additional-css)
 
 
 Thanks
