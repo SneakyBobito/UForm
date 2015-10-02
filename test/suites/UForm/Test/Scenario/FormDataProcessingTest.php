@@ -9,6 +9,9 @@ use UForm\Form\Element\Primary\Input\Password;
 use UForm\Form\Element\Primary\Input\Text;
 use UForm\Validator\StringLength;
 
+/**
+ * @codeCoverageIgnore
+ */
 class FormDataProcessingTest extends \PHPUnit_Framework_TestCase
 {
 

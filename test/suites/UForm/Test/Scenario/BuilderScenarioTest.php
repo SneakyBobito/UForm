@@ -8,6 +8,9 @@ namespace UForm\Test\Scenario;
 use UForm\Builder;
 use UForm\Render\Html\Bootstrap3;
 
+/**
+ * @codeCoverageIgnore
+ */
 class BuilderScenarioTest extends \PHPUnit_Framework_TestCase
 {
 
