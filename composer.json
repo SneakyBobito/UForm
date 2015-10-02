@@ -1,5 +1,5 @@
 {
-    
+
     "name": "gsouf/uform",
     "description": "Form library, flexible and concret including filtering/validation/render with Bootstrap and Foundation adapters ",
     "type": "library",
@@ -22,7 +22,7 @@
 
     "autoload-dev":{
         "psr-4" : {
-            "UForm\\Doc\\"   :   "doc/",
+            "UForm\\Doc\\"   :   "test/doc/",
             "UForm\\Test\\"   :   "test/suites/UForm/Test"
         }
     },
