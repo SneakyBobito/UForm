@@ -68,6 +68,12 @@ echo $html;
 
 ```
 
+Known Issues
+------------
+
+### Bootstrap3 Render
+
+- Some additional css may be need to render bootstrap3 correctly. See : link TODO
 
 
 Thanks
