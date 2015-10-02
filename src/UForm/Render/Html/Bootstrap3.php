@@ -27,4 +27,27 @@ class Bootstrap3 extends StandardHtml
     {
         return "Bootstrap3";
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "colNumber":
+            case "columnNumber":
+                return true;
+        }
+
+        return false;
+    }
+
+    public function __get($name)
+    {
+
+        switch ($name) {
+            case "colNumber":
+            case "columnNumber":
+                return $this->getOption("columnNumber", 12);
+        }
+
+        return null;
+    }
 }
