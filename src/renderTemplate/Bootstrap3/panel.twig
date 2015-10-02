@@ -1,0 +1,8 @@
+<div class="panel panel-default">
+    {%- if current.element.getOption("title") -%}
+    <div class="panel-heading">{{ current.element.getOption("title") }}</div>
+    {%- endif -%}
+    <div class="panel-body">
+        {{- renderParentType() -}}
+    </div>
+</div>

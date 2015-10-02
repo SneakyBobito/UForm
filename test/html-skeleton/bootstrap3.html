@@ -10,19 +10,46 @@
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+        <style>
+            .form-inline .form-group {
+                vertical-align: top;
+            }
+            .form-inline .form-group,
+            .form-inline label{
+                margin-right: 15px;
+            }
+
+            .form-tabgroup .tab-content{
+                border-left: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            .nav-tabs>li.error>a,
+            .nav-tabs>li.active.error>a
+            {
+                color: #a94442;
+                font-weight: bold;
+            }
+            .nav-tabs>li.error:hover>a{
+                background: #F9CED1;
+            }
+            .nav-tabs>li.error>a{
+                background: #FFF2F3;
+            }
+            .nav-tabs>li.active.error>a{
+                background: #FFF;
+            }
+
+        </style>
+
     </head>
 
     <body>
 
         <div class="container">
             <h1>Bootstrap 3 Form</h1>
-
-            <div class="row">
-                <div class="col-md-3">
                 {{content}}
-                </div>
             </div>
-        </div>
 
     </body>
 

@@ -1,3 +1,4 @@
+{% spaceless %}
 <form
     method = "{{ current.element.getMethod() }}"
     action = "{{ current.element.getAction() }}"
@@ -5,5 +6,6 @@
     id     = "{{ current.element.getId() }}">
 
     {# render as a container #}
-    {{ renderParentType() }}
+    {{- renderParentType() -}}
 </form>
+{% endspaceless %}

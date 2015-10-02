@@ -55,11 +55,22 @@ class RenderContext
         return $this->render->renderElementAs($this->element, $this->formContext, $this->parentTypes);
     }
 
+    /**
+     * Check if the current element is valid
+     * @return bool
+     */
     public function isValid()
     {
         return $this->formContext->elementIsValid($this->element);
     }
 
+    /**
+     * Process to the default render of the given element. The element must implement Drawable
+     * @param Element $element
+     * @param array $options
+     * @return mixed
+     * @throws \UForm\Exception
+     */
     public function elementDefaultRender(Element $element, $options = [])
     {
 
@@ -73,8 +84,49 @@ class RenderContext
 
     }
 
+    /**
+     * Get the value of the current element
+     * @return array
+     */
     public function getLocalValue()
     {
         return $this->formContext->getData()->getDataCopy();
+    }
+
+    /**
+     * Get the children of the current element
+     * @return \UForm\Form\Element[]
+     */
+    public function getChildren()
+    {
+        if ($this->element instanceof Element\Container) {
+            return $this->element->getElements($this->getLocalValue());
+        }
+        return [];
+    }
+
+    /**
+     * Checks if children of an element are valid
+     * @param Element|null $element leave it null to check the current element or give an element instance to check it
+     */
+    public function childrenAreValid(Element $element = null)
+    {
+        if (null === $element) {
+            $element = $this->element;
+        }
+        return $this->formContext->childrenAreValid($element);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __get($name)
+    {
+        switch ($name) {
+            case "children":
+                return $this->getChildren();
+            default:
+                return null;
+        }
     }
 }

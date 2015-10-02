@@ -1,18 +1,22 @@
 {% embed "layout/form-group.twig" %}
-    {% block input  %}
+    {%- block input  -%}
 
-        {% if current.element.getOption("leftAddon") or current.element.getOption("rightAddon") %}
+        {%- if current.element.getOption("leftAddon") or current.element.getOption("rightAddon") -%}
             <div class="input-group">
-            {% if current.element.getOption("leftAddon") %}
+            {%- if current.element.getOption("leftAddon") -%}
                 <div class="input-group-addon">{{ current.element.getOption("leftAddon") | raw }}</div>
-            {% endif %}
+            {%- endif -%}
                 {{ defaultRenderFor(current.element,  { "class" : "form-control" }) }}
-            {% if current.element.getOption("rightAddon") %}
+            {%- if current.element.getOption("rightAddon") -%}
                 <div class="input-group-addon">{{ current.element.getOption("rightAddon") | raw }}</div>
-            {% endif %}
+            {%- endif -%}
             </div>
-        {% else %}
-            {{ defaultRenderFor(current.element,  { "class" : "form-control" }) }}
-        {% endif %}
-    {% endblock %}
+        {%- else -%}
+            {{- defaultRenderFor(current.element,  { "class" : "form-control" }) -}}
+        {%- endif -%}
+
+        {%- if current.element.getOption("helper") -%}
+            <span class="help-block">{{ current.element.getOption("helper") }}</span>
+        {%- endif -%}
+    {%- endblock -%}
 {% endembed %}

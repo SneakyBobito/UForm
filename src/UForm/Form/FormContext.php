@@ -110,7 +110,7 @@ class FormContext
     /**
      * Check if children of an element are valid
      * Element's children will always be valid before the formContext is validated
-     * @param $elementName
+     * @param string|Element $elementName name of the element or instance of the element
      * @return bool
      * @throws \UForm\Exception
      */

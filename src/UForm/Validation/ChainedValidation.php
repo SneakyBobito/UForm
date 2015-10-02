@@ -184,7 +184,7 @@ class ChainedValidation
 
     /**
      * check whether all the children of the element are valid
-     * @param string $name
+     * @param string|Element $name
      * @return boolean
      */
     public function elementChildrenAreValid($name)
@@ -193,7 +193,7 @@ class ChainedValidation
         if (is_string($name)) {
             $validation = $this->getValidation($name);
         } elseif ($name instanceof Element) {
-            $validation = $this->getValidation($name->getName(true, true));
+            $validation = $this->getValidation($name->getInternalName(true), true);
         }
         if (!$validation instanceof ValidationItem) {
             throw new Exception("Element not valid for children validation");

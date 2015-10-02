@@ -143,11 +143,27 @@ trait GroupBuilder
 
     /**
      * Adds a tab group that will allow to setup some tabs inside
+     *
+     * You can specify additional options for rendering.
+     * Be aware that options may not be considered by all render engines
+     *
+     * <pre>
+     *      $options = [
+     *          "tab-style" => "tab"  // "pills" is also a valid option for boostrap render
+     *          "tab-position" => "top" // also accept "bottom", "left", "right"
+     *          "tab-justified" => false // pass it to true to have tab justified in bootstrap3
+     *      ]
+     * </pre>
+     *
+     * @param array $options
      * @return $this
      */
-    public function tabGroup()
+    public function tabGroup($options = [])
     {
         $element = new TabGroup();
+        foreach ($options as $name => $value) {
+            $element->setOption("tabgroup-$name", $value);
+        }
         $this->add($element);
         $this->open($element);
         return  $this;
@@ -156,15 +172,19 @@ trait GroupBuilder
     /**
      * Adds a tab. Requires a tabGroup to be currently opened
      * @param string $title title of the tab
+     * @param string $active pass to true to set this tab currently active
      * @return $this
      * @throws BuilderException
      */
-    public function tab($title = null)
+    public function tab($title = null, $active = false)
     {
         if (!$this->current() instanceof TabGroup) {
             throw new BuilderException("Cant call builder::tab() outside of a tabgroup Element");
         }
         $element = new Tab($title);
+        if ($active) {
+            $element->setOption("tab-active", true);
+        }
         $this->add($element);
         $this->open($element);
         return  $this;
