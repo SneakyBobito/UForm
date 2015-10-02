@@ -18,6 +18,4 @@ class StandardHtml extends AbstractHtmlRender
     {
         return "StandardHtml";
     }
-
-
 }

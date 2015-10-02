@@ -27,6 +27,4 @@ class Bootstrap3 extends StandardHtml
     {
         return "Bootstrap3";
     }
-
-
 }

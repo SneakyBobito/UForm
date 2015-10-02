@@ -184,7 +184,8 @@ trait InputBuilder
      * @return $this
      * @throws BuilderException
      */
-    public function helper($text){
+    public function helper($text)
+    {
         try {
             $this->last()->setOption("helper", $text);
         } catch (BuilderException $e) {
@@ -192,5 +193,4 @@ trait InputBuilder
         }
         return $this;
     }
-
 }

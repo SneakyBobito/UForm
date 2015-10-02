@@ -5,17 +5,18 @@
 
 namespace UForm\Test\Render;
 
-
 use UForm\Render\AbstractHtmlRender;
 
-abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase {
+abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var AbstractHtmlRender
      */
     protected $render;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->render = $this->createRender();
     }
 
@@ -24,10 +25,11 @@ abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase {
      */
     abstract public function createRender();
 
-    public function testDirectoryExistence(){
+    public function testDirectoryExistence()
+    {
         $files = $this->render->getTemplatesPathes();
 
-        foreach($files as $file){
+        foreach ($files as $file) {
             $this->assertTrue(file_exists($file), "template directory $file does not exist");
             $this->assertTrue(is_dir($file), "the template path $file is not a directory");
         }
@@ -37,23 +39,23 @@ abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase {
     /**
      * Test if every non abstract elements have a render template for the current render implementation
      */
-    public function testTemplatesImplementation(){
+    public function testTemplatesImplementation()
+    {
 
         $treeBuilder = new  \UForm\Doc\ElementTreeBuilder([
             __DIR__ . '/../../../../../src/UForm/Form' => 'UForm\Form'
         ]);
         $tree = $treeBuilder->getTree();
 
-        $it = new \RecursiveIteratorIterator( new \UForm\Doc\ElementTreeRecursiveIterator($tree));
-        foreach($it as $nodeInfo){
+        $it = new \RecursiveIteratorIterator(new \UForm\Doc\ElementTreeRecursiveIterator($tree));
+        foreach ($it as $nodeInfo) {
             /* @var $nodeInfo \UForm\Doc\NodeInfo */
             $reflection = new \ReflectionClass($nodeInfo->node->getClassName());
-            if(!$reflection->isAbstract() && !$reflection->implementsInterface("UForm\Form\Element\Drawable")){
-
+            if (!$reflection->isAbstract() && !$reflection->implementsInterface("UForm\Form\Element\Drawable")) {
                 $semanticTypesObjects = $nodeInfo->node->getSemanticTypes();
 
                 $semanticTypes = [];
-                foreach($semanticTypesObjects as $s){
+                foreach ($semanticTypesObjects as $s) {
                     $semanticTypes[] = $s->getName();
                 }
 
@@ -70,5 +72,4 @@ abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase {
 
         }
     }
-
 }

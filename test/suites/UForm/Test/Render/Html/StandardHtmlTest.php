@@ -18,6 +18,4 @@ class StandardHtmlTazdazest extends HtmlRenderTestCase
     {
         return new StandardHtml();
     }
-
-
 }
