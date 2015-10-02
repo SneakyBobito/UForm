@@ -8,7 +8,7 @@ use UForm\Form\Form;
 use UForm\Form\FormContext;
 use UForm\OptionGroup;
 
-abstract class AbstractRender
+abstract class AbstractHtmlRender
 {
 
     use OptionGroup;

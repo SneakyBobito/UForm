@@ -1,10 +1,11 @@
+#!/usr/bin/php
 <?php
 
-include __DIR__ . '/../vendor/autoload.php';
+include __DIR__ . '/../../vendor/autoload.php';
 
 
 $treeBuilder = new  \UForm\Doc\ElementTreeBuilder([
-    __DIR__ . '/../src/UForm/Form' => 'UForm\Form'
+    __DIR__ . '/../../src/UForm/Form' => 'UForm\Form'
 ]);
 
 $tree = $treeBuilder->getTree();
@@ -49,6 +50,5 @@ foreach($it as $nodeInfo){
 
     $str .=  PHP_EOL;
 }
-
 
 echo $str;

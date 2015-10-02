@@ -3,16 +3,16 @@
  * @license see LICENSE
  */
 
-namespace UForm\Test\Render;
+namespace UForm\Test\Render\Html;
 
-use UForm\Render\StandardHtmlRender;
+use UForm\Render\Html\StandardHtml;
 
 class StandardHtmlRenderTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testDirectoryExistance()
     {
-        $standardHtmlRender = new StandardHtmlRender();
+        $standardHtmlRender = new StandardHtml();
 
         $file = current($standardHtmlRender->getTemplatesPathes());
 

@@ -8,7 +8,7 @@ namespace UForm\Test\Render;
 use UForm\Builder;
 use UForm\Form;
 use UForm\Form\Element\Primary\Input\Text;
-use UForm\Render\AbstractRender;
+use UForm\Render\AbstractHtmlRender as AbstractRender;
 
 class AbstractRenderTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,10 +20,10 @@ class AbstractRenderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->render = $this->getMockForAbstractClass("UForm\Render\AbstractRender");
+        $this->render = $this->getMockForAbstractClass("UForm\Render\AbstractHtmlRender");
         $this->render
             ->method("getTemplatesPathes")
-            ->willReturn([ "test" => __DIR__ . "/../../../../Fixtures/templates/AbstractRender"]);
+            ->willReturn([ "test" => __DIR__ . "/../../../../Fixtures/templates/AbstractHtmlRender"]);
     }
 
     public function testGetTwigEnvironment()

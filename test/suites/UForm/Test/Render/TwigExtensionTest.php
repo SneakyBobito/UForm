@@ -6,7 +6,7 @@
 namespace UForm\Test\Render;
 
 use UForm\Builder;
-use UForm\Render\AbstractRender;
+use UForm\Render\AbstractHtmlRender as AbstractRender;
 
 class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,7 +18,7 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->render = $this->getMockForAbstractClass("UForm\Render\AbstractRender");
+        $this->render = $this->getMockForAbstractClass("UForm\Render\AbstractHtmlRender");
         $this->render
             ->method("getTemplatesPathes")
             ->willReturn(["test" => __DIR__ . "/../../../../Fixtures/templates/TwigExtension"]);

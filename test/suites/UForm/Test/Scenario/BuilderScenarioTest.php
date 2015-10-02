@@ -6,7 +6,7 @@
 namespace UForm\Test\Scenario;
 
 use UForm\Builder;
-use UForm\Render\Bootstrap3Render;
+use UForm\Render\Html\Bootstrap3;
 
 class BuilderScenarioTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,7 +30,7 @@ class BuilderScenarioTest extends \PHPUnit_Framework_TestCase
         $formContext = $form->validate($data);
 
 
-        $render = new Bootstrap3Render();
+        $render = new Bootstrap3();
         $html = $render->render($formContext);
 
         $this->assertInternalType("string", $html);

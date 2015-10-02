@@ -27,7 +27,7 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
 
-        $this->render = $this->getMockForAbstractClass("UForm\Render\AbstractRender");
+        $this->render = $this->getMockForAbstractClass("UForm\Render\AbstractHtmlRender");
         $this->render
             ->method("getTemplatesPath")
             ->willReturn(__DIR__ . "/../../../../Fixtures/templates/AbstractRender");
