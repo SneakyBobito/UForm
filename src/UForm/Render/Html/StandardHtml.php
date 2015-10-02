@@ -10,4 +10,14 @@ class StandardHtml extends AbstractHtmlRender
     {
         return ["StandarHtml" => __DIR__ . "/../../../renderTemplate/StandardHtml"];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRenderName()
+    {
+        return "StandardHtml";
+    }
+
+
 }

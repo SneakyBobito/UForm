@@ -19,4 +19,14 @@ class Bootstrap3 extends StandardHtml
             parent::getTemplatesPathes()
         );
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRenderName()
+    {
+        return "Bootstrap3";
+    }
+
+
 }

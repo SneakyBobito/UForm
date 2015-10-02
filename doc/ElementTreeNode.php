@@ -58,6 +58,9 @@ class ElementTreeNode implements NodeContainer{
         return count($this->nodes) > 0;
     }
 
+    /**
+     * @return SemanticTypeInformation[]
+     */
     public function getSemanticTypes(){
 
         if(null === $this->semTypes){
