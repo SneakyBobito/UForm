@@ -5,13 +5,14 @@
 
 namespace UForm\Render\Html;
 
-
 use UForm\Render\AbstractHtmlRender;
 
-class Foundation5 extends AbstractHtmlRender{
+class Foundation5 extends AbstractHtmlRender
+{
 
 
-    public function __construct(array $options = []){
+    public function __construct(array $options = [])
+    {
         $this->setOptions($options);
     }
 
@@ -33,8 +34,9 @@ class Foundation5 extends AbstractHtmlRender{
         return "Foundation5";
     }
 
-    public function __isset($name){
-        switch($name){
+    public function __isset($name)
+    {
+        switch ($name) {
             case "colNumber":
             case "columnNumber":
                 return true;
@@ -43,9 +45,10 @@ class Foundation5 extends AbstractHtmlRender{
         return false;
     }
 
-    public function __get($name){
+    public function __get($name)
+    {
 
-        switch($name){
+        switch ($name) {
             case "colNumber":
             case "columnNumber":
                 return $this->getOption("columnNumber", 12);
@@ -53,5 +56,4 @@ class Foundation5 extends AbstractHtmlRender{
 
         return null;
     }
-
 }

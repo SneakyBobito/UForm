@@ -51,7 +51,7 @@ class Input extends Primary implements Drawable
         ];
 
         if (isset($options["attributes"]) && is_array($options["attributes"])) {
-            foreach($options["attributes"] as $attrName => $attrValue){
+            foreach ($options["attributes"] as $attrName => $attrValue) {
                 $params[$attrName] = $attrValue;
             }
         }
