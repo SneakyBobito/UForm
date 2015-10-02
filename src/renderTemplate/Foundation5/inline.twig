@@ -1,0 +1,7 @@
+<ul class="row inline-list">
+    {% for element in current.children %}
+    <li class="inline">
+        {{ renderElement(element) }}
+    </li>
+    {% endfor %}
+</ul>

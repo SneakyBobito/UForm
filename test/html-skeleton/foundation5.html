@@ -1,0 +1,106 @@
+<html>
+
+    <head>
+
+        <title>Foundation form</title>
+
+        <link rel="stylesheet" href="http://cdn.foundation5.zurb.com/foundation.css">
+
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+        <script src="http://cdn.foundation5.zurb.com/foundation.js"></script>
+
+        <script>
+            $(function(){
+                $(document).foundation();
+            });
+        </script>
+
+        <style>
+
+            /** Highlight tabs with errors **/
+            .tab-title.error a,
+            .tab-title.active.error a{
+                color: #E26464;
+            }
+            .tab-title.error a,
+            .tab-title.error.active a,
+            .tab-title.error.active:hover a{
+
+                background: #FFEDEC;
+            }
+            .tab-title.error:hover a{
+                background: #FABEBB;
+            }
+
+            /** bootstrap's like panels for foundation **/
+            .form-panel{
+                border: 1px solid #DDD;
+                margin: 10px 0 5px 0;
+            }
+            .form-panel .panel-heading{
+                background: #FAFAFA;
+                padding: 5px 8px;
+                border-bottom: 1px solid #DDD;
+            }
+
+            .form-panel .panel-body{
+                padding: 5px;
+            }
+
+            /** foundation tab border **/
+            .tabs-content{
+                border-left: 1px solid #DDD;
+                padding-left: 8px;
+            }
+            .tabs{
+                border-bottom:1px solid #DDD;
+            }
+            .tabs>dd{
+                position: relative;
+                top:2px;
+            }
+            .tabs>dd.active{
+                border-bottom: 1px solid #FFF;
+                border-left: 1px solid #DDD;
+                border-top: 1px solid #DDD;
+                border-right: 1px solid #DDD;
+            }
+            .tabs>dd.active>a.has-tip{
+                border:0;
+            }
+
+            /** remove tab outline **/
+            .tabs dd > a{
+                outline: 0;
+            }
+
+
+            /** foundation 5 does not implement help text **/
+            .help-text{
+                color: #888;
+                font-size: 0.8em;
+            }
+            .input-single .help-text{
+                position: relative;
+                top: -15px;
+            }
+
+            .tabs-content>.content>.help-text{
+                margin-bottom: 5px;;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="row">
+            <h1>Foundation 5 Form</h1>
+        </div>
+        {{content}}
+
+    </body>
+
+</html>

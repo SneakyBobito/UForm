@@ -111,4 +111,37 @@ trait FluentElement
         $last->setOption($option, $value);
         return $this;
     }
+
+
+    /**
+     * Adds an helper that serves to give additional informations to the user
+     * @param $text
+     * @return $this
+     * @throws BuilderException
+     */
+    public function helper($text)
+    {
+        try {
+            $this->last()->setOption("helper", $text);
+        } catch (BuilderException $e) {
+            throw new BuilderException("helper() call requires you already added an element to the builder", 0, $e);
+        }
+        return $this;
+    }
+
+    /**
+     * Adds a tooltip that serves to give additional informations to the user
+     * @param $text
+     * @return $this
+     * @throws BuilderException
+     */
+    public function tooltip($text)
+    {
+        try {
+            $this->last()->setOption("tooltip", $text);
+        } catch (BuilderException $e) {
+            throw new BuilderException("tooltip() call requires you already added an element to the builder", 0, $e);
+        }
+        return $this;
+    }
 }

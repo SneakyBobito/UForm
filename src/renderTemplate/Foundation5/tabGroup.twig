@@ -1,0 +1,28 @@
+<div class="form-tabgroup row">
+
+    <dl class="tabs" data-tab>
+    {%- for tab in current.children -%}
+        <dd class="tab-title{% if tab.getOption("tab-active") == 1 %} active{% endif %}{% if not current.childrenAreValid(tab)%} error{% endif %}">
+            <a  {% if tab.getOption("tooltip") %}data-tooltip aria-haspopup="true" title="{{ tab.getOption("tooltip") }}" class="has-tip"{% endif -%}
+                href="#{{ tab.getId() }}"
+            >
+                {{ tab.getOption("title") }}
+            </a>
+        </dd>
+    {%- endfor -%}
+    </dl>
+
+    <div class="tabs-content">
+    {%- for tab in current.children -%}
+        <div class="content{% if tab.getOption("tab-active") == 1 %} active{% endif %}" id="{{ tab.getId() }}">
+
+            {% if tab.getOption("helper") %}
+                <div class="help-text">{{ tab.getOption("helper") }}</div>
+            {% endif %}
+
+            {{- renderElement(tab) -}}
+        </div>
+    {%- endfor -%}
+
+    </div>
+</div>

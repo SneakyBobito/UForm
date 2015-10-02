@@ -106,6 +106,19 @@ class RenderContext
     }
 
     /**
+     * Get the children of the current element
+     * @return \UForm\Form\Element[]
+     */
+    public function getMessages()
+    {
+        return $this
+            ->formContext
+            ->getChainedValidation()
+            ->getValidation($this->element->getInternalName(true), true)
+            ->getMessages();
+    }
+
+    /**
      * Checks if children of an element are valid
      * @param Element|null $element leave it null to check the current element or give an element instance to check it
      */
@@ -125,6 +138,8 @@ class RenderContext
         switch ($name) {
             case "children":
                 return $this->getChildren();
+            case "messages":
+                return $this->getMessages();
             default:
                 return null;
         }

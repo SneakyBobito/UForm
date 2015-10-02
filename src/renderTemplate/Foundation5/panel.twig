@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="form-panel">
+        {%- if current.element.getOption("title") -%}
+        <div class="panel-heading">
+            <span {% if current.element.getOption("tooltip") %}data-tooltip aria-haspopup="true" title="{{ current.element.getOption("tooltip") }}" class="has-tip"{% endif %}>
+                {{ current.element.getOption("title") }}
+            </span>
+        </div>
+        {%- endif -%}
+        <div class="panel-body">
+            {{- renderParentType() -}}
+        </div>
+    </div>
+</div>

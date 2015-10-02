@@ -73,8 +73,12 @@ Known Issues
 
 ### Bootstrap3 Render
 
-- Some additional css may be need to render bootstrap3 correctly : [additional css](https://github.com/gsouf/UForm/blob/gh-pages/render/Bootstrap3.md#additional-css)
+- Some additional css may be need to render bootstrap3 correctly: [additional css](https://github.com/gsouf/UForm/blob/gh-pages/render/Bootstrap3.md#additional-css)
 
+### Foundation5 Render
+
+- Some additional css may be needed to have a proper render: [additional css](https://github.com/gsouf/UForm/blob/gh-pages/render/Foundation5.md#additional-css)
+- Foundation does not support inlined elements
 
 Thanks
 ------

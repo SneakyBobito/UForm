@@ -5,38 +5,48 @@ include __DIR__ . "/../../vendor/autoload.php";
 
 use UForm\Builder;
 use UForm\Render\Html\Bootstrap3;
+use UForm\Render\Html\Foundation5;
 use UForm\Render\Html\StandardHtml;
 
+
+$renders = [
+
+    "standardHtml" => new StandardHtml(),
+    "bootstrap3" => new Bootstrap3(),
+    "foundation5" => new Foundation5()
+
+];
+
 $form = Builder::init("action", "method")
-    ->text("firstname", "Firstname")->required()->stringLength(2, 20)->helper("This is your first name")
-    ->text("lastname", "Lastname")->required()->stringLength(2, 20)
-    ->text("login", "Login")->required()->stringLength(2, 20)
-    ->password("password", "Password")->required()->stringLength(2, 20)
-    ->text("currency", "Currency")->required()->rightAddon("&euro;")
-    ->panel("Inlined Elements")
+    ->columnGroup()
+        ->column(5)
+            ->panel("Login informations")
+                ->text("login", "Login")->required()->stringLength(2, 20)
+                ->password("password", "Password")->required()->stringLength(2, 20)
+            ->close()
+        ->close()
+        ->column(5)
+            ->text("money", "Money (with tooltip)")->required()->rightAddon("&euro;")->tooltip("Give me your money")
+        ->close()
+    ->close()
+
+    ->panel("Inlined Panel (with tooltip)")->tooltip("The following elemens are inlined")
         ->inline()
-            ->text("inlined1", "Inlined 1")->helper("This element is inlined")
+            ->text("weight", "Weight")->helper("This element is inlined")->rightAddon("g")
             ->text("inlined2", "Inlined 2")
+            ->text("inlined3", "Inlined 3")
         ->close()
     ->close()
     ->tabGroup()
-        ->tab("Tab 1", true)
+        ->tab("Tab with error", true)
             ->text("tab1validInput", "Valid input")
             ->text("tab1invalidInput", "invalid input")->validator(function(){return false;})
         ->close()
-        ->tab("Tab 2")
+        ->tab("Tab (with tooltip)")->tooltip("additional informations")
             ->text("tab2validInput", "Valid input")
         ->close()
-    ->close()
-    ->tabGroup(["tab-style" => "pills", "tab-position" => "right", "tab-justified" => true])
-        ->tab("Tab 1")
-            ->text("tab1validInput", "Valid input")
-        ->close()
-        ->tab("Tab 2", true)
-            ->text("tab2validInput", "Valid input")
-        ->close()
-        ->tab("Tab 3")
-            ->text("tab3invalidInput", "Invalid input")->validator(function(){return false;})
+        ->tab("Tab with helptext")->helper("This tab contains some message that aims to help the user")
+            ->text("tab3validInput", "Valid input")
         ->close()
     ->close()
     ->getForm();
@@ -51,12 +61,7 @@ $data = [
 $formContext = $form->validate($data);
 
 
-$renders = [
 
-    "standardHtml" => new StandardHtml(),
-    "bootstrap3" => new Bootstrap3()
-
-];
 
 
 foreach($renders as $name=>$render){
