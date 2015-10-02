@@ -5,6 +5,11 @@ UForm allows to render for bootstrap 3:
 
 ```php
 
+    use UForm\Render\Html\Bootstrap3;
+
+    $render = new Bootstrap3();
+    $html = $render->render($formContext);
+
 ```
 
 Additional CSS
