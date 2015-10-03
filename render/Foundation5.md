@@ -16,7 +16,9 @@ UForm allows to render for foundation 5:
 Additional CSS
 --------------
 
-Some additional css is required to make the render of foundation 5 render better:
+Some additional css is required to make the render of foundation 5 render better.
+
+Up to you to modify the following sample to adapt it to your theme.
 
 
 ```css
@@ -105,4 +107,7 @@ $(function(){
     $(document).foundation();
 });
 ```
+
+Note: If you load a form via ajax you need to run this javascript again on the loaded html
+
 More informations available on the [foundation doc](http://foundation.zurb.com/docs/javascript.html)

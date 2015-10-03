@@ -12,10 +12,17 @@ UForm allows to render for bootstrap 3:
 
 ```
 
+Known Issues
+------------
+
+- Bootstrap's addons with button, radio and checkbox are currently not implemented
+
 Additional CSS
 --------------
 
-Some additional css is required to make the render of bootstrap3 render better:
+Some additional css is required to make the render of bootstrap3 render better.
+
+Up to you to modify the following sample to adapt it to your theme.
 
 
 ```css
@@ -60,3 +67,14 @@ Some additional css is required to make the render of bootstrap3 render better:
         background: #FFF;
     }
 ```
+
+Additional Javascript
+---------------------
+
+Some component need additional javascript to run properly:
+
+- Tab: they are defaultly loaded correctly but if you load your html via ajax you will need additional
+javascript to initialize them again : http://getbootstrap.com/javascript/#tabs
+
+- Tooltip: bootstrap does not autoload tooltip,
+you need additional javascript to initialize them : http://getbootstrap.com/javascript/#tooltips
