@@ -2,8 +2,8 @@ UForm
 =====
 
 [![Build Status](https://travis-ci.org/gsouf/UForm.svg)](https://travis-ci.org/gsouf/UForm)
-[![Test Coverage](https://codeclimate.com/github/SneakyBobito/UForm/badges/coverage.svg)](https://codeclimate.com/github/SneakyBobito/UForm/coverage)
-[![Code Climate](https://codeclimate.com/github/SneakyBobito/UForm/badges/gpa.svg)](https://codeclimate.com/github/SneakyBobito/UForm)
+[![Test Coverage](https://codeclimate.com/github/gsouf/UForm/badges/coverage.svg)](https://codeclimate.com/github/SneakyBobito/UForm/coverage)
+[![Code Climate](https://codeclimate.com/github/gsouf/UForm/badges/gpa.svg)](https://codeclimate.com/github/SneakyBobito/UForm)
 [![Latest Stable Version](https://poser.pugx.org/gsouf/uform/version)](https://packagist.org/packages/gsouf/uform)
 
 
