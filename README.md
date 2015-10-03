@@ -11,15 +11,17 @@ UForm is a form validation/filtering/rendering library that solve all the proble
 
 Why another form library? Because the other I tried had limitations. This library is an effort to make something more flexible and at the same time very concrete. 
 
-Why concrete? Because a form library should be as simple as possible in many aspects : creation, validation, data binding, rendering, etc...
 
-Top Features
-------------
+UForm is structured as follows
+------------------------------
 
-- Fluent form builder to make form creation as painless as possible
-- Structure aware form: you can structure your inputs in columns, tabs, panels... with no impact of the data processing
-- Flexible and extensible rendering: you are free to use the native html render, the bootstrap render, the foundation render, or to write your one render from scratch or by extending an existing one.
-- Validation message translation (WIP)
+- A **KISS and stateless core** that defines usual form elements with no additional logic
+- A **HTML structure aware**  (fieldset, row, colomns, tabs, panel...) 
+- A flexible **validation/filtering** workflow with translatable messages
+- An **extendable fluent builder** (factory) to create forms easily with **the additional needed logic** (CSRF, label, tooltip...)
+- **Tools** to render forms with **twig**
+- Some extendable default render engines for popular html frameworks like **Bootstrap** or **Foundation**
+- **Standards for rendering** that makes every engine compatible
 
 
 Usage
