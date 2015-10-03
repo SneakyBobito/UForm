@@ -51,6 +51,24 @@ class TwigExtension extends \Twig_Extension
             }, [
                 "needs_context" => true,
                 "is_safe" => ["html"]
+            ]),
+
+            // isValid
+            // shortcut to check if an element is valid
+            // Leave the first param empty to check current element
+            new \Twig_SimpleFunction('isValid', function ($context, Element $element = null) {
+                return $context["current"]->isValid($element);
+            }, [
+                "needs_context" => true
+            ]),
+
+            // childrenAreValid
+            // shortcut to check if an element is valid
+            // Leave the first param empty to check current element
+            new \Twig_SimpleFunction('childrenAreValid', function ($context, Element $element = null) {
+                return $context["current"]->childrenAreValid($element);
+            }, [
+                "needs_context" => true
             ])
 
         ];

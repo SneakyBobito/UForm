@@ -1,7 +1,7 @@
 {% embed "layout/form-group.twig" %}
     {%- block input  -%}
 
-        {%- if current.element.getOption("leftAddon") or current.element.getOption("rightAddon") -%}
+        {%- if current.element.getOption("leftAddon") or current.element.getOption("rightAddon") or current.element.getOption("tooltip") -%}
             <div class="input-group">
             {%- if current.element.getOption("leftAddon") -%}
                 <div class="input-group-addon">{{ current.element.getOption("leftAddon") | raw }}</div>
@@ -10,6 +10,11 @@
             {%- if current.element.getOption("rightAddon") -%}
                 <div class="input-group-addon">{{ current.element.getOption("rightAddon") | raw }}</div>
             {%- endif -%}
+            {% if current.element.getOption("tooltip") %}
+                <div class="input-group-addon" data-toggle="tooltip" title="{{ current.element.getOption("tooltip") }}">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </div>
+            {% endif %}
             </div>
         {%- else -%}
             {{- defaultRenderFor(current.element,  { "class" : "form-control" }) -}}

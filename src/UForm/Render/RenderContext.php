@@ -59,9 +59,12 @@ class RenderContext
      * Check if the current element is valid
      * @return bool
      */
-    public function isValid()
+    public function isValid(Element $element = null)
     {
-        return $this->formContext->elementIsValid($this->element);
+        if (null === $element) {
+            $element = $this->element;
+        }
+        return $this->formContext->elementIsValid($element);
     }
 
     /**

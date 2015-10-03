@@ -19,7 +19,7 @@ $renders = [
 
 $form = Builder::init("action", "method")
     ->columnGroup()
-        ->column(5)
+        ->column(15)
             ->panel("Login informations")
                 ->text("login", "Login")->required()->stringLength(2, 20)
                 ->password("password", "Password")->required()->stringLength(2, 20)
