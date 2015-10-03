@@ -149,9 +149,8 @@ trait GroupBuilder
      *
      * <pre>
      *      $options = [
-     *          "tab-style" => "tab"  // "pills" is also a valid option for boostrap render
      *          "tab-position" => "top" // also accept "bottom", "left", "right"
-     *          "tab-justified" => false // pass it to true to have tab justified in bootstrap3
+     *          "tab-justified" => false // pass it to true to have tab justified
      *      ]
      * </pre>
      *
@@ -162,7 +161,7 @@ trait GroupBuilder
     {
         $element = new TabGroup();
         foreach ($options as $name => $value) {
-            $element->setOption("tabgroup-$name", $value);
+            $element->setOption("$name", $value);
         }
         $this->add($element);
         $this->open($element);

@@ -10,6 +10,8 @@ use UForm\InvalidArgumentException;
 /**
  * Class TabGroup
  * @semanticType tabGroup
+ * @renderOption tab-position  position of the tab "top", "bottom", "left" or "right". Default to top
+ * @renderOption tab-justified  in some render engine you can make tab to fill all the width while having the same size
  */
 class TabGroup extends Group
 {

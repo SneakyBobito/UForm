@@ -16,6 +16,8 @@ class ElementTreeNode implements NodeContainer{
      */
     protected $semTypes = null;
 
+    protected $renderOptions = null;
+
     function __construct($className)
     {
         $this->className = $className;
@@ -97,6 +99,39 @@ class ElementTreeNode implements NodeContainer{
             }
         }
         return $found;
+    }
+
+    /**
+     * get the list of renderOption annotation
+     * @return RenderOptionInformation[]
+     */
+    public function getRenderOptions(){
+
+        if(null === $this->renderOptions){
+            $reader = AnnotationReaderFactory::getDefault();
+            $rOptions = [];
+
+            // DEFAULT CLASS
+            $annotations = $reader->getClassAnnotations($this->className);
+            $foundOptions = $annotations->getAsArray("renderOption");
+
+            foreach($foundOptions as $string){
+                $rOptions[] = RenderOptionInformation::fromString($string);
+            }
+
+            // PARENT CLASSES
+            foreach(class_parents($this->getClassName()) as $parentClass){
+                $annotations = $reader->getClassAnnotations($parentClass);
+                $foundOptions = $annotations->getAsArray("renderOption");
+                foreach($foundOptions as $string){
+                    $rOptions[] = RenderOptionInformation::fromString($string);
+                }
+            }
+            $this->renderOptions = $rOptions;
+        }
+
+        return $this->renderOptions;
+
     }
 
     public function implementsDrawable(){

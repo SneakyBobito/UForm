@@ -16,6 +16,9 @@ use UForm\Tag;
 /**
  * That a general class to simplify the code of element using the tag input
  * @semanticType input
+ * @renderOption label the label of the element
+ * @renderOption helper text that gives further information to the user (always visible)
+ * @renderOption tooltip text that gives further information to the user (visible on mouse over or click)
  */
 class Input extends Primary implements Drawable
 {

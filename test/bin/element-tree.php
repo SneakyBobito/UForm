@@ -39,13 +39,17 @@ foreach($it as $nodeInfo){
     if(count($types) > 0){
         $str .= "\033[32m ";
         foreach($types as $t){
-            $str .= $t->getName() . " ";
+            $str .= $t->getName();
         }
         $str .= "\033[0m";
     }
 
     if($nodeInfo->node->implementsDrawable()){
-        $str .= "\033[36m Drawable \033[0m";
+        $str .= "\033[36m Drawable\033[0m";
+    }
+
+    foreach($nodeInfo->node->getRenderOptions() as $renderOption){
+        $str .= "\033[33m " . $renderOption->getName() . "\033[0m";
     }
 
     $str .=  PHP_EOL;
