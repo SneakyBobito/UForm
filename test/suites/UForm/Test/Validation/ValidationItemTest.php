@@ -14,7 +14,7 @@ use UForm\Validation\ValidationItem;
 use UForm\Validator\DirectClosure;
 
 /**
- * @covers ValidationItem
+ * @covers UForm\Validation\ValidationItem
  */
 class ValidationItemTest extends \PHPUnit_Framework_TestCase
 {
