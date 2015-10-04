@@ -2,9 +2,12 @@
     <div class="form-panel">
         {%- if current.element.getOption("title") -%}
         <div class="panel-heading">
-            <span {% if current.element.getOption("tooltip") %}data-tooltip aria-haspopup="true" title="{{ current.element.getOption("tooltip") }}" class="has-tip"{% endif %}>
+            <span>
                 {{ current.element.getOption("title") }}
             </span>
+            {% if current.element.getOption("tooltip") %}
+                <span data-tooltip aria-haspopup="true" title="{{ current.element.getOption("tooltip") }}" class="has-tip">?</span>
+            {% endif %}
         </div>
         {%- endif -%}
         <div class="panel-body">

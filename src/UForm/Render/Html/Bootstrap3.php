@@ -5,7 +5,9 @@
 
 namespace UForm\Render\Html;
 
-class Bootstrap3 extends StandardHtml
+use UForm\Render\AbstractHtmlRender;
+
+class Bootstrap3 extends AbstractHtmlRender
 {
     public function __construct($options = [])
     {
@@ -14,10 +16,7 @@ class Bootstrap3 extends StandardHtml
 
     public function getTemplatesPathes()
     {
-        return array_merge(
-            ["Bootstrap3" => __DIR__ . "/../../../renderTemplate/Bootstrap3"],
-            parent::getTemplatesPathes()
-        );
+        return ["Bootstrap3" => __DIR__ . "/../../../renderTemplate/Bootstrap3"];
     }
 
     /**

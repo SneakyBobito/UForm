@@ -1,6 +1,11 @@
 <div class="panel panel-default">
     {%- if current.element.getOption("title") -%}
-    <div class="panel-heading">{{ current.element.getOption("title") }}</div>
+    <div class="panel-heading">
+        {{ current.element.getOption("title") }}
+        {% if current.element.getOption("tooltip") %}
+            <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="{{ current.element.getOption("tooltip") }}"></span>
+        {% endif %}
+    </div>
     {%- endif -%}
     <div class="panel-body">
         {{- renderParentType() -}}
