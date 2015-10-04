@@ -2,13 +2,14 @@
 /**
  * @license see LICENSE
  */
-namespace UForm;
+namespace UForm\Validation;
 
+use UForm\DataContext;
 use UForm\Form\Element;
 use UForm\Form\FormContext;
-use UForm\Validation\ChainedValidation;
 use Uform\Validation\Message;
 use UForm\Validation\Message\Group;
+use UForm\ValidatorGroup;
 
 /**
  * That's an object that helps to achieve one and only one validation schema through validators
@@ -31,7 +32,7 @@ class ValidationItem
      *
      * the element being validated
      *
-     * @var Form\Element
+     * @var Element
      */
     protected $element;
 
@@ -106,7 +107,7 @@ class ValidationItem
         $this->valid = true;
         $this->messages = new Group();
     }
-        
+
     /**
      * Validate a set of data according to a set of rules
      *
@@ -116,15 +117,15 @@ class ValidationItem
     public function validate()
     {
         $validators = $this->element->getValidators();
-
         foreach ($validators as $v) {
-            if (false === $v->validate($this)) {
-                $this->valid = false;
-            } else {
-                $this->valid = true;
-            }
+            $v->validate($this);
         }
         return $this->valid;
+    }
+
+    public function setInvalid()
+    {
+        $this->valid = false;
     }
 
     public function isValid()
@@ -193,8 +194,8 @@ class ValidationItem
 
     /**
      * Find a value for an element in the full dataset
-     * @param $name
-     * @return
+     * @param string $name
+     * @return mixed
      */
     public function findValue($name)
     {
@@ -206,13 +207,22 @@ class ValidationItem
 
     /**
      * Find a value for an element in the local dataset
-     * @param $name
-     * @return
+     * @param string $name
+     * @return mixed
      */
     public function findLocalValue($name)
     {
         return $this
             ->dataLocal
             ->findValue($name);
+    }
+
+    /**
+     * get the internal formcontext
+     * @return FormContext
+     */
+    public function getFormContext()
+    {
+        return $this->formContext;
     }
 }

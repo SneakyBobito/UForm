@@ -3,7 +3,7 @@
 namespace UForm\Validator;
 
 use UForm\Validation;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 use UForm\Validator;
 
 class Required extends Validator
@@ -19,14 +19,13 @@ class Required extends Validator
 
         $value = $validationItem->getLocalData()->getDataCopy();
 
-
         if (!is_array($value)
             || !isset($value[$validationItem->getLocalName()])
             || null === $value[$validationItem->getLocalName()]
         ) {
             $message = new Validation\Message("Field is required", [], self::REQUIRED);
             $validationItem->appendMessage($message);
-            return false;
+            $validationItem->setInvalid();
         }
 
         return true;

@@ -9,7 +9,7 @@ use UForm\DataContext;
 use UForm\Form;
 use UForm\Validation\ChainedValidation;
 use UForm\Validation\Message;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 use UForm\Validator\DirectClosure;
 
 class ChainedValidationTest extends \PHPUnit_Framework_TestCase
@@ -71,7 +71,7 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
         $this->firstName->addValidator(new DirectClosure(function (ValidationItem $v) {
             $message = new Message("invalid");
             $v->appendMessage($message);
-            return false;
+            $v->setInvalid();
         }));
 
         $this->form = new Form();

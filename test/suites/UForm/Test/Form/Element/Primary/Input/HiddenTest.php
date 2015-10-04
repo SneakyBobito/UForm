@@ -18,7 +18,7 @@ class HiddenTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->input = new Hidden("inputname");
+        $this->input = new Hidden("inputname", "inputValue");
     }
 
     public function testConstruct()
@@ -28,7 +28,7 @@ class HiddenTest extends \PHPUnit_Framework_TestCase
 
     public function testRender()
     {
-        $render = $this->input->render(["inputname" => "inputValue"], ["inputname" => "inputValue"]);
+        $render = $this->input->render(["inputname" => "inputFakeValue"]);
         $id = $this->input->getId();
         $expected = '<input type="hidden" name="inputname" id="' . $id . '" value="inputValue"/>';
         $this->assertEquals($expected, $render);

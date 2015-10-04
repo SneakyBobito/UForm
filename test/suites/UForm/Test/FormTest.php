@@ -9,7 +9,7 @@ use UForm\Filter\Trim;
 use UForm\Form;
 use UForm\Form\Element\Primary\Input\Password;
 use UForm\Form\Element\Primary\Input\Text;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 
 class FormTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +25,9 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         $userName = new Text("username");
         $userName->addValidator(function (ValidationItem $v) {
-            return $v->getValue() == "bart";
+            if ($v->getValue() !== "bart") {
+                $v->setInvalid();
+            }
 
         });
         $userName->addFilter(new Trim());

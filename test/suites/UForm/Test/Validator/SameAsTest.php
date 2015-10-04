@@ -15,14 +15,16 @@ class SameAsTest extends ValidatorTestCase
     {
         $validation = $this->generateValidationItem(["firstname" => "bart", "lastname" => "bart"]);
         $validator = new SameAs("lastname");
-        $this->assertTrue($validator->validate($validation));
+        $validator->validate($validation);
+        $this->assertTrue($validation->isValid());
     }
 
     public function testNotValid()
     {
         $validation = $this->generateValidationItem(["firstname" => "bart", "lastname" => "simpsons"]);
         $validator = new SameAs("lastname");
-        $this->assertFalse($validator->validate($validation));
+        $validator->validate($validation);
+        $this->assertFalse($validation->isValid());
 
         $this->assertCount(1, $validation->getMessages());
         $message =  $validation->getMessages()->getAt(0);

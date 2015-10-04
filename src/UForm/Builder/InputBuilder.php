@@ -125,9 +125,9 @@ trait InputBuilder
      * @param $name
      * @return $this
      */
-    public function hidden($name)
+    public function hidden($name, $value = null)
     {
-        $element = new Hidden($name);
+        $element = new Hidden($name, $value);
         $this->add($element);
         return $this;
     }

@@ -3,7 +3,7 @@
 namespace UForm\Validator;
 
 use UForm\Validation;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 use UForm\Validator;
 
 /**
@@ -23,13 +23,13 @@ class SameAs extends Validator
         parent::__construct($options);
     }
 
-    
+
     /**
      * @inheritdoc
      */
     public function validate(ValidationItem $validationItem)
     {
-        
+
         $value1 = $validationItem->getValue();
         $value2 = $validationItem->findValue($this->sameElement);
 
@@ -44,9 +44,7 @@ class SameAs extends Validator
             );
 
             $validationItem->appendMessage($message);
-            return false;
+            $validationItem->setInvalid();
         }
-
-        return true;
     }
 }

@@ -10,7 +10,7 @@ use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Input\Hidden;
 use UForm\Form\Element\Primary\Input\Password;
 use UForm\Form\Element\Primary\Input\Text;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
@@ -48,7 +48,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
         $namedGroup = new Group("namedGroup");
         $namedGroup->addElement(new Text("item1"));
-        $namedGroup->addElement(new Hidden("someItem"));
+        $namedGroup->addElement(new Hidden("someItem", "someValue"));
 
         $this->container
             ->expects($this->any())

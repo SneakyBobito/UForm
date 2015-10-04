@@ -3,7 +3,7 @@
 namespace UForm\Validator;
 
 use UForm\Validation;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 use UForm\Validator;
 
 class StringLength extends Validator
@@ -39,17 +39,15 @@ class StringLength extends Validator
                 self::TOO_SHORT
             );
             $validationItem->appendMessage($message);
-            return false;
-        }
-        if ($this->maxLength > 0 && $length > $this->maxLength) {
+            $validationItem->setInvalid();
+        } elseif ($this->maxLength > 0 && $length > $this->maxLength) {
             $message = new Validation\Message(
                 'String too long (more than %_max-length_% character)',
                 ["max-length" => $this->maxLength, "string-length" => $length ],
                 self::TOO_LONG
             );
             $validationItem->appendMessage($message);
-            return false;
+            $validationItem->setInvalid();
         }
-        return true;
     }
 }

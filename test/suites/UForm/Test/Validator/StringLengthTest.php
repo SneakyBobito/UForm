@@ -18,14 +18,16 @@ class StringLengthTest extends ValidatorTestCase
 
         $validator = new StringLength(1, 20);
         $validation = $this->generateValidationItem(["firstname" => "bart"]);
-        $this->assertTrue($validator->validate($validation));
+        $validator->validate($validation);
+        $this->assertTrue($validation->isValid());
     }
 
     public function testTooShort()
     {
         $validator = new StringLength(10, 20);
         $validation = $this->generateValidationItem(["firstname" => "short"]);
-        $this->assertFalse($validator->validate($validation));
+        $validator->validate($validation);
+        $this->assertFalse($validation->isValid());
 
         $this->assertSame(StringLength::TOO_SHORT, $validation->getMessages()->getAt(0)->getType());
         $this->assertSame(10, $validation->getMessages()->getAt(0)->getVariables()["min-length"]);
@@ -36,7 +38,8 @@ class StringLengthTest extends ValidatorTestCase
     {
         $validator = new StringLength(3, 5);
         $validation = $this->generateValidationItem(["firstname" => "verylongstring"]);
-        $this->assertFalse($validator->validate($validation));
+        $validator->validate($validation);
+        $this->assertFalse($validation->isValid());
 
         $this->assertCount(1, $validation->getMessages());
         $message =  $validation->getMessages()->getAt(0);

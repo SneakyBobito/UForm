@@ -10,7 +10,7 @@ use UForm\Form;
 use UForm\Form\Element\Primary\Input\Password;
 use UForm\Form\Element\Primary\Input\Text;
 use UForm\Validation\Message;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 use UForm\Validator\DirectClosure;
 
 class ValidationItemTest extends \PHPUnit_Framework_TestCase
@@ -74,7 +74,7 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase
         $this->element->addValidator(new DirectClosure(function (ValidationItem $v) {
             $message = new Message("invalid");
             $v->appendMessage($message);
-            return false;
+            $v->setInvalid();
         }));
 
         $this->form = new Form();
@@ -174,8 +174,9 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase
 
         $userName = new Text("username");
         $userName->addValidator(function (ValidationItem $v) {
-            return $v->getValue() == "bart";
-
+            if ($v->getValue() !== "bart") {
+                $v->setInvalid();
+            }
         });
         $password = new Password("password");
         $group = new Form\Element\Container\Group("user");
@@ -196,8 +197,8 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase
         $phoneGroup = new Form\Element\Container\Group("phones");
         $phoneGroup->addElement(new Text("phone1"));
         $phone2 = new Text("phone2");
-        $phone2->addValidator(function () {
-            return false;
+        $phone2->addValidator(function (ValidationItem $v) {
+            $v->setInvalid();
 
         });
         $phoneGroup->addElement($phone2);

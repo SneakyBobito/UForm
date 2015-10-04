@@ -8,7 +8,6 @@ use UForm\Form\Element;
 use UForm\InvalidArgumentException;
 use UForm\Navigator;
 use UForm\Validation;
-use UForm\ValidationItem;
 
 /**
  * ChaineValidation

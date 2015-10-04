@@ -3,6 +3,7 @@
 namespace UForm;
 
 use UForm\Validation\Message;
+use UForm\Validation\ValidationItem;
 
 /**
  * This is a base class for validators
@@ -25,7 +26,7 @@ abstract class Validator
     /**
      * Executes the validation
      *
-     * @param \UForm\ValidationItem $validationItem
+     * @param ValidationItem $validationItem
      * @return boolean true if validation was successful
      * @throws Exception
      */

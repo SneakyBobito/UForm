@@ -12,7 +12,7 @@ use UForm\InvalidArgumentException;
 use UForm\OptionGroup;
 use UForm\SemanticItem;
 use UForm\Validation;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 use UForm\ValidatorGroup;
 
 /**

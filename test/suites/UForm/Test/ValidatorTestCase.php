@@ -8,7 +8,7 @@ namespace UForm\Test;
 use UForm\DataContext;
 use UForm\Form;
 use UForm\Form\Element\Primary\Input\Text;
-use UForm\ValidationItem;
+use UForm\Validation\ValidationItem;
 
 class ValidatorTestCase extends \PHPUnit_Framework_TestCase
 {

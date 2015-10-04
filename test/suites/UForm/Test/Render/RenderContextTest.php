@@ -9,6 +9,7 @@ use UForm\Builder;
 use UForm\Form;
 use UForm\Render\AbstractRender;
 use UForm\Render\RenderContext;
+use UForm\Validation\ValidationItem;
 
 class RenderContextTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,8 +34,8 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
             ->willReturn(__DIR__ . "/../../../../Fixtures/templates/AbstractRender");
 
         $this->form = Builder::init()->text("firstname")->text("lastname")->getForm();
-        $this->form->getElement("firstname")->addValidator(function () {
-            return false;
+        $this->form->getElement("firstname")->addValidator(function (ValidationItem $v) {
+            $v->setInvalid();
         });
     }
 
