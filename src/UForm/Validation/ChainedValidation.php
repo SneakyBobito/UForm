@@ -124,28 +124,38 @@ class ChainedValidation
     /**
      * Starts to validate every validation.
      * No filtering is made. All filtering should be made before setting the data
+     *
+     * @see isValid()
+     *
      * @return bool true if the validation passed
      */
     public function validate()
     {
-
-        $passed = true;
 
         // we init validation before (e.g we init messages to make them ready from everywhere)
         foreach ($this->validationsInternalName as $v) {
             $v->resetValidation();
         }
 
+        // We validate everything
         foreach ($this->validationsInternalName as $v) {
-            if (false === $v->validate()) {
+            $v->validate();
+        }
+
+        // we use an additional loop because we can check valid
+        // state only when everything is processed
+        // For instance Validator proxy mays set the valid state latter
+        $passed = true;
+        foreach ($this->validationsInternalName as $v) {
+            if (!$v->isValid()) {
                 $passed = false;
+                break;
             }
         }
 
-
         $this->isValid = $passed;
 
-        return $passed;
+        return $this->isValid;
 
     }
 
@@ -207,7 +217,7 @@ class ChainedValidation
     public function getMessages()
     {
         $messages = new Validation\Message\Group();
-        foreach ($this->validationsName as $validation) {
+        foreach ($this->validationsInternalName as $validation) {
             $messages->appendMessages($validation->getMessages());
         }
         return $messages;

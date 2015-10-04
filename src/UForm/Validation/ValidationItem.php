@@ -112,7 +112,6 @@ class ValidationItem
      * Validate a set of data according to a set of rules
      *
      * @return boolean
-     * @throws Exception
      */
     public function validate()
     {
@@ -146,21 +145,11 @@ class ValidationItem
     /**
      * Appends a message to the messages list
      *
-     * @param string $message
+     * @param Message $message
      */
-    public function appendMessage(Message $message, $elementName = null)
+    public function appendMessage(Message $message)
     {
-        if (null == $elementName) {
-            $this->messages->appendMessage($message);
-        } else {
-            $v = $this->getChainedValidation()->getValidation($elementName);
-            if (!$v) {
-                throw new \UForm\Exception(
-                    'Unable to append message : element with ID='.$elementName.' is not part of the form.'
-                );
-            }
-            $v->appendMessage($message);
-        }
+        $this->messages->appendMessage($message);
     }
 
 

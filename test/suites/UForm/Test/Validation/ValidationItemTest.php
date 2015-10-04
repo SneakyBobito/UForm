@@ -13,6 +13,9 @@ use UForm\Validation\Message;
 use UForm\Validation\ValidationItem;
 use UForm\Validator\DirectClosure;
 
+/**
+ * @covers ValidationItem
+ */
 class ValidationItemTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -143,18 +146,6 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase
         $this->validationItem->appendMessage($message);
         $this->assertCount(1, $this->validationItem->getMessages());
         $this->assertSame($message, $this->validationItem->getMessages()->getAt(0));
-
-        // Test append to another element
-        $this->form->addElement(new Text("email"));
-        $context = $this->form->generateContext();
-        $message = new Message("bad email");
-        $validation = $context->getChainedValidation()->getValidation("firstname");
-        $validation->appendMessage($message, "email");
-        $this->assertSame($message, $context->getChainedValidation()->getValidation("email")->getMessages()->getAt(0));
-
-        // Test unexisting element
-        $this->setExpectedException("UForm\Exception");
-        $this->validationItem->appendMessage(new Message("message"), "unknown");
     }
 
     public function testGetValue()

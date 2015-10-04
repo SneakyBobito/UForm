@@ -14,7 +14,7 @@ use UForm\Validator;
  * Acts like a proxy for validator. It will process validator as usually,
  * but messages and error will be attached to the given element
  */
-class ValidateProxy extends Validator
+class ValidatorProxy extends Validator
 {
 
     protected $validatedElement;

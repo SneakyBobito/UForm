@@ -85,9 +85,8 @@ class Form extends ElementGroup
 
 
     /**
-     * validates the form using either the data given in parameter or either the data set with setData method
+     * validates the form using the data given in parameter
      * @var array|null $data the data used for the validation.
-     * If ommited the method will try to get the last data set with setData method
      * @return FormContext
      */
     public function validate($inputData)
@@ -139,12 +138,14 @@ class Form extends ElementGroup
     public function generateContext($data = null)
     {
         if (null === $data) {
-            $data = new DataContext(null);
+            $data = null;
         } else {
-            $data = new DataContext($this->sanitizeData($data));
+            $data = $data;
         }
 
-        $formContext = new FormContext($this, $data);
+        $data = $this->sanitizeData($data);
+
+        $formContext = new FormContext($this, new DataContext($data));
         return $formContext;
     }
 }

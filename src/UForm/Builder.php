@@ -9,7 +9,10 @@ use UForm\Builder\GroupBuilder;
 use UForm\Builder\InputBuilder;
 use UForm\Builder\ValidatorBuilder;
 use UForm\Form\Element;
+use UForm\Form\Element\Primary\Input\Hidden;
 use UForm\Validator;
+use UForm\Validator\Csrf;
+use UForm\Validator\ValidatorProxy;
 
 class Builder
 {
@@ -29,6 +32,18 @@ class Builder
         $this->form = new Form($action, $method);
         $this->open($this->form);
 
+        $this->processCsrf($builderOptions);
+    }
+
+    /**
+     * Builds the csrf token
+     * @param $builderOptions
+     * @throws BuilderException
+     */
+    private function processCsrf($builderOptions)
+    {
+
+        // Check if csrf interface was set in the option
         if (isset($builderOptions["csrf"]) && $builderOptions["csrf"]) {
             if ($builderOptions["csrf"] instanceof Validator\Csrf\CsrfInterface) {
                 $csrfInterface = $builderOptions["csrf"];
@@ -36,12 +51,23 @@ class Builder
                 $eMessage = "Builder's csrf option must be an instance of UForm\Validator\Csrf\CsrfInterface";
                 throw new BuilderException($eMessage);
             }
+        // Or else check from environment
         } else {
             $csrfInterface = Environment::getCsrfResolver();
         }
+
+
         if ($csrfInterface) {
-            $csrf = new Element\Primary\Input\Hidden("__uf_csrf", $csrfInterface->getToken());
-            $csrf->addValidator(new Validator\Csrf($csrfInterface));
+            if (isset($builderOptions["csrf-name"])) {
+                $csrfName = $builderOptions["csrf-name"];
+            } else {
+                $csrfName = "__uf_csrf";
+            }
+
+            $csrf = new Hidden($csrfName);
+            $csrfValidator = new Csrf($csrfInterface);
+            $csrf->addValidator(new ValidatorProxy($this->form, $csrfValidator));
+            $this->form->addElement($csrf);
         }
     }
 
@@ -59,8 +85,8 @@ class Builder
      * @param null $method
      * @return self
      */
-    public static function init($action = null, $method = null)
+    public static function init($action = null, $method = null, $builderOptions = [])
     {
-        return new self($action, $method);
+        return new self($action, $method, $builderOptions);
     }
 }

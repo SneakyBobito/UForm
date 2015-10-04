@@ -39,6 +39,8 @@ class Csrf extends Validator
     {
         if (!$this->csrfInterface->tokenIsValid($validationItem->getValue())) {
             $message = new Message("Csrf token is not valid", [], self::NOT_VALID);
+            $validationItem->appendMessage($message);
+            $validationItem->setInvalid();
         }
     }
 }
