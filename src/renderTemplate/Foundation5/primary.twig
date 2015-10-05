@@ -1,0 +1,5 @@
+{% embed "layout/form-group.twig" %}
+    {%- block input -%}
+        {{ defaultRenderFor(current.element) }}
+    {% endblock %}
+{% endembed %}

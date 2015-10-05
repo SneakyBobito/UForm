@@ -17,7 +17,7 @@ $renders = [
 
 ];
 
-$form = Builder::init("action", "method")
+$form = Builder::init("#", "POST")
     ->columnGroup()
         ->column(15)
             ->panel("Login informations")
@@ -40,7 +40,7 @@ $form = Builder::init("action", "method")
     ->tabGroup()
         ->tab("Tab with error", true)
             ->text("tab1validInput", "Valid input")
-            ->text("tab1invalidInput", "invalid input")->validator(function(){return false;})
+            ->text("tab1invalidInput", "invalid input")->validator(function(\UForm\Validation\ValidationItem $v){$v->setInvalid();})
         ->close()
         ->tab("Tab (with tooltip)")->tooltip("additional informations")
             ->text("tab2validInput", "Valid input")
@@ -49,6 +49,7 @@ $form = Builder::init("action", "method")
             ->text("tab3validInput", "Valid input")
         ->close()
     ->close()
+    ->submit()
     ->getForm();
 
 $data = [

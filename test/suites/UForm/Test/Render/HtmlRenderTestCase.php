@@ -51,7 +51,7 @@ abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase
         foreach ($it as $nodeInfo) {
             /* @var $nodeInfo \UForm\Doc\NodeInfo */
             $reflection = new \ReflectionClass($nodeInfo->node->getClassName());
-            if (!$reflection->isAbstract() && !$reflection->implementsInterface("UForm\Form\Element\Drawable")) {
+            if (!$reflection->isAbstract()) {
                 $semanticTypesObjects = $nodeInfo->node->getSemanticTypes();
 
                 $semanticTypes = [];

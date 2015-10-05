@@ -11,6 +11,7 @@ use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Input\File;
 use UForm\Form\Element\Primary\Input\Hidden;
 use UForm\Form\Element\Primary\Input\Password;
+use UForm\Form\Element\Primary\Input\Submit;
 use UForm\Form\Element\Primary\Input\Text;
 use UForm\Form\Element\Primary\Select;
 use UForm\Form\Element\Primary\TextArea;
@@ -180,6 +181,16 @@ trait InputBuilder
         } catch (BuilderException $e) {
             throw new BuilderException("rightAddon() call requires you already added an element to the builder", 0, $e);
         }
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function submit()
+    {
+        $element = new Submit();
+        $this->add($element);
         return $this;
     }
 }

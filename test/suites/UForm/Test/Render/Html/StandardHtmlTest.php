@@ -9,7 +9,7 @@ use UForm\Render\AbstractHtmlRender;
 use UForm\Render\Html\StandardHtml;
 use UForm\Test\Render\HtmlRenderTestCase;
 
-class StandardHtmlTazdazest extends HtmlRenderTestCase
+class StandardHtmlTest extends HtmlRenderTestCase
 {
     /**
      * @return AbstractHtmlRender

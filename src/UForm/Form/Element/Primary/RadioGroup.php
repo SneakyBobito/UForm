@@ -3,12 +3,13 @@
 namespace UForm\Form\Element\Primary;
 
 use UForm\Form\Element;
+use UForm\Form\Element\Primary;
 use UForm\Validation;
 
 /**
  * @semanticType radioGroup
  */
-class RadioGroup extends Element implements Element\Drawable
+class RadioGroup extends Primary implements Element\Drawable
 {
 
     protected $values;
