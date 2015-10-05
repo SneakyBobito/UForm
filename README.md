@@ -15,13 +15,13 @@ Why another form library? Because the other I tried had limitations. This librar
 UForm is structured as follows
 ------------------------------
 
-- A **KISS and stateless core** that defines usual form elements with no additional logic
-- A **HTML structure aware**  (fieldset, row, colomns, tabs, panel...) 
+- A **logicless and stateless core** that defines usual form elements
+- Some **HTML structure aware** components (fieldset, row, colomns, tabs, panel...) 
 - A flexible **validation/filtering** workflow with translatable messages
 - An **extendable fluent builder** (factory) to create forms easily with **the additional needed logic** (CSRF, label, tooltip...)
 - **Tools** to render forms with **twig**
 - Some extendable default render engines for popular html frameworks like **Bootstrap** or **Foundation**
-- **Standards for rendering** that makes every engine compatible
+- **Standards for rendering** that make every engine compatible
 
 
 Usage

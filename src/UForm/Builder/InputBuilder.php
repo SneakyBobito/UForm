@@ -5,6 +5,7 @@
 
 namespace UForm\Builder;
 
+use UForm\Filter\DefaultValue;
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Input\File;
@@ -52,10 +53,14 @@ trait InputBuilder
      * @param Element $element
      * @param $label
      */
-    protected function _makeInput(Element $element, $label)
+    protected function _makeInput(Element $element, $label, $defaultValue)
     {
         if (null !== $label) {
             $element->setOption("label", $label);
+        }
+
+        if (null !== $defaultValue) {
+            $element->addFilter(new DefaultValue($defaultValue));
         }
     }
 
@@ -66,10 +71,10 @@ trait InputBuilder
      * @param $label
      * @return $this
      */
-    public function text($name, $label = null)
+    public function text($name, $label = null, $defaultValue = null)
     {
         $element = new Text($name);
-        $this->_makeInput($element, $label);
+        $this->_makeInput($element, $label, $defaultValue);
         $this->add($element);
 
         return $this;
@@ -82,10 +87,10 @@ trait InputBuilder
      * @param $label
      * @return $this
      */
-    public function textArea($name, $label = null)
+    public function textArea($name, $label = null, $defaultValue = null)
     {
         $element = new TextArea($name);
-        $this->_makeInput($element, $label);
+        $this->_makeInput($element, $label, $defaultValue);
         $this->add($element);
         return $this;
     }
@@ -97,10 +102,10 @@ trait InputBuilder
      * @param $label
      * @return $this
      */
-    public function password($name, $label = null)
+    public function password($name, $label = null, $defaultValue = null)
     {
         $element = new Password($name);
-        $this->_makeInput($element, $label);
+        $this->_makeInput($element, $label, $defaultValue);
         $this->add($element);
 
         return $this;
@@ -112,10 +117,10 @@ trait InputBuilder
      * @param $label
      * @return $this
      */
-    public function select($name, $label, $values = [])
+    public function select($name, $label, $values = [], $defaultValue = null)
     {
         $element = new Select($name, $values);
-        $this->_makeInput($element, $label);
+        $this->_makeInput($element, $label, $defaultValue);
         $this->add($element);
         return $this;
     }
@@ -125,9 +130,9 @@ trait InputBuilder
      * @param $name
      * @return $this
      */
-    public function hidden($name, $value = null)
+    public function hidden($name, $value = null, $defaultValue = null)
     {
-        $element = new Hidden($name, $value);
+        $element = new Hidden($name, $value, $defaultValue);
         $this->add($element);
         return $this;
     }
@@ -141,7 +146,7 @@ trait InputBuilder
     public function file($name, $label = null)
     {
         $element = new File($name);
-        $this->_makeInput($element, $label);
+        $this->_makeInput($element, $label, null);
         $this->add($element);
         return $this;
     }

@@ -12,6 +12,9 @@ use UForm\Form\Element\Primary\Input\Password;
 use UForm\Form\Element\Primary\Input\Text;
 use UForm\Validation\ValidationItem;
 
+/**
+ * @covers UForm\Form\Element\Container
+ */
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -65,7 +68,17 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testSanitizeData()
     {
         $data = $this->container->sanitizeData(["data" => "value"]);
-        $this->assertEquals(["data" => "value"], $data);
+        $this->assertEquals([
+            "data" => "value",
+            "username" => null,
+            "password" => null,
+            "item1"    => null,
+            "item2"    => null,
+            "namedGroup" => [
+                "item1"    => null,
+                "someItem"    => null,
+            ]
+        ], $data);
     }
 
     public function testGetDirectElement()

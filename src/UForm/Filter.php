@@ -15,8 +15,8 @@ abstract class Filter
 
     /**
      * Filters the given value
-     * @param $v
+     * @param mixed $value the value to filter
      * @return mixed
      */
-    abstract public function filter($v);
+    abstract public function filter($value);
 }

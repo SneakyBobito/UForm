@@ -19,14 +19,13 @@ class BuilderScenarioTest extends \PHPUnit_Framework_TestCase
         $form = Builder::init("action", "method")
             ->text("firstname", "Firstname")->required()->stringLength(2, 20)
             ->text("lastname", "Lastname")->required()->stringLength(2, 20)
-            ->text("login", "Login")->required()->stringLength(2, 20)
+            ->text("login", "Login", "loginValue")->required()->stringLength(2, 20)
             ->password("password", "Password")->required()->stringLength(2, 20)
             ->getForm();
 
         $data = [
             "firstname" => "bart",
             "lastname" => "simpson",
-            "login" => "bart",
             "password" => "****"
         ];
 
@@ -37,6 +36,7 @@ class BuilderScenarioTest extends \PHPUnit_Framework_TestCase
         $html = $render->render($formContext);
 
         $this->assertInternalType("string", $html);
+        $this->assertSame("loginValue", $formContext->getValueFor("login"));
 
     }
 }

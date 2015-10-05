@@ -11,6 +11,9 @@ use UForm\Form\Element\Primary\Input\Password;
 use UForm\Form\Element\Primary\Input\Text;
 use UForm\Validation\ValidationItem;
 
+/**
+ * @covers UForm\Form
+ */
 class FormTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -76,7 +79,13 @@ class FormTest extends \PHPUnit_Framework_TestCase
     {
         $context = $this->form->generateContext(["data" => "value"]);
         $this->assertInstanceOf("UForm\Form\FormContext", $context);
-        $this->assertSame(["data" => "value"], $context->getData()->getDataCopy());
+        $this->assertSame([
+            "data" => "value",
+            "user" => [
+                "username" => null,
+                "password" => null
+            ]
+        ], $context->getData()->getDataCopy());
         $this->assertSame($this->form, $context->getForm());
         $this->assertTrue($context->isValid()); // Still valid because no validation was processed
 
@@ -89,10 +98,14 @@ class FormTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertTrue($context->isValid());
 
-
         // test empty context
         $context = $this->form->generateContext();
-        $this->assertEquals(null, $context->getData()->getDataCopy());
+        $this->assertEquals([
+            "user" => [
+                "username" => null,
+                "password" => null
+            ]
+        ], $context->getData()->getDataCopy());
 
     }
 
@@ -100,7 +113,13 @@ class FormTest extends \PHPUnit_Framework_TestCase
     {
         $context = $this->form->validate(["data" => "value"]);
         $this->assertInstanceOf("UForm\Form\FormContext", $context);
-        $this->assertSame(["data" => "value"], $context->getData()->getDataCopy());
+        $this->assertSame([
+            "data" => "value",
+            "user" => [
+                "username" => null,
+                "password" => null
+            ]
+        ], $context->getData()->getDataCopy());
         $this->assertSame($this->form, $context->getForm());
         $this->assertFalse($context->isValid()); // Still valid because no validation was processed
 

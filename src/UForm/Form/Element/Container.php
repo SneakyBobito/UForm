@@ -115,9 +115,8 @@ abstract class Container extends Element
         foreach ($this->getElements($data) as $element) {
             $name = $element->getName();
             if ($name) {
-                if (isset($data[$name])) {
-                    $data[$name] = $element->sanitizeData($data[$name]);
-                }
+                $value = isset($data[$name]) ? $data[$name] : null;
+                $data[$name] = $element->sanitizeData($value);
             } else {
                 $data = $element->sanitizeData($data);
             }
