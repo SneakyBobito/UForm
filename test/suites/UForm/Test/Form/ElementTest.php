@@ -4,7 +4,12 @@ namespace UForm\Test\Form;
 
 use UForm\Form;
 use UForm\Form\Element;
+use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Container\Group\NamedGroup\Panel;
 
+/**
+ * @covers UForm\Form\Element
+ */
 class ElementTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -43,6 +48,21 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($attributes, $element->getAttributes());
         $this->assertSame($validators, $element->getValidators());
         $this->assertSame($filters, $element->getFilters());
+    }
+
+    public function testGetClosestParent()
+    {
+        $this->assertNull($this->elementStub->getClosestInstanceOf("UForm\Element\Container"));
+
+        $group = new Group();
+        $group->addElement($this->elementStub);
+
+        $this->assertSame($group, $this->elementStub->getClosestInstanceOf("UForm\Form\Element\Container"));
+
+        $panel = new Panel();
+        $panel->addElement($group);
+        $this->assertSame($group, $this->elementStub->getClosestInstanceOf("UForm\Form\Element\Container"));
+        $this->assertSame($panel, $this->elementStub->getClosestInstanceOf("UForm\Form\Element\Container\Group\NamedGroup\Panel"));
     }
 
 

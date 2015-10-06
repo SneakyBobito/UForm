@@ -112,6 +112,24 @@ abstract class Element
     }
 
     /**
+     * get the closest parent of the given class
+     * @param string $className fully qualified name of the class
+     * @return null|Container the closest parent or null if no parent was found with the given class
+     */
+    public function getClosestInstanceOf($className)
+    {
+        if ($this->parent) {
+            if (is_a($this->parent, $className)) {
+                return $this->parent;
+            } else {
+                return $this->parent->getClosestInstanceOf($className);
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Internal use only. Should be called when a change occurs
      * on the parents and the info related to the parent need to be updated
      */
