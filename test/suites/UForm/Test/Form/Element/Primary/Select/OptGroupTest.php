@@ -9,6 +9,9 @@ use UForm\Form\Element\Primary\Select;
 use UForm\Form\Element\Primary\Select\OptGroup;
 use UForm\Form\Element\Primary\Select\Option;
 
+/**
+ * @covers UForm\Form\Element\Primary\Select\OptGroup
+ */
 class OptGroupTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -51,8 +54,8 @@ class OptGroupTest extends \PHPUnit_Framework_TestCase
         $optionGroup->getOptions();
         $this->assertEquals("homer", $optionGroup->getOptions()[0]->getValue());
         $this->assertEquals("marge", $optionGroup->getOptions()[1]->getValue());
-        $this->assertNull($optionGroup->getOptions()[0]->getLabel());
-        $this->assertNull($optionGroup->getOptions()[1]->getLabel());
+        $this->assertEquals("homer", $optionGroup->getOptions()[0]->getLabel());
+        $this->assertEquals("marge", $optionGroup->getOptions()[1]->getLabel());
 
 
         // Test Text and key

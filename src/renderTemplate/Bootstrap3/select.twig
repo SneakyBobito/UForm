@@ -1,0 +1,41 @@
+{% embed "layout/form-group.twig" %}
+    {%- block input  -%}
+
+        {%- if current.element.getOption("tooltip") -%}
+        <div class="input-group">
+            {%- if current.element.getOption("leftAddon") -%}
+                <div class="input-group-addon">{{ current.element.getOption("leftAddon") | raw }}</div>
+            {%- endif -%}
+
+            {{ defaultRenderFor(current.element,  { "class" : "form-control" }) }}
+
+            {%- if current.element.getOption("rightAddon") -%}
+                <div class="input-group-addon">{{ current.element.getOption("rightAddon") | raw }}</div>
+            {%- endif -%}
+            {% if current.element.getOption("tooltip") %}
+                <div class="input-group-addon" data-toggle="tooltip" title="{{ current.element.getOption("tooltip") }}">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </div>
+            {% endif %}
+        </div>
+        {%- else -%}
+            {{- defaultRenderFor(current.element,  { "class" : "form-control" }) -}}
+        {% endif %}
+
+        {%- if current.element.getOption("helper") -%}
+            <span class="help-block">{{ current.element.getOption("helper") }}</span>
+        {%- endif -%}
+
+
+        {% if current.messages | length > 0 %}
+            <div class="alert alert-danger" role="alert">
+                {% for message in current.messages %}
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    {%- endblock -%}
+{% endembed %}

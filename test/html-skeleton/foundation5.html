@@ -11,9 +11,17 @@
         <script src="http://cdn.foundation5.zurb.com/foundation.js"></script>
 
         <script>
-            $(function(){
+
+            $(function () {
                 $(document).foundation();
+
+                $("#goToFramework").change(function(){
+                    var val = $(this).val();
+                    window.location.href = val + ".html";
+                });
+
             });
+
         </script>
 
         <style>

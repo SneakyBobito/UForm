@@ -72,7 +72,7 @@ class OptGroup extends AbstractOption
                 }
 
                 if (is_int($key)) {
-                    $option = new Option($option);
+                    $option = new Option($option, $option);
                 } elseif (is_string($key)) {
                     $option = new Option($option, $key);
                 }

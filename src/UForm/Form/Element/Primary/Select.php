@@ -12,11 +12,13 @@ use UForm\Tag;
 
 /**
  * Class Select
- * @semanticType Select
+ * @semanticType select
  * @renderOption label the label of the element
  * @renderOption placeholder a placeholder text to show when it's empty
  * @renderOption helper text that gives further information to the user (always visible)
  * @renderOption tooltip text that gives further information to the user (visible on mouse over or click)
+ * @renderOption leftAddon an addon to add to the left of the field
+ * @renderOption rightAddon an addon to add to the right of the field
  */
 class Select extends Element\Primary implements Element\Drawable
 {
@@ -42,6 +44,9 @@ class Select extends Element\Primary implements Element\Drawable
         if (null !== $values) {
             $this->setOptionValues($values);
         }
+
+        $this->addSemanticType("select");
+
     }
 
 
@@ -69,10 +74,14 @@ class Select extends Element\Primary implements Element\Drawable
 
     public function render($value, array $options = [])
     {
-
         $params = [
+            "id" => $this->getId(),
             "name" => $this->getName(true)
         ];
+
+        if (isset($options["class"])) {
+            $params["class"] = $options["class"];
+        }
 
         if (isset($value[$this->getName()])) {
             $value = $value[$this->getName()];
@@ -82,12 +91,12 @@ class Select extends Element\Primary implements Element\Drawable
 
         $render = new Tag("select", $params, false);
 
-        $options = "";
+        $selectOptions = "";
 
         foreach ($this->rootGroup->getOptions() as $v) {
-            $options .= $v->render($value);
+            $selectOptions .= $v->render($value);
         }
 
-        return $render->draw([], $options);
+        return $render->draw([], $selectOptions);
     }
 }

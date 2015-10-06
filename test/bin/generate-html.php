@@ -29,7 +29,22 @@ $form = Builder::init("#", "POST")
             ->text("money", "Money (with tooltip, helper and error)")->required()->rightAddon("&euro;")
                 ->tooltip("Give me your money")->helper("Some helper")
         ->close()
-        ->column(4)->close()
+        ->column(4)
+            ->select("framework", "Go to framework (with tooltip)", [
+
+                "Bootstrap" => [
+                    "Bootstrap 2 (oldest)" => "bootstrap2",
+                    "bootstrap3",
+                ],
+                "Foundation 5" => "foundation5",
+                "UIKit",
+
+                "Material" => [
+                    "Materialize",
+                    "MUI"
+                ]
+            ])->tooltip("Choose a framework to view")->leftAddon("Framework")->id("goToFramework")
+        ->close()
     ->close()
 
     ->panel("Inlined Panel (with tooltip)")->tooltip("The following elemens are inlined")
@@ -40,7 +55,7 @@ $form = Builder::init("#", "POST")
         ->close()
     ->close()
     ->columnGroup()
-        ->column(3)
+        ->column(4)
             ->tabGroup()
                 ->tab("Tab with error", true)
                     ->text("tab1validInput", "Valid input")
@@ -58,26 +73,26 @@ $form = Builder::init("#", "POST")
             ->tabGroup()
                 ->tab("Empty tab", true)
                 ->close()
+                ->tab("Not empty")
+                    ->panel("Empty panel")
+                    ->close()
+                ->close()
             ->close()
         ->close()
     ->close()
     ->submit()
     ->getForm();
 
-$data = [
-    "firstname" => "bart",
-    "lastname" => "simpson",
-    "login" => "bart",
-    "password" => "somepassword"
-];
-
-$formContext = $form->validate($data);
-
-
-
-
-
 foreach($renders as $name=>$render){
+    $data = [
+        "firstname" => "bart",
+        "lastname" => "simpson",
+        "login" => "bart",
+        "password" => "somepassword",
+        "framework" => $name
+    ];
+
+    $formContext = $form->validate($data);
     $html = file_get_contents(__DIR__ . "/../html-skeleton/$name.html");
     $html = str_replace("{{content}}", $render->render($formContext), $html);
     file_put_contents(__DIR__ . "/../../build/$name.html", $html);

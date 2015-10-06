@@ -13,8 +13,13 @@
         <script>
 
             $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
+                $('[data-toggle="tooltip"]').tooltip();
+
+                $("#goToFramework").change(function(){
+                    var val = $(this).val();
+                    window.location.href = val + ".html";
+                });
+            });
 
         </script>
 

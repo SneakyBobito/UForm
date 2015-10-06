@@ -101,6 +101,7 @@ trait FluentElement
 
     /**
      * Set option to the last element
+     * @see \UForm\Form\Element::setOption()
      * @param string $option name of the option
      * @param string $value value of the option
      * @return $this
@@ -141,6 +142,22 @@ trait FluentElement
             $this->last()->setOption("tooltip", $text);
         } catch (BuilderException $e) {
             throw new BuilderException("tooltip() call requires you already added an element to the builder", 0, $e);
+        }
+        return $this;
+    }
+
+    /**
+     * Sets the id of the last element
+     * @param string $id id of the element
+     * @return $this
+     * @throws BuilderException
+     */
+    public function id($id)
+    {
+        try {
+            $this->last()->setId($id);
+        } catch (BuilderException $e) {
+            throw new BuilderException("id() call requires you already added an element to the builder", 0, $e);
         }
         return $this;
     }
