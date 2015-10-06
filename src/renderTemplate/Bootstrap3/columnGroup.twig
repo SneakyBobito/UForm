@@ -1,6 +1,6 @@
 <div class="row">
     {% for column in current.children -%}
-    <div class="col-md-{{ column.getAdaptiveWidth(render.colNumber) }}">
+    <div class="col-md-{{ column.getAdaptiveWidth(render.colNumber) | round }}">
             {{- renderElement(column) -}}
     </div>
     {%- endfor %}

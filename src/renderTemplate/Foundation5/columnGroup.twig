@@ -1,6 +1,6 @@
 <div class="row form-columns">
     {% for column in current.children -%}
-    <div class="large-{{ column.getAdaptiveWidth(render.colNumber) }} columns">
+    <div class="large-{{ column.getAdaptiveWidth(render.colNumber) | round }} columns">
             {{- renderElement(column) -}}
     </div>
     {%- endfor %}
