@@ -43,6 +43,7 @@ More information about the template rendering : TODO
 - **current**: the instance of the current ``RenderContext`` instance
 - **current.element**: the instance of the element you are rendering
 - **current.children**: an array with the instances of the children of the current element
+- **current.messages**: an array with the error messages for the current element
 - **render**: the instance of the render engine
 
 ### Template functions
