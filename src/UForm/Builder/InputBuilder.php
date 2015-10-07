@@ -5,9 +5,11 @@
 
 namespace UForm\Builder;
 
+use UForm\Filter\BooleanValue;
 use UForm\Filter\DefaultValue;
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Primary\Input\Check;
 use UForm\Form\Element\Primary\Input\File;
 use UForm\Form\Element\Primary\Input\Hidden;
 use UForm\Form\Element\Primary\Input\Password;
@@ -153,6 +155,45 @@ trait InputBuilder
     }
 
     /**
+     * add a submit input to the current group
+     * @see UForm\Form\Element\Primary\Input\Submit
+     * @return $this
+     */
+    public function submit()
+    {
+        $element = new Submit();
+        $this->add($element);
+        return $this;
+    }
+
+    /**
+     * add a check input to the current group
+     * @see UForm\Form\Element\Primary\Input\Check
+     * @param $label
+     * @param boolean $checkedDefault pass it to true to set the checkbox checked
+     * @param null $name
+     * @return $this
+     */
+    public function check($name, $label, $checkedDefault = null)
+    {
+        $element = new Check($name);
+        $this->_makeInput($element, $label, $checkedDefault);
+        $element->addFilter(new BooleanValue());
+        $this->add($element);
+        return $this;
+    }
+
+
+
+    public function checkGroup($name)
+    {
+        $element = new Group\CheckGroup($name, []);
+        $this->add($element);
+        $this->open($element);
+        return $this;
+    }
+
+    /**
      * add a left addon option for current input
      * @param $text
      * @return $this
@@ -181,16 +222,6 @@ trait InputBuilder
         } catch (BuilderException $e) {
             throw new BuilderException("rightAddon() call requires you already added an element to the builder", 0, $e);
         }
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function submit()
-    {
-        $element = new Submit();
-        $this->add($element);
         return $this;
     }
 }

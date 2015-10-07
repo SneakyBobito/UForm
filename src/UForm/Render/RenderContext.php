@@ -5,6 +5,7 @@ namespace UForm\Render;
 
 use UForm\Form\Element;
 use UForm\Form\FormContext;
+use UForm\Navigator;
 use UForm\Render\AbstractHtmlRender as AbstractRender;
 
 /**
@@ -78,7 +79,14 @@ class RenderContext
     {
 
         if ($element instanceof Element\Drawable) {
-            return $element->render($this->getLocalValue(), $options);
+            $navigator = new Navigator();
+            $value = $navigator->arrayGet(
+                $this->formContext->getData()->getDataCopy(),
+                $element->getName(true, true),
+                1
+            );
+
+            return $element->render($value, $options);
         } else {
             throw new \UForm\Exception(
                 "Trying to render an invalid element. Element not implementing Drawable cant be rendered"

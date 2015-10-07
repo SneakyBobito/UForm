@@ -23,13 +23,14 @@ $form = Builder::init("#", "POST")
             ->panel("Login informations")
                 ->text("login", "Login")->required()->stringLength(2, 20)
                 ->password("password", "Password")->required()->stringLength(2, 20)
+                ->check("remember", "Remember (checked)", true)
             ->close()
         ->close()
-        ->column(5)
+        ->column(3)
             ->text("money", "Money (with tooltip, helper and error)")->required()->rightAddon("&euro;")
                 ->tooltip("Give me your money")->helper("Some helper")
         ->close()
-        ->column(4)
+        ->column(6)
             ->select("framework", "Go to framework (with tooltip)", [
 
                 "Bootstrap" => [
@@ -44,6 +45,26 @@ $form = Builder::init("#", "POST")
                     "MUI"
                 ]
             ])->tooltip("Choose a framework to view")->leftAddon("Framework")->id("goToFramework")
+
+            ->fieldset("Input Type")
+                ->checkGroup("inputType")
+                    ->columnGroup()
+                        ->column(6)
+                            ->panel("Text fields")
+                                ->check("text", "Text", "text")
+                                ->check("password", "Password (checked)", "password")
+                                ->check("email", "Email", "email")
+                            ->close()
+                        ->close()
+                        ->column(6)
+                            ->check("select", "Select", "Select")
+                            ->check("check", "Check (checked)", "radio")
+                            ->check("radio", "Radio (checked)", "check")
+                        ->close()
+                    ->close()
+                ->close()
+            ->close()
+
         ->close()
     ->close()
 
@@ -89,7 +110,8 @@ foreach($renders as $name=>$render){
         "lastname" => "simpson",
         "login" => "bart",
         "password" => "somepassword",
-        "framework" => $name
+        "framework" => $name,
+        "inputType" => ["password" => true, "check" => true, "radio" => true]
     ];
 
     $formContext = $form->validate($data);

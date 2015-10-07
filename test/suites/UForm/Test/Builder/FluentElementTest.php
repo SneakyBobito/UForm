@@ -77,6 +77,8 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase
     public function testCurrent()
     {
         $this->assertSame($this->parentGroup, $this->fluentElementStub->current());
+
+        $this->assertSame($this->parentGroup, $this->fluentElementStub->current("UForm\Form\Element\Container\Group"));
     }
 
     public function testLast()

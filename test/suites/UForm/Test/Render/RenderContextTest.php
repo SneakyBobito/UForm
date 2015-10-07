@@ -7,15 +7,18 @@ namespace UForm\Test\Render;
 
 use UForm\Builder;
 use UForm\Form;
-use UForm\Render\AbstractRender;
+use UForm\Render\AbstractHtmlRender;
 use UForm\Render\RenderContext;
 use UForm\Validation\ValidationItem;
 
+/**
+ * @covers UForm\Render\RenderContext
+ */
 class RenderContextTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var AbstractRender
+     * @var AbstractHtmlRender
      */
     protected $render;
 

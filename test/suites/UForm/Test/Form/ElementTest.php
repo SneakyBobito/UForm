@@ -62,7 +62,8 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $panel = new Panel();
         $panel->addElement($group);
         $this->assertSame($group, $this->elementStub->getClosestInstanceOf("UForm\Form\Element\Container"));
-        $this->assertSame($panel, $this->elementStub->getClosestInstanceOf("UForm\Form\Element\Container\Group\NamedGroup\Panel"));
+
+        $this->assertSame($panel, $this->elementStub->getClosestInstanceOf(get_class($panel)));
     }
 
 

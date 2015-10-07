@@ -18,34 +18,21 @@ class Check extends Input
     protected $value;
 
 
-    public function __construct($name, $value = null, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name, $attributes = null, $validators = null, $filters = null)
     {
         parent::__construct("checkbox", $name, $attributes, $validators, $filters);
-        $this->value = $value;
         $this->addSemanticType("input:checkbox");
     }
 
     protected function overridesParamsBeforeRender($params, $attributes, $value, $prename = null)
     {
-        if (isset($value[$this->getName()]) && $value[$this->getName()] == $this->value) {
+
+        if (isset($value[$this->getName()]) && $value[$this->getName()]) {
             $params["checked"] = "checked";
         }
 
-        if ($this->value) {
-            $params["value"] = $this->value;
-        } else {
-            unset($params["value"]);
-        }
+        $params["value"] = 1;
 
         return $params;
-    }
-
-    /**
-     * Get the checkbox value
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 }

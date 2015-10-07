@@ -1,7 +1,5 @@
 <div class="form-group{% if not current.isValid() %} has-error{% endif %}{% if current.element.getOption("required") %} required{% endif %}">
-    {%- if current.element.getOption("label") -%}
-        <label class="control-label" for="{{ current.element.getId() }}">{{ current.element.getOption("label") }}</label>
-    {%- endif -%}
+    {% include "partial/label.twig" %}
     {%- block input  -%}
     {%- endblock -%}
 </div>
