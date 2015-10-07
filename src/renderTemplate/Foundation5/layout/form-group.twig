@@ -1,13 +1,5 @@
 <div class="input-single row collapse {% if not current.isValid() %} error{% endif %}{% if current.element.getOption("required") %} required{% endif %}">
-    {%- if current.element.getOption("label") -%}
-        <label
-            id="{{ current.element.getId() }}-label"
-            for="{{ current.element.getId() }}"
-            {% if current.element.getOption("tooltip") %}data-tooltip aria-haspopup="true" title="{{ current.element.getOption("tooltip") }}" class="has-tip"{% endif %}
-            >
-            {{ current.element.getOption("label") }}
-        </label>
-    {%- endif -%}
+    {% include "partial/label.twig" %}
     {%- block input -%}
     {%- endblock -%}
 </div>
