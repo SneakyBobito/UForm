@@ -140,7 +140,8 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $this->chainedValidation->getValidations());
     }
 
-    public function testGetValidationByName(){
+    public function testGetValidationByName()
+    {
         $this->assertSame(
             "firstname",
             $this->chainedValidation->getValidationByName("firstname")->getElement()->getName()

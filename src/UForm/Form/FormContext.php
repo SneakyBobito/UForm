@@ -117,14 +117,14 @@ class FormContext
     public function childrenAreValid($elementName)
     {
 
-        if(is_string($elementName)){
+        if (is_string($elementName)) {
             $validation = $this->chainValidation->getValidationByName($elementName);
-            if($validation){
+            if ($validation) {
                 return $validation->childrenAreValid();
-            }else{
+            } else {
                 return true;
             }
-        }else{
+        } else {
             return $this->chainValidation->elementChildrenAreValid($elementName);
         }
     }

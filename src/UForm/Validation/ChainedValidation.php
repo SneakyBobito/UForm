@@ -87,7 +87,7 @@ class ChainedValidation
      */
     public function getValidation($name)
     {
-        if(is_object($name) && $name instanceof Element){
+        if (is_object($name) && $name instanceof Element) {
             $name = $name->getInternalName(true);
         } elseif (!is_string($name) && !is_int($name)) {
             throw new InvalidArgumentException("name", "Element instance or string or int", $name);
@@ -106,7 +106,8 @@ class ChainedValidation
      * @param string $name public name of the element
      * @return null|ValidationItem
      */
-    public function getValidationByName($name){
+    public function getValidationByName($name)
+    {
         if (!is_string($name) && !is_int($name)) {
             throw new InvalidArgumentException("name", "Element instance or string or int", $name);
         }
