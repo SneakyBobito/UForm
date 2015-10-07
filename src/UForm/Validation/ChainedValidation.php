@@ -18,7 +18,7 @@ class ChainedValidation
 {
 
     /**
-     * @var ValidationItem[]
+     * @var string[]
      */
     protected $validationsName = [];
     /**
@@ -46,10 +46,11 @@ class ChainedValidation
     {
         $el = $validation->getElement();
         $name = $el->getName();
+        $internalName = $el->getInternalName(true);
         if (null !== $name) {
-            $this->validationsName[$el->getName(true, true)] = $validation;
+            $this->validationsName[$el->getName(true, true)] = $internalName;
         }
-        $this->validationsInternalName[$validation->getElement()->getInternalName(true)] = $validation;
+        $this->validationsInternalName[$internalName] = $validation;
 
     }
 
@@ -77,34 +78,48 @@ class ChainedValidation
     }
 
     /**
-     * gets the validation by its name
-     * @param string $name name of the validation
-     * @param bool $iname default the function will search for the real name of the element, passe $iname to true
-     * to search by its internalName
+     * gets the validation by its internal name
+     * @see getValidations()
+     * @see getValidationByName()
+     * @param string $name internal name of the element or the element instance
      * @return null|ValidationItem the validation item
      * @throws InvalidArgumentException
      */
-    public function getValidation($name, $iname = false)
+    public function getValidation($name)
     {
-
-        if (!is_string($name) && !is_int($name)) {
-            throw new InvalidArgumentException("name", "string or int", $name);
+        if(is_object($name) && $name instanceof Element){
+            $name = $name->getInternalName(true);
+        } elseif (!is_string($name) && !is_int($name)) {
+            throw new InvalidArgumentException("name", "Element instance or string or int", $name);
         }
 
-        if ($iname) {
-            if (isset($this->validationsInternalName[$name])) {
-                return $this->validationsInternalName[$name];
-            }
-        } elseif (isset($this->validationsName[$name])) {
-            return $this->validationsName[$name];
+        if (isset($this->validationsInternalName[$name])) {
+            return $this->validationsInternalName[$name];
         }
-
         return null;
+    }
 
+    /**
+     * Get an element validation by its public name
+     * @see getValidation()
+     * @see getValidations()
+     * @param string $name public name of the element
+     * @return null|ValidationItem
+     */
+    public function getValidationByName($name){
+        if (!is_string($name) && !is_int($name)) {
+            throw new InvalidArgumentException("name", "Element instance or string or int", $name);
+        }
+        if (isset($this->validationsName[$name])) {
+            return $this->validationsInternalName[$this->validationsName[$name]];
+        }
+        return null;
     }
 
     /**
      * get the validations in the chainedValidation
+     * @see getValidation()
+     * @see getValidationByName()
      * @return ValidationItem[]
      */
     public function getValidations()
@@ -181,7 +196,7 @@ class ChainedValidation
             $name = $name->getInternalName(true);
             $validation = $this->getValidation($name, true);
         } else {
-            $validation = $this->getValidation($name);
+            $validation = $this->getValidationByName($name);
         }
 
 
@@ -193,16 +208,15 @@ class ChainedValidation
 
     /**
      * check whether all the children of the element are valid
-     * @param string|Element $name
+     * @param string|Element $name internal name or instance of the element
      * @return boolean
+     * @throws Exception
      */
     public function elementChildrenAreValid($name)
     {
         $validation = null;
-        if (is_string($name)) {
+        if (is_string($name) || $name instanceof Element) {
             $validation = $this->getValidation($name);
-        } elseif ($name instanceof Element) {
-            $validation = $this->getValidation($name->getInternalName(true), true);
         }
         if (!$validation instanceof ValidationItem) {
             throw new Exception("Element not valid for children validation");

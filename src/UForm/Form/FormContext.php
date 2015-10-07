@@ -110,13 +110,23 @@ class FormContext
     /**
      * Check if children of an element are valid
      * Element's children will always be valid before the formContext is validated
-     * @param string|Element $elementName name of the element or instance of the element
+     * @param string|Element $elementName public name of the element or instance of the element
      * @return bool
      * @throws \UForm\Exception
      */
     public function childrenAreValid($elementName)
     {
-        return $this->chainValidation->elementChildrenAreValid($elementName);
+
+        if(is_string($elementName)){
+            $validation = $this->chainValidation->getValidationByName($elementName);
+            if($validation){
+                return $validation->childrenAreValid();
+            }else{
+                return true;
+            }
+        }else{
+            return $this->chainValidation->elementChildrenAreValid($elementName);
+        }
     }
 
     /**

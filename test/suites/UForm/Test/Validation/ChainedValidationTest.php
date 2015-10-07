@@ -12,6 +12,9 @@ use UForm\Validation\Message;
 use UForm\Validation\ValidationItem;
 use UForm\Validator\DirectClosure;
 
+/**
+ * @covers UForm\Validation\ChainedValidation
+ */
 class ChainedValidationTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -87,7 +90,7 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
         $chainedValidation = new ChainedValidation(new DataContext([]));
         $this->assertCount(0, $chainedValidation->getValidations());
 
-        $validationItem = $this->chainedValidation->getValidation("firstname");
+        $validationItem = $this->chainedValidation->getValidationByName("firstname");
         $chainedValidation->addValidation($validationItem);
 
         $this->assertCount(1, $chainedValidation->getValidations());
@@ -119,7 +122,7 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
     public function testGetValidation()
     {
 
-        $validation = $this->chainedValidation->getValidation("firstname");
+        $validation = $this->chainedValidation->getValidation($this->firstName);
         $this->assertEquals($this->firstName, $validation->getElement());
 
         $validation = $this->chainedValidation->getValidation($this->firstName->getInternalName(true), true);
@@ -135,6 +138,13 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInternalType("array", $this->chainedValidation->getValidations());
         $this->assertCount(2, $this->chainedValidation->getValidations());
+    }
+
+    public function testGetValidationByName(){
+        $this->assertSame(
+            "firstname",
+            $this->chainedValidation->getValidationByName("firstname")->getElement()->getName()
+        );
     }
 
     public function testGetData()
@@ -168,9 +178,9 @@ class ChainedValidationTest extends \PHPUnit_Framework_TestCase
     public function testElementChildrenAreValid()
     {
 
-        $this->assertTrue($this->chainedValidation->elementChildrenAreValid("firstname"));
+        $this->assertTrue($this->chainedValidation->elementChildrenAreValid($this->firstName));
         $this->chainedValidation->validate();
-        $this->assertTrue($this->chainedValidation->elementChildrenAreValid("firstname"));
+        $this->assertTrue($this->chainedValidation->elementChildrenAreValid($this->firstName));
 
         $this->setExpectedException("UForm\Exception");
         $this->chainedValidation->elementChildrenAreValid("fake");

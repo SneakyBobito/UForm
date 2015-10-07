@@ -12,11 +12,11 @@ use UForm\Validation\Message;
 use UForm\Validation\ValidationItem;
 use UForm\Validator\DirectClosure;
 
+/**
+ * @covers UForm\Form\FormContext
+ */
 class FormContextTest extends \PHPUnit_Framework_TestCase
 {
-
-
-
     protected $dataSet;
 
     /**
@@ -128,7 +128,6 @@ class FormContextTest extends \PHPUnit_Framework_TestCase
             if ($v->getValue() !== "bart") {
                 $v->setInvalid();
             }
-
         });
         $password = new Password("password");
         $group = new Form\Element\Container\Group("user");

@@ -6,6 +6,7 @@ namespace UForm\Validation;
 
 use UForm\DataContext;
 use UForm\Form\Element;
+use UForm\Form\Element\Container;
 use UForm\Form\FormContext;
 use Uform\Validation\Message;
 use UForm\Validation\Message\Group;
@@ -168,7 +169,7 @@ class ValidationItem
 
     public function childrenAreValid()
     {
-        if ($this->element instanceof Element\Container) {
+        if ($this->element instanceof Container) {
             foreach ($this->element->getElements($this->getValue()) as $element) {
                 if (!$this->formContext->elementIsValid($element)) {
                     return false;

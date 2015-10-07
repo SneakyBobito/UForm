@@ -9,6 +9,9 @@ use UForm\Form;
 use UForm\Form\Element\Container\Collection;
 use UForm\Form\Element\Primary\Input\Text;
 
+/**
+ * @covers UForm\Form\Element\Container\Collection
+ */
 class CollectionTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -52,11 +55,11 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             "UForm\Form\Element\Primary\Input\Text",
-            $chainedValidation->getValidation("simpsons.0")->getElement()
+            $chainedValidation->getValidationByName("simpsons.0")->getElement()
         );
         $this->assertInstanceOf(
             "UForm\Form\Element\Primary\Input\Text",
-            $chainedValidation->getValidation("simpsons.1")->getElement()
+            $chainedValidation->getValidationByName("simpsons.1")->getElement()
         );
 
     }

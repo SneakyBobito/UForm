@@ -159,6 +159,12 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $this->elementStub->setInternalNamespace("parentInternalName");
         $this->assertEquals("internalName", $this->elementStub->getInternalName(false));
         $this->assertEquals("parentInternalName.internalName", $this->elementStub->getInternalName(true));
+
+        // Internal namespace 0 was causing issues
+        $this->elementStub->setInternalName("internalName");
+        $this->elementStub->setInternalNamespace(0);
+        $this->assertEquals("internalName", $this->elementStub->getInternalName(false));
+        $this->assertEquals("0.internalName", $this->elementStub->getInternalName(true));
     }
 
     public function testSetAttribute()

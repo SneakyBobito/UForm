@@ -231,7 +231,7 @@ abstract class Element
 
     public function getInternalName($namespaced = false)
     {
-        if ($namespaced && !empty($namespaced) && $this->internalPrename && !empty($this->internalPrename)) {
+        if ($namespaced && !empty($namespaced) && null !== $this->internalPrename) {
             return $this->internalPrename . "." . $this->internalName;
         } else {
             return $this->internalName;

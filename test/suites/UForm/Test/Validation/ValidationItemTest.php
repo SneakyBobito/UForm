@@ -176,11 +176,11 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase
         $form->addElement($group);
 
         $formContext = $form->validate(["user" => ["username" => "bart"]]);
-        $validationItem = $formContext->getChainedValidation()->getValidation("user");
+        $validationItem = $formContext->getChainedValidation()->getValidation($group);
         $this->assertTrue($validationItem->childrenAreValid());
 
         $formContext = $form->validate(["user" => ["username" => "lisa"]]);
-        $validationItem = $formContext->getChainedValidation()->getValidation("user");
+        $validationItem = $formContext->getChainedValidation()->getValidation($group);
         $this->assertFalse($validationItem->childrenAreValid());
 
 
@@ -196,7 +196,7 @@ class ValidationItemTest extends \PHPUnit_Framework_TestCase
         $group->addElement($phoneGroup);
 
         $formContext = $form->validate(["user" => ["username" => "bart"]]);
-        $validationItem = $formContext->getChainedValidation()->getValidation("user");
+        $validationItem = $formContext->getChainedValidation()->getValidationByName("user");
         $this->assertFalse($validationItem->childrenAreValid());
 
     }
