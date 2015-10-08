@@ -1,10 +1,10 @@
 <?php
 
-namespace UForm\Form\Element\Container\Group;
+namespace UForm\Form\Element\Container\Group\Structural;
 
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Container\Group\NamedGroup\Tab;
+use UForm\Form\Element\Container\Group\StructuralGroup;
 use UForm\InvalidArgumentException;
 
 /**
@@ -13,12 +13,12 @@ use UForm\InvalidArgumentException;
  * @renderOption tab-position  position of the tab "top", "bottom", "left" or "right". Default to top
  * @renderOption tab-justified  in some render engine you can make tab to fill all the width while having the same size
  */
-class TabGroup extends Group
+class TabGroup extends StructuralGroup
 {
 
-    public function __construct($name = null, $elements = null)
+    public function __construct()
     {
-        parent::__construct($name, $elements);
+        parent::__construct();
         $this->addSemanticType("tabGroup");
     }
 

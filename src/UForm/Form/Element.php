@@ -6,6 +6,7 @@ namespace UForm\Form;
 
 use UForm\DataContext;
 use UForm\FilterGroup;
+use UForm\Filtering\FilterChain;
 use UForm\Form;
 use UForm\Form\Element\Container;
 use UForm\InvalidArgumentException;
@@ -53,25 +54,10 @@ abstract class Element
      * \UForm\Form\Element constructor
      *
      * @param string $name
-     * @param array|null $attributes
      */
-    public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name = null)
     {
         $this->name = $name;
-
-        if (is_array($attributes) === true) {
-            $this->attributes = $attributes;
-        }
-
-        if (null !== $validators) {
-            $this->addValidators($validators);
-        }
-
-        if (null !== $filters) {
-            foreach ($filters as $f) {
-                $this->addFilter($f);
-            }
-        }
 
         $this->internalName = 0;
         $this->addSemanticType("element");
@@ -208,8 +194,8 @@ abstract class Element
     /**
      * @param bool $namespaced if set to true it will return the name of the element with its namespace.
      * The namespace it the name of all the parent elements
-     * @param bool $dottedNotation if set to true will return the nameme in a dotted notation,
-     * else it will use the html valid array notation
+     * @param bool $dottedNotation if set to true will return the name in a dotted notation,
+     * else it will use the html valid array notation (namespace1[namespace2][name]
      * @return mixed|null|string
      */
     public function getName($namespaced = false, $dottedNotation = false)
@@ -325,6 +311,13 @@ abstract class Element
         $formContext->getChainedValidation()->addValidation($v);
     }
 
+
+    public function prepareFilterChain(FilterChain $filterChain)
+    {
+        if ($this->getName()) {
+            $filterChain->addFiltersFor($this, $this->getFilters());
+        }
+    }
 
     /**
      * Set an id for the element that will serve for the rendering (html id attribute)

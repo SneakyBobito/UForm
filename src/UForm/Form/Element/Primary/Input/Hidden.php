@@ -16,9 +16,9 @@ class Hidden extends Input
 
     protected $value;
 
-    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name)
     {
-        parent::__construct("hidden", $name, $attributes, $validators, $filters);
+        parent::__construct("hidden", $name);
         $this->addSemanticType("input:hidden");
     }
 }

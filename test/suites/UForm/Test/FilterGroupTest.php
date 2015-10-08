@@ -2,8 +2,6 @@
 
 namespace UForm\Test;
 
-use UForm\Filter\LeftTrim;
-use UForm\Filter\RightTrim;
 use UForm\FilterGroup;
 
 class FilterGroupTest extends \PHPUnit_Framework_TestCase
@@ -13,7 +11,7 @@ class FilterGroupTest extends \PHPUnit_Framework_TestCase
      * @var FilterGroup
      */
     protected $filterGroupStub;
-    
+
     public function setup()
     {
         $this->filterGroupStub = $this->getMockForTrait('UForm\FilterGroup');
@@ -65,15 +63,5 @@ class FilterGroupTest extends \PHPUnit_Framework_TestCase
     public function testGetFilters()
     {
         $this->assertSame([], $this->filterGroupStub->getFilters());
-    }
-
-    public function testSanitizeData()
-    {
-        $data = " string ";
-        $this->assertSame($data, $this->filterGroupStub->sanitizeData($data));
-        $this->filterGroupStub->addFilter(new RightTrim());
-        $this->assertSame(" string", $this->filterGroupStub->sanitizeData($data));
-        $this->filterGroupStub->addFilter(new LeftTrim());
-        $this->assertSame("string", $this->filterGroupStub->sanitizeData($data));
     }
 }

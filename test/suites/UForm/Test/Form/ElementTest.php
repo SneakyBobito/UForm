@@ -5,7 +5,7 @@ namespace UForm\Test\Form;
 use UForm\Form;
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Container\Group\NamedGroup\Panel;
+use UForm\Form\Element\Container\Group\Structural\Panel;
 
 /**
  * @covers UForm\Form\Element
@@ -29,25 +29,14 @@ class ElementTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
-
-
         $elementName = "elementName";
-        $attributes = ["at1" => "val1", "at2" => "val2"];
-        $validators = [
-            $this->getMockForAbstractClass('UForm\Validator'),
-            $this->getMockForAbstractClass('UForm\Validator')
-        ];
-        $filters= [$this->getMockForAbstractClass('UForm\Filter'), $this->getMockForAbstractClass('UForm\Filter')];
 
         /* @var $element Element */
         $element = $this->getMockForAbstractClass('UForm\Form\Element', [
-            $elementName, $attributes, $validators, $filters
+            $elementName
         ]);
 
         $this->assertEquals($elementName, $element->getName());
-        $this->assertSame($attributes, $element->getAttributes());
-        $this->assertSame($validators, $element->getValidators());
-        $this->assertSame($filters, $element->getFilters());
     }
 
     public function testGetClosestParent()
@@ -131,6 +120,8 @@ class ElementTest extends \PHPUnit_Framework_TestCase
     public function testGetName()
     {
         $this->assertEquals(null, $this->elementStub->getName());
+        $this->assertEquals(null, $this->elementStub->getName(true));
+        $this->assertEquals(null, $this->elementStub->getName(true, true));
 
         $this->elementStub->setName("newName");
         $this->assertEquals("newName", $this->elementStub->getName(false, false));

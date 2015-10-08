@@ -23,16 +23,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("name", $group->getName());
         $this->assertSame([], $group->getElements());
 
-        $text = new Text("firstname");
-        $group = new Group("name", $text);
-        $this->assertEquals("name", $group->getName());
-        $this->assertSame([$text], $group->getElements());
-
-        $text1 = new Text("firstname");
-        $text2 = new Text("lastname");
-        $group = new Group("name", [$text1, $text2]);
-        $this->assertEquals("name", $group->getName());
-        $this->assertSame([$text1, $text2], $group->getElements());
 
     }
 

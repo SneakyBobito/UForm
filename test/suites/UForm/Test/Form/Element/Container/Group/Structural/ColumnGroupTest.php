@@ -3,10 +3,10 @@
  * @license see LICENSE
  */
 
-namespace UForm\Test\Form\Element\Container\Group;
+namespace UForm\Test\Form\Element\Container\Group\Structural;
 
-use UForm\Form\Element\Container\Group\Column;
-use UForm\Form\Element\Container\Group\ColumnGroup;
+use UForm\Form\Element\Container\Group\Structural\Column;
+use UForm\Form\Element\Container\Group\Structural\ColumnGroup;
 use UForm\Form\Element\Primary\Input\Text;
 
 class ColumnGroupTest extends \PHPUnit_Framework_TestCase

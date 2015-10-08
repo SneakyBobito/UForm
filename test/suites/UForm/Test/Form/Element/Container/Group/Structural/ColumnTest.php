@@ -3,11 +3,11 @@
  * @license see LICENSE
  */
 
-namespace UForm\Test\Form\Element\Container\Group;
+namespace UForm\Test\Form\Element\Container\Group\Structural;
 
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Container\Group\Column;
-use UForm\Form\Element\Container\Group\ColumnGroup;
+use UForm\Form\Element\Container\Group\Structural\Column;
+use UForm\Form\Element\Container\Group\Structural\ColumnGroup;
 
 class ColumnTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,19 +44,19 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
 
         // With parent
-        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\ColumnGroup")->getMock();
+        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\Structural\ColumnGroup")->getMock();
         $column->setParent($columnGroup);
         $columnGroup->method("getWidthInPercent")->willReturn(100);
         $this->assertEquals(10, $column->getAdaptiveWidth(10));
         $this->assertEquals(12, $column->getAdaptiveWidth(12));
 
         // mock other children in parent
-        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\ColumnGroup")->getMock();
+        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\Structural\ColumnGroup")->getMock();
         $columnGroup->method("getWidthInPercent")->willReturn(50);
         $column->setParent($columnGroup);
         $this->assertEquals(6, $column->getAdaptiveWidth(12));
 
-        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\ColumnGroup")->getMock();
+        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\Structural\ColumnGroup")->getMock();
         $columnGroup->method("getWidthInPercent")->willReturn(25);
         $column->setParent($columnGroup);
         $this->assertEquals(3, $column->getAdaptiveWidth(12));

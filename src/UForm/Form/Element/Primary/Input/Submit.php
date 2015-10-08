@@ -13,9 +13,9 @@ use UForm\Form\Element\Primary\Input;
  */
 class Submit extends Input
 {
-    public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name = null)
     {
-        parent::__construct("submit", $name, $attributes, $validators, $filters);
+        parent::__construct("submit", $name);
         $this->addSemanticType("input:submit");
     }
 }

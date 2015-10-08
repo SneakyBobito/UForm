@@ -17,9 +17,9 @@ use UForm\Form\Element\Primary\Input;
  */
 class Password extends Input
 {
-    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name)
     {
-        parent::__construct("password", $name, $attributes, $validators, $filters);
+        parent::__construct("password", $name);
         $this->addSemanticType("input:textfield");
         $this->addSemanticType("input:password");
     }

@@ -13,6 +13,7 @@ use UForm\Form\Element\Primary\Input\Check;
 use UForm\Form\Element\Primary\Input\File;
 use UForm\Form\Element\Primary\Input\Hidden;
 use UForm\Form\Element\Primary\Input\Password;
+use UForm\Form\Element\Primary\Input\Radio;
 use UForm\Form\Element\Primary\Input\Submit;
 use UForm\Form\Element\Primary\Input\Text;
 use UForm\Form\Element\Primary\Select;
@@ -184,12 +185,14 @@ trait InputBuilder
     }
 
 
-
-    public function checkGroup($name)
+    public function radio($name, $value, $label = null)
     {
-        $element = new Group\CheckGroup($name, []);
+        if (null == $label) {
+            $label = $value;
+        }
+        $element = new Radio($name, $value);
+        $this->_makeInput($element, $label, null);
         $this->add($element);
-        $this->open($element);
         return $this;
     }
 

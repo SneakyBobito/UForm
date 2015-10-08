@@ -2,6 +2,7 @@
 
 namespace UForm;
 
+use UForm\Filtering\FilterChain;
 use UForm\Form\Element\Container\Group as ElementGroup;
 use UForm\Form\FormContext;
 use UForm\Validation;
@@ -139,11 +140,12 @@ class Form extends ElementGroup
     {
         if (null === $data) {
             $data = null;
-        } else {
-            $data = $data;
         }
 
-        $data = $this->sanitizeData($data);
+        $filterChain = new FilterChain($this);
+        $this->prepareFilterChain($filterChain);
+
+        $data = $filterChain->sanitizeData($data);
 
         $formContext = new FormContext($this, new DataContext($data));
         return $formContext;

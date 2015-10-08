@@ -1,20 +1,21 @@
 <?php
 
-namespace UForm\Form\Element\Container\Group;
+namespace UForm\Form\Element\Container\Group\Structural;
 
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Container\Group\StructuralGroup;
 use UForm\InvalidArgumentException;
 
 /**
  * @method Column[] getElements($values=null)
  * @semanticType columnGroup
  */
-class ColumnGroup extends Group
+class ColumnGroup extends StructuralGroup
 {
-    public function __construct($name = null, $elements = null)
+    public function __construct()
     {
-        parent::__construct($name, $elements);
+        parent::__construct();
         $this->addSemanticType("columnGroup");
     }
 

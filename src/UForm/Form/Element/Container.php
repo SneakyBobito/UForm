@@ -2,6 +2,7 @@
 
 namespace UForm\Form\Element;
 
+use UForm\Filtering\FilterChain;
 use UForm\Form\Element;
 
 /**
@@ -19,9 +20,9 @@ use UForm\Form\Element;
 abstract class Container extends Element
 {
 
-    public function __construct($name = null, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name = null)
     {
-        parent::__construct($name, $attributes, $validators, $filters);
+        parent::__construct($name);
         $this->addSemanticType("container");
     }
 
@@ -94,6 +95,14 @@ abstract class Container extends Element
         return false;
     }
 
+    public function prepareFilterChain(FilterChain $filterChain)
+    {
+        parent::prepareFilterChain($filterChain);
+        foreach ($this->getElements() as $v) {
+            $v->prepareFilterChain($filterChain);
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -104,23 +113,5 @@ abstract class Container extends Element
             $element->refreshParent();
         }
         return $r;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function sanitizeData($data)
-    {
-        $data = parent::sanitizeData($data);
-        foreach ($this->getElements($data) as $element) {
-            $name = $element->getName();
-            if ($name) {
-                $value = isset($data[$name]) ? $data[$name] : null;
-                $data[$name] = $element->sanitizeData($value);
-            } else {
-                $data = $element->sanitizeData($data);
-            }
-        }
-        return $data;
     }
 }

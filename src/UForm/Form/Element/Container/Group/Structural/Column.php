@@ -1,25 +1,25 @@
 <?php
 
-namespace UForm\Form\Element\Container\Group;
+namespace UForm\Form\Element\Container\Group\Structural;
 
 use UForm\Exception;
 use UForm\Form\Element\Container;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Container\Group\NamedGroup;
+use UForm\Form\Element\Container\Group\StructuralGroup;
 use UForm\InvalidArgumentException;
 
 /**
  * @semanticType column
  * @method ColumnGroup getParent()
  */
-class Column extends Group
+class Column extends StructuralGroup
 {
 
     protected $width;
 
-    public function __construct($width, $name = null, $elements = null)
+    public function __construct($width)
     {
-        parent::__construct($name, $elements);
+        parent::__construct();
         $this->addSemanticType("column");
 
         if ($width < 0) {

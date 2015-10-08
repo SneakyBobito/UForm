@@ -32,9 +32,9 @@ class Input extends Primary implements Drawable
      * @param Validator[] $validators
      * @param Filter[] $filters
      */
-    public function __construct($type, $name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($type, $name)
     {
-        parent::__construct($name, $attributes, $validators, $filters);
+        parent::__construct($name);
         $this->inputType = $type;
         $this->addSemanticType("input");
     }

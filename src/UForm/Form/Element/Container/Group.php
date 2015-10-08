@@ -21,7 +21,7 @@ use UForm\InvalidArgumentException;
  */
 class Group extends Container
 {
-    
+
     /**
      * @var \UForm\Form\Element[]
      */
@@ -31,16 +31,9 @@ class Group extends Container
      * @param null|string $name name of the group. A group name can be null to allow transparent grouping
      * @param Element|Element[] $elements one or many elements to add to the group
      */
-    public function __construct($name = null, $elements = null)
+    public function __construct($name = null)
     {
         parent::__construct($name);
-        if (is_array($elements)) {
-            foreach ($elements as $el) {
-                $this->addElement($el);
-            }
-        } elseif (is_object($elements)) {
-            $this->addElement($elements);
-        }
         $this->addSemanticType("group");
     }
 
@@ -84,7 +77,7 @@ class Group extends Container
 
 
         $finalElm = $this->getDirectElement($namesP[0]);
-        
+
         if ($finalElm && count($namesP)>1) {
             array_shift($namesP);
             return $finalElm->getElement(($namesP));
