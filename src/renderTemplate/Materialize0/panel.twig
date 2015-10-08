@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-content">
+        {%- if current.element.getOption("title") -%}
+        <div class="card-title">
+            {{ current.element.getOption("title") }}
+            {% if current.element.getOption("tooltip") %}
+                <i class="tiny material-icons tooltipped" data-tooltip="{{ current.element.getOption("tooltip") }}">info</i>
+            {% endif %}
+        </div>
+        {{- renderParentType() -}}
+        {%- endif -%}
+
+    </div>
+</div>

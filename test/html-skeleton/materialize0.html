@@ -1,0 +1,45 @@
+<html>
+
+    <head>
+
+        <title>Materialize 0.x form</title>
+
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
+        <style>
+            .card .card-content .card-title{
+                color: #999;
+            }
+        </style>
+
+
+        <script>
+
+            $(function () {
+                $('ul.tabs').tabs();
+                $('select').material_select();
+                $('.tooltipped').tooltip({delay: 50});
+            });
+
+        </script>
+
+        <style>
+
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+            <h1>Materialize 0.x form</h1>
+                {{content}}
+            </div>
+
+    </body>
+
+</html>

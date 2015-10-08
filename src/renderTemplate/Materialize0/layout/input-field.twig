@@ -1,0 +1,9 @@
+<div class="input-field{% if not current.isValid() %} has-error{% endif %}{% if current.element.getOption("required") %} required{% endif %}">
+    {%- block beforeInput  -%}
+        {% include "partial/label.twig" %}
+    {%- endblock -%}
+    {%- block input  -%}
+    {%- endblock -%}
+    {%- block afterInput  -%}
+    {%- endblock -%}
+</div>

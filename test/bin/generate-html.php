@@ -6,14 +6,15 @@ include __DIR__ . "/../../vendor/autoload.php";
 use UForm\Builder;
 use UForm\Render\Html\Bootstrap3;
 use UForm\Render\Html\Foundation5;
+use UForm\Render\Html\Materialize0;
 use UForm\Render\Html\StandardHtml;
-
 
 $renders = [
 
     "standardHtml" => new StandardHtml(),
     "bootstrap3" => new Bootstrap3(),
-    "foundation5" => new Foundation5()
+    "foundation5" => new Foundation5(),
+    "materialize0" => new Materialize0()
 
 ];
 
@@ -41,7 +42,7 @@ $form = Builder::init("#", "POST")
                 "UIKit",
 
                 "Material" => [
-                    "Materialize",
+                    "Materialize" => "materialize0",
                     "MUI"
                 ]
             ])->tooltip("Choose a framework to view")->leftAddon("Framework")->id("goToFramework")
