@@ -9,6 +9,9 @@ use UForm\Builder;
 use UForm\Builder\GroupBuilder;
 use UForm\Form\Element\Container\Group;
 
+/**
+ * @covers UForm\Builder\GroupBuilder
+ */
 class GroupBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -36,7 +39,8 @@ class GroupBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->groupBuilderStub->columnGroup();
         $this->groupBuilderStub->column(6);
-        $this->assertInstanceOf("UForm\Form\Element\Container\Group\Column", $this->groupBuilderStub->current());
+        $className = "UForm\Form\Element\Container\Group\Structural\Column";
+        $this->assertInstanceOf($className, $this->groupBuilderStub->current());
         $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
         $this->assertEquals(6, $this->groupBuilderStub->last()->getWidth());
 
@@ -50,7 +54,7 @@ class GroupBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->groupBuilderStub->columnGroup();
         $this->assertInstanceOf(
-            "UForm\Form\Element\Container\Group\ColumnGroup",
+            "UForm\Form\Element\Container\Group\Structural\ColumnGroup",
             $this->groupBuilderStub->current()
         );
         $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
@@ -60,7 +64,7 @@ class GroupBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->groupBuilderStub->panel("panelTitle");
         $this->assertInstanceOf(
-            "UForm\Form\Element\Container\Group\NamedGroup\Panel",
+            "UForm\Form\Element\Container\Group\Structural\Panel",
             $this->groupBuilderStub->current()
         );
         $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
@@ -71,17 +75,11 @@ class GroupBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->groupBuilderStub->fieldset("fieldsetTitle");
         $this->assertInstanceOf(
-            "UForm\Form\Element\Container\Group\NamedGroup\Fieldset",
+            "UForm\Form\Element\Container\Group\Structural\Fieldset",
             $this->groupBuilderStub->current()
         );
         $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
         $this->assertEquals("fieldsetTitle", $this->groupBuilderStub->current()->getOption("title"));
-    }
-    public function testRow()
-    {
-        $this->groupBuilderStub->row();
-        $this->assertInstanceOf("UForm\Form\Element\Container\Group\Row", $this->groupBuilderStub->current());
-        $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
     }
 
     public function testTab()
@@ -89,7 +87,7 @@ class GroupBuilderTest extends \PHPUnit_Framework_TestCase
         $this->groupBuilderStub->tabGroup();
         $this->groupBuilderStub->tab("tabTitle");
         $this->assertInstanceOf(
-            "UForm\Form\Element\Container\Group\NamedGroup\Tab",
+            "UForm\Form\Element\Container\Group\Structural\Tab",
             $this->groupBuilderStub->current()
         );
         $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
@@ -104,7 +102,8 @@ class GroupBuilderTest extends \PHPUnit_Framework_TestCase
     public function testTabGroup()
     {
         $this->groupBuilderStub->tabGroup();
-        $this->assertInstanceOf("UForm\Form\Element\Container\Group\TabGroup", $this->groupBuilderStub->current());
+        $className = "UForm\Form\Element\Container\Group\Structural\TabGroup";
+        $this->assertInstanceOf($className, $this->groupBuilderStub->current());
         $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
     }
 }

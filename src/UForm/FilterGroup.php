@@ -73,18 +73,4 @@ trait FilterGroup
     {
         return $this->filterGroup;
     }
-
-    /**
-     * Apply filters of the element to sanitize the given data
-     * @param mixed $data the data to sanitize
-     * @return mixed the sanitized data
-     */
-    public function sanitizeData($data)
-    {
-        $filters = $this->getFilters();
-        foreach ($filters as $filter) {
-            $data = $filter->filter($data);
-        }
-        return $data;
-    }
 }

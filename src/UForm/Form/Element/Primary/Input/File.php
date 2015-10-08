@@ -15,9 +15,9 @@ use UForm\Form\Element\Primary\Input;
  */
 class File extends Input
 {
-    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name)
     {
-        parent::__construct("file", $name, $attributes, $validators, $filters);
+        parent::__construct("file", $name);
         $this->addSemanticType("input:file");
     }
 

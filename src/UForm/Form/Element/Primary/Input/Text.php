@@ -18,9 +18,9 @@ use UForm\Form\Element\Primary\Input;
  */
 class Text extends Input
 {
-    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name)
     {
-        parent::__construct("text", $name, $attributes, $validators, $filters);
+        parent::__construct("text", $name);
         $this->addSemanticType("input:textfield");
         $this->addSemanticType("input:text");
     }

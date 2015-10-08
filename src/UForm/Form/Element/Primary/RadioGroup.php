@@ -15,9 +15,9 @@ class RadioGroup extends Primary implements Element\Drawable
     protected $values;
     protected $generatedIds = [];
 
-    public function __construct($name, $values, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name, $values)
     {
-        parent::__construct($name, $attributes, $validators, $filters);
+        parent::__construct($name);
         $this->values = $values;
         $this->addSemanticType("radioGroup");
     }

@@ -3,10 +3,10 @@
  * @license see LICENSE
  */
 
-namespace UForm\Test\Form\Element\Container\Group;
+namespace UForm\Test\Form\Element\Container\Group\Structural;
 
-use UForm\Form\Element\Container\Group\NamedGroup\Tab;
-use UForm\Form\Element\Container\Group\TabGroup;
+use UForm\Form\Element\Container\Group\Structural\Tab;
+use UForm\Form\Element\Container\Group\Structural\TabGroup;
 use UForm\Form\Element\Primary\Input\Text;
 
 class TabGroupTest extends \PHPUnit_Framework_TestCase

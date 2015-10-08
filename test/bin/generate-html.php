@@ -46,8 +46,13 @@ $form = Builder::init("#", "POST")
                 ]
             ])->tooltip("Choose a framework to view")->leftAddon("Framework")->id("goToFramework")
 
-            ->fieldset("Input Type")
-                ->checkGroup("inputType")
+        ->close()
+    ->close()
+
+    ->columnGroup()
+        ->column(3)
+            ->fieldset("List of checkbox")
+                ->group("inputType")
                     ->columnGroup()
                         ->column(6)
                             ->panel("Text fields")
@@ -64,13 +69,37 @@ $form = Builder::init("#", "POST")
                     ->close()
                 ->close()
             ->close()
-
+        ->close()
+        ->column(3)
+            ->fieldset("Your favorite dessert")
+                ->columnGroup()
+                    ->column(1)
+                        ->fieldset("Cake and pie")
+                            ->radio("favorite_dessert", "chocolate", "Chocolate Cake")
+                            ->radio("favorite_dessert", "apple-pie", "Apple pie")
+                            ->radio("favorite_dessert", "cheesecake", "Cheese cake")
+                        ->close()
+                    ->close()
+                    ->column(1)
+                        ->fieldset("Fruit")
+                            ->radio("favorite_dessert", "strawberry", "Strawberry with cream")
+                            ->radio("favorite_dessert", "banana", "Banana (default)")
+                        ->close()
+                    ->close()
+                    ->column(1)
+                        ->fieldset("Other")
+                            ->radio("favorite_dessert", "ice-cream", "Ice cream")
+                            ->radio("favorite_dessert", "crepes", "Crepes")
+                        ->close()
+                    ->close()
+                ->close()
+            ->close()
         ->close()
     ->close()
 
     ->panel("Inlined Panel (with tooltip)")->tooltip("The following elemens are inlined")
         ->inline()
-            ->text("weight", "Weight")->helper("This element is inlined")->rightAddon("g")
+            ->text("weight", "Weight", 20)->helper("This element is inlined")->rightAddon("g")
             ->text("inlined2", "Inlined 2")
             ->text("inlined3", "Inlined 3")
         ->close()
@@ -111,7 +140,8 @@ foreach($renders as $name=>$render){
         "login" => "bart",
         "password" => "somepassword",
         "framework" => $name,
-        "inputType" => ["password" => true, "check" => true, "radio" => true]
+        "inputType" => ["password" => true, "check" => true, "radio" => true],
+        "favorite_dessert" => "banana"
     ];
 
     $formContext = $form->validate($data);

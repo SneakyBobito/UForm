@@ -9,16 +9,15 @@ namespace UForm\Form\Element;
 use UForm\Form\Element;
 
 /**
- * A primary element is the opposite of a container.
- * It cant contain other elements and therefor it can be rendered directly
- * It does not have children relation and therefor a name is required for a primary element
+ * A primary element is the opposite of a container. It cant contain other elements
+ *
  * @semanticType primary
  */
 abstract class Primary extends Element
 {
-    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name)
     {
-        parent::__construct($name, $attributes, $validators, $filters);
+        parent::__construct($name);
         $this->addSemanticType("primary");
     }
 }

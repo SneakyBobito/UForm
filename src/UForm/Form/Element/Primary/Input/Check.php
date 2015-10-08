@@ -14,25 +14,23 @@ use UForm\Form\Element\Primary\Input;
  */
 class Check extends Input
 {
-
-    protected $value;
-
-
-    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name)
     {
-        parent::__construct("checkbox", $name, $attributes, $validators, $filters);
+        parent::__construct("checkbox", $name);
         $this->addSemanticType("input:checkbox");
     }
 
     protected function overridesParamsBeforeRender($params, $attributes, $value, $prename = null)
     {
-
         if (isset($value[$this->getName()]) && $value[$this->getName()]) {
             $params["checked"] = "checked";
         }
-
         $params["value"] = 1;
-
         return $params;
+    }
+
+    public function sanitizeData()
+    {
+
     }
 }

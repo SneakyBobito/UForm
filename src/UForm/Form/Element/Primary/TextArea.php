@@ -18,9 +18,9 @@ use UForm\Tag;
  */
 class TextArea extends Element\Primary implements Drawable
 {
-    public function __construct($name, $attributes = null, $validators = null, $filters = null)
+    public function __construct($name)
     {
-        parent::__construct($name, $attributes, $validators, $filters);
+        parent::__construct($name);
         $this->addSemanticType("textarea");
     }
 

@@ -7,13 +7,13 @@ namespace UForm\Builder;
 
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
-use UForm\Form\Element\Container\Group\Column;
-use UForm\Form\Element\Container\Group\ColumnGroup;
-use UForm\Form\Element\Container\Group\NamedGroup\Fieldset;
-use UForm\Form\Element\Container\Group\NamedGroup\Panel;
-use UForm\Form\Element\Container\Group\NamedGroup\Tab;
-use UForm\Form\Element\Container\Group\Row;
-use UForm\Form\Element\Container\Group\TabGroup;
+use UForm\Form\Element\Container\Group\Structural\Column;
+use UForm\Form\Element\Container\Group\Structural\ColumnGroup;
+use UForm\Form\Element\Container\Group\Structural\Fieldset;
+use UForm\Form\Element\Container\Group\Structural\Inline;
+use UForm\Form\Element\Container\Group\Structural\Panel;
+use UForm\Form\Element\Container\Group\Structural\Tab;
+use UForm\Form\Element\Container\Group\Structural\TabGroup;
 
 trait GroupBuilder
 {
@@ -96,7 +96,7 @@ trait GroupBuilder
      */
     public function inline()
     {
-        $element = new Group\Inline();
+        $element = new Inline();
         $this->add($element);
         $this->open($element);
         return $this;
@@ -126,19 +126,6 @@ trait GroupBuilder
         $this->add($element);
         $this->open($element);
         return $this;
-    }
-
-
-    /**
-     * Adds a row
-     * @return $this
-     */
-    public function row()
-    {
-        $element = new Row();
-        $this->add($element);
-        $this->open($element);
-        return  $this;
     }
 
     /**

@@ -5,6 +5,7 @@
 
 namespace UForm\Test\Form\Element;
 
+use UForm\Filtering\FilterChain;
 use UForm\Form\Element\Container;
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Input\Hidden;
@@ -67,7 +68,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
     public function testSanitizeData()
     {
-        $data = $this->container->sanitizeData(["data" => "value"]);
+        $chainFilter = new FilterChain();
+        $this->container->prepareFilterChain($chainFilter);
+        $data = $chainFilter->sanitizeData(["data" => "value"]);
         $this->assertEquals([
             "data" => "value",
             "username" => null,

@@ -34,9 +34,9 @@ class Select extends Element\Primary implements Element\Drawable
      * @param array|null $values
      * @param array|null $attributes
      */
-    public function __construct($name, array $values = null, $attributes = null)
+    public function __construct($name, array $values = null)
     {
-        parent::__construct($name, $attributes);
+        parent::__construct($name);
 
         $this->rootGroup = new OptGroup("");
         $this->rootGroup->setSelect($this);
