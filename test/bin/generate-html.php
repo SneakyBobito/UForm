@@ -46,11 +46,16 @@ $form = Builder::init("#", "POST")
                 ]
             ])->tooltip("Choose a framework to view")->leftAddon("Framework")->id("goToFramework")
 
+
+            ->select("selectError", "With error and right addon", [
+                "foo", "bar", "baz"
+            ])->rightAddon("qux")->required()
+
         ->close()
     ->close()
 
     ->columnGroup()
-        ->column(3)
+        ->column(5)
             ->fieldset("List of checkbox")
                 ->group("inputType")
                     ->columnGroup()
@@ -70,7 +75,7 @@ $form = Builder::init("#", "POST")
                 ->close()
             ->close()
         ->close()
-        ->column(3)
+        ->column(7)
             ->fieldset("Your favorite dessert")
                 ->columnGroup()
                     ->column(1)

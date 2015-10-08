@@ -29,9 +29,7 @@
             {%- endif -%}
         </div>
 
-        {% for message in current.messages() %}
-            <small class="error">{{ message }}</small>
-        {% endfor %}
+        {% include "partial/error-messages.twig" %}
 
 
 

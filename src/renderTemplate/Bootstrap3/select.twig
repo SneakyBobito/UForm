@@ -1,7 +1,7 @@
 {% embed "layout/form-group.twig" %}
     {%- block input  -%}
 
-        {%- if current.element.getOption("tooltip") -%}
+        {%- if current.element.hasOneOption("tooltip", "leftAddon", "rightAddon") -%}
         <div class="input-group">
             {%- if current.element.getOption("leftAddon") -%}
                 <div class="input-group-addon">{{ current.element.getOption("leftAddon") | raw }}</div>

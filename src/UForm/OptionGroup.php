@@ -73,6 +73,21 @@ trait OptionGroup
     }
 
     /**
+     * Check if at least one of the given option exists
+     * @return bool if at least one of the option exists
+     */
+    public function hasOneOption()
+    {
+        $args = func_get_args();
+        foreach ($args as $optionName) {
+            if (isset($this->optionGroup[$optionName])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Returns the options for the element
      *
      * @return array
