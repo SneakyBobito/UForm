@@ -24,7 +24,7 @@ class Message
     /**
      * @var []
      */
-    protected $variables = [];
+    protected $variables;
 
     /**
      * @var TranslationInterface
@@ -36,7 +36,7 @@ class Message
      * @param array|null $variables
      * @param string|null $type
 =     */
-    public function __construct($message, array $variables = null, $type = null)
+    public function __construct($message, array $variables = [], $type = null)
     {
         $this->message = $message;
         $this->variables = $variables;

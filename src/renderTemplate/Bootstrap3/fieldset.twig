@@ -1,4 +1,4 @@
-<fieldset>
-    <legend>{{ current.element.getOption("title") }}</legend>
+<fieldset class="{% if not childrenAreValid() %}error{% endif %}">
+    <legend class="{% if not childrenAreValid() %}text-danger{% endif %}"> {{ current.element.getOption("title") }}</legend>
     {{ renderParentType() }}
 </fieldset>

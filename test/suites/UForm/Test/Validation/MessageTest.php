@@ -43,6 +43,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function testGetVariables()
     {
         $this->assertEquals(["width" => 10, "height" => 20, "foo" => "bar"], $this->message->getVariables());
+
+        // variable must always be an array
+        $messageWithNoVariable = new Message("message");
+        $this->assertInternalType("array", $messageWithNoVariable->getVariables());
+        $this->assertCount(0, $messageWithNoVariable->getVariables());
+
     }
 
     public function testToString()

@@ -7,6 +7,7 @@ namespace UForm\Filtering;
 
 use UForm\Form\Element;
 use UForm\Form\Element\Container;
+use UForm\InvalidArgumentException;
 
 final class FilterChain
 {
@@ -22,9 +23,22 @@ final class FilterChain
         $this->filters = ["children" => []];
     }
 
-    public function addFiltersFor(Element $element, array $filters)
+    /**
+     * Add a filter for the given path
+     * @param Element|string $element path of the data to filter or instance of the element to filter
+     * @param array $filters
+     */
+    public function addFiltersFor($path, array $filters)
     {
-        $name = $element->getName(true, true);
+
+        if (is_string($path)) {
+            $name = $path;
+        } elseif ($path instanceof Element) {
+            $name = $path->getName(true, true);
+        } else {
+            throw new InvalidArgumentException("path", "stirng or instance of Element", $path);
+        }
+
 
         $nameParts = explode(".", $name);
 

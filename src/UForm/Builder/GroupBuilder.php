@@ -5,8 +5,10 @@
 
 namespace UForm\Builder;
 
+use UForm\Filter\DefaultValue;
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Container\Group\Proxy\RadioGroup;
 use UForm\Form\Element\Container\Group\Structural\Column;
 use UForm\Form\Element\Container\Group\Structural\ColumnGroup;
 use UForm\Form\Element\Container\Group\Structural\Fieldset;
@@ -147,9 +149,7 @@ trait GroupBuilder
     public function tabGroup($options = [])
     {
         $element = new TabGroup();
-        foreach ($options as $name => $value) {
-            $element->setOption("$name", $value);
-        }
+        $element->addOptions($options);
         $this->add($element);
         $this->open($element);
         return  $this;
@@ -174,5 +174,19 @@ trait GroupBuilder
         $this->add($element);
         $this->open($element);
         return  $this;
+    }
+
+
+    public function radioGroup($name, $defaultValue = null)
+    {
+        $element = new RadioGroup($name);
+        $this->add($element);
+        $this->open($element);
+
+        if ($defaultValue) {
+            $element->addFilter(new DefaultValue($defaultValue));
+        }
+
+        return $this;
     }
 }

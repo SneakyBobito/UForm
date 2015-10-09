@@ -1,0 +1,9 @@
+{% if current.messages | length > 0 %}
+    <div class="alert alert-danger" role="alert">
+        {% for message in current.messages %}
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{ message }}
+        {% endfor %}
+    </div>
+{% endif %}

@@ -148,8 +148,11 @@ class ValidationItem
      *
      * @param Message $message
      */
-    public function appendMessage(Message $message)
+    public function appendMessage($message)
     {
+        if (is_string($message)) {
+            $message = new Message($message);
+        }
         $this->messages->appendMessage($message);
     }
 
