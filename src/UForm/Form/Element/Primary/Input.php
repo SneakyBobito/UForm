@@ -66,7 +66,7 @@ class Input extends Primary implements Drawable
             $params["value"] = $localValue[$this->getName()];
         }
 
-        $render = new Tag("input", $this->overridesParamsBeforeRender($params, [], $localValue), true);
+        $render = new Tag("input", $this->overridesParamsBeforeRender($params, $localValue), true);
 
         return $render->draw([], null);
     }
@@ -81,7 +81,7 @@ class Input extends Primary implements Drawable
      * @param null $prename
      * @return mixed
      */
-    protected function overridesParamsBeforeRender($params, $attributes, $value, $prename = null)
+    protected function overridesParamsBeforeRender($params, $value)
     {
         return $params;
     }

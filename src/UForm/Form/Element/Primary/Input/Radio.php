@@ -19,7 +19,7 @@ class Radio extends Input
         $this->value = $value;
     }
 
-    protected function overridesParamsBeforeRender($params, $attributes, $value, $prename = null)
+    protected function overridesParamsBeforeRender($params, $value)
     {
         if (isset($value[$this->getName()]) && $value[$this->getName()] === $this->value) {
             $params["checked"] = "checked";
