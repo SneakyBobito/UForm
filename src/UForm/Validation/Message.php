@@ -35,7 +35,7 @@ class Message
      * @param string $message
      * @param array|null $variables
      * @param string|null $type
-=     */
+     */
     public function __construct($message, array $variables = [], $type = null)
     {
         $this->message = $message;
