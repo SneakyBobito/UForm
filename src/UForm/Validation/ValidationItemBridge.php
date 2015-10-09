@@ -36,7 +36,7 @@ class ValidationItemBridge extends ValidationItem
     /**
      * @inheritdoc
      */
-    public function appendMessage(Message $message, $elementName = null)
+    public function appendMessage($message, $elementName = null)
     {
         $this->bridgeOutput->appendMessage($message, $elementName);
     }
