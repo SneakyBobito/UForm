@@ -19,6 +19,10 @@ class Radio extends Input
         $this->value = $value;
     }
 
+    public function getValue(){
+        return $this->value;
+    }
+
     protected function overridesParamsBeforeRender($params, $value)
     {
         if (isset($value[$this->getName()]) && $value[$this->getName()] === $this->value) {

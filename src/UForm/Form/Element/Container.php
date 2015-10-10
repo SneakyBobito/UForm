@@ -66,6 +66,28 @@ abstract class Container extends Element
     }
 
     /**
+     * Get direct elements with the given name
+     * @param $name
+     * @param null $values
+     * @return Element[]
+     */
+    public function getDirectElements($name, $values = null){
+
+        $elements = [];
+
+        foreach ($this->getElements($values) as $elm) {
+            if ($name == $elm->getName()) {
+                $elements[] = $elm;
+            } elseif (!$elm->getName() && $elm instanceof Container) {
+                /* @var $elm \UForm\Form\Element\Container */
+                $elements += $elm->getDirectElements($name, $values);
+            }
+        }
+
+        return $elements;
+    }
+
+    /**
      * check if this element contains at least one element that is an instance of the given type
      * @param string $className the name of the class to search for
      * @return bool true if the instance was found

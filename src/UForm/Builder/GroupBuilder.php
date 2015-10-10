@@ -16,6 +16,7 @@ use UForm\Form\Element\Container\Group\Structural\Inline;
 use UForm\Form\Element\Container\Group\Structural\Panel;
 use UForm\Form\Element\Container\Group\Structural\Tab;
 use UForm\Form\Element\Container\Group\Structural\TabGroup;
+use UForm\Validator\InRange;
 
 trait GroupBuilder
 {
@@ -182,6 +183,8 @@ trait GroupBuilder
         $element = new RadioGroup($name);
         $this->add($element);
         $this->open($element);
+
+        $element->addValidator(new InRange($element));
 
         if ($defaultValue) {
             $element->addFilter(new DefaultValue($defaultValue));
