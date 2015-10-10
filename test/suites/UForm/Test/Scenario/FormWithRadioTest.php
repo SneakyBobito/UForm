@@ -43,7 +43,7 @@ class FormWithRadioTest extends \PHPUnit_Framework_TestCase
         $formContext = $form->validate(["choose" => "fake"]);
         $this->assertSame(["choose" => "fake"], $formContext->getData()->getDataCopy());
         $this->assertFalse($formContext->isValid());
-        $this->assertCount(1,  $formContext->getMessages());
+        $this->assertCount(1, $formContext->getMessages());
         $this->assertEquals(InRange::NOT_IN_RANGE, $formContext->getMessages()->getAt(0)->getType());
 
 

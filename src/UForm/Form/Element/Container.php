@@ -71,7 +71,8 @@ abstract class Container extends Element
      * @param null $values
      * @return Element[]
      */
-    public function getDirectElements($name, $values = null){
+    public function getDirectElements($name, $values = null)
+    {
 
         $elements = [];
 

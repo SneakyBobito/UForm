@@ -21,18 +21,16 @@ class RadioGroup extends ProxyGroup implements ValueRangeInterface
     public function valueIsInRange($data)
     {
 
-        if(isset($data[$this->proxyName])){
+        if (isset($data[$this->proxyName])) {
             $elements = $this->getDirectElements($this->getProxyName(), $data);
             $value = $data[$this->proxyName];
 
-            foreach($elements as $element){
-                if($element instanceof Radio && $element->getValue() == $value){
+            foreach ($elements as $element) {
+                if ($element instanceof Radio && $element->getValue() == $value) {
                     return true;
                 }
             }
         }
         return false;
     }
-
-
 }
