@@ -185,6 +185,17 @@ trait InputBuilder
     }
 
 
+    /**
+     * Adds a radio to the current element
+     *
+     * radio must have a radio group as ancestor, but not necessary as a direct parent
+     *
+     * @see UForm\Form\Element\Container\Group\Proxy\RadioGroup
+     * @param string $name name of the radio
+     * @param string $value value of the radio
+     * @param string $label  label of the radio. If null it will take the value of the radio as label
+     * @return $this
+     */
     public function radio($name, $value, $label = null)
     {
         if (null == $label) {

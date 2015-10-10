@@ -178,6 +178,27 @@ trait GroupBuilder
     }
 
 
+    /**
+     * Adds a radio group that can contain any kind of element. Only radios with the same name will be considered in
+     * this group
+     *
+     * Note that the name of the radio group does not modify the name of children elements.
+     *
+     * <code>
+     * $form = Builder::init()
+     *   ->radioGroup("radioName", "defaultValue")
+     *      ->radio("radioName", "defaultValue", "some label")
+     *      ->radio("radioName", "secondValue", "some label")
+     *      ->radio("radioName", "thirdValue", "some label")
+     *   ->close()
+     *   ->getForm();
+     * </code>
+     *
+     * @see Uform\Form\Element\Input\Radio
+     * @param string $name name of the radio to take into the group. This name wont modify the namespace of children
+     * @param string $defaultValue value of the radio that will be checked by default
+     * @return $this
+     */
     public function radioGroup($name, $defaultValue = null)
     {
         $element = new RadioGroup($name);
