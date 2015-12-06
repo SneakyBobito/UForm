@@ -1,15 +1,13 @@
 UForm
 =====
 
+[![Latest Stable Version](https://poser.pugx.org/gsouf/uform/version)](https://packagist.org/packages/gsouf/uform)
 [![Build Status](https://travis-ci.org/gsouf/UForm.svg)](https://travis-ci.org/gsouf/UForm)
 [![Test Coverage](https://codeclimate.com/github/gsouf/UForm/badges/coverage.svg)](https://codeclimate.com/github/SneakyBobito/UForm/coverage)
-[![Code Climate](https://codeclimate.com/github/gsouf/UForm/badges/gpa.svg)](https://codeclimate.com/github/SneakyBobito/UForm)
-[![Latest Stable Version](https://poser.pugx.org/gsouf/uform/version)](https://packagist.org/packages/gsouf/uform)
-[![Latest Unstable Version](https://poser.pugx.org/gsouf/uform/v/unstable)](//packagist.org/packages/gsouf/uform)
 
-UForm is a form validation/filtering/rendering library that solve all the problems you encounter with web forms.
+UForm is a form validation/filtering/rendering library.
 
-Why another form library? Because the other I tried had limitations. This library is an effort to make something more flexible and at the same time very concrete. 
+Why another form library? Because the other I tried didn't work the way I needed it to work.
 
 
 UForm is structured as follows
