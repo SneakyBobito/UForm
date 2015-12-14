@@ -5,29 +5,28 @@ UForm
 [![Build Status](https://travis-ci.org/gsouf/UForm.svg)](https://travis-ci.org/gsouf/UForm)
 [![Test Coverage](https://codeclimate.com/github/gsouf/UForm/badges/coverage.svg)](https://codeclimate.com/github/SneakyBobito/UForm/coverage)
 
-UForm is a form validation/filtering/rendering library.
+UForm is a form validation/filtering/rendering library for PHP.
 
-Why another form library? Because the other I tried didn't work the way I needed it to work.
+The 100$ question: why another form library? Because I needed a rock solid and flexible library, that other libraries 
+couldn't deal with (especially due to lack of flexibility).
 
 
 UForm is structured as follows
 ------------------------------
 
-- A **logicless and stateless core** that defines usual form elements
-- Some **HTML structure aware** components (fieldset, row, colomns, tabs, panel...) 
-- A flexible **validation/filtering** workflow with translatable messages
-- An **extendable fluent builder** (factory) to create forms easily with **the additional needed logic** (CSRF, label, tooltip...)
-- **Tools** to render forms with **twig**
-- Some extendable default render engines for popular html frameworks like **Bootstrap** or **Foundation**
-- **Standards for rendering** that make every engine compatible
+- A **logicless and stateless core** that defines usual form elements *(that makes it rock solid)*
+- A flexible **validation/filtering** workflow with translatable messages *(that makes it flexible)*
+- Some **HTML structure aware** components like fieldset, row, columns, tabs, panel... *(that makes it easy to use)*
+- An **extendable fluent builder** (factory) to create forms easily with **the additional needed logic** *(that makes it cool to use)*
+- Some extendable default render engines for popular html frameworks like **Bootstrap** or **Foundation** *(that makes it sociable enough for the real world)*
 
 
 Usage
 -----
 
-**Project is under heavy development** and doc will come when the API is frozen or more stable.
+**Project is a work in progress** that means that doc will come when the API is frozen or more stable.
 
-Here is an example of how the library works :
+In the meanwhile here a simple example:
 
 ```php
 
