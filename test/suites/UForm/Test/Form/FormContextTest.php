@@ -146,6 +146,19 @@ class FormContextTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testBind(){
+
+        $o = new \stdClass();
+        $this->formContext->bind($o);
+        $this->assertEquals(["firstname" => "homer"], (array) $o);
+
+        $a = [];
+        $this->formContext->bind($a);
+        $this->assertEquals(["firstname" => "homer"], (array) $a);
+
+
+    }
+
     public function testGetValueFor()
     {
         $this->assertEquals("homer", $this->formContext->getValueFor("firstname"));

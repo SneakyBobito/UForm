@@ -2,6 +2,8 @@
 
 namespace UForm;
 
+use UForm\DataBind\ArrayBinder;
+use UForm\DataBind\ObjectBinder;
 use UForm\Filtering\FilterChain;
 use UForm\Form\Element\Container\Group as ElementGroup;
 use UForm\Form\FormContext;
@@ -99,36 +101,40 @@ class Form extends ElementGroup
 
     /**
      * Binds data to the entity.
-     * It does not apply the filter if you want to apply form filters please use sanitizeData instead
+     * It does not apply the filter if you want to apply form filters please use $formContext->bind
+     * or sanitize the data before
      *
      * @see sanitizeData();
+     * @see FormContext::bind();
      *
-     * @param object $entity
+     * @param object|array $entity
      * @param array $data
      * @param array|null $whitelist
      * @return \UForm\Form
      * @throws Exception
      */
-    public function bind($entity, array $data, array $whitelist = null)
+    public function bind(&$entity, array $data, $whitelist = null)
     {
-        if (!is_object($entity)) {
-            throw new InvalidArgumentException('entity', 'object', $entity);
+        if (is_object($entity)) {
+            $binder = new ObjectBinder($entity);
+        } elseif (is_array($entity)) {
+            $binder = new ArrayBinder($entity);
+        } else {
+            throw new InvalidArgumentException('$entity', "object or array", $entity);
         }
+
+        $blackList = [];
 
         foreach ($data as $key => $value) {
             $element = $this->getElement($key);
-
             if (!$element) {
-                continue;
+                $blackList[] = $key;
             }
-
-            //Check if the item is in the whitelist
-            if (is_array($whitelist) && !in_array($key, $whitelist)) {
-                continue;
-            }
-
-            $entity->$key = $value;
         }
+        $binder->setBlacklist($blackList);
+        $binder->setWhitelist($whitelist);
+
+        $binder->bind($data);
     }
 
     /**

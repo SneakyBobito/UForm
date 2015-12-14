@@ -168,7 +168,8 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, (array)$o);
 
         $this->setExpectedException("UForm\InvalidArgumentException");
-        $this->form->bind([], ["username" => "bart"]);
+        $intValue = 5;
+        $this->form->bind($intValue, ["username" => "bart"]);
     }
 
     public function testSetEncType()

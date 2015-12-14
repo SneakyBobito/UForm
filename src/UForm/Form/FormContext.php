@@ -10,6 +10,9 @@ use UForm\DataContext;
 use UForm\Form;
 use UForm\Validation\ChainedValidation;
 
+/**
+ * @covers UForm\Form\FormContext
+ */
 class FormContext
 {
 
@@ -137,5 +140,14 @@ class FormContext
     public function getValueFor($name)
     {
         return $this->getData()->findValue($name);
+    }
+
+    /**
+     * bind the given objet or array with the data of the form context
+     * @param $entity
+     * @param array $whiteList
+     */
+    public function bind(&$entity, $whiteList = null){
+        $this->form->bind($entity, $this->getData()->getDataCopy(), $whiteList);
     }
 }
