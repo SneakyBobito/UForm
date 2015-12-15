@@ -1,0 +1,7 @@
+{%- if current.element.getOption("label") -%}
+    <label class="control-label" for="{{ current.element.getId() }}">
+        {% block labelInner %}
+            {{ current.element.getOption("label") }}
+        {% endblock %}
+    </label>
+{%- endif -%}

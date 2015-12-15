@@ -1,0 +1,9 @@
+<div class="control-group{% if not current.isValid() %} error{% endif %}"{% if current.element.getOption("required") %} required{% endif %}">
+    {%- include "partial/label.twig" -%}
+    {%- block inputOuter -%}
+        <div class="controls">
+        {%- block input  -%}
+        {%- endblock -%}
+        </div>
+    {%- endblock -%}
+</div>

@@ -4,6 +4,7 @@
 include __DIR__ . "/../../vendor/autoload.php";
 
 use UForm\Builder;
+use UForm\Render\Html\Bootstrap2;
 use UForm\Render\Html\Bootstrap3;
 use UForm\Render\Html\Foundation5;
 use UForm\Render\Html\StandardHtml;
@@ -13,6 +14,7 @@ $renders = [
 
     "standardHtml" => new StandardHtml(),
     "bootstrap3" => new Bootstrap3(),
+    "bootstrap2" => new Bootstrap2(),
     "foundation5" => new Foundation5()
 
 ];
@@ -41,7 +43,7 @@ $form = Builder::init("#", "POST")
             ->select("framework", "Go to framework (with tooltip)", [
 
                 "Bootstrap" => [
-                    "Bootstrap 2 (oldest)" => "bootstrap2",
+                    "Bootstrap 2" => "bootstrap2",
                     "bootstrap3",
                 ],
                 "Foundation 5" => "foundation5",

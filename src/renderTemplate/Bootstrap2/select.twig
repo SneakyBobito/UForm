@@ -1,0 +1,35 @@
+{% embed "layout/form-group.twig" %}
+    {%- block input  -%}
+
+        {%- if current.element.hasOneOption("tooltip", "leftAddon", "rightAddon") -%}
+            {% set _input_classes =
+                (current.element.getOption("leftAddon") ? "input-prepend":"") ~
+                (current.element.getOption("rightAddon") or current.element.getOption("tooltip") ? " input-append":"")
+            %}
+            <div class="{{ _input_classes | trim }}">
+                {%- if current.element.getOption("leftAddon") -%}
+                    <div class="add-on">{{ current.element.getOption("leftAddon") | raw }}</div>
+                {%- endif -%}
+                    {{ defaultRenderFor(current.element) }}
+                {%- if current.element.getOption("rightAddon") -%}
+                    <div class="add-on">{{ current.element.getOption("rightAddon") | raw }}</div>
+                {%- endif -%}
+                {%- if current.element.getOption("tooltip") -%}
+                    <div class="add-on" data-toggle="tooltip" title="{{ current.element.getOption("tooltip") }}">
+                        <span class="icon icon-question-sign"></span>
+                    </div>
+                {%- endif -%}
+            </div>
+        {%- else -%}
+            {{- defaultRenderFor(current.element,  { "class" : "form-control" }) -}}
+        {%- endif -%}
+
+        {# TODO option to set help in block or inlined #}
+        {%- if current.element.getOption("helper") -%}
+            <span class="help-block">{{ current.element.getOption("helper") }}</span>
+        {%- endif -%}
+
+        {% include "partial/errors.twig" %}
+
+    {%- endblock -%}
+{% endembed %}
