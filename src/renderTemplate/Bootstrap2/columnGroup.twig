@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row-fluid">
     {% for column in current.children -%}
     <div class="span{{ column.getAdaptiveWidth(render.colNumber) | round }}">
             {{- renderElement(column) -}}
