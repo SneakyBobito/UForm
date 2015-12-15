@@ -146,7 +146,8 @@ class FormContextTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testBind(){
+    public function testBind()
+    {
 
         $o = new \stdClass();
         $this->formContext->bind($o);

@@ -5,7 +5,6 @@
 
 namespace UForm\DataBind;
 
-
 abstract class Binder
 {
 
@@ -32,7 +31,8 @@ abstract class Binder
      * binds the given data on the internal target
      * @param $data
      */
-    public function bind($data){
+    public function bind($data)
+    {
 
         foreach ($data as $key => $value) {
             //Check if the item is in the whitelist
@@ -40,7 +40,7 @@ abstract class Binder
                 continue;
             }
 
-            if(in_array($key, $this->blacklist)){
+            if (in_array($key, $this->blacklist)) {
                 continue;
             }
 
@@ -50,5 +50,4 @@ abstract class Binder
     }
 
     abstract protected function bindKey($key, $value);
-
 }

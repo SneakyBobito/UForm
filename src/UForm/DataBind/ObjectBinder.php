@@ -5,8 +5,7 @@
 
 namespace UForm\DataBind;
 
-
-class ObjectBinder extends  Binder
+class ObjectBinder extends Binder
 {
 
     protected $data;
@@ -21,5 +20,4 @@ class ObjectBinder extends  Binder
     {
         $this->data->$key = $value;
     }
-
 }

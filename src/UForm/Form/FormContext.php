@@ -147,7 +147,8 @@ class FormContext
      * @param $entity
      * @param array $whiteList
      */
-    public function bind(&$entity, $whiteList = null){
+    public function bind(&$entity, $whiteList = null)
+    {
         $this->form->bind($entity, $this->getData()->getDataCopy(), $whiteList);
     }
 }

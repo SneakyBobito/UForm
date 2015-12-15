@@ -5,7 +5,6 @@
 
 namespace UForm\DataBind;
 
-
 class ArrayBinder extends Binder
 {
 
@@ -21,5 +20,4 @@ class ArrayBinder extends Binder
     {
         $this->data[$key] = $value;
     }
-
 }
