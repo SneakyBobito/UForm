@@ -1,0 +1,8 @@
+<div class="radio">
+    {% embed "partial/label.twig" %}
+        {% block labelInner %}
+            {{- defaultRenderFor(current.element) -}}
+            {{ parent() }}
+        {% endblock labelInner %}
+    {% endembed %}
+</div>

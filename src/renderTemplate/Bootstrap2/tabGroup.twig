@@ -1,0 +1,23 @@
+<div class="form-tabgroup">
+    <ul class="nav nav-tabs" role="tablist">
+    {%- for tab in current.children -%}
+        <li role="presentation" class="{% if tab.getOption("tab-active") == 1 %} active{% endif %}{% if not current.childrenAreValid(tab)%} error{% endif %}">
+            <a role="tab" data-toggle="tab" href="#{{ tab.getId() }}">
+                {{ tab.getOption("title") }}
+                {% if tab.getOption("tooltip") %}
+                    <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="{{ tab.getOption("tooltip") }}"></span>
+                {% endif %}
+            </a>
+        </li>
+    {%- endfor -%}
+    </ul>
+
+    <div class="tab-content">
+    {%- for tab in current.children -%}
+        <div role="tabpanel" class="tab-pane{% if tab.getOption("tab-active") == 1 %} active{% endif %}" id="{{ tab.getId() }}">
+            {{- renderElement(tab) -}}
+        </div>
+    {%- endfor -%}
+
+    </div>
+</div>

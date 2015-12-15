@@ -1,0 +1,5 @@
+<div class="form-group{% if not current.isValid() %} has-error{% endif %}{% if current.element.getOption("required") %} required{% endif %}">
+    {% include "partial/label.twig" %}
+    {%- block input  -%}
+    {%- endblock -%}
+</div>
