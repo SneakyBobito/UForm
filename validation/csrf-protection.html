@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>UForm</title>
+
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/highlight.dark.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://gsouf.github.io/UForm/">
+                UForm
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="csrf-protection">CSRF Protection</h1>
+<p><a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">CSRF protection</a>
+is necessary for security reason.</p>
+<p>UForm's builder takes care of CSRF processing and can check
+the validity of a given token. The only one condition is that
+you tell it how to retrieve and check token validity.</p>
+<h2 id="implement-csrf-interface">Implement CSRF Interface</h2>
+<p>The first step is to implement the interface <code>UForm\Validator\Csrf\CsrfInterface</code></p>
+<p>The following example shows you a very basic CSRF example:</p>
+<pre><code class="language-php">  &lt;?php
+
+  use UForm\Validator\Csrf\CsrfInterface;
+
+  class MyCsrfImplementation implements CsrfInterface
+  {
+
+    protected $tokenHandler;
+
+    function __construct(TokenHandler $tokenHandler)
+    {
+      $this-&gt;tokenHandler = $tokenHandler;
+    }
+
+    public function getToken(){
+      return $this-&gt;tokenHandler-&gt;getCsrfToken();
+    }
+
+    public function tokenIsValid($token){
+      return $this-&gt;tokenHandler-&gt;isValid($token);
+    }
+
+  }</code></pre>
+<h2 id="tell-uforms-builder-about-your-csrf-implementation">Tell UForm's builder about your CSRF implementation</h2>
+<p>There are two ways to pass a CSRF implementation : <strong>globally</strong> or <strong>locally</strong></p>
+<h3 id="set-a-global-csrf-implementation">Set a global CSRF implementation</h3>
+<p>UForm environment is used to globally store your CSRF implementation.</p>
+<pre><code class="language-php">  use UForm\Environment;
+  use UForm\Builder;
+
+  $myCsrfImplementation = new MyCsrfImplementation($myTokenHandler);
+
+  Environment::setCsrfResolver($myCsrfImplementation);
+
+  // Now UForm's builder is aware of your token
+  // and it's transparent to use it
+  // Just do :
+  $form = Builder::init()-&gt;getForm();
+
+  // $form is protected by csrf
+</code></pre>
+<h3 id="set-a-local-csrf-implementation">Set a local CSRF implementation</h3>
+<p>Sometimes you dont want to put a global instance of the CSRF implementation,
+then you can use the builder options:</p>
+<pre><code class="language-php">  use UForm\Environment;
+  use UForm\Builder;
+
+  $myCsrfImplementation = new MyCsrfImplementation($myTokenHandler);
+
+  $builderOptions = [
+    "csrf" =&gt; $myCsrfImplementation
+  ];
+
+  $form = Builder::init("action", "POST", $builderOptions)-&gt;getForm();
+
+  // $form is protected by csrf
+</code></pre>
+<h2 id="change-the-name-of-the-csrf-element">Change the name of the CSRF element</h2>
+<p>When the builder creates a CSRF, it actually creates an hidden field
+with a name set automatically. In some edges cases you want to use
+a custom name for this hidden field. The builder option <code>csrf-name</code>
+can do it:</p>
+<pre><code class="language-php">  use UForm\Builder;
+
+  $myCsrfImplementation = new MyCsrfImplementation($myTokenHandler);
+
+  $builderOptions = [
+    "csrf" =&gt; $myCsrfImplementation,
+    "csrf-name" =&gt; "customName"
+  ];
+
+  $form = Builder::init("action", "POST", $builderOptions)-&gt;getForm();
+
+  // The generated hidden will have the name "customName":
+  // &lt;input type="hidden" name="customName" /&gt;</code></pre>
+<p><a href="../builder.html#options">View more builder options</a></p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

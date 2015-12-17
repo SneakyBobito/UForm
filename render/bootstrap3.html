@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>UForm</title>
+
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/highlight.dark.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://gsouf.github.io/UForm/">
+                UForm
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="bootstrap-3-render">Bootstrap 3 Render</h1>
+<p>UForm allows to render for bootstrap 3:</p>
+<pre><code class="language-php">
+    use UForm\Render\Html\Bootstrap3;
+
+    $render = new Bootstrap3();
+    $html = $render-&gt;render($formContext);
+</code></pre>
+<h2 id="additional-css">Additional CSS</h2>
+<p>Some additional css is required to make the render of bootstrap3 render better:</p>
+<pre><code class="language-css">    /** Inline elements with help text wont be vertically aligned **/
+    .form-inline .form-group{
+        vertical-align: top;
+    }
+
+    /** Inline elements with label have spacing issues **/
+    .form-inline .form-group,
+    .form-inline label{
+        margin-right: 15px;
+    }
+
+    /** Tabs with error are not displaying the error status **/
+    .nav-tabs&gt;li.error&gt;a,
+    .nav-tabs&gt;li.active.error&gt;a
+    {
+        color: #a94442;
+        font-weight: bold;
+        background: #FFF2F3;
+    }
+    .nav-tabs&gt;li.error:hover&gt;a{
+        background: #F9CED1;
+    }
+
+    /** Tabs error are not highlited **/
+    .nav-tabs&gt;li.error&gt;a,
+    .nav-tabs&gt;li.active.error&gt;a
+    {
+        color: #a94442;
+        font-weight: bold;
+    }
+    .nav-tabs&gt;li.error:hover&gt;a{
+        background: #F9CED1;
+    }
+    .nav-tabs&gt;li.error&gt;a{
+        background: #FFF2F3;
+    }
+    .nav-tabs&gt;li.active.error&gt;a{
+        background: #FFF;
+    }</code></pre>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

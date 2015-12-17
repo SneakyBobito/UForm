@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>UForm</title>
+
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/highlight.dark.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://gsouf.github.io/UForm/">
+                UForm
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="foundation-5-render">Foundation 5 Render</h1>
+<p>UForm allows to render for foundation 5:</p>
+<pre><code class="language-php">
+    use UForm\Render\Html\Foundation5;
+
+    $render = new Foundation5();
+    $html = $render-&gt;render($formContext);
+</code></pre>
+<h2 id="additional-css">Additional CSS</h2>
+<p>Some additional css is required to make the render of foundation 5 render better.</p>
+<p>Up to you to modify the following sample to adapt it to your theme.</p>
+<pre><code class="language-css">  /** Highlight tabs with errors **/
+  .tab-title.error a,
+  .tab-title.active.error a{
+      color: #E26464;
+  }
+  .tab-title.error a,
+  .tab-title.error.active a,
+  .tab-title.error.active:hover a{
+
+      background: #FFEDEC;
+  }
+  .tab-title.error:hover a{
+      background: #FABEBB;
+  }
+
+  /** bootstrap's like panels for foundation **/
+  .form-panel{
+      border: 1px solid #DDD;
+      margin: 10px 0 5px 0;
+  }
+  .form-panel .panel-heading{
+      background: #FAFAFA;
+      padding: 5px 8px;
+      border-bottom: 1px solid #DDD;
+  }
+
+  .form-panel .panel-body{
+      padding: 5px;
+  }
+
+  /** foundation tab border **/
+  .tabs-content{
+      border-left: 1px solid #DDD;
+      padding-left: 8px;
+  }
+  .tabs{
+      border-bottom:1px solid #DDD;
+  }
+  .tabs&gt;dd{
+      position: relative;
+      top:2px;
+  }
+  .tabs&gt;dd.active{
+      border-bottom: 1px solid #FFF;
+      border-left: 1px solid #DDD;
+      border-top: 1px solid #DDD;
+      border-right: 1px solid #DDD;
+  }
+  .tabs&gt;dd.active&gt;a.has-tip{
+      border:0;
+  }
+
+  /** remove tab outline **/
+  .tabs dd &gt; a{
+      outline: 0;
+  }
+
+  /** foundation 5 does not implement help text **/
+  .help-text{
+      color: #888;
+      font-size: 0.8em;
+  }
+  .input-single .help-text{
+      position: relative;
+      top: -15px;
+  }
+
+  .tabs-content&gt;.content&gt;.help-text{
+      margin-bottom: 5px;;
+  }
+</code></pre>
+<h2 id="additional-javascript">Additional Javascript</h2>
+<p>Some component need additional javascript to run properly:</p>
+<pre><code class="language-js">$(function(){
+    // you need to call this everytime you add a form to the dom
+    $(document).foundation();
+});</code></pre>
+<p>Note: If you load a form via ajax you need to run this javascript again on the loaded html</p>
+<p>More informations available on the <a href="http://foundation.zurb.com/docs/javascript.html">foundation doc</a></p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>UForm</title>
+
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/highlight.dark.css">
+        <link rel="stylesheet" href="http://gsouf.github.io/UForm/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://gsouf.github.io/UForm/">
+                UForm
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="documentation-generation">Documentation Generation</h1>
+<p>The website is generated from this directory to the <code>gh-pages</code> branch thanks to <a href="http://couscous.io/">couscous</a></p>
+<p>Anything here will be published to the website upon a successful build of the <code>master</code> branch only.</p>
+<p>The directory <code>templates</code> contains the templates of the website.</p>
+<p>Happy contributions!</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
