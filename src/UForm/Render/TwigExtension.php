@@ -35,41 +35,41 @@ class TwigExtension extends \Twig_Extension
 
             // RenderElement
             // shortcut to render the given element
-            new \Twig_SimpleFunction('renderElement', function ($context, Element $element) {
-                return $context["current"]->renderElement($element);
-            }, [
+                new \Twig_SimpleFunction('renderElement', function ($context, Element $element) {
+                    return $context["current"]->renderElement($element);
+                }, [
                 "needs_context" => true,
                 "is_safe" => ["html"]
-            ]),
+                ]),
 
 
             // defaultRenderFor
             // shortcut to render the current element with its default render method.
             // The element must implement Drawable interface
-            new \Twig_SimpleFunction('defaultRenderFor', function ($context, Element $element, $options = []) {
-                return $context["current"]->elementDefaultRender($element, $options);
-            }, [
+                new \Twig_SimpleFunction('defaultRenderFor', function ($context, Element $element, $options = []) {
+                    return $context["current"]->elementDefaultRender($element, $options);
+                }, [
                 "needs_context" => true,
                 "is_safe" => ["html"]
-            ]),
+                ]),
 
             // isValid
             // shortcut to check if an element is valid
             // Leave the first param empty to check current element
-            new \Twig_SimpleFunction('isValid', function ($context, Element $element = null) {
-                return $context["current"]->isValid($element);
-            }, [
+                new \Twig_SimpleFunction('isValid', function ($context, Element $element = null) {
+                    return $context["current"]->isValid($element);
+                }, [
                 "needs_context" => true
-            ]),
+                ]),
 
             // childrenAreValid
             // shortcut to check if an element is valid
             // Leave the first param empty to check current element
-            new \Twig_SimpleFunction('childrenAreValid', function ($context, Element $element = null) {
-                return $context["current"]->childrenAreValid($element);
-            }, [
+                new \Twig_SimpleFunction('childrenAreValid', function ($context, Element $element = null) {
+                    return $context["current"]->childrenAreValid($element);
+                }, [
                 "needs_context" => true
-            ])
+                ])
 
         ];
 
