@@ -1,4 +1,5 @@
 /build              export-ignore
+/doc                export-ignore
 /script             export-ignore
 /test               export-ignore
 .codeclimate.yml    export-ignore

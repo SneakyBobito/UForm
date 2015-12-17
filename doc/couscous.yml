@@ -1,0 +1,28 @@
+template:
+    # Name of the directory containing the website template (default is "website")
+    #directory: template
+    # Or if you are using a remote template, you can set the Git URL
+    url: https://github.com/CouscousPHP/Template-Light.git
+    # Name of the index file (default is "README.md")
+    index: index.md
+
+# List of directories to exclude from the processing (default contains "vendor" and "website")
+# Paths are relative to the repository root
+exclude:
+    - template
+    - README.md
+#
+#scripts:
+#    Scripts to execute before generating the website
+#    before:
+#        - cp bin/couscous.phar website/
+#    # Scripts to execute after generating the website
+#    after:
+#        - rm website/couscous.phar
+
+# Any variable you put in this file is also available in the Twig layouts:
+title: UForm
+
+# Base URL of the published website (no "/" at the end!)
+# You are advised to set and use this variable to write your links in the HTML layouts
+baseUrl: http://gsouf.github.io/UForm
