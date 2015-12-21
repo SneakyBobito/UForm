@@ -53,7 +53,8 @@ trait ValidatorBuilder
      * @param array $values
      * @return $this
      */
-    public function inRange(array $values){
+    public function inRange(array $values)
+    {
         $this->last()->addValidator(new Validator\InRange($values));
         return $this;
     }
