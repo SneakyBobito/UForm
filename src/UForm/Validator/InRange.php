@@ -13,7 +13,7 @@ use UForm\Validator;
 
 /**
  * Check if the value for the validated element are in the given range
- * Range can be either an array of values or an intstance of ValueRangeInterface
+ * Range can be either an array of values or an instance of ValueRangeInterface
  *
  * @see UForm\Form\Element\ValueRangeInterface
  */
