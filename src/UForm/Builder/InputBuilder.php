@@ -178,7 +178,7 @@ trait InputBuilder
     public function check($name, $label, $checkedDefault = null)
     {
         $element = new Check($name);
-        $this->_makeInput($element, $label, $checkedDefault);
+        $this->_makeInput($element, $label, $checkedDefault == true);
         $element->addFilter(new BooleanValue());
         $this->add($element);
         return $this;
