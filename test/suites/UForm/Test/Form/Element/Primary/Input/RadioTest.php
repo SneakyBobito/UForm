@@ -45,7 +45,8 @@ class RadioTest extends \PHPUnit_Framework_TestCase
     /**
      * Fix bug with boolean values that were not renderable as string
      */
-    public function testBooleanValues(){
+    public function testBooleanValues()
+    {
 
         $input = new Radio("something", true);
 
