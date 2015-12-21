@@ -20,9 +20,16 @@ exclude:
 #    after:
 #        - rm website/couscous.phar
 
-# Any variable you put in this file is also available in the Twig layouts:
-title: UForm
 
 # Base URL of the published website (no "/" at the end!)
 # You are advised to set and use this variable to write your links in the HTML layouts
 baseUrl: http://gsouf.github.io/UForm
+
+
+title: UForm
+subTitle: Form library
+
+github:
+    user: gsouf
+    repo: UForm
+
