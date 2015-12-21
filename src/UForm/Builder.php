@@ -87,6 +87,6 @@ class Builder
      */
     public static function init($action = null, $method = null, $builderOptions = [])
     {
-        return new self($action, $method, $builderOptions);
+        return new static($action, $method, $builderOptions);
     }
 }
