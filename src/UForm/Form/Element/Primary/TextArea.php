@@ -29,7 +29,8 @@ class TextArea extends Element\Primary implements Drawable
     {
 
         $params = [
-            "name" => $this->getName(true)
+            "name" => $this->getName(true),
+            "id"   => $this->getId()
         ];
 
         if (isset($value[$this->getName()])) {
