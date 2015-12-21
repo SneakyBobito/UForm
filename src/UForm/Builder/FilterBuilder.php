@@ -14,7 +14,7 @@ trait FilterBuilder
 
     /**
      * @see FluentElement::last()
-     * @return $this
+     * @return Element
      */
     public abstract function last();
 

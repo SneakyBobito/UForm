@@ -5,6 +5,7 @@
 
 namespace UForm\Builder;
 
+use UForm\Builder;
 use UForm\Form\Element;
 use UForm\Validator;
 use UForm\Validator\Required;
@@ -15,7 +16,7 @@ trait ValidatorBuilder
 
     /**
      * @see FluentElement::last()
-     * @return $this
+     * @return Element
      */
     public abstract function last();
 
@@ -53,6 +54,18 @@ trait ValidatorBuilder
     public function validator($validator)
     {
         $this->last()->addValidator($validator);
+        return $this;
+    }
+
+    /**
+     * Adds an alphanum validator to the last element
+     * @see UForm\Validator\AlphaNum
+     * @param bool|false $allowSpace
+     * @return $this
+     */
+    public function alphaNum($allowSpace = false)
+    {
+        $this->last()->addValidator(new Validator\AlphaNum($allowSpace));
         return $this;
     }
 }

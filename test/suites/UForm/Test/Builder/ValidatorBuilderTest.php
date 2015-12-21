@@ -50,4 +50,13 @@ class ValidatorBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->validatorBuilder, $output);
         $this->assertInstanceOf("UForm\Validator\StringLength", $this->validatorBuilder->last()->getValidators()[0]);
     }
+
+    public function testAlphaNum()
+    {
+        $this->validatorBuilder->text("text");
+        $output = $this->validatorBuilder->alphaNum();
+
+        $this->assertSame($this->validatorBuilder, $output);
+        $this->assertInstanceOf("UForm\Validator\AlphaNum", $this->validatorBuilder->last()->getValidators()[0]);
+    }
 }
