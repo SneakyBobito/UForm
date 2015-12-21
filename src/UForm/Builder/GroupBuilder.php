@@ -180,7 +180,7 @@ trait GroupBuilder
 
     /**
      * Adds a radio group that can contain any kind of element. Only radios with the same name will be considered in
-     * this group
+     * this group. It will also automatically add a validator the restrict the value to be one of the radio's value
      *
      * Note that the name of the radio group does not modify the name of children elements.
      *
