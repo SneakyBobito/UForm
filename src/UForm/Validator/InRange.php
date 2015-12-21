@@ -26,6 +26,7 @@ class InRange extends Validator
 
     public function __construct($range)
     {
+        parent::__construct(null);
 
         if (!is_array($range) && !($range instanceof ValueRangeInterface)) {
             throw new InvalidArgumentException("range", "array or instance of ValueRangeInterface", $range);

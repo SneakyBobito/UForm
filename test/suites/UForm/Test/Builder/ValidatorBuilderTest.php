@@ -59,4 +59,12 @@ class ValidatorBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->validatorBuilder, $output);
         $this->assertInstanceOf("UForm\Validator\AlphaNum", $this->validatorBuilder->last()->getValidators()[0]);
     }
+
+    public function testInRange(){
+        $this->validatorBuilder->text("text");
+        $output = $this->validatorBuilder->inRange(["bart", "homer"]);
+
+        $this->assertSame($this->validatorBuilder, $output);
+        $this->assertInstanceOf("UForm\Validator\InRange", $this->validatorBuilder->last()->getValidators()[0]);
+    }
 }

@@ -47,6 +47,19 @@ trait ValidatorBuilder
     }
 
     /**
+     * Add a inRange validator to the latest element
+     *
+     * @see UForm\Validator\InRange
+     * @param array $values
+     * @return $this
+     */
+    public function inRange(array $values){
+        $this->last()->addValidator(new Validator\InRange($values));
+        return $this;
+    }
+
+    /**
+     * Adds the given validator to the last element
      * @param callable|Validator $validator
      * @return $this
      * @throws \Exception
