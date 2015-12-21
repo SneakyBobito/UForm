@@ -83,7 +83,7 @@ class Builder
     /**
      * @param null $action
      * @param null $method
-     * @return self
+     * @return static
      */
     public static function init($action = null, $method = null, $builderOptions = [])
     {
