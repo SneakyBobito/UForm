@@ -24,6 +24,9 @@ class InRange extends Validator
 
     protected $range;
 
+    /**
+     * @param array|ValueRangeInterface $range
+     */
     public function __construct($range)
     {
         parent::__construct(null);
