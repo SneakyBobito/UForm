@@ -29,7 +29,7 @@ class Radio extends Input
         if (isset($value[$this->getName()]) && $value[$this->getName()] === $this->value) {
             $params["checked"] = "checked";
         }
-        $params["value"] = $this->value;
+        $params["value"] = (string)$this->value;
         return $params;
     }
 }

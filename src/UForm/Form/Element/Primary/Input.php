@@ -63,7 +63,7 @@ class Input extends Primary implements Drawable
         }
 
         if (is_array($localValue) && isset($localValue[$this->getName()])) {
-            $params["value"] = $localValue[$this->getName()];
+            $params["value"] = (string)$localValue[$this->getName()];
         }
 
         $render = new Tag("input", $this->overridesParamsBeforeRender($params, $localValue), true);
