@@ -156,4 +156,30 @@ class Form extends ElementGroup
         $formContext = new FormContext($this, new DataContext($data));
         return $formContext;
     }
+
+    /**
+     * Get input data from global variables ($_POST $_GET $_FILE...)
+     */
+    public function getInputFromGlobals()
+    {
+
+        switch ($this->getMethod()) {
+            case "POST":
+                $finalData = $_POST + FileUpload::fromGlobalFilesVariable($_FILES, true);
+                break;
+
+            case "GET":
+                $finalData = $_GET;
+                break;
+
+            // TODO other methods
+
+            default:
+                $finalData = [];
+                break;
+        }
+
+        return $finalData;
+
+    }
 }
