@@ -96,4 +96,30 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException("UForm\Builder\BuilderException");
         $this->inputBuilderStub->rightAddon("rightAddon");
     }
+
+    public function testDisabled()
+    {
+        $this->inputBuilderStub
+            ->text("text")
+            ->disabled();
+        $this->assertEquals("disabled", $this->inputBuilderStub->last()->getAttribute("disabled"));
+        $this->assertInstanceOf("UForm\Filter\RemoveValue", $this->inputBuilderStub->last()->getFilters()[0]);
+    }
+
+    public function testReadOnly()
+    {
+        $this->inputBuilderStub
+            ->text("text")
+            ->readOnly();
+        $this->assertEquals("readonly", $this->inputBuilderStub->last()->getAttribute("readonly"));
+        $this->assertInstanceOf("UForm\Filter\RemoveValue", $this->inputBuilderStub->last()->getFilters()[0]);
+
+        $this->inputBuilderStub
+            ->text("text")
+            ->readOnly("freeze");
+        $this->assertEquals("readonly", $this->inputBuilderStub->last()->getAttribute("readonly"));
+        $this->assertInstanceOf("UForm\Filter\FreezeValue", $this->inputBuilderStub->last()->getFilters()[0]);
+
+        $this->assertEquals("freeze", $this->inputBuilderStub->last()->getFilters()[0]->filter("foo"));
+    }
 }

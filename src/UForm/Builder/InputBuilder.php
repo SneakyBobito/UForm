@@ -7,6 +7,8 @@ namespace UForm\Builder;
 
 use UForm\Filter\BooleanValue;
 use UForm\Filter\DefaultValue;
+use UForm\Filter\FreezeValue;
+use UForm\Filter\RemoveValue;
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Input\Check;
@@ -42,7 +44,7 @@ trait InputBuilder
 
     /**
      * @see FluentElement::last()
-     * @return $this
+     * @return Element
      */
     abstract public function last();
 
@@ -236,6 +238,37 @@ trait InputBuilder
         } catch (BuilderException $e) {
             throw new BuilderException("rightAddon() call requires you already added an element to the builder", 0, $e);
         }
+        return $this;
+    }
+
+    /**
+     * Set the last element to be readonly
+     *
+     * @param string $value a value to set for the field.
+     * This value will automatically replace the previous @see UForm\Filter\FreezeValue
+     * If omitted then the original value will be removed @see UForm\Filter\RemoveValue
+     * @return $this
+     */
+    public function readOnly($value = null)
+    {
+        if ($value) {
+            $this->last()->addFilter(new FreezeValue($value));
+        } else {
+            $this->last()->addFilter(new RemoveValue());
+        }
+        $this->last()->setAttribute("readonly", "readonly");
+        return $this;
+    }
+
+    /**
+     * Set the last element disabled.
+     * The value will be removed @see UForm\Filter\RemoveValue
+     * @return $this
+     */
+    public function disabled()
+    {
+        $this->last()->addFilter(new RemoveValue());
+        $this->last()->setAttribute("disabled", "disabled");
         return $this;
     }
 }
