@@ -31,7 +31,7 @@ use UForm\Filter;
  * </code>
  *
  */
-class Trim extends Filter
+class Trim extends AbstractSimpleFilter
 {
 
     protected $trimString;
@@ -53,7 +53,7 @@ class Trim extends Filter
         if (null === $v) {
             return $v;
         }
-        
+
         if (null == $this->trimString) {
             return trim($v);
         } else {

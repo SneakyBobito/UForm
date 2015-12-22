@@ -63,23 +63,30 @@ final class FilterChain
 
     public function sanitizeData($data)
     {
-        return $this->recursiveSanitize($data, $this->filters);
+        $this->recursiveSanitize($data, null, $this->filters);
+        return $data;
     }
 
-    private function recursiveSanitize($data, $filterWrapper)
+
+    private function recursiveSanitize(&$data, $currentName, $filterWrapper)
     {
         if (isset($filterWrapper["filterItem"])) {
+            /* @var $filters \UForm\Filter[] */
             $filters = $filterWrapper["filterItem"]->getFilters();
             foreach ($filters as $filter) {
-                $data = $filter->filter($data);
+                $filter->processFiltering($data, $currentName);
             }
         }
 
-        foreach ($filterWrapper["children"] as $name => $wrapper) {
-            $value = isset($data[$name]) ? $data[$name] : null;
-            $data[$name] = $this->recursiveSanitize($value, $wrapper);
+        if ($currentName) {
+            $nextData = &$data[$currentName];
+        } else {
+            $nextData = &$data;
         }
 
-        return $data;
+        foreach ($filterWrapper["children"] as $name => $wrapper) {
+            $this->recursiveSanitize($nextData, $name, $wrapper);
+        }
+
     }
 }

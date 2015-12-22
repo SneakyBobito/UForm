@@ -13,7 +13,7 @@ use UForm\Filter;
  *
  * That's the filter used for checkbox's default value
  */
-class BooleanValue extends Filter
+class BooleanValue extends AbstractSimpleFilter
 {
 
     /**

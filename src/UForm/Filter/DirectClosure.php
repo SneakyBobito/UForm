@@ -21,7 +21,7 @@ use UForm\Filter;
  * </code>
  *
  */
-class DirectClosure extends Filter
+class DirectClosure extends AbstractSimpleFilter
 {
 
     /**

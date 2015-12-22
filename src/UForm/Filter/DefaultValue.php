@@ -10,7 +10,7 @@ use UForm\Filter;
 /**
  * Used to set a default value in a field
  */
-class DefaultValue extends Filter
+class DefaultValue extends AbstractSimpleFilter
 {
 
     protected $defaultValue;

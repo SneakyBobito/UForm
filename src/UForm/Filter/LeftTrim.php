@@ -31,7 +31,7 @@ use UForm\Filter;
  * </code>
  *
  */
-class LeftTrim extends Filter
+class LeftTrim extends AbstractSimpleFilter
 {
 
     protected $trimString;

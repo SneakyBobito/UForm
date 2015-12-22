@@ -5,18 +5,19 @@
 namespace UForm;
 
 /**
- * UForm\Filter
+ * Filter class allows to clearly filter a dataset.
  *
- * Base class for user defined filters.
+ * @see UForm\Filter\AbstractSimpleFilter for simple value filtering
  *
  */
 abstract class Filter
 {
 
     /**
-     * Filters the given value
-     * @param mixed $value the value to filter
-     * @return mixed
+     * Filter the given data
+     * @param array $data the array of data to filter
+     * @param string $name index of the array item that is currently filtered
+     * @return void
      */
-    abstract public function filter($value);
+    abstract public function processFiltering(&$data, $name);
 }
