@@ -26,8 +26,12 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $expected = '<input type="inputType" name="inputName" id="' . $id . '" value="someValue"/>';
         $this->assertEquals($expected, $input->render(["inputName" => "someValue"]));
 
+        $input->setAttribute("disabled", "disabled");
+        $expected = '<input type="inputType" name="inputName" id="' . $id . '" disabled="disabled" value="someValue"/>';
+        $this->assertEquals($expected, $input->render(["inputName" => "someValue"]));
+
         // Render with a class
-        $expected = '<input type="inputType" name="inputName" id="' . $id . '" class="customClass" value="someValue"/>';
+        $expected = '<input type="inputType" name="inputName" id="' . $id . '" disabled="disabled" class="customClass" value="someValue"/>';
         $this->assertEquals($expected, $input->render(["inputName" => "someValue"], ["class" => "customClass"]));
     }
 }

@@ -53,11 +53,17 @@ class Input extends Primary implements Drawable
             "id"   => $this->getId()
         ];
 
+        foreach ($this->getAttributes() as $attrName => $attrValue) {
+            $params[$attrName] = $attrValue;
+        }
+
         if (isset($options["attributes"]) && is_array($options["attributes"])) {
             foreach ($options["attributes"] as $attrName => $attrValue) {
                 $params[$attrName] = $attrValue;
             }
         }
+
+
         if (isset($options["class"])) {
             $params["class"] = $options["class"];
         }

@@ -11,4 +11,11 @@
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 
+
+    <!-- Long lines do no apply on test files -->
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern>./test/*</exclude-pattern>
+    </rule>
+
+
 </ruleset>
