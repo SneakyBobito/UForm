@@ -1,11 +1,16 @@
 {% spaceless %}
+{% block formOuter %}
 <form
     method = "{{ current.element.getMethod() }}"
     action = "{{ current.element.getAction() }}"
     class  = "{{ current.element.getUserOption("class") }}{% if not current.isValid() %} error{% endif %}"
     id     = "{{ current.element.getId() }}">
 
-    {# render as a container #}
-    {{- renderParentType() -}}
+    {% block formInner %}
+        {# render as a container #}
+        {{- renderParentType() -}}
+    {% endblock %}
+
 </form>
+{% endblock %}
 {% endspaceless %}
