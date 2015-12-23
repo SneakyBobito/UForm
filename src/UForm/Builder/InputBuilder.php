@@ -150,9 +150,9 @@ trait InputBuilder
      * @param $label
      * @return $this
      */
-    public function file($name, $label = null)
+    public function file($name, $label = null, $multiple = false, $accept = null)
     {
-        $element = new File($name);
+        $element = new File($name, $multiple, $accept);
         $this->_makeInput($element, $label, null);
         $this->add($element);
         $this->last()->addValidator(new IsFile());
