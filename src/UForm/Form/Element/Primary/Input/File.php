@@ -17,9 +17,25 @@ use UForm\Validation\ValidationItem;
  */
 class File extends Input implements Requirable
 {
-    public function __construct($name)
+
+    protected $accept;
+    protected $multiple;
+
+    /**
+     * File constructor.
+     * @param string $name
+     * @param bool $multiple whether or not multiple file can be selected
+     * @param string $accept file type to accept @link http://www.w3schools.com/tags/att_input_accept.asp
+     *
+     */
+    public function __construct($name, $multiple = false, $accept = null)
     {
+
+        // TODO multiple can be a number
+
         parent::__construct("file", $name);
+        $this->multiple = $multiple;
+        $this->accept = $accept;
         $this->addSemanticType("input:file");
     }
 
@@ -30,6 +46,23 @@ class File extends Input implements Requirable
             $this->form->setEnctype(Form::ENCTYPE_MULTIPART_FORMDATA);
         }
     }
+
+    protected function overridesParamsBeforeRender($params, $value)
+    {
+        unset($params["value"]);
+
+        if ($this->multiple) {
+            $params["multiple"] = true;
+        }
+
+        if ($this->accept) {
+            $params["accept"] = $this->accept;
+        }
+
+        return $params;
+
+    }
+
 
     public function isDefined(ValidationItem $validationItem)
     {

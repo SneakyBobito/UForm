@@ -81,10 +81,7 @@ class Input extends Primary implements Drawable
      * allows subclasses to redefine some params before the rendering
      * (e.g checkbox will use 'checked' instead of 'value')
      * @param $params
-     * @param $attributes
      * @param $value
-     * @param $data
-     * @param null $prename
      * @return mixed
      */
     protected function overridesParamsBeforeRender($params, $value)

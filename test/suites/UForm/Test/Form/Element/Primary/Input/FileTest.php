@@ -40,7 +40,20 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         $expected = '<input type="file" name="inputname" id="' . $id . '"/>';
         $this->assertEquals($expected, $render);
+
+
+        // Render multiple / accept
+
+        $this->input = new File("inputname", true, "image/*");
+        $id = $this->input->getId();
+        $render = $this->input->render([], []);
+
+        $expected = '<input type="file" name="inputname" id="' . $id . '" multiple accept="image/*"/>';
+        $this->assertEquals($expected, $render);
+
+
     }
+
 
     public function testFormEnctype()
     {
