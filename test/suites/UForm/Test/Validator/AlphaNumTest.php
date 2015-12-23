@@ -41,4 +41,14 @@ class AlphaNumTest extends ValidatorTestCase
         $validator->validate($validation);
         $this->assertFalse($validation->isValid());
     }
+
+    public function testEmpty(){
+
+        $validation = $this->generateValidationItem(["firstname" => ""]);
+        $validator = new AlphaNum();
+        $validator->validate($validation);
+        $this->assertTrue($validation->isValid());
+
+    }
+
 }

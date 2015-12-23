@@ -31,9 +31,9 @@ class AlphaNum extends Validator
             $data = preg_replace('/\s/', '', $data);
         }
 
-        if (!ctype_alnum($data)) {
+        if (strlen($data) > 0 && !ctype_alnum($data)) {
             $message = new Validation\Message(
-                "The value must only contain alpha numeric characters",
+                "The value must only contain numbers or letters",
                 [],
                 self::NOT_ALPHANUM
             );
