@@ -7,18 +7,19 @@ UForm
 
 UForm is a form validation/filtering/rendering library for PHP.
 
-The 100$ question: why another form library? Because I needed a rock solid and flexible library, that other libraries 
-couldn't deal with (especially due to lack of flexibility).
+The 100$ question: why another form library? Because I needed a rock solid and flexible library. Something that other libraries 
+couldn't deal with (especially due to lack of flexibility in the rendering).
 
 
 UForm is structured as follows
 ------------------------------
 
-- A **logicless and stateless core** that defines usual form elements *(that makes it rock solid)*
-- A flexible **validation/filtering** workflow with translatable messages *(that makes it flexible)*
-- Some **HTML structure aware** components like fieldset, row, columns, tabs, panel... *(that makes it easy to use)*
-- An **extendable fluent builder** (factory) to create forms easily with **the additional needed logic** *(that makes it cool to use)*
-- Some extendable default render engines for popular html frameworks like **Bootstrap** or **Foundation** *(that makes it sociable enough for the real world)*
+- A **logicless and stateless core** that defines usual form elements *(makes it rock solid)*
+- A flexible **validation/filtering** workflow with translatable messages *(makes it extensible)*
+- Some **HTML aware** components like fieldset, row, columns, tabs, panel... *(makes it easy to use)*
+- An **extendable fluent builder** (factory) to create forms easily with **the additional needed logic** *(makes it cool to use)*
+- Implementation of popular html frameworks like **Bootstrap** or **Foundation** with a custom twig workflow *(makes it sociable enough for the real world)*
+
 
 
 Usage
@@ -47,9 +48,9 @@ $form =
 
 
 
-if (isset($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
     //If its a post query we validate the form with the post data
-    $formContext = $form->validate($_POST);
+    $formContext = $form->validate($form->getInputFromGlobals());
     if ($formContext->isValid()) {
         $filteredData = $formContext->getData();
         // Do some logic with data
@@ -66,6 +67,12 @@ $html = $render->render($formContext);
 echo $html;
 
 ```
+
+Tests
+-----
+
+The library is fully unit tested. Every bug is reproduced in the unit test and make it unreproducible for ever.
+The test coverage mays not be 100% between 2 releases but release is made only when the whole library will be covered.
 
 Known Issues
 ------------
