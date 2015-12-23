@@ -32,6 +32,7 @@ class File extends Input implements Requirable
     {
 
         // TODO multiple can be a number
+        // TODO more validation (file type, mime type, image size, ...)
 
         parent::__construct("file", $name);
         $this->multiple = $multiple;
