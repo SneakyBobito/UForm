@@ -8,7 +8,7 @@ namespace UForm\Test\Form\Element\Primary\Input;
 use UForm\Form;
 use UForm\Form\Element\Primary\Input;
 use UForm\Form\Element\Primary\Input\File;
-use UForm\Validator\IsFile;
+use UForm\Validator\IsValid;
 use UForm\Validator\Required;
 
 /**
@@ -68,7 +68,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         $form = new Form();
         $form->addElement($this->input);
-        $this->input->addValidator(new IsFile());
+        $this->input->addValidator(new IsValid());
 
         $this->assertTrue($form->validate([])->isValid());
         $this->assertTrue($form->validate(["inputname" => null])->isValid());

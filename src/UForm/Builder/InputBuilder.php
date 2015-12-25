@@ -21,6 +21,7 @@ use UForm\Form\Element\Primary\Input\Text;
 use UForm\Form\Element\Primary\Select;
 use UForm\Form\Element\Primary\TextArea;
 use UForm\Validator\IsFile;
+use UForm\Validator\IsValid;
 
 trait InputBuilder
 {
@@ -155,7 +156,6 @@ trait InputBuilder
         $element = new File($name, $multiple, $accept);
         $this->_makeInput($element, $label, null);
         $this->add($element);
-        $this->last()->addValidator(new IsFile());
         return $this;
     }
 

@@ -7,6 +7,7 @@ namespace UForm\Builder;
 
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
+use UForm\Validator\IsValid;
 
 /**
  * That's the most basic builder. It allows to create elements in a fluent way
@@ -43,6 +44,10 @@ trait FluentElement
 
         $this->currentGroup->addElement($element);
         $this->lastElement = $element;
+
+        if ($element instanceof Element\Validatable) {
+            $element->addValidator(new IsValid());
+        }
 
         return $this;
     }

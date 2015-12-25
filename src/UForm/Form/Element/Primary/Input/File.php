@@ -6,17 +6,22 @@
 
 namespace UForm\Form\Element\Primary\Input;
 
+use UForm\FileUpload;
 use UForm\Form;
 use UForm\Form\Element\Primary\Input;
 use UForm\Form\Element\Requirable;
+use UForm\Validation\Message;
 use UForm\Validation\ValidationItem;
+use UForm\Form\Element\Validatable;
 
 /**
- * Class File
+ * File input
  * @semanticType input:file
  */
-class File extends Input implements Requirable
+class File extends Input implements Requirable, Validatable
 {
+
+    const NOT_VALID_NOT_A_FILE = "File::NOT_A_FILE";
 
     protected $accept;
     protected $multiple;
@@ -68,5 +73,16 @@ class File extends Input implements Requirable
     public function isDefined(ValidationItem $validationItem)
     {
         return $validationItem->getValue() !== null;
+    }
+
+    public function checkValidity(ValidationItem $validationItem)
+    {
+        $value = $validationItem->getValue();
+
+        if (!$value instanceof FileUpload && $value !== null) {
+            $message = new Message("The data sent is not a valid file", [], self::NOT_VALID_NOT_A_FILE);
+            $validationItem->appendMessage($message);
+            $validationItem->setInvalid();
+        }
     }
 }
