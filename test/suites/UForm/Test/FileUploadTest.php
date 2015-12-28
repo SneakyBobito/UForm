@@ -35,18 +35,27 @@ class FileUploadTest extends \PHPUnit_Framework_TestCase
                     UPLOAD_ERR_OK,
                     UPLOAD_ERR_OK
                 ]
+            ],
+
+            "nothing" => [
+                "name" => "",
+                "tmp_name" => "",
+                "error"    => UPLOAD_ERR_NO_FILE
             ]
         ];
 
         $files = FileUpload::fromGlobalFilesVariable($filesGlobal, false);
 
-        $this->assertCount(2, $files);
+        $this->assertCount(3, $files);
         $this->assertArrayHasKey("foo", $files);
         $this->assertArrayHasKey("bar", $files);
+        $this->assertArrayHasKey("nothing", $files);
 
         $this->assertInstanceOf("UForm\FileUpload", $files["foo"]);
         $this->assertInternalType("array", $files["bar"]);
         $this->assertCount(2, $files["bar"]);
+
+        $this->assertNull($files["nothing"]);
     }
 
     public function testGetPath()

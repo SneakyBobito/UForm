@@ -62,6 +62,10 @@ class FileUpload
 
     private static function createFileFromData($data, $checkIsUploaded)
     {
+        if ($data["error"] == UPLOAD_ERR_NO_FILE) {
+            return null;
+        }
+
         if ($checkIsUploaded && !is_uploaded_file($data["tmp_name"])) {
             throw new Exception("File upload is not a valid uploaded file");
         }
