@@ -5,6 +5,7 @@
 
 namespace UForm\Test\Form\Element\Primary\Input;
 
+use UForm\FileUpload;
 use UForm\Form;
 use UForm\Form\Element\Primary\Input;
 use UForm\Form\Element\Primary\Input\File;
@@ -47,6 +48,16 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->input = new File("inputname", true, "image/*");
         $id = $this->input->getId();
         $render = $this->input->render([], []);
+
+        $expected = '<input type="file" name="inputname" id="' . $id . '" multiple accept="image/*"/>';
+        $this->assertEquals($expected, $render);
+
+
+        // Render with a FileUpload Value (object to string conversion issue)
+        $this->input = new File("inputname", true, "image/*");
+        $id = $this->input->getId();
+        $file = new FileUpload("foo.txt", "/tmp/foo.txt", UPLOAD_ERR_OK);
+        $render = $this->input->render(["inputname" => $file], []);
 
         $expected = '<input type="file" name="inputname" id="' . $id . '" multiple accept="image/*"/>';
         $this->assertEquals($expected, $render);
