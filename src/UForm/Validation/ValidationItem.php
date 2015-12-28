@@ -118,6 +118,9 @@ class ValidationItem
     {
         $validators = $this->element->getValidators();
         foreach ($validators as $v) {
+            if (!$this->isValid()) {
+                break;
+            }
             $v->validate($this);
         }
         return $this->valid;
