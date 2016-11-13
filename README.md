@@ -48,7 +48,7 @@ $html = $formRenderer->render($formContext);
 echo $html;
 ```
 
-<center>![bootstrap 3 example](/doc/screenshot/bootstrap3.png)</center>
+<div style="text-align:center">![bootstrap 3 example](/doc/screenshot/bootstrap3.png)</div>
 
 ### Full documentation
 
