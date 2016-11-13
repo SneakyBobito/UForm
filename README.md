@@ -18,15 +18,21 @@ Usage
 use UForm\Builder;
 
 $form = 
-     Builder::init("action", "POST") // initialize the form with action and method
-        // Add some input text with some validation rules
-        ->text("firstname", "Firstname")->required()->stringLength(2, 20) 
-        ->text("lastname", "Lastname")->required()->stringLength(2, 20)
-        ->text("login", "Login")->required()->stringLength(2, 20)
-        // Add an input password
-        ->password("password", "Password")->required()->stringLength(2, 20)
-        // Get the form instance
-        ->getForm();
+     Builder::init("action", "POST")
+         ->columnGroup()
+             ->column(3, 12)
+                 ->text("firstname", "Firstname")->required()->stringLength(2, 20)
+                 ->text("lastname", "Lastname")->required()->stringLength(2, 20)
+             ->close()
+             ->column(3, 12)
+                 ->panel('Login Information')
+                     ->text("login", "Login")->required()->stringLength(2, 20)
+                     ->password("password", "Password")->required()->stringLength(2, 20)
+                 ->close()
+             ->close()
+         ->close()
+     ->getForm();
+
 
 
 //If it's a post request we validate the form with the post data
