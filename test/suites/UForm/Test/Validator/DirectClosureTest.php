@@ -14,9 +14,9 @@ class DirectClosureTest extends ValidatorTestCase
 
     public function testValid()
     {
-        $validation = $this->generateValidationItem(["firstname" => "bart", "lastname" => "bart"]);
+        $validation = $this->generateValidationItem(['firstname' => 'bart', 'lastname' => 'bart']);
         $validator = new DirectClosure(function (ValidationItem $validationItem) {
-            if ($validationItem->getValue() !== "bart") {
+            if ($validationItem->getValue() !== 'bart') {
                 $validationItem->setInvalid();
             }
         });
@@ -26,9 +26,9 @@ class DirectClosureTest extends ValidatorTestCase
 
     public function testNotValid()
     {
-        $validation = $this->generateValidationItem(["firstname" => "foo", "lastname" => "bart"]);
+        $validation = $this->generateValidationItem(['firstname' => 'foo', 'lastname' => 'bart']);
         $validator = new DirectClosure(function (ValidationItem $validationItem) {
-            if ($validationItem->getValue() !== "bart") {
+            if ($validationItem->getValue() !== 'bart') {
                 $validationItem->setInvalid();
             }
         });

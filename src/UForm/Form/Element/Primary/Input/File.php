@@ -21,7 +21,7 @@ use UForm\Form\Element\Validatable;
 class File extends Input implements Requirable, Validatable
 {
 
-    const NOT_VALID_NOT_A_FILE = "File::NOT_A_FILE";
+    const NOT_VALID_NOT_A_FILE = 'File::NOT_A_FILE';
 
     protected $accept;
     protected $multiple;
@@ -39,10 +39,10 @@ class File extends Input implements Requirable, Validatable
         // TODO multiple can be a number
         // TODO more validation (file type, mime type, image size, ...)
 
-        parent::__construct("file", $name);
+        parent::__construct('file', $name);
         $this->multiple = $multiple;
         $this->accept = $accept;
-        $this->addSemanticType("input:file");
+        $this->addSemanticType('input:file');
     }
 
     public function refreshParent()
@@ -55,18 +55,17 @@ class File extends Input implements Requirable, Validatable
 
     protected function overridesParamsBeforeRender($params, $value)
     {
-        unset($params["value"]);
+        unset($params['value']);
 
         if ($this->multiple) {
-            $params["multiple"] = true;
+            $params['multiple'] = true;
         }
 
         if ($this->accept) {
-            $params["accept"] = $this->accept;
+            $params['accept'] = $this->accept;
         }
 
         return $params;
-
     }
 
 
@@ -80,7 +79,7 @@ class File extends Input implements Requirable, Validatable
         $value = $validationItem->getValue();
 
         if (!$value instanceof FileUpload && $value !== null) {
-            $message = new Message("The data sent is not a valid file", [], self::NOT_VALID_NOT_A_FILE);
+            $message = new Message('The data sent is not a valid file', [], self::NOT_VALID_NOT_A_FILE);
             $validationItem->appendMessage($message);
             $validationItem->setInvalid();
         }

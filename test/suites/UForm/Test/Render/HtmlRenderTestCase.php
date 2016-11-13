@@ -33,7 +33,6 @@ abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase
             $this->assertTrue(file_exists($file), "template directory $file does not exist");
             $this->assertTrue(is_dir($file), "the template path $file is not a directory");
         }
-
     }
 
     /**
@@ -61,15 +60,13 @@ abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase
 
                 try {
                     $template = $this->render->resolveTemplate($semanticTypes);
-                    $this->assertInstanceOf("Twig_TemplateInterface", $template);
+                    $this->assertInstanceOf('Twig_TemplateInterface', $template);
                 } catch (\Exception $e) {
                     $className = $nodeInfo->node->getClassName();
                     $renderName = $this->render->getRenderName();
                     $this->fail("Class $className has no template for render $renderName : " . $e->getMessage());
                 }
             }
-
-
         }
     }
 }

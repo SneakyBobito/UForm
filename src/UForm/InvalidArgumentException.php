@@ -15,10 +15,9 @@ class InvalidArgumentException extends \InvalidArgumentException
         $finalMessage = "Invalid type for argument $argumentName. $actualType given but $expectedType expected.";
 
         if ($message) {
-            $finalMessage .= " " . $message;
+            $finalMessage .= ' ' . $message;
         }
 
         parent::__construct($finalMessage);
-
     }
 }

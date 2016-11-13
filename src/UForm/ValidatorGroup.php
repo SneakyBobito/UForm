@@ -44,7 +44,7 @@ trait ValidatorGroup
         if (is_callable($validator)) {
             $validator = new DirectClosure($validator);
         } elseif (!is_object($validator) || !$validator instanceof \UForm\Validator) {
-            throw new InvalidArgumentException('validator', "instance of UForm\\UForm\Validator", $validator);
+            throw new InvalidArgumentException('validator', 'instance of UForm\\UForm\Validator', $validator);
         }
         $this->validatorGroup[] = $validator;
         return $validator;

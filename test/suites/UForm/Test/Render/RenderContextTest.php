@@ -31,13 +31,13 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
 
-        $this->render = $this->getMockForAbstractClass("UForm\Render\AbstractHtmlRender");
+        $this->render = $this->getMockForAbstractClass('UForm\Render\AbstractHtmlRender');
         $this->render
-            ->method("getTemplatesPath")
-            ->willReturn(__DIR__ . "/../../../../Fixtures/templates/AbstractRender");
+            ->method('getTemplatesPath')
+            ->willReturn(__DIR__ . '/../../../../Fixtures/templates/AbstractRender');
 
-        $this->form = Builder::init()->text("firstname")->text("lastname")->getForm();
-        $this->form->getElement("firstname")->addValidator(function (ValidationItem $v) {
+        $this->form = Builder::init()->text('firstname')->text('lastname')->getForm();
+        $this->form->getElement('firstname')->addValidator(function (ValidationItem $v) {
             $v->setInvalid();
         });
     }
@@ -67,15 +67,14 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->generateContext('firstname', [])->isValid());
 
         $this->assertTrue($this->generateContext($this->form, [])->isValid());
-
     }
 
     public function testElementDefaultRenderException()
     {
-        $unrenderable = $this->getMockForAbstractClass("UForm\Form\Element", ["unrenderable"]);
+        $unrenderable = $this->getMockForAbstractClass('UForm\Form\Element', ['unrenderable']);
 
-        $context = $this->generateContext("firstname", []);
-        $this->setExpectedException("UForm\Exception");
+        $context = $this->generateContext('firstname', []);
+        $this->setExpectedException('UForm\Exception');
         $context->elementDefaultRender($unrenderable);
     }
 }

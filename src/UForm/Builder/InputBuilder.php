@@ -64,7 +64,7 @@ trait InputBuilder
     protected function _makeInput(Element $element, $label, $defaultValue)
     {
         if (null !== $label) {
-            $element->setOption("label", $label);
+            $element->setOption('label', $label);
         }
 
         if (null !== $defaultValue) {
@@ -220,9 +220,9 @@ trait InputBuilder
     public function leftAddon($text)
     {
         try {
-            $this->last()->setOption("leftAddon", $text);
+            $this->last()->setOption('leftAddon', $text);
         } catch (BuilderException $e) {
-            throw new BuilderException("leftAddon() call requires you already added an element to the builder", 0, $e);
+            throw new BuilderException('leftAddon() call requires you already added an element to the builder', 0, $e);
         }
         return $this;
     }
@@ -236,9 +236,9 @@ trait InputBuilder
     public function rightAddon($text)
     {
         try {
-            $this->last()->setOption("rightAddon", $text);
+            $this->last()->setOption('rightAddon', $text);
         } catch (BuilderException $e) {
-            throw new BuilderException("rightAddon() call requires you already added an element to the builder", 0, $e);
+            throw new BuilderException('rightAddon() call requires you already added an element to the builder', 0, $e);
         }
         return $this;
     }
@@ -258,7 +258,7 @@ trait InputBuilder
         } else {
             $this->last()->addFilter(new RemoveValue());
         }
-        $this->last()->setAttribute("readonly", "readonly");
+        $this->last()->setAttribute('readonly', 'readonly');
         return $this;
     }
 
@@ -270,7 +270,7 @@ trait InputBuilder
     public function disabled()
     {
         $this->last()->addFilter(new RemoveValue());
-        $this->last()->setAttribute("disabled", "disabled");
+        $this->last()->setAttribute('disabled', 'disabled');
         return $this;
     }
 }

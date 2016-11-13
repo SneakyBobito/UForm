@@ -14,6 +14,6 @@ class Divider extends Structural
     public function __construct()
     {
         parent::__construct();
-        $this->addSemanticType("divider");
+        $this->addSemanticType('divider');
     }
 }

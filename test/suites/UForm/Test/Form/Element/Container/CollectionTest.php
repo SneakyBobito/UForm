@@ -24,13 +24,13 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->elementModel =  new Text("firstname");
-        $this->collection = new Collection("simpsons", $this->elementModel);
+        $this->elementModel =  new Text('firstname');
+        $this->collection = new Collection('simpsons', $this->elementModel);
     }
 
     public function testCollection()
     {
-        $this->assertSame($this->elementModel, $this->collection->getElement(""));
+        $this->assertSame($this->elementModel, $this->collection->getElement(''));
     }
 
     public function testPrepareValidation()
@@ -40,9 +40,9 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $form->addElement($this->collection);
         $context = $form->generateContext(
             [
-                "simpsons" => [
-                    ["firstname" => "bart"],
-                    ["firstname" => "lisa"]
+                'simpsons' => [
+                    ['firstname' => 'bart'],
+                    ['firstname' => 'lisa']
                 ]
             ]
         );
@@ -54,36 +54,35 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(4, $validations);
 
         $this->assertInstanceOf(
-            "UForm\Form\Element\Primary\Input\Text",
-            $chainedValidation->getValidationByName("simpsons.0")->getElement()
+            'UForm\Form\Element\Primary\Input\Text',
+            $chainedValidation->getValidationByName('simpsons.0')->getElement()
         );
         $this->assertInstanceOf(
-            "UForm\Form\Element\Primary\Input\Text",
-            $chainedValidation->getValidationByName("simpsons.1")->getElement()
+            'UForm\Form\Element\Primary\Input\Text',
+            $chainedValidation->getValidationByName('simpsons.1')->getElement()
         );
-
     }
 
     public function testGetElements()
     {
         $elements = $this->collection->getElements([
-            "simpsons" => [
-                ["firstname" => "bart"],
-                ["firstname" => "lisa"],
-                ["firstname" => "homer"],
-                ["firstname" => "marge"]
+            'simpsons' => [
+                ['firstname' => 'bart'],
+                ['firstname' => 'lisa'],
+                ['firstname' => 'homer'],
+                ['firstname' => 'marge']
             ]
         ]);
 
         $this->assertCount(4, $elements);
 
         foreach ($elements as $element) {
-            $this->assertInstanceOf("UForm\Form\Element\Primary\Input\Text", $element);
+            $this->assertInstanceOf('UForm\Form\Element\Primary\Input\Text', $element);
         }
 
-        $this->assertEquals("0", $elements[0]->getName());
-        $this->assertEquals("1", $elements[1]->getName());
-        $this->assertEquals("2", $elements[2]->getName());
-        $this->assertEquals("3", $elements[3]->getName());
+        $this->assertEquals('0', $elements[0]->getName());
+        $this->assertEquals('1', $elements[1]->getName());
+        $this->assertEquals('2', $elements[2]->getName());
+        $this->assertEquals('3', $elements[3]->getName());
     }
 }

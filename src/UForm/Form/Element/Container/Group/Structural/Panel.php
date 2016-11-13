@@ -15,12 +15,12 @@ use UForm\Form\Element\Container\Group\StructuralGroup;
 class Panel extends StructuralGroup
 {
 
-    public function __construct($title = "")
+    public function __construct($title = '')
     {
         parent::__construct();
         if ($title) {
-            $this->setOption("title", $title);
+            $this->setOption('title', $title);
         }
-        $this->addSemanticType("panel");
+        $this->addSemanticType('panel');
     }
 }

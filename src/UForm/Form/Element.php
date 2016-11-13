@@ -60,23 +60,22 @@ abstract class Element
         $this->name = $name;
 
         $this->internalName = 0;
-        $this->addSemanticType("element");
+        $this->addSemanticType('element');
     }
 
 
     public function addClass($className)
     {
 
-        $currentClass = $this->getAttribute("class");
+        $currentClass = $this->getAttribute('class');
 
         if ($currentClass) {
-            $currentClass .= " ";
+            $currentClass .= ' ';
         }
 
         $currentClass .= $className;
 
-        $this->setAttribute("class", $currentClass);
-
+        $this->setAttribute('class', $currentClass);
     }
 
     /////////
@@ -202,12 +201,12 @@ abstract class Element
     {
         if ($namespaced && !empty($namespaced) && $this->prename && !empty($this->prename)) {
             if ($dottedNotation) {
-                return $this->prename . "." . $this->name;
+                return $this->prename . '.' . $this->name;
             } else {
-                $ppart = explode(".", $this->prename);
+                $ppart = explode('.', $this->prename);
                 $ppart[] = $this->name;
                 $final = array_shift($ppart);
-                $final .= "[" . implode("][", $ppart) . "]";
+                $final .= '[' . implode('][', $ppart) . ']';
                 return $final;
             }
         } else {
@@ -218,7 +217,7 @@ abstract class Element
     public function getInternalName($namespaced = false)
     {
         if ($namespaced && !empty($namespaced) && null !== $this->internalPrename) {
-            return $this->internalPrename . "." . $this->internalName;
+            return $this->internalPrename . '.' . $this->internalName;
         } else {
             return $this->internalName;
         }
@@ -240,7 +239,7 @@ abstract class Element
     public function setAttribute($attribute, $value)
     {
         if (is_string($attribute) === false) {
-            throw new InvalidArgumentException("attribute", "string", $attribute);
+            throw new InvalidArgumentException('attribute', 'string', $attribute);
         }
 
         $this->attributes[$attribute] = $value;
@@ -261,7 +260,7 @@ abstract class Element
     public function getAttribute($attributeName, $defaultValue = null)
     {
         if (is_string($attributeName) === false) {
-            throw new InvalidArgumentException("attributeName", "string", $attributeName);
+            throw new InvalidArgumentException('attributeName', 'string', $attributeName);
         }
         if (isset($this->attributes[$attributeName])) {
             return $this->attributes[$attributeName];
@@ -278,7 +277,7 @@ abstract class Element
     public function addAttributes($attributes)
     {
         if (!is_array($attributes)) {
-            throw new InvalidArgumentException("attributes", "array", $attributes);
+            throw new InvalidArgumentException('attributes', 'array', $attributes);
         }
         foreach ($attributes as $attribute => $value) {
             $this->setAttribute($attribute, $value);
@@ -337,7 +336,7 @@ abstract class Element
     public function getId()
     {
         if (null === $this->id) {
-            $this->id = uniqid("uform_");
+            $this->id = uniqid('uform_');
         }
         return $this->id;
     }

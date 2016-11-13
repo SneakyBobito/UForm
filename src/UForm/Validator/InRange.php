@@ -20,7 +20,7 @@ use UForm\Validator;
 class InRange extends Validator
 {
 
-    const NOT_IN_RANGE = "InRange::NOT_IN_RANGE";
+    const NOT_IN_RANGE = 'InRange::NOT_IN_RANGE';
 
     protected $range;
 
@@ -32,7 +32,7 @@ class InRange extends Validator
         parent::__construct(null);
 
         if (!is_array($range) && !($range instanceof ValueRangeInterface)) {
-            throw new InvalidArgumentException("range", "array or instance of ValueRangeInterface", $range);
+            throw new InvalidArgumentException('range', 'array or instance of ValueRangeInterface', $range);
         }
 
         $this->range = $range;
@@ -63,10 +63,8 @@ class InRange extends Validator
         if (!$hasMatch) {
             $validationItem->setInvalid();
             $value = $validationItem->getValue();
-            $message = new Message("Value not valid", ["value" => $value], self::NOT_IN_RANGE);
+            $message = new Message('Value not valid', ['value' => $value], self::NOT_IN_RANGE);
             $validationItem->appendMessage($message);
         }
-
-
     }
 }

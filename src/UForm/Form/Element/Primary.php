@@ -18,6 +18,6 @@ abstract class Primary extends Element
     public function __construct($name)
     {
         parent::__construct($name);
-        $this->addSemanticType("primary");
+        $this->addSemanticType('primary');
     }
 }

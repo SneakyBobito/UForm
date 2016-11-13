@@ -12,9 +12,9 @@ class FieldsetTest extends \PHPUnit_Framework_TestCase
 
     public function testConstruct()
     {
-        $group = new Fieldset("myTitle");
+        $group = new Fieldset('myTitle');
 
-        $this->assertEquals("myTitle", $group->getOption("title"));
-        $this->assertTrue($group->hasSemanticType("fieldset"));
+        $this->assertEquals('myTitle', $group->getOption('title'));
+        $this->assertTrue($group->hasSemanticType('fieldset'));
     }
 }

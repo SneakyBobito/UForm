@@ -51,7 +51,6 @@ class ChainedValidation
             $this->validationsName[$el->getName(true, true)] = $internalName;
         }
         $this->validationsInternalName[$internalName] = $validation;
-
     }
 
     /**
@@ -74,7 +73,6 @@ class ChainedValidation
 
         $navigator = new Navigator();
         return $navigator->arrayGet($data, $name);
-
     }
 
     /**
@@ -90,7 +88,7 @@ class ChainedValidation
         if (is_object($name) && $name instanceof Element) {
             $name = $name->getInternalName(true);
         } elseif (!is_string($name) && !is_int($name)) {
-            throw new InvalidArgumentException("name", "Element instance or string or int", $name);
+            throw new InvalidArgumentException('name', 'Element instance or string or int', $name);
         }
 
         if (isset($this->validationsInternalName[$name])) {
@@ -109,7 +107,7 @@ class ChainedValidation
     public function getValidationByName($name)
     {
         if (!is_string($name) && !is_int($name)) {
-            throw new InvalidArgumentException("name", "Element instance or string or int", $name);
+            throw new InvalidArgumentException('name', 'Element instance or string or int', $name);
         }
         if (isset($this->validationsName[$name])) {
             return $this->validationsInternalName[$this->validationsName[$name]];
@@ -172,7 +170,6 @@ class ChainedValidation
         $this->isValid = $passed;
 
         return $this->isValid;
-
     }
 
     /**
@@ -220,7 +217,7 @@ class ChainedValidation
             $validation = $this->getValidation($name);
         }
         if (!$validation instanceof ValidationItem) {
-            throw new Exception("Element not valid for children validation");
+            throw new Exception('Element not valid for children validation');
         }
         return $validation->childrenAreValid($this);
     }

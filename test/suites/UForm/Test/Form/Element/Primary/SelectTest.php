@@ -21,30 +21,30 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->select = new Select("familly");
+        $this->select = new Select('familly');
     }
 
     public function testConstruct()
     {
-        $this->assertTrue($this->select->hasSemanticType("select"));
+        $this->assertTrue($this->select->hasSemanticType('select'));
     }
 
     public function testSetOptionValues()
     {
 
         $this->select->setOptionValues([
-            "Homer" => "simpson",
-            "Ned" => "flanders",
+            'Homer' => 'simpson',
+            'Ned' => 'flanders',
 
-            "Kids" => [
-                "Bart" => "simpson",
-                "Rod" => "flanders"
+            'Kids' => [
+                'Bart' => 'simpson',
+                'Rod' => 'flanders'
             ],
 
-            "skinner"
+            'skinner'
         ]);
 
-        $this->select->setId("someID");
+        $this->select->setId('someID');
 
         // No selection
         $expected =
@@ -74,7 +74,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             . '<option value="skinner">skinner</option>'
 
             . '</select>';
-        $this->assertEquals($expected, $this->select->render(["familly" => "simpson"], ["familly" => "simpson"]));
-
+        $this->assertEquals($expected, $this->select->render(['familly' => 'simpson'], ['familly' => 'simpson']));
     }
 }

@@ -20,10 +20,10 @@ class Column extends StructuralGroup
     public function __construct($width)
     {
         parent::__construct();
-        $this->addSemanticType("column");
+        $this->addSemanticType('column');
 
         if ($width < 0) {
-            throw new Exception("Column width cant be negative");
+            throw new Exception('Column width cant be negative');
         }
         $this->width = $width;
     }
@@ -42,7 +42,7 @@ class Column extends StructuralGroup
     public function setParent(Container $parent)
     {
         if (!($parent instanceof ColumnGroup)) {
-            throw new Exception("The column parent must be a column group");
+            throw new Exception('The column parent must be a column group');
         }
         return parent::setParent($parent);
     }
@@ -50,7 +50,7 @@ class Column extends StructuralGroup
     public function getAdaptiveWidth($factor)
     {
         if (!is_integer($factor)) {
-            throw new InvalidArgumentException("factor", "int", $factor);
+            throw new InvalidArgumentException('factor', 'int', $factor);
         }
 
         $width = $this->getWidth();

@@ -13,6 +13,6 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     public function testGetForm()
     {
         $builder =new Builder();
-        $this->assertInstanceOf("UForm\Form", $builder->getForm());
+        $this->assertInstanceOf('UForm\Form', $builder->getForm());
     }
 }

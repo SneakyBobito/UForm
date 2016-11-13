@@ -15,8 +15,8 @@ class FreezeValueTest extends \PHPUnit_Framework_TestCase
 
     public function testFilter()
     {
-        $filter = new FreezeValue("frozen");
-        $this->assertSame("frozen", $filter->filter(null));
-        $this->assertSame("frozen", $filter->filter("otherValue"));
+        $filter = new FreezeValue('frozen');
+        $this->assertSame('frozen', $filter->filter(null));
+        $this->assertSame('frozen', $filter->filter('otherValue'));
     }
 }

@@ -12,9 +12,9 @@ class TabTest extends \PHPUnit_Framework_TestCase
 
     public function testConstruct()
     {
-        $group = new Tab("myTitle");
+        $group = new Tab('myTitle');
 
-        $this->assertEquals("myTitle", $group->getOption("title"));
-        $this->assertTrue($group->hasSemanticType("tab"));
+        $this->assertEquals('myTitle', $group->getOption('title'));
+        $this->assertTrue($group->hasSemanticType('tab'));
     }
 }

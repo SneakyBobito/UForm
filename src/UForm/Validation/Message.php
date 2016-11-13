@@ -8,8 +8,8 @@ use UForm\Validation\Message\TranslationInterface;
 class Message
 {
 
-    protected $variablePlaceholderBefore = "%_";
-    protected $variablePlaceholderAfter  = "_%";
+    protected $variablePlaceholderBefore = '%_';
+    protected $variablePlaceholderAfter  = '_%';
 
     /**
      * @var null|string

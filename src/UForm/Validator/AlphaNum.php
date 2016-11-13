@@ -9,7 +9,7 @@ use UForm\Validator;
 class AlphaNum extends Validator
 {
 
-    const NOT_ALPHANUM = "AlphaNum::NOT_ALPHANUM";
+    const NOT_ALPHANUM = 'AlphaNum::NOT_ALPHANUM';
 
     protected $allowSpaces;
 
@@ -33,7 +33,7 @@ class AlphaNum extends Validator
 
         if (strlen($data) > 0 && !ctype_alnum($data)) {
             $message = new Validation\Message(
-                "The value must only contain numbers or letters",
+                'The value must only contain numbers or letters',
                 [],
                 self::NOT_ALPHANUM
             );

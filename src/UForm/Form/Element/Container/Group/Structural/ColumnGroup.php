@@ -16,7 +16,7 @@ class ColumnGroup extends StructuralGroup
     public function __construct()
     {
         parent::__construct();
-        $this->addSemanticType("columnGroup");
+        $this->addSemanticType('columnGroup');
     }
 
 
@@ -28,10 +28,10 @@ class ColumnGroup extends StructuralGroup
     {
         if (!($element instanceof Column)) {
             throw new InvalidArgumentException(
-                "element",
-                "Instance of Column",
+                'element',
+                'Instance of Column',
                 $element,
-                "Cant add non-column element into columnGroup"
+                'Cant add non-column element into columnGroup'
             );
         }
         parent::addElement($element);

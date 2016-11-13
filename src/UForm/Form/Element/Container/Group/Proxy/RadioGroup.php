@@ -15,7 +15,7 @@ class RadioGroup extends ProxyGroup implements ValueRangeInterface
     public function __construct($proxyName = null)
     {
         parent::__construct($proxyName);
-        $this->addSemanticType("radioGroup");
+        $this->addSemanticType('radioGroup');
     }
 
     public function valueIsInRange($data)

@@ -19,6 +19,6 @@ class DirectClosureTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($closure, $directClosure->getClosure());
 
-        $this->assertEquals("-foo-", $directClosure->filter("foo"));
+        $this->assertEquals('-foo-', $directClosure->filter('foo'));
     }
 }

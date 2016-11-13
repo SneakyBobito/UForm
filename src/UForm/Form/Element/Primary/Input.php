@@ -36,7 +36,7 @@ class Input extends Primary implements Drawable
     {
         parent::__construct($name);
         $this->inputType = $type;
-        $this->addSemanticType("input");
+        $this->addSemanticType('input');
     }
 
 
@@ -48,31 +48,31 @@ class Input extends Primary implements Drawable
 
 
         $params = [
-            "type" => $this->inputType,
-            "name" => $this->getName(true),
-            "id"   => $this->getId()
+            'type' => $this->inputType,
+            'name' => $this->getName(true),
+            'id'   => $this->getId()
         ];
 
         foreach ($this->getAttributes() as $attrName => $attrValue) {
             $params[$attrName] = $attrValue;
         }
 
-        if (isset($options["attributes"]) && is_array($options["attributes"])) {
-            foreach ($options["attributes"] as $attrName => $attrValue) {
+        if (isset($options['attributes']) && is_array($options['attributes'])) {
+            foreach ($options['attributes'] as $attrName => $attrValue) {
                 $params[$attrName] = $attrValue;
             }
         }
 
 
-        if (isset($options["class"])) {
-            $params["class"] = $options["class"];
+        if (isset($options['class'])) {
+            $params['class'] = $options['class'];
         }
 
         if (is_array($localValue) && isset($localValue[$this->getName()])) {
-            $params["value"] = (string)$localValue[$this->getName()];
+            $params['value'] = (string)$localValue[$this->getName()];
         }
 
-        $render = new Tag("input", $this->overridesParamsBeforeRender($params, $localValue), true);
+        $render = new Tag('input', $this->overridesParamsBeforeRender($params, $localValue), true);
 
         return $render->draw([], null);
     }

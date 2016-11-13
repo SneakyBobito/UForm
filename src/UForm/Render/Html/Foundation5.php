@@ -22,7 +22,7 @@ class Foundation5 extends AbstractHtmlRender
     public function getTemplatesPathes()
     {
         return [
-            "Foundation5" => __DIR__ . "/../../../renderTemplate/Foundation5"
+            'Foundation5' => __DIR__ . '/../../../renderTemplate/Foundation5'
         ];
     }
 
@@ -31,14 +31,14 @@ class Foundation5 extends AbstractHtmlRender
      */
     public function getRenderName()
     {
-        return "Foundation5";
+        return 'Foundation5';
     }
 
     public function __isset($name)
     {
         switch ($name) {
-            case "colNumber":
-            case "columnNumber":
+            case 'colNumber':
+            case 'columnNumber':
                 return true;
         }
 
@@ -49,9 +49,9 @@ class Foundation5 extends AbstractHtmlRender
     {
 
         switch ($name) {
-            case "colNumber":
-            case "columnNumber":
-                return $this->getOption("columnNumber", 12);
+            case 'colNumber':
+            case 'columnNumber':
+                return $this->getOption('columnNumber', 12);
         }
 
         return null;

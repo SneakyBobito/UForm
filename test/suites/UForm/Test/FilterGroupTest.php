@@ -27,7 +27,6 @@ class FilterGroupTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([], $this->filterGroupStub->getFilters());
         $this->filterGroupStub->setFilters(null);
         $this->assertSame([], $this->filterGroupStub->getFilters());
-
     }
 
     public function testAddFilter()
@@ -40,13 +39,12 @@ class FilterGroupTest extends \PHPUnit_Framework_TestCase
         // ADD FILTER CLOSURE
         $closure = function ($v) {
             return $v;
-
         };
         $newFilter = $this->filterGroupStub->addFilter($closure);
-        $this->assertInstanceOf("UForm\Filter\DirectClosure", $newFilter);
+        $this->assertInstanceOf('UForm\Filter\DirectClosure', $newFilter);
         $this->assertSame($closure, $newFilter->getClosure());
 
-        $this->setExpectedException("UForm\InvalidArgumentException");
+        $this->setExpectedException('UForm\InvalidArgumentException');
         $this->filterGroupStub->addFilter([]);
     }
 

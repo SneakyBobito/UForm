@@ -15,8 +15,8 @@ class ValidatorTestCase extends \PHPUnit_Framework_TestCase
 
     public function generateValidationItem($data)
     {
-        $firstname = new Text("firstname");
-        $lastname  = new Text("lastname");
+        $firstname = new Text('firstname');
+        $lastname  = new Text('lastname');
 
         $form = new Form();
         $form->addElement($firstname);

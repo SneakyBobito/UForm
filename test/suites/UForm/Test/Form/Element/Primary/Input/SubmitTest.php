@@ -18,17 +18,17 @@ class SubmitTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->input = new Submit("inputname");
+        $this->input = new Submit('inputname');
     }
 
     public function testConstruct()
     {
-        $this->assertTrue($this->input->hasSemanticType("input:submit"));
+        $this->assertTrue($this->input->hasSemanticType('input:submit'));
     }
 
     public function testRender()
     {
-        $render = $this->input->render(["inputname" => "inputValue"], ["inputname" => "inputValue"]);
+        $render = $this->input->render(['inputname' => 'inputValue'], ['inputname' => 'inputValue']);
         $id = $this->input->getId();
         $expected = '<input type="submit" name="inputname" id="' . $id . '" value="inputValue"/>';
         $this->assertEquals($expected, $render);

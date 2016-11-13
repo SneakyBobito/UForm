@@ -13,7 +13,7 @@ use UForm\Validator;
 class SameAs extends Validator
 {
 
-    const DIFFERENT = "SameAs::DIFFERENT";
+    const DIFFERENT = 'SameAs::DIFFERENT';
 
     protected $sameElement = null;
 
@@ -35,10 +35,10 @@ class SameAs extends Validator
 
         if ($value2 !== $value1) {
             $message = new Validation\Message(
-                "Fields %_tested-field_% and %_compare-field_% have different values",
+                'Fields %_tested-field_% and %_compare-field_% have different values',
                 [
-                    "tested-field" => $validationItem->getElement()->getName(true, true),
-                    "compare-field" => $this->sameElement
+                    'tested-field' => $validationItem->getElement()->getName(true, true),
+                    'compare-field' => $this->sameElement
                 ],
                 self::DIFFERENT
             );

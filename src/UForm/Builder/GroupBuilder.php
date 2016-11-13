@@ -73,7 +73,7 @@ trait GroupBuilder
     public function column($width)
     {
         if (!$this->current() instanceof ColumnGroup) {
-            throw new BuilderException("Cant call builder::column() outside of a columnGroup Element");
+            throw new BuilderException('Cant call builder::column() outside of a columnGroup Element');
         }
         $element = new Column($width);
         $this->add($element);
@@ -166,11 +166,11 @@ trait GroupBuilder
     public function tab($title = null, $active = false)
     {
         if (!$this->current() instanceof TabGroup) {
-            throw new BuilderException("Cant call builder::tab() outside of a tabgroup Element");
+            throw new BuilderException('Cant call builder::tab() outside of a tabgroup Element');
         }
         $element = new Tab($title);
         if ($active) {
-            $element->setOption("tab-active", true);
+            $element->setOption('tab-active', true);
         }
         $this->add($element);
         $this->open($element);

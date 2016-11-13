@@ -32,13 +32,13 @@ class Tag
             $p = [];
         }
         
-        $class = isset($this->baseProperties["class"]) ? $this->baseProperties["class"] : null;
+        $class = isset($this->baseProperties['class']) ? $this->baseProperties['class'] : null;
         
-        if (isset($p["class"])) {
+        if (isset($p['class'])) {
             if ($class) {
-                $class .= " " . $p["class"];
+                $class .= ' ' . $p['class'];
             } else {
-                $class = $p["class"];
+                $class = $p['class'];
             }
         }
 
@@ -46,10 +46,10 @@ class Tag
 
         
         if ($class) {
-            $properties["class"] = $class;
+            $properties['class'] = $class;
         }
         
-        $d = "";
+        $d = '';
 
         foreach ($properties as $k => $v) {
             $vs = htmlspecialchars($v);
@@ -63,16 +63,15 @@ class Tag
         }
         
         return $d;
-        
     }
     
-    public function draw($p = null, $content = "")
+    public function draw($p = null, $content = '')
     {
-        $d = "<" . $this->name;
+        $d = '<' . $this->name;
         $d .= $this->__parseProperties($p);
         
         if ($this->closed) {
-            $d .= "/>";
+            $d .= '/>';
         } else {
             $d .= ">$content</$this->name>";
         }

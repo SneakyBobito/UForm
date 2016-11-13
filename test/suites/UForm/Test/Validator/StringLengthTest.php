@@ -17,7 +17,7 @@ class StringLengthTest extends ValidatorTestCase
     {
 
         $validator = new StringLength(1, 20);
-        $validation = $this->generateValidationItem(["firstname" => "bart"]);
+        $validation = $this->generateValidationItem(['firstname' => 'bart']);
         $validator->validate($validation);
         $this->assertTrue($validation->isValid());
     }
@@ -25,26 +25,26 @@ class StringLengthTest extends ValidatorTestCase
     public function testTooShort()
     {
         $validator = new StringLength(10, 20);
-        $validation = $this->generateValidationItem(["firstname" => "short"]);
+        $validation = $this->generateValidationItem(['firstname' => 'short']);
         $validator->validate($validation);
         $this->assertFalse($validation->isValid());
 
         $this->assertSame(StringLength::TOO_SHORT, $validation->getMessages()->getAt(0)->getType());
-        $this->assertSame(10, $validation->getMessages()->getAt(0)->getVariables()["min-length"]);
-        $this->assertSame(5, $validation->getMessages()->getAt(0)->getVariables()["string-length"]);
+        $this->assertSame(10, $validation->getMessages()->getAt(0)->getVariables()['min-length']);
+        $this->assertSame(5, $validation->getMessages()->getAt(0)->getVariables()['string-length']);
     }
 
     public function testTooLong()
     {
         $validator = new StringLength(3, 5);
-        $validation = $this->generateValidationItem(["firstname" => "verylongstring"]);
+        $validation = $this->generateValidationItem(['firstname' => 'verylongstring']);
         $validator->validate($validation);
         $this->assertFalse($validation->isValid());
 
         $this->assertCount(1, $validation->getMessages());
         $message =  $validation->getMessages()->getAt(0);
         $this->assertSame(StringLength::TOO_LONG, $message->getType());
-        $this->assertSame(5, $message->getVariables()["max-length"]);
-        $this->assertSame(14, $message->getVariables()["string-length"]);
+        $this->assertSame(5, $message->getVariables()['max-length']);
+        $this->assertSame(14, $message->getVariables()['string-length']);
     }
 }

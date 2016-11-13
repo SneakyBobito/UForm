@@ -48,26 +48,24 @@ class OptGroup extends AbstractOption
             if (is_object($option)) {
                 if (!$option instanceof Option) {
                     throw new Exception(
-                        "An option is not valid for option factory. It should be an instance of Option, "
-                        . "instead an instance of " . get_class($option) . " was given"
+                        'An option is not valid for option factory. It should be an instance of Option, '
+                        . 'instead an instance of ' . get_class($option) . ' was given'
                     );
                 }
             } elseif (is_array($option)) {
                 if (!is_string($key)) {
                     throw new Exception(
-                        "An option is not valid for option factory.When the value is an array "
-                        . "then the key should be a string that represents the name of the optgroup"
+                        'An option is not valid for option factory.When the value is an array '
+                        . 'then the key should be a string that represents the name of the optgroup'
                     );
                 } else {
                     $option = new OptGroup($key, $option);
                 }
-
-
             } else {
                 if (!is_string($option)) {
                     throw new Exception(
-                        "An option is not valid for option factory. It should be a string, "
-                        . "instead " . gettype($option) . " was given"
+                        'An option is not valid for option factory. It should be a string, '
+                        . 'instead ' . gettype($option) . ' was given'
                     );
                 }
 
@@ -92,9 +90,9 @@ class OptGroup extends AbstractOption
 
     public function render($value)
     {
-        $tag = new Tag("optgroup");
+        $tag = new Tag('optgroup');
         $params = [
-            "label" => $this->getLabel()
+            'label' => $this->getLabel()
         ];
         $optionsRender = '';
         foreach ($this->getOptions() as $option) {

@@ -15,7 +15,7 @@ class TabGroupTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $group = new TabGroup();
-        $this->assertTrue($group->hasSemanticType("tabGroup"));
+        $this->assertTrue($group->hasSemanticType('tabGroup'));
     }
 
 
@@ -27,7 +27,7 @@ class TabGroupTest extends \PHPUnit_Framework_TestCase
         $group->addElement($child);
         $this->assertSame($child, $group->getElements()[0]);
 
-        $this->setExpectedException("UForm\InvalidArgumentException");
-        $group->addElement(new Text("name"));
+        $this->setExpectedException('UForm\InvalidArgumentException');
+        $group->addElement(new Text('name'));
     }
 }

@@ -25,17 +25,17 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->input = new File("inputname");
+        $this->input = new File('inputname');
     }
 
     public function testConstruct()
     {
-        $this->assertTrue($this->input->hasSemanticType("input:file"));
+        $this->assertTrue($this->input->hasSemanticType('input:file'));
     }
 
     public function testRender()
     {
-        $this->input = new File("inputname");
+        $this->input = new File('inputname');
         $id = $this->input->getId();
         $render = $this->input->render([], []);
 
@@ -45,7 +45,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         // Render multiple / accept
 
-        $this->input = new File("inputname", true, "image/*");
+        $this->input = new File('inputname', true, 'image/*');
         $id = $this->input->getId();
         $render = $this->input->render([], []);
 
@@ -54,15 +54,13 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
 
         // Render with a FileUpload Value (object to string conversion issue)
-        $this->input = new File("inputname", true, "image/*");
+        $this->input = new File('inputname', true, 'image/*');
         $id = $this->input->getId();
-        $file = new FileUpload("foo.txt", "/tmp/foo.txt", UPLOAD_ERR_OK);
-        $render = $this->input->render(["inputname" => $file], []);
+        $file = new FileUpload('foo.txt', '/tmp/foo.txt', UPLOAD_ERR_OK);
+        $render = $this->input->render(['inputname' => $file], []);
 
         $expected = '<input type="file" name="inputname" id="' . $id . '" multiple accept="image/*"/>';
         $this->assertEquals($expected, $render);
-
-
     }
 
 
@@ -82,10 +80,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->input->addValidator(new IsValid());
 
         $this->assertTrue($form->validate([])->isValid());
-        $this->assertTrue($form->validate(["inputname" => null])->isValid());
-        $this->assertFalse($form->validate(["inputname" => "sometext"])->isValid());
+        $this->assertTrue($form->validate(['inputname' => null])->isValid());
+        $this->assertFalse($form->validate(['inputname' => 'sometext'])->isValid());
         $this->input->addValidator(new Required());
-        $this->assertFalse($form->validate(["inputname" => null])->isValid());
-
+        $this->assertFalse($form->validate(['inputname' => null])->isValid());
     }
 }

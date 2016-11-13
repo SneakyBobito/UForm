@@ -15,22 +15,22 @@ class CheckTest extends \PHPUnit_Framework_TestCase
 
     public function testConstruct()
     {
-        $input = new Check("inputname");
-        $this->assertTrue($input->hasSemanticType("input:checkbox"));
+        $input = new Check('inputname');
+        $this->assertTrue($input->hasSemanticType('input:checkbox'));
     }
 
     public function testRender()
     {
-        $input = new Check("inputname", "yes");
+        $input = new Check('inputname', 'yes');
         $id = $input->getId();
-        $render = $input->render(["inputname" => true]);
+        $render = $input->render(['inputname' => true]);
         $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1" checked="checked"/>';
         $this->assertEquals($expected, $render);
 
         // no value
-        $input = new Check("inputname");
+        $input = new Check('inputname');
         $id = $input->getId();
-        $render = $input->render(["inputname" => false]);
+        $render = $input->render(['inputname' => false]);
         $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1"/>';
         $this->assertEquals($expected, $render);
     }

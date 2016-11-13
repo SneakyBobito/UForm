@@ -23,7 +23,7 @@ abstract class Container extends Element
     public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->addSemanticType("container");
+        $this->addSemanticType('container');
     }
 
     /**

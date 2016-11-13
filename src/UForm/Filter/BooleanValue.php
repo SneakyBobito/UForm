@@ -25,7 +25,7 @@ class BooleanValue extends AbstractSimpleFilter
 
         if (null === $newValue) {
             if (is_string($value)) {
-                if ($value == "null" || empty($value)) {
+                if ($value == 'null' || empty($value)) {
                     $newValue = false;
                 } else {
                     $newValue = true;

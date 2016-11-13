@@ -44,9 +44,9 @@ class Builder
     {
 
         // Check if csrf interface was set in the option
-        if (isset($builderOptions["csrf"]) && $builderOptions["csrf"]) {
-            if ($builderOptions["csrf"] instanceof Validator\Csrf\CsrfInterface) {
-                $csrfInterface = $builderOptions["csrf"];
+        if (isset($builderOptions['csrf']) && $builderOptions['csrf']) {
+            if ($builderOptions['csrf'] instanceof Validator\Csrf\CsrfInterface) {
+                $csrfInterface = $builderOptions['csrf'];
             } else {
                 $eMessage = "Builder's csrf option must be an instance of UForm\Validator\Csrf\CsrfInterface";
                 throw new BuilderException($eMessage);
@@ -58,10 +58,10 @@ class Builder
 
 
         if ($csrfInterface) {
-            if (isset($builderOptions["csrf-name"])) {
-                $csrfName = $builderOptions["csrf-name"];
+            if (isset($builderOptions['csrf-name'])) {
+                $csrfName = $builderOptions['csrf-name'];
             } else {
-                $csrfName = "__uf_csrf";
+                $csrfName = '__uf_csrf';
             }
 
             $csrf = new Hidden($csrfName);

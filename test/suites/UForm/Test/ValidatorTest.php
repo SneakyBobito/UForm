@@ -11,9 +11,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
 
-        $options = ["foo" => "bar", "qux" => "quux"];
+        $options = ['foo' => 'bar', 'qux' => 'quux'];
 
-        $validator = $this->getMockForAbstractClass("UForm\Validator", [$options]);
+        $validator = $this->getMockForAbstractClass('UForm\Validator', [$options]);
         $this->assertSame($options, $validator->getOptions());
     }
 }

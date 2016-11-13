@@ -13,25 +13,25 @@ class InputTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         /* @var $input Input */
-        $input = $this->getMockForAbstractClass("UForm\Form\Element\Primary\Input", ["inputType", "inputName"]);
+        $input = $this->getMockForAbstractClass('UForm\Form\Element\Primary\Input', ['inputType', 'inputName']);
 
-        $this->assertTrue($input->hasSemanticType("input"));
+        $this->assertTrue($input->hasSemanticType('input'));
     }
 
     public function testRender()
     {
         /* @var $input Input */
-        $input = $this->getMockForAbstractClass("UForm\Form\Element\Primary\Input", ["inputType", "inputName"]);
+        $input = $this->getMockForAbstractClass('UForm\Form\Element\Primary\Input', ['inputType', 'inputName']);
         $id = $input->getId();
         $expected = '<input type="inputType" name="inputName" id="' . $id . '" value="someValue"/>';
-        $this->assertEquals($expected, $input->render(["inputName" => "someValue"]));
+        $this->assertEquals($expected, $input->render(['inputName' => 'someValue']));
 
-        $input->setAttribute("disabled", "disabled");
+        $input->setAttribute('disabled', 'disabled');
         $expected = '<input type="inputType" name="inputName" id="' . $id . '" disabled="disabled" value="someValue"/>';
-        $this->assertEquals($expected, $input->render(["inputName" => "someValue"]));
+        $this->assertEquals($expected, $input->render(['inputName' => 'someValue']));
 
         // Render with a class
         $expected = '<input type="inputType" name="inputName" id="' . $id . '" disabled="disabled" class="customClass" value="someValue"/>';
-        $this->assertEquals($expected, $input->render(["inputName" => "someValue"], ["class" => "customClass"]));
+        $this->assertEquals($expected, $input->render(['inputName' => 'someValue'], ['class' => 'customClass']));
     }
 }

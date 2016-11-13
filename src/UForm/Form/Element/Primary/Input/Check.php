@@ -16,21 +16,20 @@ class Check extends Input
 {
     public function __construct($name)
     {
-        parent::__construct("checkbox", $name);
-        $this->addSemanticType("input:checkbox");
+        parent::__construct('checkbox', $name);
+        $this->addSemanticType('input:checkbox');
     }
 
     protected function overridesParamsBeforeRender($params, $value)
     {
         if (isset($value[$this->getName()]) && $value[$this->getName()]) {
-            $params["checked"] = "checked";
+            $params['checked'] = 'checked';
         }
-        $params["value"] = 1;
+        $params['value'] = 1;
         return $params;
     }
 
     public function sanitizeData()
     {
-
     }
 }

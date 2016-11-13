@@ -43,8 +43,8 @@ class FileUpload
         $final = [];
         if ($files) {
             foreach ($files as $fieldName => $file) {
-                if (is_array($file["name"])) {
-                    $fileCount = count($file["name"]);
+                if (is_array($file['name'])) {
+                    $fileCount = count($file['name']);
                     for ($i=0; $i<$fileCount; $i++) {
                         $fileData = [];
                         foreach ($file as $fileDataName => $data) {
@@ -62,14 +62,14 @@ class FileUpload
 
     private static function createFileFromData($data, $checkIsUploaded)
     {
-        if ($data["error"] == UPLOAD_ERR_NO_FILE) {
+        if ($data['error'] == UPLOAD_ERR_NO_FILE) {
             return null;
         }
 
-        if ($checkIsUploaded && !is_uploaded_file($data["tmp_name"])) {
-            throw new Exception("File upload is not a valid uploaded file");
+        if ($checkIsUploaded && !is_uploaded_file($data['tmp_name'])) {
+            throw new Exception('File upload is not a valid uploaded file');
         }
-        return new self($data["name"], $data["tmp_name"], $data["error"]);
+        return new self($data['name'], $data['tmp_name'], $data['error']);
     }
 
     /**
@@ -90,22 +90,22 @@ class FileUpload
     public function moveTo($destination)
     {
         if ($this->hasError()) {
-            throw new Exception("Cannot move the uploaded file because the upload ended with an error.");
+            throw new Exception('Cannot move the uploaded file because the upload ended with an error.');
         }
 
         $file = $this->getPath();
         if (!file_exists($file)) {
-            throw new Exception("Cannot move the uploaded file because the file is not valid. Did you move it away?");
+            throw new Exception('Cannot move the uploaded file because the file is not valid. Did you move it away?');
         }
         if (!is_writable($file)) {
-            throw new Exception("Cannot move the uploaded file because the file is not writable.");
+            throw new Exception('Cannot move the uploaded file because the file is not writable.');
         }
         $done = rename($file, $destination);
 
         if ($done) {
             $this->path = $destination;
         } else {
-            throw new Exception("An error happened while moving the uploaded file");
+            throw new Exception('An error happened while moving the uploaded file');
         }
     }
 
@@ -143,6 +143,6 @@ class FileUpload
 
     public function __toString()
     {
-        return "";
+        return '';
     }
 }

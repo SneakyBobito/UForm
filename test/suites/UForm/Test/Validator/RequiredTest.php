@@ -13,7 +13,7 @@ class RequiredTest extends ValidatorTestCase
 
     public function testValid()
     {
-        $validation = $this->generateValidationItem(["firstname" => "bart", "lastname" => "bart"]);
+        $validation = $this->generateValidationItem(['firstname' => 'bart', 'lastname' => 'bart']);
         $validator = new Required();
         $validator->validate($validation);
         $this->assertTrue($validation->isValid());
@@ -21,7 +21,7 @@ class RequiredTest extends ValidatorTestCase
 
     public function testNotValid()
     {
-        $validation = $this->generateValidationItem(["lastname" => "simpsons"]);
+        $validation = $this->generateValidationItem(['lastname' => 'simpsons']);
         $validator = new Required();
         $validator->validate($validation);
         $this->assertFalse($validation->isValid());

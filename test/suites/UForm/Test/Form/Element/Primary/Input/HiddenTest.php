@@ -18,17 +18,17 @@ class HiddenTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->input = new Hidden("inputname");
+        $this->input = new Hidden('inputname');
     }
 
     public function testConstruct()
     {
-        $this->assertTrue($this->input->hasSemanticType("input:hidden"));
+        $this->assertTrue($this->input->hasSemanticType('input:hidden'));
     }
 
     public function testRender()
     {
-        $render = $this->input->render(["inputname" => "inputValue"]);
+        $render = $this->input->render(['inputname' => 'inputValue']);
         $id = $this->input->getId();
         $expected = '<input type="hidden" name="inputname" id="' . $id . '" value="inputValue"/>';
         $this->assertEquals($expected, $render);

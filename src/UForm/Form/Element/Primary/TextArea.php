@@ -21,7 +21,7 @@ class TextArea extends Element\Primary implements Drawable
     public function __construct($name)
     {
         parent::__construct($name);
-        $this->addSemanticType("textarea");
+        $this->addSemanticType('textarea');
     }
 
 
@@ -29,17 +29,17 @@ class TextArea extends Element\Primary implements Drawable
     {
 
         $params = [
-            "name" => $this->getName(true),
-            "id"   => $this->getId()
+            'name' => $this->getName(true),
+            'id'   => $this->getId()
         ];
 
         if (isset($value[$this->getName()])) {
             $value = $value[$this->getName()];
         } else {
-            $value = "";
+            $value = '';
         }
 
-        $render = new Tag("textarea", $params, false);
+        $render = new Tag('textarea', $params, false);
 
         return $render->draw([], $value);
     }

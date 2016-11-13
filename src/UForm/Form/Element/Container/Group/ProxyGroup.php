@@ -10,7 +10,8 @@ use UForm\Form\Element\Container\Group;
 
 /**
  * A proxy group is used to proxify all validation and filtering to a given element.
- * A proxy ats as a group but does not have a concret name. Thus it does not modify the namespace of descendant elements
+ * A proxy acts as a group but does not have a concrete name.
+ * Thus it does not modify the namespace of descendant elements
  *
  * A concrete usage case is as a radio group: it will gather radios in one radio group
  * that will take validators and filters. Then validation messages will be shown in the proxy and not in the radio
@@ -25,7 +26,6 @@ class ProxyGroup extends Group
     {
         parent::__construct(null);
         $this->proxyName = $proxyName;
-
     }
 
     public function prepareFilterChain(FilterChain $filterChain)
@@ -45,7 +45,7 @@ class ProxyGroup extends Group
         }
 
         if ($this->prename) {
-            $name = $this->prename . "." . $this->proxyName;
+            $name = $this->prename . '.' . $this->proxyName;
         } else {
             $name = $this->proxyName;
         }

@@ -17,9 +17,9 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
         $column = new Column(5);
 
         $this->assertSame(5, $column->getWidth());
-        $this->assertTrue($column->hasSemanticType("column"));
+        $this->assertTrue($column->hasSemanticType('column'));
 
-        $this->setExpectedException("UForm\Exception");
+        $this->setExpectedException('UForm\Exception');
         new Column(-2);
     }
 
@@ -31,7 +31,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($columnGroup, $column->getParent());
 
-        $this->setExpectedException("UForm\Exception");
+        $this->setExpectedException('UForm\Exception');
         $column->setParent(new Group());
     }
 
@@ -44,25 +44,25 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
 
         // With parent
-        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\Structural\ColumnGroup")->getMock();
+        $columnGroup = $this->getMockBuilder('UForm\Form\Element\Container\Group\Structural\ColumnGroup')->getMock();
         $column->setParent($columnGroup);
-        $columnGroup->method("getWidthInPercent")->willReturn(100);
+        $columnGroup->method('getWidthInPercent')->willReturn(100);
         $this->assertEquals(10, $column->getAdaptiveWidth(10));
         $this->assertEquals(12, $column->getAdaptiveWidth(12));
 
         // mock other children in parent
-        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\Structural\ColumnGroup")->getMock();
-        $columnGroup->method("getWidthInPercent")->willReturn(50);
+        $columnGroup = $this->getMockBuilder('UForm\Form\Element\Container\Group\Structural\ColumnGroup')->getMock();
+        $columnGroup->method('getWidthInPercent')->willReturn(50);
         $column->setParent($columnGroup);
         $this->assertEquals(6, $column->getAdaptiveWidth(12));
 
-        $columnGroup = $this->getMockBuilder("UForm\Form\Element\Container\Group\Structural\ColumnGroup")->getMock();
-        $columnGroup->method("getWidthInPercent")->willReturn(25);
+        $columnGroup = $this->getMockBuilder('UForm\Form\Element\Container\Group\Structural\ColumnGroup')->getMock();
+        $columnGroup->method('getWidthInPercent')->willReturn(25);
         $column->setParent($columnGroup);
         $this->assertEquals(3, $column->getAdaptiveWidth(12));
 
 
-        $this->setExpectedException("UForm\InvalidArgumentException");
-        $column->getAdaptiveWidth("fake");
+        $this->setExpectedException('UForm\InvalidArgumentException');
+        $column->getAdaptiveWidth('fake');
     }
 }

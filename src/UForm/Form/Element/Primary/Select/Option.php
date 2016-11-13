@@ -67,10 +67,10 @@ class Option extends AbstractOption
     public function render($value)
     {
 
-        $tag = new Tag("option");
+        $tag = new Tag('option');
 
         $params = [
-            "value" => $this->getValue()
+            'value' => $this->getValue()
         ];
 
 
@@ -78,16 +78,15 @@ class Option extends AbstractOption
             if ((is_array($value) && in_array($this->getValue(), $value))
                 || (!is_array($value) && $value == $this->getValue())
             ) {
-                $params["selected"] = "selected";
+                $params['selected'] = 'selected';
             }
         } else {
             if ($this->enabled === false) {
-                $params["disabled"] = "disabled";
+                $params['disabled'] = 'disabled';
             }
         }
 
 
         return $tag->draw($params, $this->getLabel());
-
     }
 }

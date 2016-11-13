@@ -16,7 +16,7 @@ class Tab extends StructuralGroup
     public function __construct($title = null)
     {
         parent::__construct($title);
-        $this->setOption("title", $title);
-        $this->addSemanticType("tab");
+        $this->setOption('title', $title);
+        $this->addSemanticType('tab');
     }
 }

@@ -16,7 +16,7 @@ class Bootstrap2 extends AbstractHtmlRender
 
     public function getTemplatesPathes()
     {
-        return ["Bootstrap2" => __DIR__ . "/../../../renderTemplate/Bootstrap2"];
+        return ['Bootstrap2' => __DIR__ . '/../../../renderTemplate/Bootstrap2'];
     }
 
     /**
@@ -24,14 +24,14 @@ class Bootstrap2 extends AbstractHtmlRender
      */
     public function getRenderName()
     {
-        return "Bootstrap2";
+        return 'Bootstrap2';
     }
 
     public function __isset($name)
     {
         switch ($name) {
-            case "colNumber":
-            case "columnNumber":
+            case 'colNumber':
+            case 'columnNumber':
                 return true;
         }
 
@@ -42,9 +42,9 @@ class Bootstrap2 extends AbstractHtmlRender
     {
 
         switch ($name) {
-            case "colNumber":
-            case "columnNumber":
-                return $this->getOption("columnNumber", 12);
+            case 'colNumber':
+            case 'columnNumber':
+                return $this->getOption('columnNumber', 12);
         }
 
         return null;

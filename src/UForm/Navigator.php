@@ -50,7 +50,7 @@ class Navigator
         }
 
 
-        $stringParts = explode(".", $string);
+        $stringParts = explode('.', $string);
 
         if ($rOffset>0) {
             for ($i=0; $i<$rOffset; $i++) {
@@ -68,6 +68,5 @@ class Navigator
         }
         
         return $data;
-        
     }
 }

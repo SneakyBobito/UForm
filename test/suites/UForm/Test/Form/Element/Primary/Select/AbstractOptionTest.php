@@ -19,20 +19,20 @@ class AbstractOptionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->abstractOption = $this->getMockForAbstractClass(
-            "UForm\Form\Element\Primary\Select\AbstractOption",
-            ["optionName"]
+            'UForm\Form\Element\Primary\Select\AbstractOption',
+            ['optionName']
         );
     }
 
 
     public function testGetLabel()
     {
-        $this->assertSame("optionName", $this->abstractOption->getLabel());
+        $this->assertSame('optionName', $this->abstractOption->getLabel());
     }
 
     public function testSetSelect()
     {
-        $select = new Select("select");
+        $select = new Select('select');
         $this->abstractOption->setSelect($select);
         $this->assertSame($select, $this->abstractOption->getSelect());
     }

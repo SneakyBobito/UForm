@@ -46,7 +46,6 @@ abstract class Binder
 
             $this->bindKey($key, $value);
         }
-
     }
 
     abstract protected function bindKey($key, $value);

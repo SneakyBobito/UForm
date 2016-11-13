@@ -15,7 +15,7 @@ class ColumnGroupTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $group = new ColumnGroup();
-        $this->assertTrue($group->hasSemanticType("columnGroup"));
+        $this->assertTrue($group->hasSemanticType('columnGroup'));
     }
 
 
@@ -27,8 +27,8 @@ class ColumnGroupTest extends \PHPUnit_Framework_TestCase
         $group->addElement($child);
         $this->assertSame($child, $group->getElements()[0]);
 
-        $this->setExpectedException("UForm\InvalidArgumentException");
-        $group->addElement(new Text("name"));
+        $this->setExpectedException('UForm\InvalidArgumentException');
+        $group->addElement(new Text('name'));
     }
 
     public function testGetWidthInPercent()

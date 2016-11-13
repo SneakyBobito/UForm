@@ -18,9 +18,9 @@ use UForm\Validation;
 class Form extends ElementGroup
 {
 
-    const METHOD_POST = "POST";
-    const METHOD_GET = "GET";
-    const ENCTYPE_MULTIPART_FORMDATA = "multipart/form-data";
+    const METHOD_POST = 'POST';
+    const METHOD_GET = 'GET';
+    const ENCTYPE_MULTIPART_FORMDATA = 'multipart/form-data';
 
     protected $action;
     protected $method;
@@ -34,7 +34,7 @@ class Form extends ElementGroup
     {
         $this->form = $this;
         parent::__construct();
-        $this->addSemanticType("form");
+        $this->addSemanticType('form');
 
         if ($action) {
             $this->setAction($action);
@@ -120,7 +120,7 @@ class Form extends ElementGroup
         } elseif (is_array($entity)) {
             $binder = new ArrayBinder($entity);
         } else {
-            throw new InvalidArgumentException('$entity', "object or array", $entity);
+            throw new InvalidArgumentException('$entity', 'object or array', $entity);
         }
 
         $blackList = [];
@@ -164,11 +164,11 @@ class Form extends ElementGroup
     {
 
         switch ($this->getMethod()) {
-            case "POST":
+            case 'POST':
                 $finalData = $_POST + FileUpload::fromGlobalFilesVariable($_FILES, true);
                 break;
 
-            case "GET":
+            case 'GET':
                 $finalData = $_GET;
                 break;
 
@@ -180,6 +180,5 @@ class Form extends ElementGroup
         }
 
         return $finalData;
-
     }
 }

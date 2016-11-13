@@ -28,7 +28,7 @@ trait ValidatorBuilder
     public function required()
     {
         $this->last()->addValidator(new Required());
-        $this->last()->setOption("required", true);
+        $this->last()->setOption('required', true);
         return $this;
     }
 

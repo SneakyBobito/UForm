@@ -14,10 +14,10 @@ class DefaultTranslatorTest extends \PHPUnit_Framework_TestCase
 
     public function testTranslate()
     {
-        $message = new Message("Message %_variable_%", ["variable" => "foo"]);
+        $message = new Message('Message %_variable_%', ['variable' => 'foo']);
         $translator = new DefaultTranslator();
         $translated = $translator->translate($message);
 
-        $this->assertEquals("Message foo", $translated);
+        $this->assertEquals('Message foo', $translated);
     }
 }

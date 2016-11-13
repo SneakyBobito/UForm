@@ -19,68 +19,67 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->message = new Message(
-            "message width: %_width_%; height: %_height_%",
-            ["width" => 10, "height" => 20, "foo" => "bar"],
-            "TestMessage"
+            'message width: %_width_%; height: %_height_%',
+            ['width' => 10, 'height' => 20, 'foo' => 'bar'],
+            'TestMessage'
         );
     }
 
     public function testGetType()
     {
-        $this->assertEquals("TestMessage", $this->message->getType());
+        $this->assertEquals('TestMessage', $this->message->getType());
     }
 
     public function testGetMessageRaw()
     {
-        $this->assertEquals("message width: %_width_%; height: %_height_%", $this->message->getMessageRaw());
+        $this->assertEquals('message width: %_width_%; height: %_height_%', $this->message->getMessageRaw());
     }
 
     public function testGetProcessedMessage()
     {
-        $this->assertEquals("message width: 10; height: 20", $this->message->getProcessedMessage());
+        $this->assertEquals('message width: 10; height: 20', $this->message->getProcessedMessage());
     }
 
     public function testGetVariables()
     {
-        $this->assertEquals(["width" => 10, "height" => 20, "foo" => "bar"], $this->message->getVariables());
+        $this->assertEquals(['width' => 10, 'height' => 20, 'foo' => 'bar'], $this->message->getVariables());
 
         // variable must always be an array
-        $messageWithNoVariable = new Message("message");
-        $this->assertInternalType("array", $messageWithNoVariable->getVariables());
+        $messageWithNoVariable = new Message('message');
+        $this->assertInternalType('array', $messageWithNoVariable->getVariables());
         $this->assertCount(0, $messageWithNoVariable->getVariables());
-
     }
 
     public function testToString()
     {
-        $this->assertEquals("message width: 10; height: 20", (string) $this->message);
+        $this->assertEquals('message width: 10; height: 20', (string) $this->message);
     }
 
     public function testSetVariablePlaceholderBefore()
     {
         $message = new Message(
-            "message width: {{width_%; height: %_height_%",
-            ["width" => 10, "height" => 20, "foo" => "bar"],
-            "TestMessage"
+            'message width: {{width_%; height: %_height_%',
+            ['width' => 10, 'height' => 20, 'foo' => 'bar'],
+            'TestMessage'
         );
-        $message->setVariablePlaceholderBefore("{{");
-        $this->assertEquals("message width: 10; height: %_height_%", $message->getProcessedMessage());
+        $message->setVariablePlaceholderBefore('{{');
+        $this->assertEquals('message width: 10; height: %_height_%', $message->getProcessedMessage());
     }
 
     public function testSetVariablePlaceholderAfter()
     {
         $message = new Message(
-            "message width: %_width}}; height: %_height_%",
-            ["width" => 10, "height" => 20, "foo" => "bar"],
-            "TestMessage"
+            'message width: %_width}}; height: %_height_%',
+            ['width' => 10, 'height' => 20, 'foo' => 'bar'],
+            'TestMessage'
         );
-        $message->setVariablePlaceholderAfter("}}");
-        $this->assertEquals("message width: 10; height: %_height_%", $message->getProcessedMessage());
+        $message->setVariablePlaceholderAfter('}}');
+        $this->assertEquals('message width: 10; height: %_height_%', $message->getProcessedMessage());
     }
 
     public function testSetTranslator()
     {
-        $message = new Message("Some message");
+        $message = new Message('Some message');
         $this->assertSame(Environment::getTranslator(), $message->getTranslator());
 
         $translator = new Message\DefaultTranslator();

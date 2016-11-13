@@ -12,9 +12,9 @@ class PanelTest extends \PHPUnit_Framework_TestCase
 
     public function testConstruct()
     {
-        $group = new Panel("myTitle");
+        $group = new Panel('myTitle');
 
-        $this->assertEquals("myTitle", $group->getOption("title"));
-        $this->assertTrue($group->hasSemanticType("panel"));
+        $this->assertEquals('myTitle', $group->getOption('title'));
+        $this->assertTrue($group->hasSemanticType('panel'));
     }
 }

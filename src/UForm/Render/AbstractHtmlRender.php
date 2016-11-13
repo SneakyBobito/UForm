@@ -85,8 +85,8 @@ abstract class AbstractHtmlRender
         $renderContext = $this->generateRenderContext($element, $formContext, $semanticTypes);
         return $template->render(
             [
-                "current" => $renderContext,
-                "render"  => $this
+                'current' => $renderContext,
+                'render'  => $this
             ]
         );
     }
@@ -126,7 +126,5 @@ abstract class AbstractHtmlRender
                 sprintf('Unable to find one of the following templates: "%s".', implode('", "', $failedNames))
             );
         }
-
-
     }
 }

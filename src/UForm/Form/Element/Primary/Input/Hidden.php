@@ -18,7 +18,7 @@ class Hidden extends Input
 
     public function __construct($name)
     {
-        parent::__construct("hidden", $name);
-        $this->addSemanticType("input:hidden");
+        parent::__construct('hidden', $name);
+        $this->addSemanticType('input:hidden');
     }
 }

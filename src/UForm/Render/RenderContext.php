@@ -89,10 +89,9 @@ class RenderContext
             return $element->render($value, $options);
         } else {
             throw new \UForm\Exception(
-                "Trying to render an invalid element. Element not implementing Drawable cant be rendered"
+                'Trying to render an invalid element. Element not implementing Drawable cant be rendered'
             );
         }
-
     }
 
     /**
@@ -147,9 +146,9 @@ class RenderContext
     public function __get($name)
     {
         switch ($name) {
-            case "children":
+            case 'children':
                 return $this->getChildren();
-            case "messages":
+            case 'messages':
                 return $this->getMessages();
             default:
                 return null;

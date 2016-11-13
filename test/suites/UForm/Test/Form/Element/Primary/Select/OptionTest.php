@@ -17,14 +17,14 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->option = new Option("optionValue", "optionLabel");
+        $this->option = new Option('optionValue', 'optionLabel');
     }
 
     public function testConstruct()
     {
-        $option = new Option("optionValue", "optionLabel");
-        $this->assertEquals("optionValue", $option->getValue());
-        $this->assertEquals("optionLabel", $option->getLabel());
+        $option = new Option('optionValue', 'optionLabel');
+        $this->assertEquals('optionValue', $option->getValue());
+        $this->assertEquals('optionLabel', $option->getLabel());
     }
 
     public function testEnable()
@@ -46,10 +46,10 @@ class OptionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->option->render(null));
 
         $expected = '<option value="optionValue" selected="selected">optionLabel</option>';
-        $this->assertEquals($expected, $this->option->render("optionValue"));
+        $this->assertEquals($expected, $this->option->render('optionValue'));
 
         $this->option->disable();
         $expected = '<option value="optionValue" disabled="disabled">optionLabel</option>';
-        $this->assertEquals($expected, $this->option->render("optionValue"));
+        $this->assertEquals($expected, $this->option->render('optionValue'));
     }
 }

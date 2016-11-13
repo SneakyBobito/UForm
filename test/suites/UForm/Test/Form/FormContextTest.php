@@ -41,34 +41,34 @@ class FormContextTest extends \PHPUnit_Framework_TestCase
 
         $this->dataSet = [
 
-            "lastname" => "simpson",
-            "firstname"=> "homer",
+            'lastname' => 'simpson',
+            'firstname'=> 'homer',
 
-            "age" => "40",
+            'age' => '40',
 
-            "children" => [
+            'children' => [
 
                 [
-                    "lastname" => "simpson",
-                    "firstname"=> "bart",
-                    "age" => "12",
-                    "dog" => [
-                        "name" => "Santa's Little Helper"
+                    'lastname' => 'simpson',
+                    'firstname'=> 'bart',
+                    'age' => '12',
+                    'dog' => [
+                        'name' => "Santa's Little Helper"
                     ]
                 ],
 
                 [
-                    "lastname" => "simpson",
-                    "firstname"=> "lisa",
-                    "age" => "10"
+                    'lastname' => 'simpson',
+                    'firstname'=> 'lisa',
+                    'age' => '10'
                 ]
             ]
 
         ];
 
-        $this->element = new Text("firstname");
+        $this->element = new Text('firstname');
         $this->element->addValidator(new DirectClosure(function (ValidationItem $v) {
-            $message = new Message("invalid");
+            $message = new Message('invalid');
             $v->appendMessage($message);
             $v->setInvalid();
         }));
@@ -80,7 +80,7 @@ class FormContextTest extends \PHPUnit_Framework_TestCase
 
     public function testGetChainedValidation()
     {
-        $this->assertInstanceOf("UForm\Validation\ChainedValidation", $this->formContext->getChainedValidation());
+        $this->assertInstanceOf('UForm\Validation\ChainedValidation', $this->formContext->getChainedValidation());
     }
 
     public function testValidate()
@@ -107,43 +107,42 @@ class FormContextTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMessages()
     {
-        $this->assertInstanceOf("UForm\Validation\Message\Group", $this->formContext->getMessages());
+        $this->assertInstanceOf('UForm\Validation\Message\Group', $this->formContext->getMessages());
         $this->assertCount(0, $this->formContext->getMessages());
     }
 
     public function testElementIsValid()
     {
-        $this->assertTrue($this->formContext->elementIsValid("firstname"));
+        $this->assertTrue($this->formContext->elementIsValid('firstname'));
     }
 
     public function testChildrenAreValid()
     {
-        $this->assertTrue($this->formContext->childrenAreValid("firstname"));
+        $this->assertTrue($this->formContext->childrenAreValid('firstname'));
 
         // test children are valid with deeper form structure
         $form = new Form();
 
-        $userName = new Text("username");
+        $userName = new Text('username');
         $userName->addValidator(function (ValidationItem $v) {
-            if ($v->getValue() !== "bart") {
+            if ($v->getValue() !== 'bart') {
                 $v->setInvalid();
             }
         });
-        $password = new Password("password");
-        $group = new Form\Element\Container\Group("user");
+        $password = new Password('password');
+        $group = new Form\Element\Container\Group('user');
         $group->addElement($userName);
         $group->addElement($password);
         $form->addElement($group);
 
-        $formContext = $form->validate(["user" => ["username" => "bart"]]);
-        $this->assertTrue($formContext->childrenAreValid("user"));
+        $formContext = $form->validate(['user' => ['username' => 'bart']]);
+        $this->assertTrue($formContext->childrenAreValid('user'));
 
-        $formContext = $form->generateContext(["user" => ["username" => "lisa"]]);
-        $this->assertTrue($formContext->childrenAreValid("user"));
+        $formContext = $form->generateContext(['user' => ['username' => 'lisa']]);
+        $this->assertTrue($formContext->childrenAreValid('user'));
 
-        $formContext->validate(["user" => ["username" => "lisa"]]);
-        $this->assertFalse($formContext->childrenAreValid("user"));
-
+        $formContext->validate(['user' => ['username' => 'lisa']]);
+        $this->assertFalse($formContext->childrenAreValid('user'));
     }
 
     public function testBind()
@@ -151,18 +150,16 @@ class FormContextTest extends \PHPUnit_Framework_TestCase
 
         $o = new \stdClass();
         $this->formContext->bind($o);
-        $this->assertEquals(["firstname" => "homer"], (array) $o);
+        $this->assertEquals(['firstname' => 'homer'], (array) $o);
 
         $a = [];
         $this->formContext->bind($a);
-        $this->assertEquals(["firstname" => "homer"], (array) $a);
-
-
+        $this->assertEquals(['firstname' => 'homer'], (array) $a);
     }
 
     public function testGetValueFor()
     {
-        $this->assertEquals("homer", $this->formContext->getValueFor("firstname"));
-        $this->assertEquals("simpson", $this->formContext->getValueFor("lastname"));
+        $this->assertEquals('homer', $this->formContext->getValueFor('firstname'));
+        $this->assertEquals('simpson', $this->formContext->getValueFor('lastname'));
     }
 }

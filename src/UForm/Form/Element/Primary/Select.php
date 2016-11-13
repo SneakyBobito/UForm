@@ -38,15 +38,14 @@ class Select extends Element\Primary implements Element\Drawable
     {
         parent::__construct($name);
 
-        $this->rootGroup = new OptGroup("");
+        $this->rootGroup = new OptGroup('');
         $this->rootGroup->setSelect($this);
 
         if (null !== $values) {
             $this->setOptionValues($values);
         }
 
-        $this->addSemanticType("select");
-
+        $this->addSemanticType('select');
     }
 
 
@@ -75,12 +74,12 @@ class Select extends Element\Primary implements Element\Drawable
     public function render($value, array $options = [])
     {
         $params = [
-            "id" => $this->getId(),
-            "name" => $this->getName(true)
+            'id' => $this->getId(),
+            'name' => $this->getName(true)
         ];
 
-        if (isset($options["class"])) {
-            $params["class"] = $options["class"];
+        if (isset($options['class'])) {
+            $params['class'] = $options['class'];
         }
 
         if (isset($value[$this->getName()])) {
@@ -89,9 +88,9 @@ class Select extends Element\Primary implements Element\Drawable
             $value = null;
         }
 
-        $render = new Tag("select", $params, false);
+        $render = new Tag('select', $params, false);
 
-        $selectOptions = "";
+        $selectOptions = '';
 
         foreach ($this->rootGroup->getOptions() as $v) {
             $selectOptions .= $v->render($value);

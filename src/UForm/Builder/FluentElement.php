@@ -37,7 +37,7 @@ trait FluentElement
 
         if (!$this->currentGroup) {
             throw new BuilderException(
-                "Call to add() impossible, no group opened," .
+                'Call to add() impossible, no group opened,' .
                 "you probably didn't open a group or you closed to many groups"
             );
         }
@@ -75,7 +75,7 @@ trait FluentElement
     public function close()
     {
         if (!$this->currentGroup) {
-            throw new BuilderException("Group stack is empty, call to close() requires a stack to be opened");
+            throw new BuilderException('Group stack is empty, call to close() requires a stack to be opened');
         }
         $this->currentGroup = array_pop($this->stack);
         return $this;
@@ -99,7 +99,7 @@ trait FluentElement
     public function last()
     {
         if (!$this->lastElement) {
-            throw new BuilderException("No last element");
+            throw new BuilderException('No last element');
         }
         return $this->lastElement;
     }
@@ -128,9 +128,9 @@ trait FluentElement
     public function helper($text)
     {
         try {
-            $this->last()->setOption("helper", $text);
+            $this->last()->setOption('helper', $text);
         } catch (BuilderException $e) {
-            throw new BuilderException("helper() call requires you already added an element to the builder", 0, $e);
+            throw new BuilderException('helper() call requires you already added an element to the builder', 0, $e);
         }
         return $this;
     }
@@ -144,9 +144,9 @@ trait FluentElement
     public function tooltip($text)
     {
         try {
-            $this->last()->setOption("tooltip", $text);
+            $this->last()->setOption('tooltip', $text);
         } catch (BuilderException $e) {
-            throw new BuilderException("tooltip() call requires you already added an element to the builder", 0, $e);
+            throw new BuilderException('tooltip() call requires you already added an element to the builder', 0, $e);
         }
         return $this;
     }
@@ -162,7 +162,7 @@ trait FluentElement
         try {
             $this->last()->setId($id);
         } catch (BuilderException $e) {
-            throw new BuilderException("id() call requires you already added an element to the builder", 0, $e);
+            throw new BuilderException('id() call requires you already added an element to the builder', 0, $e);
         }
         return $this;
     }

@@ -20,8 +20,8 @@ class Text extends Input
 {
     public function __construct($name)
     {
-        parent::__construct("text", $name);
-        $this->addSemanticType("input:textfield");
-        $this->addSemanticType("input:text");
+        parent::__construct('text', $name);
+        $this->addSemanticType('input:textfield');
+        $this->addSemanticType('input:text');
     }
 }

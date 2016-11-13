@@ -19,7 +19,7 @@ class TabGroup extends StructuralGroup
     public function __construct()
     {
         parent::__construct();
-        $this->addSemanticType("tabGroup");
+        $this->addSemanticType('tabGroup');
     }
 
 
@@ -27,10 +27,10 @@ class TabGroup extends StructuralGroup
     {
         if (!($element instanceof Tab)) {
             throw new InvalidArgumentException(
-                "element",
-                "Instance of Tab",
+                'element',
+                'Instance of Tab',
                 $element,
-                "Cannot add non-tab element into TabGroup"
+                'Cannot add non-tab element into TabGroup'
             );
         }
         parent::addElement($element);

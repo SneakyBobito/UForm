@@ -20,7 +20,7 @@ final class FilterChain
     public function __construct()
     {
 
-        $this->filters = ["children" => []];
+        $this->filters = ['children' => []];
     }
 
     /**
@@ -36,28 +36,28 @@ final class FilterChain
         } elseif ($path instanceof Element) {
             $name = $path->getName(true, true);
         } else {
-            throw new InvalidArgumentException("path", "stirng or instance of Element", $path);
+            throw new InvalidArgumentException('path', 'stirng or instance of Element', $path);
         }
 
 
-        $nameParts = explode(".", $name);
+        $nameParts = explode('.', $name);
 
         $currentArray = &$this->filters;
 
         while ($currentNamePart = array_shift($nameParts)) {
-            if (!isset($currentArray["children"][$currentNamePart])) {
-                $currentArray["children"][$currentNamePart] = [
-                    "children"   => []
+            if (!isset($currentArray['children'][$currentNamePart])) {
+                $currentArray['children'][$currentNamePart] = [
+                    'children'   => []
                 ];
             }
-            $currentArray = &$currentArray["children"][$currentNamePart];
+            $currentArray = &$currentArray['children'][$currentNamePart];
         }
 
-        if (!isset($currentArray["filterItem"])) {
-            $currentArray["filterItem"] = new FilterItem();
+        if (!isset($currentArray['filterItem'])) {
+            $currentArray['filterItem'] = new FilterItem();
         }
 
-        $filterItem = $currentArray["filterItem"];
+        $filterItem = $currentArray['filterItem'];
         $filterItem->addFilters($filters);
     }
 
@@ -70,9 +70,9 @@ final class FilterChain
 
     private function recursiveSanitize(&$data, $currentName, $filterWrapper)
     {
-        if (isset($filterWrapper["filterItem"])) {
+        if (isset($filterWrapper['filterItem'])) {
             /* @var $filters \UForm\Filter[] */
-            $filters = $filterWrapper["filterItem"]->getFilters();
+            $filters = $filterWrapper['filterItem']->getFilters();
             foreach ($filters as $filter) {
                 $filter->processFiltering($data, $currentName);
             }
@@ -84,9 +84,8 @@ final class FilterChain
             $nextData = &$data;
         }
 
-        foreach ($filterWrapper["children"] as $name => $wrapper) {
+        foreach ($filterWrapper['children'] as $name => $wrapper) {
             $this->recursiveSanitize($nextData, $name, $wrapper);
         }
-
     }
 }

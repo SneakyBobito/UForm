@@ -38,7 +38,7 @@ class Collection extends Container
         $this->min = $min;
         $this->max = $max;
         $this->elementDefinition->setName(null);
-        $this->addSemanticType("collection");
+        $this->addSemanticType('collection');
     }
 
 

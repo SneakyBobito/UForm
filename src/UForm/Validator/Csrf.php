@@ -19,7 +19,7 @@ class Csrf extends Validator
     /**
      * @validationMessage triggered when a csrf token is not valid
      */
-    const NOT_VALID = "Csrf::NOT_VALID";
+    const NOT_VALID = 'Csrf::NOT_VALID';
 
     /**
      * @var CsrfInterface
@@ -38,7 +38,7 @@ class Csrf extends Validator
     public function validate(ValidationItem $validationItem)
     {
         if (!$this->csrfInterface->tokenIsValid($validationItem->getValue())) {
-            $message = new Message("Csrf token is not valid", [], self::NOT_VALID);
+            $message = new Message('Csrf token is not valid', [], self::NOT_VALID);
             $validationItem->appendMessage($message);
             $validationItem->setInvalid();
         }

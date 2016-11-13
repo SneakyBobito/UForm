@@ -18,7 +18,7 @@ class Fieldset extends StructuralGroup
     public function __construct($title = null)
     {
         parent::__construct();
-        $this->setOption("title", $title);
-        $this->addSemanticType("fieldset");
+        $this->setOption('title', $title);
+        $this->addSemanticType('fieldset');
     }
 }

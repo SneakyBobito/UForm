@@ -35,9 +35,9 @@ class BuilderCsrfValidationTest extends \PHPUnit_Framework_TestCase
             return $token == $testedToken;
         });
         Environment::setCsrfResolver($csrfInterfaceStub);
-        $form = Builder::init(null, null, ["csrf-name" => "csrf"])->getForm();
+        $form = Builder::init(null, null, ['csrf-name' => 'csrf'])->getForm();
 
-        $context = $form->validate(["csrf" => "fake"]);
+        $context = $form->validate(['csrf' => 'fake']);
         $formValidation = $context->getChainedValidation()->getValidation($form->getInternalName(true), true);
         $this->assertFalse($context->isValid());
         $this->assertCount(1, $formValidation->getMessages());
@@ -45,10 +45,9 @@ class BuilderCsrfValidationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Csrf::NOT_VALID, $formValidation->getMessages()->getAt(0)->getType());
 
 
-        $context = $form->validate(["csrf" => $token]);
+        $context = $form->validate(['csrf' => $token]);
         $formValidation = $context->getChainedValidation()->getValidation($form->getInternalName(true), true);
         $this->assertCount(0, $formValidation->getMessages());
         $this->assertTrue($context->isValid());
-
     }
 }

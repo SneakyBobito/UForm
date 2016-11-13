@@ -17,19 +17,17 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group = new Group();
         $this->assertNull($group->getName());
         $this->assertSame([], $group->getElements());
-        $this->assertTrue($group->hasSemanticType("group"));
+        $this->assertTrue($group->hasSemanticType('group'));
 
-        $group = new Group("name");
-        $this->assertEquals("name", $group->getName());
+        $group = new Group('name');
+        $this->assertEquals('name', $group->getName());
         $this->assertSame([], $group->getElements());
-
-
     }
 
     public function testAddElement()
     {
-        $text1 = new Text("firstname");
-        $text2 = new Text("lastname");
+        $text1 = new Text('firstname');
+        $text2 = new Text('lastname');
         $group = new Group();
 
         $group->addElement($text1);
@@ -45,32 +43,32 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group = new Group();
         $this->assertNull($group->getName());
 
-        $group->setName("name");
-        $this->assertSame("name", $group->getName());
+        $group->setName('name');
+        $this->assertSame('name', $group->getName());
 
-        $group->setNamespace("namespace");
+        $group->setNamespace('namespace');
 
-        $this->assertSame("namespace.name", $group->getName(true, true));
+        $this->assertSame('namespace.name', $group->getName(true, true));
     }
 
     public function testGetElement()
     {
-        $text1 = new Text("firstname");
+        $text1 = new Text('firstname');
         $group = new Group();
-        $group2 = new Group("phones");
-        $phone1 = new Text("phone1");
-        $phone2 = new Text("phone2");
+        $group2 = new Group('phones');
+        $phone1 = new Text('phone1');
+        $phone2 = new Text('phone2');
 
         $group->addElement($text1);
         $group->addElement($group2);
         $group2->addElement($phone1);
         $group2->addElement($phone2);
 
-        $this->assertSame($text1, $group->getElement("firstname"));
-        $this->assertSame($phone2, $group->getElement("phones.phone2"));
-        $this->assertSame($phone1, $group->getElement("phones.phone1"));
+        $this->assertSame($text1, $group->getElement('firstname'));
+        $this->assertSame($phone2, $group->getElement('phones.phone2'));
+        $this->assertSame($phone1, $group->getElement('phones.phone1'));
 
-        $this->setExpectedException("UForm\InvalidArgumentException");
+        $this->setExpectedException('UForm\InvalidArgumentException');
         $group->getElement(new \stdClass());
     }
 }

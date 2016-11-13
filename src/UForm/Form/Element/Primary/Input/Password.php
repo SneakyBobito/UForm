@@ -19,8 +19,8 @@ class Password extends Input
 {
     public function __construct($name)
     {
-        parent::__construct("password", $name);
-        $this->addSemanticType("input:textfield");
-        $this->addSemanticType("input:password");
+        parent::__construct('password', $name);
+        $this->addSemanticType('input:textfield');
+        $this->addSemanticType('input:password');
     }
 }

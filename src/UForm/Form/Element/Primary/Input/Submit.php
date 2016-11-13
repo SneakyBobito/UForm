@@ -15,7 +15,7 @@ class Submit extends Input
 {
     public function __construct($name = null)
     {
-        parent::__construct("submit", $name);
-        $this->addSemanticType("input:submit");
+        parent::__construct('submit', $name);
+        $this->addSemanticType('input:submit');
     }
 }

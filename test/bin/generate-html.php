@@ -46,15 +46,8 @@ $form = Builder::init("#", "POST")
                     "Bootstrap 2" => "bootstrap2",
                     "bootstrap3",
                 ],
-                "Foundation 5" => "foundation5",
-                "UIKit",
-
-                "Material" => [
-                    "Materialize",
-                    "MUI"
-                ]
+                "Foundation 5" => "foundation5"
             ])->tooltip("Choose a framework to view")->leftAddon("Framework")->id("goToFramework")
-
 
             ->select("selectError", "With error and right addon", [
                 "foo", "bar", "baz"

@@ -16,13 +16,13 @@ class AlphaNumTest extends ValidatorTestCase
 
     public function testValid()
     {
-        $validation = $this->generateValidationItem(["firstname" => "bart1"]);
+        $validation = $this->generateValidationItem(['firstname' => 'bart1']);
         $validator = new AlphaNum();
         $validator->validate($validation);
         $this->assertTrue($validation->isValid());
 
 
-        $validation = $this->generateValidationItem(["firstname" => "bart 1"]);
+        $validation = $this->generateValidationItem(['firstname' => 'bart 1']);
         $validator = new AlphaNum(true);
         $validator->validate($validation);
         $this->assertTrue($validation->isValid());
@@ -30,13 +30,13 @@ class AlphaNumTest extends ValidatorTestCase
 
     public function testNotValid()
     {
-        $validation = $this->generateValidationItem(["firstname" => "bart-1"]);
+        $validation = $this->generateValidationItem(['firstname' => 'bart-1']);
         $validator = new AlphaNum();
         $validator->validate($validation);
         $this->assertFalse($validation->isValid());
 
 
-        $validation = $this->generateValidationItem(["firstname" => "bart 1"]);
+        $validation = $this->generateValidationItem(['firstname' => 'bart 1']);
         $validator = new AlphaNum();
         $validator->validate($validation);
         $this->assertFalse($validation->isValid());
@@ -45,10 +45,9 @@ class AlphaNumTest extends ValidatorTestCase
     public function testEmpty()
     {
 
-        $validation = $this->generateValidationItem(["firstname" => ""]);
+        $validation = $this->generateValidationItem(['firstname' => '']);
         $validator = new AlphaNum();
         $validator->validate($validation);
         $this->assertTrue($validation->isValid());
-
     }
 }

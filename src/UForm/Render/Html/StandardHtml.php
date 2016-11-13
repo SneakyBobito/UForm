@@ -8,7 +8,7 @@ class StandardHtml extends AbstractHtmlRender
 {
     public function getTemplatesPathes()
     {
-        return ["StandarHtml" => __DIR__ . "/../../../renderTemplate/StandardHtml"];
+        return ['StandarHtml' => __DIR__ . '/../../../renderTemplate/StandardHtml'];
     }
 
     /**
@@ -16,6 +16,6 @@ class StandardHtml extends AbstractHtmlRender
      */
     public function getRenderName()
     {
-        return "StandardHtml";
+        return 'StandardHtml';
     }
 }

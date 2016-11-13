@@ -24,27 +24,26 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->fluentElementStub = $this->getMockForTrait("UForm\Builder\FluentElement");
+        $this->fluentElementStub = $this->getMockForTrait('UForm\Builder\FluentElement');
         $this->parentGroup = new Group();
         $this->fluentElementStub->open($this->parentGroup);
     }
 
     public function testAdd()
     {
-        $element = new Text("t");
+        $element = new Text('t');
         $output = $this->fluentElementStub->add($element);
         $this->assertSame($element, $this->fluentElementStub->last());
         $this->assertSame($this->parentGroup, $element->getParent());
         $this->assertSame($this->fluentElementStub, $output);
 
-        $element2 = new Text("t2");
+        $element2 = new Text('t2');
         $this->fluentElementStub->add($element2);
         $this->assertSame($element2, $this->fluentElementStub->last());
 
         $this->fluentElementStub->close();
-        $this->setExpectedException("UForm\Builder\BuilderException");
-        $this->fluentElementStub->add(new Text("t3"));
-
+        $this->setExpectedException('UForm\Builder\BuilderException');
+        $this->fluentElementStub->add(new Text('t3'));
     }
 
     public function testOpen()
@@ -70,7 +69,7 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase
 
         $this->fluentElementStub->close();
         $this->assertNull($this->fluentElementStub->current());
-        $this->setExpectedException("UForm\Builder\BuilderException");
+        $this->setExpectedException('UForm\Builder\BuilderException');
         $this->fluentElementStub->close();
     }
 
@@ -78,25 +77,25 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame($this->parentGroup, $this->fluentElementStub->current());
 
-        $this->assertSame($this->parentGroup, $this->fluentElementStub->current("UForm\Form\Element\Container\Group"));
+        $this->assertSame($this->parentGroup, $this->fluentElementStub->current('UForm\Form\Element\Container\Group'));
     }
 
     public function testLast()
     {
-        $element = new Text("test");
+        $element = new Text('test');
         $this->fluentElementStub->add($element);
         $this->assertSame($element, $this->fluentElementStub->last());
 
         $this->setUp();
-        $this->setExpectedException("UForm\Builder\BuilderException");
+        $this->setExpectedException('UForm\Builder\BuilderException');
         $this->assertNull($this->fluentElementStub->last());
     }
 
     public function testOption()
     {
-        $element = new Text("test");
+        $element = new Text('test');
         $this->fluentElementStub->add($element);
-        $this->fluentElementStub->option("testOption", "value");
-        $this->assertEquals("value", $element->getOption("testOption"));
+        $this->fluentElementStub->option('testOption', 'value');
+        $this->assertEquals('value', $element->getOption('testOption'));
     }
 }

@@ -18,17 +18,17 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->input = new Password("inputname");
+        $this->input = new Password('inputname');
     }
 
     public function testConstruct()
     {
-        $this->assertTrue($this->input->hasSemanticType("input:password"));
+        $this->assertTrue($this->input->hasSemanticType('input:password'));
     }
 
     public function testRender()
     {
-        $render = $this->input->render(["inputname" => "inputValue"], ["inputname" => "inputValue"]);
+        $render = $this->input->render(['inputname' => 'inputValue'], ['inputname' => 'inputValue']);
         $id = $this->input->getId();
         $expected = '<input type="password" name="inputname" id="' . $id . '" value="inputValue"/>';
         $this->assertEquals($expected, $render);

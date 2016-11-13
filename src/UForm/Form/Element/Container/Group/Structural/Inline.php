@@ -20,17 +20,17 @@ class Inline extends StructuralGroup
     public function __construct()
     {
         parent::__construct();
-        $this->addSemanticType("inline");
+        $this->addSemanticType('inline');
     }
 
     public function addElement(Element $element)
     {
         if (!($element instanceof Element\Primary)) {
             throw new InvalidArgumentException(
-                "element",
-                "Instance of Primary",
+                'element',
+                'Instance of Primary',
                 $element,
-                "Cant add non-primary element into an inline group"
+                'Cant add non-primary element into an inline group'
             );
         }
         parent::addElement($element);

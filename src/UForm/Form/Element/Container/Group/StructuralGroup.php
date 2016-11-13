@@ -17,6 +17,6 @@ class StructuralGroup extends Group
     public function __construct()
     {
         parent::__construct(null);
-        $this->addSemanticType("structuralGroup");
+        $this->addSemanticType('structuralGroup');
     }
 }

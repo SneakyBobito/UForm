@@ -31,7 +31,7 @@ class ValidatorGroupTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([$validator, $validator2], $this->validatorGroupStub->getValidators());
         $this->assertSame($validator2, $output);
 
-        $this->setExpectedException("UForm\InvalidArgumentException");
+        $this->setExpectedException('UForm\InvalidArgumentException');
         $this->validatorGroupStub->addValidator([]);
     }
 

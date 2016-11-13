@@ -16,17 +16,17 @@ class BuilderScenarioTest extends \PHPUnit_Framework_TestCase
 
     public function testBuilder()
     {
-        $form = Builder::init("action", "method")
-            ->text("firstname", "Firstname")->required()->stringLength(2, 20)
-            ->text("lastname", "Lastname")->required()->stringLength(2, 20)
-            ->text("login", "Login", "loginValue")->required()->stringLength(2, 20)
-            ->password("password", "Password")->required()->stringLength(2, 20)
+        $form = Builder::init('action', 'method')
+            ->text('firstname', 'Firstname')->required()->stringLength(2, 20)
+            ->text('lastname', 'Lastname')->required()->stringLength(2, 20)
+            ->text('login', 'Login', 'loginValue')->required()->stringLength(2, 20)
+            ->password('password', 'Password')->required()->stringLength(2, 20)
             ->getForm();
 
         $data = [
-            "firstname" => "bart",
-            "lastname" => "simpson",
-            "password" => "****"
+            'firstname' => 'bart',
+            'lastname' => 'simpson',
+            'password' => '****'
         ];
 
         $formContext = $form->validate($data);
@@ -35,8 +35,7 @@ class BuilderScenarioTest extends \PHPUnit_Framework_TestCase
         $render = new Bootstrap3();
         $html = $render->render($formContext);
 
-        $this->assertInternalType("string", $html);
-        $this->assertSame("loginValue", $formContext->getValueFor("login"));
-
+        $this->assertInternalType('string', $html);
+        $this->assertSame('loginValue', $formContext->getValueFor('login'));
     }
 }

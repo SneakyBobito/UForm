@@ -18,17 +18,17 @@ class TextTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->input = new Text("inputname");
+        $this->input = new Text('inputname');
     }
 
     public function testConstruct()
     {
-        $this->assertTrue($this->input->hasSemanticType("input:text"));
+        $this->assertTrue($this->input->hasSemanticType('input:text'));
     }
 
     public function testRender()
     {
-        $render = $this->input->render(["inputname" => "inputValue"], ["inputname" => "inputValue"]);
+        $render = $this->input->render(['inputname' => 'inputValue'], ['inputname' => 'inputValue']);
         $id = $this->input->getId();
         $expected = '<input type="text" name="inputname" id="' . $id . '" value="inputValue"/>';
         $this->assertEquals($expected, $render);

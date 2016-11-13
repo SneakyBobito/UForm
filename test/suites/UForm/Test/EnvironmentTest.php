@@ -31,7 +31,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     public function testGetEnvironment()
     {
         $translator = Environment::getTranslator();
-        $this->assertInstanceOf("UForm\Validation\Message\TranslationInterface", $translator);
+        $this->assertInstanceOf('UForm\Validation\Message\TranslationInterface', $translator);
     }
 
     public function testReset()

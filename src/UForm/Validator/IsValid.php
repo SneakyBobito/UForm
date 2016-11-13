@@ -23,7 +23,7 @@ class IsValid extends Validator
         if ($validationItem->getElement() instanceof Validatable) {
             $validationItem->getElement()->checkValidity($validationItem);
         } else {
-            throw new Exception("Element is not validatable. It must be an instance of UForm\Form\Element\Validatable");
+            throw new Exception('Element is not validatable. It must be an instance of UForm\Form\Element\Validatable');
         }
     }
 }

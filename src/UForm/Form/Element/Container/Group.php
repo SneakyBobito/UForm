@@ -34,7 +34,7 @@ class Group extends Container
     public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->addSemanticType("group");
+        $this->addSemanticType('group');
     }
 
     /**
@@ -43,7 +43,7 @@ class Group extends Container
      */
     public function addElement(Element $element)
     {
-        $iname = "i" . count($this->elements);
+        $iname = 'i' . count($this->elements);
         $this->elements[$iname] = $element;
         $element->setParent($this);
         $element->setInternalName($iname);
@@ -70,7 +70,7 @@ class Group extends Container
         if (is_array($name)) {
             $namesP = $name;
         } elseif (is_string($name)) {
-            $namesP = explode(".", $name);
+            $namesP = explode('.', $name);
         } else {
             throw new InvalidArgumentException('name', 'string', $name);
         }

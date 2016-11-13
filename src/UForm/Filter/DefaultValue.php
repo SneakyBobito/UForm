@@ -18,7 +18,6 @@ class DefaultValue extends AbstractSimpleFilter
     public function __construct($defaultValue)
     {
         $this->defaultValue = $defaultValue;
-
     }
 
 
