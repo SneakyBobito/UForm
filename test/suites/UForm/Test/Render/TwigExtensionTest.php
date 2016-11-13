@@ -20,7 +20,7 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->render = $this->getMockForAbstractClass('UForm\Render\AbstractHtmlRender');
         $this->render
-            ->method('getTemplatesPathes')
+            ->method('getTemplatesPaths')
             ->willReturn(['test' => __DIR__ . '/../../../../Fixtures/templates/TwigExtension']);
     }
 

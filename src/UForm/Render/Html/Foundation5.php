@@ -19,7 +19,7 @@ class Foundation5 extends AbstractHtmlRender
     /**
      * @inheritdoc
      */
-    public function getTemplatesPathes()
+    public function getTemplatesPaths()
     {
         return [
             'Foundation5' => __DIR__ . '/../../../renderTemplate/Foundation5'

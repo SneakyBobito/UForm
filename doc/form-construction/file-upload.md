@@ -1,3 +1,8 @@
+---
+currentMenu: file-upload
+---
+
+
 File Upload
 ===========
 
@@ -6,18 +11,14 @@ Html forms allow to send files through http post requests.
 UForm builder manages it very well:
 
 ```php
-
 $builder->file("someFile", "Some File");
-
 ```
 
 That will render some [html input file](http://www.w3.org/TR/html-markup/input.file.html):
 
 ```html
-
 <label>Some File</label>
 <input type="file" name="someFile">
-
 ```
 
 Multiple files and accept type
@@ -28,18 +29,14 @@ It is possible to add additional controls to the form with
 [accept](http://www.w3schools.com/tags/att_input_accept.asp) attributes:
 
 ```php
-
 $builder->file("someFile", "Some File", true, ".png,.gif");
-
 ```
 
 The third and fourth parameters are respectively ``multiple`` and ``accept`` attributes.
 
 ```html
-
 <label>Some File</label>
 <input type="file" name="someFile" multiple accept=".png,.gif">
-
 ```
 
 Validation
@@ -50,10 +47,8 @@ or a valid file (with successful upload).
 You will have to add the required validator to ensure that the input data is a valid file:
 
 ```php
-
 $builder->file("someFile", "Some File")
     ->required();
-
 ```
 
 ### File type
@@ -75,9 +70,7 @@ When a file is uploaded it is placed in the temporary directory and will be dest
 want to conserve the file you will have to store it at the place of your convenience:
 
 ```php
-
 $formContext->getData()->findValue("myFile")->moveTo("uploadDirectory/myfile.png");
-
 ```
 
 This way the file will be moved to ``uploadDirectory/myfile.png``.

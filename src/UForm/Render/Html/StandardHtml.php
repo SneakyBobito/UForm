@@ -6,7 +6,7 @@ use UForm\Render\AbstractHtmlRender;
 
 class StandardHtml extends AbstractHtmlRender
 {
-    public function getTemplatesPathes()
+    public function getTemplatesPaths()
     {
         return ['StandarHtml' => __DIR__ . '/../../../renderTemplate/StandardHtml'];
     }

@@ -27,7 +27,7 @@ abstract class HtmlRenderTestCase extends \PHPUnit_Framework_TestCase
 
     public function testDirectoryExistence()
     {
-        $files = $this->render->getTemplatesPathes();
+        $files = $this->render->getTemplatesPaths();
 
         foreach ($files as $file) {
             $this->assertTrue(file_exists($file), "template directory $file does not exist");

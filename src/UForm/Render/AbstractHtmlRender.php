@@ -29,16 +29,18 @@ abstract class AbstractHtmlRender
             $this->te = new \Twig_Environment($loader);
             $this->te->addExtension(new TwigExtension());
 
-            $pathes = $this->getTemplatesPathes();
+            $pathes = $this->getTemplatesPaths();
             foreach ($pathes as $namespace => $path) {
-                $loader->addPath($path, $namespace); // allow to find a template by its namespace
-                $loader->addPath($path); // allow to use twig multi-pathes feature
+                if (is_string($namespace)) {
+                    $loader->addPath($path, $namespace); // allow to find a template by its namespace
+                }
+                $loader->addPath($path); // allow to use twig multi-paths feature
             }
         }
         return $this->te;
     }
 
-    abstract public function getTemplatesPathes();
+    abstract public function getTemplatesPaths();
 
     /**
      * Get the name of the render that mainly serves to display accurate error messages for humans

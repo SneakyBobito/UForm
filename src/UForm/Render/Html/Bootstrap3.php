@@ -14,7 +14,7 @@ class Bootstrap3 extends AbstractHtmlRender
         $this->setOptions($options);
     }
 
-    public function getTemplatesPathes()
+    public function getTemplatesPaths()
     {
         return ['Bootstrap3' => __DIR__ . '/../../../renderTemplate/Bootstrap3'];
     }

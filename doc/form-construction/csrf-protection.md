@@ -1,3 +1,7 @@
+---
+currentMenu: CSRF
+---
+
 CSRF Protection
 ===============
 
@@ -112,5 +116,3 @@ can do it:
   // The generated hidden will have the name "customName":
   // <input type="hidden" name="customName" />
 ```
-
-[View more builder options](../builder.md#options)

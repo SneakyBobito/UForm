@@ -1,3 +1,7 @@
+---
+currentMenu: rendering
+---
+
 Bootstrap 3 Render
 ==================
 

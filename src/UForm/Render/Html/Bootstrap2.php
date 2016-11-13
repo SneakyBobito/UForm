@@ -14,7 +14,7 @@ class Bootstrap2 extends AbstractHtmlRender
         $this->setOptions($options);
     }
 
-    public function getTemplatesPathes()
+    public function getTemplatesPaths()
     {
         return ['Bootstrap2' => __DIR__ . '/../../../renderTemplate/Bootstrap2'];
     }

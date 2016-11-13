@@ -22,8 +22,15 @@ class AbstractRenderTest extends \PHPUnit_Framework_TestCase
     {
         $this->render = $this->getMockForAbstractClass('UForm\Render\AbstractHtmlRender');
         $this->render
-            ->method('getTemplatesPathes')
-            ->willReturn([ 'test' => __DIR__ . '/../../../../Fixtures/templates/AbstractHtmlRender']);
+            ->method('getTemplatesPaths')
+            ->willReturn(
+                [
+                    __DIR__ . '/../../../../Fixtures/templates/AbstractHtmlRenderExt',
+                ] +
+                [
+                    'test' => __DIR__ . '/../../../../Fixtures/templates/AbstractHtmlRender',
+                ]
+            );
     }
 
     public function testGetTwigEnvironment()
@@ -36,6 +43,14 @@ class AbstractRenderTest extends \PHPUnit_Framework_TestCase
         $expected = '<form action="someAction"></form>';
         $form = Builder::init('someAction')->getForm();
         $this->assertEquals($expected, $this->render->render($form->generateContext()));
+    }
+
+    public function testRenderExtendedElement()
+    {
+        $expected = 'Bar';
+        $form = Builder::init('someAction')->getForm();
+        $actual = $this->render->renderElementAs($form, $form->generateContext(), ['formExt']);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testRenderElementAs()

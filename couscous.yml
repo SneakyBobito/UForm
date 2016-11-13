@@ -2,9 +2,13 @@ template:
     # Name of the directory containing the website template (default is "website")
     #directory: template
     # Or if you are using a remote template, you can set the Git URL
-    url: https://github.com/CouscousPHP/Template-Light.git
+    url: https://github.com/CouscousPHP/Template-Light
     # Name of the index file (default is "README.md")
     index: index.md
+
+
+include:
+    - doc
 
 # List of directories to exclude from the processing (default contains "vendor" and "website")
 # Paths are relative to the repository root
@@ -25,11 +29,30 @@ exclude:
 # You are advised to set and use this variable to write your links in the HTML layouts
 baseUrl: http://gsouf.github.io/UForm
 
+branch: gh-pages
 
 title: UForm
-subTitle: Form library
+subTitle: Framework independent form library for php
 
 github:
     user: gsouf
     repo: UForm
 
+
+menu:
+    items:
+        home:
+            text: Quick start
+            relativeUrl:
+
+        rendering:
+            text: Rendering
+            relativeUrl: render/render-engine.html
+
+        CSRF:
+            text: CSRF Protection
+            relativeUrl: form-construction/csrf-protection.html
+
+        file-upload:
+            text: File Upload
+            relativeUrl: form-construction/file-upload.html
