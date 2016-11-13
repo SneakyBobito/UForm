@@ -35,4 +35,3 @@ then
 else
     echo "Skip code coverage report..."
 fi
-
