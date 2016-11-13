@@ -70,12 +70,12 @@ trait GroupBuilder
      * @return $this
      * @throws BuilderException
      */
-    public function column($width)
+    public function column($width, $scale = 12)
     {
         if (!$this->current() instanceof ColumnGroup) {
             throw new BuilderException('Cant call builder::column() outside of a columnGroup Element');
         }
-        $element = new Column($width);
+        $element = new Column($width, $scale);
         $this->add($element);
         $this->open($element);
         return $this;

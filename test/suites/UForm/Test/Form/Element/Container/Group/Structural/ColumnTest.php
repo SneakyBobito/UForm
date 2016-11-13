@@ -62,6 +62,33 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $column->getAdaptiveWidth(12));
 
 
+        $columnGroup = new ColumnGroup();
+        $c = new Column(25, 100);
+        $columnGroup->addElement($c);
+        $columnGroup->addElement(new Column(75, 100));
+
+        $this->assertEquals(25, $c->getAdaptiveWidth(100));
+        $this->assertEquals(3, $c->getAdaptiveWidth(12));
+
+        $columnGroup->addElement(new Column(50, 100));
+        $this->assertEquals(16.67, round($c->getAdaptiveWidth(100), 2));
+        $this->assertEquals(2, round($c->getAdaptiveWidth(12), 2));
+
+
+        $this->setExpectedException('UForm\InvalidArgumentException');
+        $column->getAdaptiveWidth('fake');
+    }
+
+    public function testGetWidthOnScale()
+    {
+        $column = new Column(5);
+        $this->assertEquals(5, $column->getWidthOnScale(100));
+        $this->assertEquals(2.5, $column->getWidthOnScale(50));
+
+        $column = new Column(5, 12);
+        $this->assertEquals(41.67, round($column->getWidthOnScale(100), 2));
+        $this->assertEquals(5, $column->getWidthOnScale(12));
+
         $this->setExpectedException('UForm\InvalidArgumentException');
         $column->getAdaptiveWidth('fake');
     }

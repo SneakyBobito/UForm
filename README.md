@@ -46,9 +46,10 @@ $formRenderer = new Bootstrap3Render();
 $html = $formRenderer->render($formContext);
 
 echo $html;
-
 ```
+
+<center>![bootstrap 3 example](/doc/screenshot/bootstrap3.png)</center>
 
 ### Full documentation
 
-The full documentation is available at: TODO
+The full documentation is available at: [gsouf.github.io/UForm](http://gsouf.github.io/UForm)

@@ -1,6 +1,6 @@
 <div class="row-fluid">
     {% for column in current.children -%}
-    <div class="span{{ column.getAdaptiveWidth(render.colNumber) | round }}">
+    <div class="span{{ column|gridFrameworkHelper(render.colNumber) }}">
             {{- renderElement(column) -}}
     </div>
     {%- endfor %}

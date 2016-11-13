@@ -16,8 +16,9 @@ class Column extends StructuralGroup
 {
 
     protected $width;
+    protected $scale;
 
-    public function __construct($width)
+    public function __construct($width, $scale = 100)
     {
         parent::__construct();
         $this->addSemanticType('column');
@@ -25,7 +26,12 @@ class Column extends StructuralGroup
         if ($width < 0) {
             throw new Exception('Column width cant be negative');
         }
+
+        if ($scale <= 0) {
+            throw new Exception('Column width cant be 0 or negative');
+        }
         $this->width = $width;
+        $this->scale = $scale;
     }
 
     /**
@@ -34,6 +40,14 @@ class Column extends StructuralGroup
     public function getWidth()
     {
         return $this->width;
+    }
+
+    /**
+     * @return int
+     */
+    public function getScale()
+    {
+        return $this->scale;
     }
 
     /**
@@ -47,17 +61,31 @@ class Column extends StructuralGroup
         return parent::setParent($parent);
     }
 
-    public function getAdaptiveWidth($factor)
+    public function getWidthOnScale($scale)
     {
-        if (!is_integer($factor)) {
-            throw new InvalidArgumentException('factor', 'int', $factor);
+        if (!is_integer($scale)) {
+            throw new InvalidArgumentException('scale', 'int', $scale);
+        }
+        return  $scale * $this->getWidth() / $this->getScale();
+    }
+
+    /**
+     * the size of this element given other elements from the parent, based
+     * on the given scale (100 will be equivalent to %)
+     * @param int $scale
+     * @return int
+     */
+    public function getAdaptiveWidth($scale)
+    {
+        if (!is_integer($scale)) {
+            throw new InvalidArgumentException('scale', 'int', $scale);
         }
 
-        $width = $this->getWidth();
         if (!$this->getParent()) {
-            return $factor;
+            return $scale;
         }
-        $percent = $this->getParent()->getWidthInPercent($width);
-        return $factor * ($percent / 100);
+
+        $percent = $this->getParent()->getWidthInPercent($this->getWidthOnScale(100), 100);
+        return $scale * ($percent / 100);
     }
 }

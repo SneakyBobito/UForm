@@ -43,11 +43,11 @@ class ColumnGroup extends StructuralGroup
      * @param int|float $width the width to compare
      * @return float|int the percent of the given width
      */
-    public function getWidthInPercent($width)
+    public function getWidthInPercent($width, $widthScale = 100)
     {
         $widthTotal = 0;
         foreach ($this->getElements() as $column) {
-            $widthTotal += $column->getWidth();
+            $widthTotal += $column->getWidthOnScale($widthScale);
         }
 
         if ($widthTotal == 0) {
