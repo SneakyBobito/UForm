@@ -50,7 +50,7 @@
                                         CSRF Protection
                                     </a>
                                 </li>
-                                                            <li class="">
+                                                            <li class="active">
                                     <a href="http://gsouf.github.io/UForm/form-construction/file-upload.html">
                                         File Upload
                                     </a>
@@ -61,20 +61,40 @@
 
                 
                 <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="uforms-builder">UForm's builder</h1>
-<h2 id="options">Options</h2>
-<p>Some options are avaible to configure the builder.</p>
-<h3 id="csrf">csrf</h3>
-<p>That allows to set a custom
-<a href="validation/csrf-protection.html">CSRF implementation</a>
-for CSRF protection.</p>
-<p>Set it to false to disable CSRF validation.</p>
-<p>Leave it null to use the Environment validation.</p>
-<p>Note: If you it null and if you dont have an environment CSRF
-then CSRF protection will be disabled</p>
-<h3 id="csrf-name">csrf-name</h3>
-<p>Set the name of the CSRF input.
-<a href="(validation/csrf-protection.html)">More informations</a></p>
+                    <h1 id="file-upload">File Upload</h1>
+<p>Html forms allow to send files through http post requests.</p>
+<p>UForm builder manages it very well:</p>
+<pre><code class="language-php">$builder-&gt;file("someFile", "Some File");</code></pre>
+<p>That will render some <a href="http://www.w3.org/TR/html-markup/input.file.html">html input file</a>:</p>
+<pre><code class="language-html">&lt;label&gt;Some File&lt;/label&gt;
+&lt;input type="file" name="someFile"&gt;</code></pre>
+<h2 id="multiple-files-and-accept-type">Multiple files and accept type</h2>
+<p>It is possible to add additional controls to the form with
+<a href="http://www.w3schools.com/tags/att_input_multiple.asp">multiple</a> and
+<a href="http://www.w3schools.com/tags/att_input_accept.asp">accept</a> attributes:</p>
+<pre><code class="language-php">$builder-&gt;file("someFile", "Some File", true, ".png,.gif");</code></pre>
+<p>The third and fourth parameters are respectively <code>multiple</code> and <code>accept</code> attributes.</p>
+<pre><code class="language-html">&lt;label&gt;Some File&lt;/label&gt;
+&lt;input type="file" name="someFile" multiple accept=".png,.gif"&gt;</code></pre>
+<h2 id="validation">Validation</h2>
+<p>By default adding a file from the builder will ensure that the file is either null
+or a valid file (with successful upload).
+You will have to add the required validator to ensure that the input data is a valid file:</p>
+<pre><code class="language-php">$builder-&gt;file("someFile", "Some File")
+    -&gt;required();</code></pre>
+<h3 id="file-type">File type</h3>
+<p>TODO</p>
+<h2 id="work-with-the-file">Work with the file</h2>
+<p>Php uses to manage files uploads with the global array <code>$_FILES</code>. The structure of <code>$_FILES</code> is not very convenient
+and thus UForm translates it to a set of <code>UForm\FileUpload</code> instances.</p>
+<h3 id="move-the-file-at-the-good-place">move the file at the good place</h3>
+<p>When a file is uploaded it is placed in the temporary directory and will be destroyed when the script exits. If you
+want to conserve the file you will have to store it at the place of your convenience:</p>
+<pre><code class="language-php">$formContext-&gt;getData()-&gt;findValue("myFile")-&gt;moveTo("uploadDirectory/myfile.png");</code></pre>
+<p>This way the file will be moved to <code>uploadDirectory/myfile.png</code>.</p>
+<h2 id="about-upload-security">About upload security</h2>
+<p>If you import the data with the method <code>$form-&gt;getInputFromGlobals()</code> then
+the <a href="http://php.net/manual/fr/function.is-uploaded-file.php">is_uploaded_file</a> check will be processed.</p>
                 </section>
 
             </div>

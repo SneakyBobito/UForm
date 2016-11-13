@@ -18,40 +18,90 @@
             <a class="navbar-brand" href="http://gsouf.github.io/UForm/">
                 UForm
                 <small class="hidden-xs hidden-sm">
-                    This is the default subtitle!
+                    Framework independent form library for php
                 </small>
             </a>
 
+                            <a href="https://github.com/gsouf/UForm">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
             
         </header>
 
-        <main class="container">
+        <main class="container-fluid">
             <div class="row">
 
                 
-                <section id="content" class="col-sm-12">
-                    <h1 id="element-rendering-informations">Element rendering informations</h1>
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                        <ul class="nav nav-pills nav-stacked">
+                                                            <li class="">
+                                    <a href="http://gsouf.github.io/UForm/">
+                                        Quick start
+                                    </a>
+                                </li>
+                                                            <li class="active">
+                                    <a href="http://gsouf.github.io/UForm/render/render-engine.html">
+                                        Rendering
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gsouf.github.io/UForm/form-construction/csrf-protection.html">
+                                        CSRF Protection
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gsouf.github.io/UForm/form-construction/file-upload.html">
+                                        File Upload
+                                    </a>
+                                </li>
+                                                    </ul>
+
+                    </nav>
+
+                
+                <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="rendering">Rendering</h1>
+<p>UForm rendering is flexible. It was designed to allow maximum customization.
+The render process uses <a href="http://twig.sensiolabs.org/">twig</a>.</p>
 <h2 id="built-in-engines">Built-in engines</h2>
 <ul>
-<li><a href="./boostrap3.html">Bootstrap 3</a></li>
+<li><a href="./bootstrap3.html">Bootstrap 3</a></li>
 <li><a href="./foundation5.html">Foundation 5</a></li>
 </ul>
 <h1 id="implement-your-own-rendering">Implement your own rendering</h1>
 <p>You can implement your own rendering in order to <strong>add new components</strong> or to <strong>customize the rendering</strong>
-or to <strong>implement a new client framework</strong>. This can be acheived by either starting from scratch or extending
+or to <strong>implement a new client framework</strong>. This can be achieved by either starting from scratch or extending
 an existing engine.</p>
 <p><strong>When should I write it from scratch?</strong> - You should write it from scratch if you write for a specific framework</p>
-<p><strong>When should I extend an engine?</strong> - You should extend an engine if an enigne already fits most of your needing,
+<p><strong>When should I extend an engine?</strong> - You should extend an engine if an engine already fits most of your needing,
 but you need new inputs, new structure or to customize existing elements.</p>
-<p>Usualy when you write your own rendring you also want to extend the default builder : TODO builder doc</p>
+<h2 id="extend-an-existing-render-engine">Extend an existing render engine</h2>
+<p>When extending an existing render engine you take all existing templates from this engine and you can override some
+of them with yours or add custom templates from a given template directory.</p>
+<p>This is achieved by extending a class that already extends the <code>AbstractHtmlRender</code> and modifying
+the output of a method:</p>
+<pre><code class="language-php">class MyEngine extends BaseEngineToExtend {
+
+    public function getTemplatesPaths()
+    {
+        return [__DIR__ . '/path/to/my/engine/directory'] 
+            + parent::getTemplatesPaths();
+    }
+
+    public function getRenderName()
+    {
+        return "NameOfMyEngine";
+    }
+}</code></pre>
+<p>In this example the directory <code>__DIR__ . '/path/to/my/engine/directory'</code> will contain the template
+of you render engine.</p>
 <h2 id="base-rendering-class">Base rendering class</h2>
 <p>A render engine must extend the class <code>UForm\Render\AbstractHtmlRender</code></p>
-<p>TODO</p>
 <h2 id="rendering-templates">Rendering templates</h2>
-<p>Render template are written with twig. The name of the templates matches the semantic types of the element.
+<p>Templates are written with twig. The name of the templates matches the <a href="#element-semantic-types">semantic types</a> of the element.
 If a semantic type does not have a template, the next semantic type is checked, until one matches.
 If any of the semantic type has a matching template then an exception is thrown.</p>
-<p>More information about the template rendering : TODO</p>
 <h3 id="template-variables">Template variables</h3>
 <ul>
 <li><strong>current</strong>: the instance of the current <code>RenderContext</code> instance</li>
@@ -72,16 +122,34 @@ e.g if you call this during the rendering of a <code>form</code> it will process
 <li><strong>childrenAreValid(element)</strong>: check if the children of the given element are valid</li>
 </ul>
 <h2 id="element-semantic-types">Element Semantic types</h2>
-<p>Each element has one or more semantic types. TODO: Read more about semantic type</p>
-<p>Here is the list of semantic types of the element:</p>
-<p>TODO: autogenerated list from annotations</p>
+<p>Each element has one or more semantic types. Semantic types help to render the element. </p>
+<p>For instance an <code>input text</code> has the following semantic types:</p>
+<ul>
+<li><code>input:text</code></li>
+<li><code>input:textfield</code> (common to input text, password, url, email...)</li>
+<li><code>input</code> (common to all input elements)</li>
+<li><code>primary</code> (common to input, select, textarea)</li>
+<li><code>element</code> (common to <strong>ALL</strong> elements)</li>
+</ul>
+<p>The order is very important for the rendering because the engine will try all the types in this order
+to find a template matching the name in the template directory. </p>
+<p>In this example it will use the first file found in this list:</p>
+<ul>
+<li><code>input:text.twig</code></li>
+<li><code>input:textfield.twig</code></li>
+<li><code>input.twig</code></li>
+<li><code>primary.twig</code></li>
+<li><code>element.twig</code></li>
+</ul>
 <h2 id="element-options">Element Options</h2>
-<p>Each element has standard options that must be implemented in every engine.
-Of course you are free to use any other options.</p>
-<p>Here is the list of the standard options :</p>
-<p>TODO : autogenerated list from annotations</p>
+<p>Each element has standard options that engines <strong>must</strong> take care of.</p>
+<p>Options can be <code>label</code>, <code>placeholder</code>, <code>helper</code>, <code>tooltip</code>, <code>leftAddon</code>...</p>
+<p>In this example we render the <code>label</code> of an element:</p>
+<pre><code class="language-twig">{% if current.element.getOption("label") %}
+    &lt;label for="{{ current.element.getId() }}"&gt;{{ current.element.getOption("label") }}&lt;/label&gt;
+{% endif %}</code></pre>
 <h2 id="notice-about-accessibility">Notice about accessibility</h2>
-<p>We highly encourage every implmenetation of render engine to take care accessibility.</p>
+<p>We highly encourage every implementation of render engine to take care accessibility.</p>
 <p>Thus the following rules should be considered:</p>
 <ul>
 <li>Always make use of <code>label</code></li>
@@ -95,7 +163,7 @@ Of course you are free to use any other options.</p>
         </main>
 
         <footer>
-            <div class="container">
+            <div class="container-fluid">
                 <p class="text-muted">
                     website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
                 </p>
