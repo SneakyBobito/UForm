@@ -50,7 +50,9 @@ echo $html;
 
 The above example will result in: 
 
-<div style="text-align:center">![bootstrap 3 example](/doc/screenshot/bootstrap3.png)</div>
+<div style="text-align:center">
+<img src ="/doc/screenshot/bootstrap3.png" />
+</div>
 
 ### Full documentation
 
