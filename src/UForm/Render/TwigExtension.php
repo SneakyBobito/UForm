@@ -83,7 +83,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('gridFrameworkHelper', function (Column $element, $scale) {
                 $scaled = $element->getWidthOnScale($scale);
                 $scaled = ceil($scaled);
-                if($scaled > $scale){
+                if ($scaled > $scale) {
                     $scaled = $scale;
                 }
                 return $scaled;

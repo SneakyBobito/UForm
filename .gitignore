@@ -2,5 +2,7 @@ composer.lock
 /vendor
 /doc/.couscous
 
+.couscous
+
 /nbproject
 .idea
