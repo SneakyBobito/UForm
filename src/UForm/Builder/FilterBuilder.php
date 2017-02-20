@@ -28,4 +28,10 @@ trait FilterBuilder
         $this->last()->addFilter($filter);
         return $this;
     }
+
+    public function trim($chars = null)
+    {
+        $this->last()->addFilter(new Filter\Trim($chars));
+        return $this;
+    }
 }

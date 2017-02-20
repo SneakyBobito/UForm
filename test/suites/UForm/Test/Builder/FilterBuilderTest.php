@@ -31,4 +31,13 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($filter, $this->filterBuilder->last()->getFilters()[0]);
     }
+
+
+    public function testRegexp()
+    {
+        $this->filterBuilder->text('text');
+        $this->filterBuilder->trim();
+
+        $this->assertInstanceOf(Trim::class, $this->filterBuilder->last()->getFilters()[0]);
+    }
 }
