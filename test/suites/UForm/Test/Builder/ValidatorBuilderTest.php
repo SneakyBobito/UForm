@@ -7,6 +7,7 @@ namespace UForm\Test\Builder;
 
 use UForm\Builder;
 use UForm\Form\Element\Container\Group;
+use UForm\Validator\Regexp;
 use UForm\Validator\Required;
 
 class ValidatorBuilderTest extends \PHPUnit_Framework_TestCase
@@ -66,5 +67,14 @@ class ValidatorBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($this->validatorBuilder, $output);
         $this->assertInstanceOf('UForm\Validator\InRange', $this->validatorBuilder->last()->getValidators()[0]);
+    }
+
+    public function testRegexp()
+    {
+        $this->validatorBuilder->text('text');
+        $output = $this->validatorBuilder->regexp('/[a-z]+/');
+
+        $this->assertSame($this->validatorBuilder, $output);
+        $this->assertInstanceOf(Regexp::class, $this->validatorBuilder->last()->getValidators()[0]);
     }
 }

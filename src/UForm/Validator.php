@@ -11,6 +11,8 @@ use UForm\Validation\ValidationItem;
 abstract class Validator
 {
 
+    const INVALID_DATA = 'INVALID_DATA';
+
     use OptionGroup;
 
     /**

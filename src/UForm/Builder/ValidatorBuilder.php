@@ -22,7 +22,7 @@ trait ValidatorBuilder
 
     /**
      * Adds a required validator
-     * @see UForm\Validator\Required
+     * @see Required
      * @return $this
      */
     public function required()
@@ -35,7 +35,7 @@ trait ValidatorBuilder
 
     /**
      * Adds a StringLength validator
-     * @see UForm\Validator\StringLength
+     * @see StringLength
      * @param int $min the minimum length of the string
      * @param int $max the maximum length of the string
      * @return $this
@@ -49,7 +49,7 @@ trait ValidatorBuilder
     /**
      * Add a inRange validator to the latest element
      *
-     * @see UForm\Validator\InRange
+     * @see InRange
      * @param array $values
      * @return $this
      */
@@ -73,13 +73,25 @@ trait ValidatorBuilder
 
     /**
      * Adds an alphanum validator to the last element
-     * @see UForm\Validator\AlphaNum
+     * @see AlphaNum
      * @param bool|false $allowSpace
      * @return $this
      */
     public function alphaNum($allowSpace = false)
     {
         $this->last()->addValidator(new Validator\AlphaNum($allowSpace));
+        return $this;
+    }
+
+    /**
+     * Adds a regexp validator to the last element
+     * @see Validator\Regexp
+     * @param bool|false $allowSpace
+     * @return $this
+     */
+    public function regexp($pattern)
+    {
+        $this->last()->addValidator(new Validator\Regexp($pattern));
         return $this;
     }
 }
