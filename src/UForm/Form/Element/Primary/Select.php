@@ -27,6 +27,8 @@ class Select extends Element\Primary implements Element\Drawable
      */
     protected $rootGroup;
 
+    protected $isMultiple;
+
     /**
      * \UForm\Form\Element constructor
      *
@@ -34,7 +36,7 @@ class Select extends Element\Primary implements Element\Drawable
      * @param array|null $values
      * @param array|null $attributes
      */
-    public function __construct($name, array $values = null)
+    public function __construct($name, array $values = null, $multiple = false)
     {
         parent::__construct($name);
 
@@ -44,6 +46,8 @@ class Select extends Element\Primary implements Element\Drawable
         if (null !== $values) {
             $this->setOptionValues($values);
         }
+
+        $this->isMultiple = $multiple == true;
 
         $this->addSemanticType('select');
     }
@@ -92,6 +96,13 @@ class Select extends Element\Primary implements Element\Drawable
             $params['class'] = $options['class'];
         }
 
+
+        if ($this->isMultiple) {
+            $params['multiple'] = true;
+            $params['name'] .= '[]';
+        } elseif (isset($params['multiple'])) {
+            unset($params['multiple']);
+        }
 
         if (isset($value[$this->getName()])) {
             $value = $value[$this->getName()];

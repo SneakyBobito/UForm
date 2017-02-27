@@ -77,4 +77,60 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             . '</select>';
         $this->assertEquals($expected, $this->select->render(['familly' => 'simpson'], ['familly' => 'simpson']));
     }
+
+
+    public function testMultiple()
+    {
+
+        $this->select = new Select('family', null, true);
+
+        $this->select->setOptionValues(
+            [
+                'Homer' => 'simpson',
+                'Ned' => 'flanders',
+
+                'Kids' => [
+                    'Bart' => 'simpson',
+                    'Rod' => 'flanders'
+                ],
+
+                'skinner'
+            ]
+        );
+
+        $this->select->setId('someID');
+        $this->select->setAttribute('data-foo', 'bar');
+
+        // No selection
+        $expected =
+            '<select id="someID" name="family[]" data-foo="bar" multiple>'
+
+            . '<option value="simpson">Homer</option>'
+            . '<option value="flanders">Ned</option>'
+            . '<optgroup label="Kids">'
+            . '<option value="simpson">Bart</option>'
+            . '<option value="flanders">Rod</option>'
+            . '</optgroup>'
+            . '<option value="skinner">skinner</option>'
+
+            . '</select>';
+        $this->assertEquals($expected, $this->select->render([], []));
+
+
+
+        // WITH VALUES
+        $expected =
+            '<select id="someID" name="family[]" data-foo="bar" multiple>'
+
+            . '<option value="simpson" selected="selected">Homer</option>'
+            . '<option value="flanders">Ned</option>'
+            . '<optgroup label="Kids">'
+            . '<option value="simpson" selected="selected">Bart</option>'
+            . '<option value="flanders">Rod</option>'
+            . '</optgroup>'
+            . '<option value="skinner" selected="selected">skinner</option>'
+
+            . '</select>';
+        $this->assertEquals($expected, $this->select->render(['family' => ['simpson', 'skinner']], []));
+    }
 }
