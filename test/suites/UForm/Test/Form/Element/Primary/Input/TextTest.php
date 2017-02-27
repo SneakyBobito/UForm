@@ -28,9 +28,10 @@ class TextTest extends \PHPUnit_Framework_TestCase
 
     public function testRender()
     {
+        $this->input->setAttribute('foo', 'bar');
         $render = $this->input->render(['inputname' => 'inputValue'], ['inputname' => 'inputValue']);
         $id = $this->input->getId();
-        $expected = '<input type="text" name="inputname" id="' . $id . '" value="inputValue"/>';
+        $expected = '<input type="text" name="inputname" id="' . $id . '" foo="bar" value="inputValue"/>';
         $this->assertEquals($expected, $render);
     }
 }

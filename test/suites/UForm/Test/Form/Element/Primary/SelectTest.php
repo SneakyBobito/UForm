@@ -45,10 +45,11 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->select->setId('someID');
+        $this->select->setAttribute('data-foo', 'bar');
 
         // No selection
         $expected =
-            '<select id="someID" name="familly">'
+            '<select id="someID" name="familly" data-foo="bar">'
 
                 . '<option value="simpson">Homer</option>'
                 . '<option value="flanders">Ned</option>'
@@ -63,7 +64,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
         // selection
         $expected =
-            '<select id="someID" name="familly">'
+            '<select id="someID" name="familly" data-foo="bar">'
 
             . '<option value="simpson" selected="selected">Homer</option>'
             . '<option value="flanders">Ned</option>'
