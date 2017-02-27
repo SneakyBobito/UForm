@@ -120,7 +120,7 @@ trait InputBuilder
     }
 
     /**
-     * @see UForm\Form\Element\Primary\Select
+     * @see Select
      * @param $name
      * @param $label
      * @return $this
@@ -128,6 +128,20 @@ trait InputBuilder
     public function select($name, $label, $values = [], $defaultValue = null)
     {
         $element = new Select($name, $values);
+        $this->_makeInput($element, $label, $defaultValue);
+        $this->add($element);
+        return $this;
+    }
+
+    /**
+     * @see Select
+     * @param $name
+     * @param $label
+     * @return $this
+     */
+    public function selectMultiple($name, $label, $values = [], $defaultValue = null)
+    {
+        $element = new Select($name, $values, true);
         $this->_makeInput($element, $label, $defaultValue);
         $this->add($element);
         return $this;
