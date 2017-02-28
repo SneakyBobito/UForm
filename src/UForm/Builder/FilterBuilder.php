@@ -29,9 +29,24 @@ trait FilterBuilder
         return $this;
     }
 
+    /**
+     * @see Filter\Trim
+     * @param null $chars
+     * @return $this
+     */
     public function trim($chars = null)
     {
         $this->last()->addFilter(new Filter\Trim($chars));
+        return $this;
+    }
+
+    /**
+     * @see Filter\BoolToInt
+     * @return $this
+     */
+    public function boolToInt()
+    {
+        $this->last()->addFilter(new Filter\BoolToInt());
         return $this;
     }
 }
