@@ -62,4 +62,4 @@ The above example will result in:
 
 ### Full documentation
 
-The full documentation is available at: [gsouf.github.io/UForm](http://gsouf.github.io/UForm)
+The full documentation will available at [gsouf.github.io/UForm](http://gsouf.github.io/UForm) once the project will be considered as stable
