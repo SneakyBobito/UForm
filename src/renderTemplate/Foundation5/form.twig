@@ -3,7 +3,9 @@
     method = "{{ current.element.getMethod() }}"
     action = "{{ current.element.getAction() }}"
     class  = "{{ current.element.getUserOption("class") }}{% if not current.isValid() %} invalid{% endif %}"
-    id     = "{{ current.element.getId() }}">
+    id     = "{{ current.element.getId() }}"
+    {% if current.element.getEnctype() %}enctype = "{{ current.element.getEnctype() }}"{% endif %}
+>
 
     {# render as a container #}
     {{- renderParentType() -}}
