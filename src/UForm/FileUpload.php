@@ -96,7 +96,9 @@ class FileUpload
 
         $file = $this->getPath();
         if (!file_exists($file)) {
-            throw new Exception('Cannot move the uploaded file because the file is not valid. Make sure you didnt move it already');
+            throw new Exception(
+                'Cannot move the uploaded file because the file is not valid. Make sure you didnt move it already'
+            );
         }
         if (!is_writable($file)) {
             throw new Exception('Cannot move the uploaded file because the file is not writable.');
