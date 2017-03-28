@@ -81,7 +81,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $file = $this->inputBuilderStub->last();
         $this->assertInstanceOf(File::class, $file);
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
-        $this->assertEquals('text/plain|image/*', $file->getAccept());
+        $this->assertEquals('text/plain,image/*', $file->getAccept());
 
         $this->assertCount(2, $file->getValidators());
         $this->assertInstanceOf(MimeType::class, $file->getValidators()[1]);

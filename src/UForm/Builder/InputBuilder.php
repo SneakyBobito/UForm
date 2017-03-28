@@ -169,7 +169,7 @@ trait InputBuilder
     public function file($name, $label = null, $multiple = false, array $allowMimeTypes = null)
     {
         if ($allowMimeTypes & !empty($allowMimeTypes)) {
-            $accept = implode('|', $allowMimeTypes);
+            $accept = implode(',', $allowMimeTypes);
         } else {
             $accept = null;
         }
