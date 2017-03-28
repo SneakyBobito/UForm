@@ -29,6 +29,7 @@ class Csrf extends Validator
     public function __construct(CsrfInterface $csrfInterface)
     {
         $this->csrfInterface = $csrfInterface;
+        parent::__construct();
     }
 
 
