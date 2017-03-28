@@ -53,11 +53,12 @@ class FileUploadTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('bar', $files);
         $this->assertArrayHasKey('nothing', $files);
 
-        $this->assertInstanceOf('UForm\FileUpload', $files['foo']);
+        $this->assertInstanceOf(FileUpload::class, $files['foo']);
         $this->assertInternalType('array', $files['bar']);
         $this->assertCount(2, $files['bar']);
 
-        $this->assertNull($files['nothing']);
+        $this->assertInstanceOf(FileUpload::class, $files['nothing']);
+        $this->assertEquals(UPLOAD_ERR_NO_FILE, $files['nothing']->getStatus());
     }
 
     public function testGetPath()

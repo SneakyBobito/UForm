@@ -63,8 +63,8 @@ class FileUpload
 
     private static function createFileFromData($data, $checkIsUploaded)
     {
-        if ($data['error'] == UPLOAD_ERR_NO_FILE) {
-            return null;
+        if ($data['error'] !== UPLOAD_ERR_OK) {
+            return new self($data['name'], null, $data['error']);
         }
 
         if ($checkIsUploaded && !is_uploaded_file($data['tmp_name'])) {
@@ -105,7 +105,7 @@ class FileUpload
         $dirname = dirname($destination);
         if (!is_dir($dirname)) {
             $done = @mkdir($dirname, 0777, true);
-            if(!$done){
+            if (!$done) {
                 throw new Exception('Cannot create the base directory');
             }
         }

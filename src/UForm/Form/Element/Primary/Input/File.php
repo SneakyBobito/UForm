@@ -22,6 +22,7 @@ class File extends Input implements Requirable, Validatable
 {
 
     const NOT_VALID_NOT_A_FILE = 'File::NOT_A_FILE';
+    const FILE_TOO_LARGE = 'File::FILE_TOO_LARGE';
 
     protected $accept;
     protected $multiple;
@@ -92,6 +93,22 @@ class File extends Input implements Requirable, Validatable
             $message = new Message('The data sent is not a valid file', [], self::NOT_VALID_NOT_A_FILE);
             $validationItem->appendMessage($message);
             $validationItem->setInvalid();
+        } elseif (null !== $value && $value->getStatus() !== UPLOAD_ERR_OK) {
+            switch ($value->getStatus()) {
+                case UPLOAD_ERR_INI_SIZE:
+                    $message = new Message('File is too large', [], self::FILE_TOO_LARGE);
+                    $validationItem->appendMessage($message);
+                    $validationItem->setInvalid();
+                    break;
+
+                // TODO more cases
+
+                default:
+                    $message = new Message('Invalid file upload', [], self::NOT_VALID_NOT_A_FILE);
+                    $validationItem->appendMessage($message);
+                    $validationItem->setInvalid();
+                    break;
+            }
         }
     }
 }
