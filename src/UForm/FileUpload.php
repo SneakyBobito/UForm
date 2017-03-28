@@ -96,14 +96,24 @@ class FileUpload
 
         $file = $this->getPath();
         if (!file_exists($file)) {
-            throw new Exception('Cannot move the uploaded file because the file is not valid. Did you move it away?');
+            throw new Exception('Cannot move the uploaded file because the file is not valid. Make sure you didnt move it already');
         }
         if (!is_writable($file)) {
             throw new Exception('Cannot move the uploaded file because the file is not writable.');
         }
+
+        $dirname = dirname($destination);
+        if (!is_dir($dirname)) {
+            $done = @mkdir($dirname, 0777, true);
+            if(!$done){
+                throw new Exception('Cannot create the base directory');
+            }
+        }
+
         $done = rename($file, $destination);
 
         if ($done) {
+            chmod($destination, 0666 & ~umask());
             $this->path = $destination;
         } else {
             throw new Exception('An error happened while moving the uploaded file');
