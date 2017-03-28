@@ -13,6 +13,8 @@ use UForm\FileUpload;
 class FileUploadTest extends \PHPUnit_Framework_TestCase
 {
 
+    const UPDIR = __DIR__ . '/../../../Fixtures/file-upload';
+
     public function testFromGlobal()
     {
         $filesGlobal = [
@@ -99,5 +101,25 @@ class FileUploadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('uform_test_data', file_get_contents($tmpFileDest));
 
         $this->assertEquals($tmpFileDest, $file->getPath());
+    }
+
+    /**
+     * @dataProvider mimTypeProvider
+     */
+    public function testMimeType($fileName, $mimeType)
+    {
+        $file = new FileUpload('foo.txt', self::UPDIR . $fileName, UPLOAD_ERR_OK);
+        $this->assertEquals($mimeType, $file->getMimeType());
+    }
+
+    public function mimTypeProvider()
+    {
+        return [
+            ['/foo.txt', 'text/plain'],
+            ['/1px.gif', 'image/gif'],
+            ['/1px.png', 'image/png'],
+            ['/1px.jpg', 'image/jpeg'],
+            ['/pdf-sample.pdf', 'application/pdf'],
+        ];
     }
 }

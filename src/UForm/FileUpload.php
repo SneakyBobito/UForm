@@ -11,9 +11,10 @@ namespace UForm;
 class FileUpload
 {
 
-    public $name;
-    public $path;
-    public $uploadStatus;
+    protected $name;
+    protected $path;
+    protected $uploadStatus;
+    protected $mimeType;
 
     /**
      * The data as present in $_FILES
@@ -140,6 +141,13 @@ class FileUpload
         return $this->name;
     }
 
+    public function getMimeType()
+    {
+        if (null === $this->mimeType) {
+            $this->mimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $this->getPath());
+        }
+        return $this->mimeType;
+    }
 
     public function __toString()
     {
