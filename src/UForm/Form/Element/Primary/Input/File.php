@@ -53,6 +53,16 @@ class File extends Input implements Requirable, Validatable
         }
     }
 
+    /**
+     * @return null|string
+     */
+    public function getAccept()
+    {
+        return $this->accept;
+    }
+
+
+
     protected function overridesParamsBeforeRender($params, $value)
     {
         unset($params['value']);

@@ -20,6 +20,7 @@ use UForm\Form\Element\Primary\Input\Submit;
 use UForm\Form\Element\Primary\Input\Text;
 use UForm\Form\Element\Primary\Select;
 use UForm\Form\Element\Primary\TextArea;
+use UForm\Validator\File\MimeType;
 use UForm\Validator\IsFile;
 use UForm\Validator\IsValid;
 
@@ -165,11 +166,22 @@ trait InputBuilder
      * @param $label
      * @return $this
      */
-    public function file($name, $label = null, $multiple = false, $accept = null)
+    public function file($name, $label = null, $multiple = false, array $allowMimeTypes = null)
     {
+        if ($allowMimeTypes & !empty($allowMimeTypes)) {
+            $accept = implode('|', $allowMimeTypes);
+        } else {
+            $accept = null;
+        }
+
         $element = new File($name, $multiple, $accept);
         $this->_makeInput($element, $label, null);
         $this->add($element);
+
+        if ($accept) {
+            $this->validator(new MimeType($allowMimeTypes));
+        }
+
         return $this;
     }
 

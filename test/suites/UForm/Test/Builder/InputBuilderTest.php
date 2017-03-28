@@ -7,6 +7,8 @@ namespace UForm\Test\Builder;
 
 use UForm\Builder;
 use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Primary\Input\File;
+use UForm\Validator\File\MimeType;
 
 class InputBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -64,12 +66,28 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('UForm\Form\Element\Primary\Input\Hidden', $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
     }
+
     public function testFile()
     {
         $this->inputBuilderStub->file('inputName', 'inputTitle');
-        $this->assertInstanceOf('UForm\Form\Element\Primary\Input\File', $this->inputBuilderStub->last());
+        $this->assertInstanceOf(File::class, $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
     }
+
+    public function testFileMimeType()
+    {
+        $this->inputBuilderStub->file('inputName', 'inputTitle', null, ['text/plain', 'image/*']);
+        /* @var $file File */
+        $file = $this->inputBuilderStub->last();
+        $this->assertInstanceOf(File::class, $file);
+        $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
+        $this->assertEquals('text/plain|image/*', $file->getAccept());
+
+        $this->assertCount(2, $file->getValidators());
+        $this->assertInstanceOf(MimeType::class, $file->getValidators()[1]);
+        $this->assertEquals(['text/plain', 'image/*'], $file->getValidators()[1]->getAllowedMimeTypes());
+    }
+
 
     public function testLeftAddon()
     {
