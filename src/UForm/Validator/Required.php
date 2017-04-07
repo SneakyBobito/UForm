@@ -33,9 +33,11 @@ class Required extends Validator
         if ($element instanceof Requirable) {
             $valid = $element->isDefined($validationItem);
         } else {
+            $localName = $validationItem->getLocalName();
             $valid = is_array($value)
-                && isset($value[$validationItem->getLocalName()])
-                && null !== $value[$validationItem->getLocalName()];
+                && isset($value[$localName])
+                && null !== $value[$localName]
+                && !empty($value[$localName]);
         }
 
         if (!$valid) {

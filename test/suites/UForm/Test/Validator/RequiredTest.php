@@ -19,9 +19,41 @@ class RequiredTest extends ValidatorTestCase
         $this->assertTrue($validation->isValid());
     }
 
-    public function testNotValid()
+    public function testValidArray()
+    {
+        $validation = $this->generateValidationItem(['firstname' => ['bart'], 'lastname' => 'bart']);
+        $validator = new Required();
+        $validator->validate($validation);
+        $this->assertTrue($validation->isValid());
+    }
+
+    public function testNotValidNotPresent()
     {
         $validation = $this->generateValidationItem(['lastname' => 'simpsons']);
+        $validator = new Required();
+        $validator->validate($validation);
+        $this->assertFalse($validation->isValid());
+
+        $this->assertCount(1, $validation->getMessages());
+        $message =  $validation->getMessages()->getAt(0);
+        $this->assertSame(Required::REQUIRED, $message->getType());
+    }
+
+    public function testNotValidEmtpy()
+    {
+        $validation = $this->generateValidationItem(['firstname' => '', 'lastname' => 'simpsons']);
+        $validator = new Required();
+        $validator->validate($validation);
+        $this->assertFalse($validation->isValid());
+
+        $this->assertCount(1, $validation->getMessages());
+        $message =  $validation->getMessages()->getAt(0);
+        $this->assertSame(Required::REQUIRED, $message->getType());
+    }
+
+    public function testNotValidEmtpyArray()
+    {
+        $validation = $this->generateValidationItem(['firstname' => [], 'lastname' => 'simpsons']);
         $validator = new Required();
         $validator->validate($validation);
         $this->assertFalse($validation->isValid());
