@@ -20,19 +20,25 @@ class Regexp extends Validator
     const NO_MATCH = 'Regexp::NO_MATCH';
 
     protected $pattern;
+    protected $message;
 
     /**
-     * @param array|ValueRangeInterface $range
+     * Regexp constructor.
+     * @param string $pattern
+     * @param string|null $message a custom message to show
+     * instead of the default one when the data does not match the regexp
      */
-    public function __construct($pattern)
+    public function __construct($pattern, $message = null)
     {
         parent::__construct(null);
+
 
         if (!is_string($pattern)) {
             throw new InvalidArgumentException('set', 'string pattern', $pattern);
         }
 
         $this->pattern = $pattern;
+        $this->message = $message;
     }
 
 
@@ -57,11 +63,19 @@ class Regexp extends Validator
         }
 
         if (!preg_match($this->pattern, $value)) {
-            $message = new Message(
-                'No match for regexp',
-                [],
-                self::NO_MATCH
-            );
+            if ($this->message) {
+                $message = new Message(
+                    $this->message,
+                    [],
+                    self::NO_MATCH
+                );
+            } else {
+                $message = new Message(
+                    'No match for regexp',
+                    [],
+                    self::NO_MATCH
+                );
+            }
             $validationItem->appendMessage($message);
             $validationItem->setInvalid();
         }

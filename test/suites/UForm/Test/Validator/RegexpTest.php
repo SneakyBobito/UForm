@@ -17,16 +17,24 @@ class RegexpTest extends ValidatorTestCase
     public function testValid()
     {
         $validation = $this->generateValidationItem(['firstname' => 'bart']);
-        $validator = new Regexp('#[a-z]+#');
+        $validator = new Regexp('#^[a-z]+$#');
         $validator->validate($validation);
         $this->assertTrue($validation->isValid());
+    }
+
+    public function testCustomMessage()
+    {
+        $validation = $this->generateValidationItem(['firstname' => 'Bart']);
+        $validator = new Regexp('#^[a-z]+$#', 'must be alpha lower case');
+        $validator->validate($validation);
+        $this->assertEquals('must be alpha lower case', $validation->getMessages()->getAt(0)->getMessageRaw());
     }
 
     public function testNotValid()
     {
         $validation = $this->generateValidationItem(['firstname' => 'Bart']);
-        $validator = new Regexp('#[a-z]+#');
+        $validator = new Regexp('#^[a-z]+$#');
         $validator->validate($validation);
-        $this->assertTrue($validation->isValid());
+        $this->assertFalse($validation->isValid());
     }
 }
