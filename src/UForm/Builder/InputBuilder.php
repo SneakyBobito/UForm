@@ -304,7 +304,7 @@ trait InputBuilder
      * Set an attribute on the last element added
      * @param $name
      * @param $value
-     * @return Element
+     * @return $this
      */
     public function attribute($name, $value)
     {
