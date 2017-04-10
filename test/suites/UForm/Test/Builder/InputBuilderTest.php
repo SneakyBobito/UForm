@@ -138,4 +138,13 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('freeze', $this->inputBuilderStub->last()->getFilters()[0]->filter('foo'));
     }
+
+
+    public function testAttribute()
+    {
+        $this->inputBuilderStub
+            ->text('text')
+            ->attribute('foobar', 'baz');
+        $this->assertEquals('baz', $this->inputBuilderStub->last()->getAttribute('foobar'));
+    }
 }

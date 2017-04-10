@@ -299,4 +299,16 @@ trait InputBuilder
         $this->last()->setAttribute('disabled', 'disabled');
         return $this;
     }
+
+    /**
+     * Set an attribute on the last element added
+     * @param $name
+     * @param $value
+     * @return Element
+     */
+    public function attribute($name, $value)
+    {
+        $this->last()->setAttribute($name, $value);
+        return $this->last();
+    }
 }
