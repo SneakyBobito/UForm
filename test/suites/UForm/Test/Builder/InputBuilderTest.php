@@ -142,9 +142,11 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testAttribute()
     {
-        $this->inputBuilderStub
+        $ret = $this->inputBuilderStub
             ->text('text')
             ->attribute('foobar', 'baz');
         $this->assertEquals('baz', $this->inputBuilderStub->last()->getAttribute('foobar'));
+
+        $this->assertSame($this->inputBuilderStub, $ret);
     }
 }

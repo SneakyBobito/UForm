@@ -309,6 +309,6 @@ trait InputBuilder
     public function attribute($name, $value)
     {
         $this->last()->setAttribute($name, $value);
-        return $this->last();
+        return $this;
     }
 }
