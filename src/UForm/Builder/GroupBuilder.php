@@ -207,7 +207,7 @@ trait GroupBuilder
 
         $element->addValidator(new InRange($element));
 
-        if ($defaultValue) {
+        if (null !== $defaultValue) {
             $element->addFilter(new DefaultValue($defaultValue));
         }
 
