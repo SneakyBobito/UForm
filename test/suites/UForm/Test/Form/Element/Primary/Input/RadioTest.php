@@ -42,6 +42,15 @@ class RadioTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $render);
     }
 
+    public function testRenderStringInt()
+    {
+        $this->input = new Radio('firstname', 1);
+        $render = $this->input->render(['firstname' => '1']);
+        $id = $this->input->getId();
+        $expected = '<input type="radio" name="firstname" id="' . $id . '" value="1" checked="checked"/>';
+        $this->assertEquals($expected, $render);
+    }
+
     /**
      * Fix bug with boolean values that were not renderable as string
      */

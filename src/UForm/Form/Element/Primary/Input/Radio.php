@@ -26,10 +26,10 @@ class Radio extends Input
 
     protected function overridesParamsBeforeRender($params, $value)
     {
-        if (isset($value[$this->getName()]) && $value[$this->getName()] === $this->value) {
+        if (isset($value[$this->getName()]) && (string) $value[$this->getName()] === (string) $this->value) {
             $params['checked'] = 'checked';
         }
-        $params['value'] = (string)$this->value;
+        $params['value'] = (string) $this->value;
         return $params;
     }
 }
