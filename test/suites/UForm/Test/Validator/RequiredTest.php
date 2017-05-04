@@ -62,4 +62,17 @@ class RequiredTest extends ValidatorTestCase
         $message =  $validation->getMessages()->getAt(0);
         $this->assertSame(Required::REQUIRED, $message->getType());
     }
+
+    public function testValidZero()
+    {
+        $validation = $this->generateValidationItem(['firstname' => 0, 'lastname' => 'simpsons']);
+        $validator = new Required();
+        $validator->validate($validation);
+        $this->assertTrue($validation->isValid());
+
+        $validation = $this->generateValidationItem(['firstname' => '0', 'lastname' => 'simpsons']);
+        $validator = new Required();
+        $validator->validate($validation);
+        $this->assertTrue($validation->isValid());
+    }
 }

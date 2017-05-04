@@ -37,7 +37,11 @@ class Required extends Validator
             $valid = is_array($value)
                 && isset($value[$localName])
                 && null !== $value[$localName]
-                && !empty($value[$localName]);
+                && (
+                    !empty($value[$localName])
+                    || 0 === $value[$localName]
+                    || '0' === $value[$localName]
+                );
         }
 
         if (!$valid) {
