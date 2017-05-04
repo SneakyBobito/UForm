@@ -279,7 +279,7 @@ trait InputBuilder
      */
     public function readOnly($value = null)
     {
-        if ($value) {
+        if ($value !== null) {
             $this->last()->addFilter(new FreezeValue($value));
         } else {
             $this->last()->addFilter(new RemoveValue());

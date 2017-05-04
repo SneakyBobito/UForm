@@ -130,13 +130,22 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('readonly', $this->inputBuilderStub->last()->getAttribute('readonly'));
         $this->assertInstanceOf('UForm\Filter\RemoveValue', $this->inputBuilderStub->last()->getFilters()[0]);
 
+
         $this->inputBuilderStub
             ->text('text')
             ->readOnly('freeze');
         $this->assertEquals('readonly', $this->inputBuilderStub->last()->getAttribute('readonly'));
         $this->assertInstanceOf('UForm\Filter\FreezeValue', $this->inputBuilderStub->last()->getFilters()[0]);
-
         $this->assertEquals('freeze', $this->inputBuilderStub->last()->getFilters()[0]->filter('foo'));
+
+
+
+        $this->inputBuilderStub
+            ->text('text')
+            ->readOnly(0);
+        $this->assertEquals('readonly', $this->inputBuilderStub->last()->getAttribute('readonly'));
+        $this->assertInstanceOf('UForm\Filter\FreezeValue', $this->inputBuilderStub->last()->getFilters()[0]);
+        $this->assertEquals(0, $this->inputBuilderStub->last()->getFilters()[0]->filter('foo'));
     }
 
 
