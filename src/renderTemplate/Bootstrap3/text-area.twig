@@ -1,0 +1,7 @@
+{% embed "layout/form-group.twig" %}
+    {% block input  %}
+        <span class="input">{{ defaultRenderFor(current.element, {'class': 'form-control'}) }}</span>
+
+        {% include "partial/errors.twig" %}
+    {% endblock %}
+{% endembed %}

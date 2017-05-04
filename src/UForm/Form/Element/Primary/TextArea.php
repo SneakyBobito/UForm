@@ -39,6 +39,24 @@ class TextArea extends Element\Primary implements Drawable
             $value = '';
         }
 
+        foreach ($this->getAttributes() as $attrName => $attrValue) {
+            $params[$attrName] = $attrValue;
+        }
+
+        if (isset($options['attributes']) && is_array($options['attributes'])) {
+            foreach ($options['attributes'] as $attrName => $attrValue) {
+                $params[$attrName] = $attrValue;
+            }
+        }
+
+        if (isset($options['class'])) {
+            if (isset($params['class'])) {
+                $params['class'] .=  ' ' . $options['class'];
+            } else {
+                $params['class'] = $options['class'];
+            }
+        }
+
         $render = new Tag('textarea', $params, false);
 
         return $render->draw([], $value);
