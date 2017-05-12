@@ -12,4 +12,11 @@ namespace UForm\Form\Element;
 interface Drawable
 {
     public function render($localData, array $options = []);
+
+    /**
+     * Allows to modify options before render. Useful when some params need to depend on the values in render context
+     * @param array $options
+     * @return mixed
+     */
+    public function addRenderOptionHandler(callable $callable);
 }

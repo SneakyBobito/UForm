@@ -31,10 +31,10 @@ class RenderContextTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
 
-        $this->render = $this->getMockForAbstractClass('UForm\Render\AbstractHtmlRender');
+        $this->render = $this->getMockForAbstractClass(\UForm\Render\AbstractHtmlRender::class);
         $this->render
             ->method('getTemplatesPath')
-            ->willReturn(__DIR__ . '/../../../../Fixtures/templates/AbstractRender');
+            ->will($this->returnValue(__DIR__ . '/../../../../Fixtures/templates/AbstractRender'));
 
         $this->form = Builder::init()->text('firstname')->text('lastname')->getForm();
         $this->form->getElement('firstname')->addValidator(function (ValidationItem $v) {

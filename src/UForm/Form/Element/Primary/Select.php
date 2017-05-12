@@ -29,6 +29,8 @@ class Select extends Element\Primary implements Element\Drawable
 
     protected $isMultiple;
 
+    use Element\RenderHandlerTrait;
+
     /**
      * \UForm\Form\Element constructor
      *
@@ -77,6 +79,9 @@ class Select extends Element\Primary implements Element\Drawable
 
     public function render($value, array $options = [])
     {
+
+        $options = $this->processRenderOptionHandlers($value, $options);
+
         $params = [
             'id' => $this->getId(),
             'name' => $this->getName(true)

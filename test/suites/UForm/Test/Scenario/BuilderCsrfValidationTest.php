@@ -29,7 +29,7 @@ class BuilderCsrfValidationTest extends \PHPUnit_Framework_TestCase
 
         $token = 'someToken';
 
-        $csrfInterfaceStub = $this->getMock('UForm\Validator\Csrf\CsrfInterface');
+        $csrfInterfaceStub = $this->createMock('UForm\Validator\Csrf\CsrfInterface');
         $csrfInterfaceStub->method('getToken')->willReturn($token);
         $csrfInterfaceStub->method('tokenIsValid')->willReturnCallback(function ($testedToken) use ($token) {
             return $token == $testedToken;

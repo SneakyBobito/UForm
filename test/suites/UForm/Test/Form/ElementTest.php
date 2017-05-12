@@ -2,6 +2,7 @@
 
 namespace UForm\Test\Form;
 
+use PHPUnit\Framework\TestCase;
 use UForm\Form;
 use UForm\Form\Element;
 use UForm\Form\Element\Container\Group;
@@ -10,7 +11,7 @@ use UForm\Form\Element\Container\Group\Structural\Panel;
 /**
  * @covers UForm\Form\Element
  */
-class ElementTest extends \PHPUnit_Framework_TestCase
+class ElementTest extends TestCase
 {
 
     /**
@@ -194,5 +195,21 @@ class ElementTest extends \PHPUnit_Framework_TestCase
 
         $this->elementStub->setAttribute('atr1', 'value1');
         $this->assertEquals('value1', $this->elementStub->getAttribute('atr1', 'defaultValue'));
+    }
+
+    public function testRenderHandler()
+    {
+
+        $mock = $this->getMockForTrait(Element\RenderHandlerTrait::class);
+
+        $a = null;
+
+        $mock->addRenderOptionHandler(function ($localValues, $options, $element) use (&$a) {
+            $a = $localValues[0];
+        });
+
+        $mock->processRenderOptionHandlers(['foo'], []);
+
+        $this->assertEquals('foo', $a);
     }
 }

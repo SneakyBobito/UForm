@@ -6,7 +6,6 @@
 
 namespace UForm\Form\Element\Primary;
 
-use Symfony\Component\Config\Tests\Loader\Validator;
 use UForm\Filter;
 use UForm\Form\Element;
 use UForm\Form\Element\Drawable;
@@ -24,13 +23,11 @@ class Input extends Primary implements Drawable
 {
 
     private $inputType;
+    use Element\RenderHandlerTrait;
 
     /**
      * @param string $type type of the input (text, password, radio,...)
      * @param string $name name of the input in the form
-     * @param array $attributes
-     * @param Validator[] $validators
-     * @param Filter[] $filters
      */
     public function __construct($type, $name)
     {
@@ -46,6 +43,7 @@ class Input extends Primary implements Drawable
     public function render($localValue, array $options = [])
     {
 
+        $options = $this->processRenderOptionHandlers($localValue, $options);
 
         $params = [
             'type' => $this->inputType,

@@ -18,6 +18,9 @@ use UForm\Tag;
  */
 class TextArea extends Element\Primary implements Drawable
 {
+
+    use Element\RenderHandlerTrait;
+
     public function __construct($name)
     {
         parent::__construct($name);
@@ -27,6 +30,8 @@ class TextArea extends Element\Primary implements Drawable
 
     public function render($value, array $options = [])
     {
+
+        $options = $this->processRenderOptionHandlers($value, $options);
 
         $params = [
             'name' => $this->getName(true),
