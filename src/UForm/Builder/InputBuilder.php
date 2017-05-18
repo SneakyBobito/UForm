@@ -75,7 +75,7 @@ trait InputBuilder
 
     /**
      * creates an input text
-     * @see UForm\Form\Element\Primary\Text
+     * @see \UForm\Form\Element\Primary\Text
      * @param $name
      * @param $label
      * @return $this
@@ -91,7 +91,7 @@ trait InputBuilder
 
     /**
      * creates a textarea
-     * @see UForm\Form\Element\Primary\Input\Text
+     * @see \UForm\Form\Element\Primary\Input\Text
      * @param $name
      * @param $label
      * @return $this
@@ -106,7 +106,7 @@ trait InputBuilder
 
 
     /**
-     * @see UForm\Form\Element\Primary\Input\Password
+     * @see \UForm\Form\Element\Primary\Input\Password
      * @param $name
      * @param $label
      * @return $this
@@ -149,7 +149,7 @@ trait InputBuilder
     }
 
     /**
-     * @see UForm\Form\Element\Primary\Input\Hidden
+     * @see \UForm\Form\Element\Primary\Input\Hidden
      * @param $name
      * @return $this
      */
@@ -161,7 +161,7 @@ trait InputBuilder
     }
 
     /**
-     * @see UForm\Form\Element\Primary\Input\File
+     * @see \UForm\Form\Element\Primary\Input\File
      * @param $name
      * @param $label
      * @return $this
@@ -187,7 +187,7 @@ trait InputBuilder
 
     /**
      * add a submit input to the current group
-     * @see UForm\Form\Element\Primary\Input\Submit
+     * @see \UForm\Form\Element\Primary\Input\Submit
      * @return $this
      */
     public function submit()
@@ -199,7 +199,7 @@ trait InputBuilder
 
     /**
      * add a check input to the current group
-     * @see UForm\Form\Element\Primary\Input\Check
+     * @see \UForm\Form\Element\Primary\Input\Check
      * @param $label
      * @param boolean $checkedDefault pass it to true to set the checkbox checked
      * @param null $name
@@ -220,7 +220,7 @@ trait InputBuilder
      *
      * radio must have a radio group as ancestor, but not necessary as a direct parent
      *
-     * @see UForm\Form\Element\Container\Group\Proxy\RadioGroup
+     * @see \UForm\Form\Element\Container\Group\Proxy\RadioGroup
      * @param string $name name of the radio
      * @param string $value value of the radio
      * @param string $label  label of the radio. If null it will take the value of the radio as label
@@ -273,8 +273,8 @@ trait InputBuilder
      * Set the last element to be readonly
      *
      * @param string $value a value to set for the field.
-     * This value will automatically replace the previous @see UForm\Filter\FreezeValue
-     * If omitted then the original value will be removed @see UForm\Filter\RemoveValue
+     * This value will automatically replace the previous @see \UForm\Filter\FreezeValue
+     * If omitted then the original value will be removed @see \UForm\Filter\RemoveValue
      * @return $this
      */
     public function readOnly($value = null)
@@ -290,7 +290,7 @@ trait InputBuilder
 
     /**
      * Set the last element disabled.
-     * The value will be removed @see UForm\Filter\RemoveValue
+     * The value will be removed @see \UForm\Filter\RemoveValue
      * @return $this
      */
     public function disabled()
