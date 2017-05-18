@@ -41,6 +41,8 @@ class SubmitTest extends \PHPUnit_Framework_TestCase
         $render = $submit->render(['foo' => 'inputValue']);
         $id = $submit->getId();
 
+        $this->assertEquals('bar', $submit->getSubmitValue());
+
         $expected = '<input type="submit" name="foo" id="' . $id . '" value="bar"/>';
         $this->assertEquals($expected, $render);
     }

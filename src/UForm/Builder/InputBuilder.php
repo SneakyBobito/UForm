@@ -190,9 +190,9 @@ trait InputBuilder
      * @see \UForm\Form\Element\Primary\Input\Submit
      * @return $this
      */
-    public function submit()
+    public function submit($name = null, $value = null)
     {
-        $element = new Submit();
+        $element = new Submit($name, $value);
         $this->add($element);
         return $this;
     }

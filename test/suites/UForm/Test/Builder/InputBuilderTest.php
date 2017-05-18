@@ -8,6 +8,7 @@ namespace UForm\Test\Builder;
 use UForm\Builder;
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Input\File;
+use UForm\Form\Element\Primary\Input\Submit;
 use UForm\Validator\File\MimeType;
 
 class InputBuilderTest extends \PHPUnit_Framework_TestCase
@@ -31,7 +32,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
     public function testText()
     {
         $this->inputBuilderStub->text('inputName', 'inputTitle');
-        $this->assertInstanceOf('UForm\Form\Element\Primary\Input\Text', $this->inputBuilderStub->last());
+        $this->assertInstanceOf(\UForm\Form\Element\Primary\Input\Text::class, $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
         $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
     }
@@ -39,7 +40,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
     public function testTextArea()
     {
         $this->inputBuilderStub->textArea('inputName', 'inputTitle');
-        $this->assertInstanceOf('UForm\Form\Element\Primary\TextArea', $this->inputBuilderStub->last());
+        $this->assertInstanceOf(\UForm\Form\Element\Primary\TextArea::class, $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
         $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
     }
@@ -47,7 +48,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
     public function testPassword()
     {
         $this->inputBuilderStub->password('inputName', 'inputTitle');
-        $this->assertInstanceOf('UForm\Form\Element\Primary\Input\Password', $this->inputBuilderStub->last());
+        $this->assertInstanceOf(\UForm\Form\Element\Primary\Input\Password::class, $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
         $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
     }
@@ -55,7 +56,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
     public function testSelect()
     {
         $this->inputBuilderStub->select('inputName', 'inputTitle');
-        $this->assertInstanceOf('UForm\Form\Element\Primary\Select', $this->inputBuilderStub->last());
+        $this->assertInstanceOf(\UForm\Form\Element\Primary\Select::class, $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
         $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
     }
@@ -63,7 +64,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
     public function testHidden()
     {
         $this->inputBuilderStub->hidden('inputName', 'inputTitle');
-        $this->assertInstanceOf('UForm\Form\Element\Primary\Input\Hidden', $this->inputBuilderStub->last());
+        $this->assertInstanceOf(\UForm\Form\Element\Primary\Input\Hidden::class, $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
     }
 
@@ -97,7 +98,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('left', $this->inputBuilderStub->last()->getOption('leftAddon'));
 
         $this->setUp();
-        $this->setExpectedException('UForm\Builder\BuilderException');
+        $this->expectException(\UForm\Builder\BuilderException::class);
         $this->inputBuilderStub->leftAddon('leftAddon');
     }
 
@@ -109,7 +110,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('right', $this->inputBuilderStub->last()->getOption('rightAddon'));
 
         $this->setUp();
-        $this->setExpectedException('UForm\Builder\BuilderException');
+        $this->expectException(\UForm\Builder\BuilderException::class);
         $this->inputBuilderStub->rightAddon('rightAddon');
     }
 
@@ -119,7 +120,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
             ->text('text')
             ->disabled();
         $this->assertEquals('disabled', $this->inputBuilderStub->last()->getAttribute('disabled'));
-        $this->assertInstanceOf('UForm\Filter\RemoveValue', $this->inputBuilderStub->last()->getFilters()[0]);
+        $this->assertInstanceOf(\UForm\Filter\RemoveValue::class, $this->inputBuilderStub->last()->getFilters()[0]);
     }
 
     public function testReadOnly()
@@ -128,14 +129,14 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
             ->text('text')
             ->readOnly();
         $this->assertEquals('readonly', $this->inputBuilderStub->last()->getAttribute('readonly'));
-        $this->assertInstanceOf('UForm\Filter\RemoveValue', $this->inputBuilderStub->last()->getFilters()[0]);
+        $this->assertInstanceOf(\UForm\Filter\RemoveValue::class, $this->inputBuilderStub->last()->getFilters()[0]);
 
 
         $this->inputBuilderStub
             ->text('text')
             ->readOnly('freeze');
         $this->assertEquals('readonly', $this->inputBuilderStub->last()->getAttribute('readonly'));
-        $this->assertInstanceOf('UForm\Filter\FreezeValue', $this->inputBuilderStub->last()->getFilters()[0]);
+        $this->assertInstanceOf(\UForm\Filter\FreezeValue::class, $this->inputBuilderStub->last()->getFilters()[0]);
         $this->assertEquals('freeze', $this->inputBuilderStub->last()->getFilters()[0]->filter('foo'));
 
 
@@ -144,7 +145,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
             ->text('text')
             ->readOnly(0);
         $this->assertEquals('readonly', $this->inputBuilderStub->last()->getAttribute('readonly'));
-        $this->assertInstanceOf('UForm\Filter\FreezeValue', $this->inputBuilderStub->last()->getFilters()[0]);
+        $this->assertInstanceOf(\UForm\Filter\FreezeValue::class, $this->inputBuilderStub->last()->getFilters()[0]);
         $this->assertEquals(0, $this->inputBuilderStub->last()->getFilters()[0]->filter('foo'));
     }
 
@@ -155,6 +156,22 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
             ->text('text')
             ->attribute('foobar', 'baz');
         $this->assertEquals('baz', $this->inputBuilderStub->last()->getAttribute('foobar'));
+
+        $this->assertSame($this->inputBuilderStub, $ret);
+    }
+
+
+    public function testSubmit()
+    {
+        $ret = $this->inputBuilderStub
+            ->submit('foo', 'bar');
+
+
+        $last = $this->inputBuilderStub->last();
+        $this->assertInstanceOf(Submit::class, $last);
+        $this->assertEquals('foo', $last->getName());
+        $this->assertEquals('bar', $last->getSubmitValue());
+
 
         $this->assertSame($this->inputBuilderStub, $ret);
     }

@@ -24,6 +24,14 @@ class Submit extends Input
         $this->addSemanticType('input:submit');
     }
 
+    /**
+     * @return null
+     */
+    public function getSubmitValue()
+    {
+        return $this->submitValue;
+    }
+
     public function overridesParamsBeforeRender($params, $value)
     {
         $params = parent::overridesParamsBeforeRender($params, $value);
