@@ -13,9 +13,23 @@ use UForm\Form\Element\Primary\Input;
  */
 class Submit extends Input
 {
-    public function __construct($name = null)
+
+    protected $submitValue;
+
+    public function __construct($name = null, $value = null)
     {
         parent::__construct('submit', $name);
+
+        $this->submitValue = $value;
         $this->addSemanticType('input:submit');
+    }
+
+    public function overridesParamsBeforeRender($params, $value)
+    {
+        $params = parent::overridesParamsBeforeRender($params, $value);
+        if ($this->submitValue) {
+            $params['value'] = $this->submitValue;
+        }
+        return $params;
     }
 }
