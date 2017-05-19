@@ -23,4 +23,15 @@ class Password extends Input
         $this->addSemanticType('input:textfield');
         $this->addSemanticType('input:password');
     }
+
+    protected function overridesParamsBeforeRender($params, $value)
+    {
+        $params = parent::overridesParamsBeforeRender($params, $value);
+
+        if (isset($params['value'])) {
+            unset($params['value']);
+        }
+
+        return $params;
+    }
 }

@@ -30,7 +30,9 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
     {
         $render = $this->input->render(['inputname' => 'inputValue'], ['inputname' => 'inputValue']);
         $id = $this->input->getId();
-        $expected = '<input type="password" name="inputname" id="' . $id . '" value="inputValue"/>';
+
+        // Password should remove value for security reasons
+        $expected = '<input type="password" name="inputname" id="' . $id . '"/>';
         $this->assertEquals($expected, $render);
     }
 }
