@@ -27,7 +27,7 @@ class HtmlContainer extends Group
     {
         parent::__construct(null);
         $this->htmlTag = $htmlTag;
-        $this->addSemanticType('customHtml');
+        $this->addSemanticType('htmlContainer');
     }
 
 

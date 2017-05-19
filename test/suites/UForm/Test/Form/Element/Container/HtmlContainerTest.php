@@ -21,7 +21,7 @@ class HtmlContainerTest extends \PHPUnit_Framework_TestCase
 
         $html = new HtmlContainer('div');
 
-        $this->assertTrue($html->hasSemanticType('customHtml'));
+        $this->assertTrue($html->hasSemanticType('htmlContainer'));
 
         $tag = $html->getTag();
 
