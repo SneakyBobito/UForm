@@ -3,6 +3,7 @@
 namespace UForm;
 
 use UForm\Builder\BuilderException;
+use UForm\Builder\CustomHtmlBuilder;
 use UForm\Builder\FilterBuilder;
 use UForm\Builder\FluentElement;
 use UForm\Builder\GroupBuilder;
@@ -21,6 +22,7 @@ class Builder
     use InputBuilder;
     use FilterBuilder;
     use ValidatorBuilder;
+    use CustomHtmlBuilder;
 
     /**
      * @var Form

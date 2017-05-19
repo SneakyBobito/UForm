@@ -179,23 +179,6 @@ trait GroupBuilder
     }
 
     /**
-     * Add a custom html container
-     * @param string $tag tagName of the html element
-     * @param null|string $classes css classes to add to the element
-     * @return $this
-     */
-    public function htmlContainer($tag, $classes = null)
-    {
-        $element = new HtmlContainer($tag);
-        if ($classes) {
-            $element->addClass($classes);
-        }
-        $this->add($element);
-        $this->open($element);
-        return $this;
-    }
-
-    /**
      * Adds a radio group that can contain any kind of element. Only radios with the same name will be considered in
      * this group. It will also automatically add a validator the restrict the value to be one of the radio's value
      *

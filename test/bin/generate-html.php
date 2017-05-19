@@ -140,6 +140,7 @@ $form = Builder::init("#", "POST")
     ->close()
 
     ->htmlContainer('fieldset')
+        ->hyperlink('foo', '/bar')
     ->close()
 
     ->submit()

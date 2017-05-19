@@ -106,15 +106,4 @@ class GroupBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($className, $this->groupBuilderStub->current());
         $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
     }
-
-    public function testHtmlContainer()
-    {
-        $builder = $this->groupBuilderStub->htmlContainer('foo', 'bar baz');
-        /* @var HtmlContainer $current */
-        $current = $this->groupBuilderStub->current();
-        $this->assertSame($this->groupBuilderStub, $builder);
-        $this->assertInstanceOf(HtmlContainer::class, $current);
-
-        $this->assertEquals('<foo class="bar baz">', $current->getTag()->open());
-    }
 }
