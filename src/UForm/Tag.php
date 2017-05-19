@@ -78,4 +78,18 @@ class Tag
 
         return $d;
     }
+
+    public function open($p = null)
+    {
+        $d = '<' . $this->name;
+        $d .= $this->__parseProperties($p);
+        $d .= '>';
+
+        return $d;
+    }
+
+    public function close()
+    {
+        return '</' . $this->name . '>';
+    }
 }

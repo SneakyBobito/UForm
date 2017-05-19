@@ -1,0 +1,5 @@
+{% set __custom_html_tag = current.getTag() %}
+
+{{ __custom_html_tag.open() }}
+{{- renderParentType() -}}
+{{ __custom_html_tag.close() }}

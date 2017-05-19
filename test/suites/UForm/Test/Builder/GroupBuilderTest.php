@@ -8,6 +8,7 @@ namespace UForm\Test\Builder;
 use UForm\Builder;
 use UForm\Builder\GroupBuilder;
 use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Container\HtmlContainer;
 
 /**
  * @covers UForm\Builder\GroupBuilder
@@ -104,5 +105,16 @@ class GroupBuilderTest extends \PHPUnit_Framework_TestCase
         $className = 'UForm\Form\Element\Container\Group\Structural\TabGroup';
         $this->assertInstanceOf($className, $this->groupBuilderStub->current());
         $this->assertTrue($this->groupBuilderStub->last() === $this->groupBuilderStub->current());
+    }
+
+    public function testHtmlContainer()
+    {
+        $builder = $this->groupBuilderStub->htmlContainer('foo', 'bar baz');
+        /* @var HtmlContainer $current */
+        $current = $this->groupBuilderStub->current();
+        $this->assertSame($this->groupBuilderStub, $builder);
+        $this->assertInstanceOf(HtmlContainer::class, $current);
+
+        $this->assertEquals('<foo class="bar baz">', $current->getTag()->open());
     }
 }

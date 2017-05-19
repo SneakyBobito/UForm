@@ -14,7 +14,10 @@ interface Drawable
     public function render($localData, array $options = []);
 
     /**
-     * Allows to modify options before render. Useful when some params need to depend on the values in render context
+     * Allows to modify options before render. Useful when some params need to depend on the values in render context.
+     *
+     * Can be implemented through usage of the trait @see RenderHandlerTrait
+     *
      * @param array $options
      * @return mixed
      */

@@ -5,6 +5,8 @@
 
 namespace UForm\Test;
 
+use UForm\Tag;
+
 class TagTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -43,5 +45,14 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $t = new \UForm\Tag('select');
         $render = $t->draw(['class' => 'class1']);
         $this->assertEquals('<select class="class1"></select>', $render);
+    }
+
+    public function testOpenClose()
+    {
+
+        $tag = new Tag('foo', ['bar' => 'baz']);
+
+        $this->assertEquals('<foo bar="baz">', $tag->open());
+        $this->assertEquals('</foo>', $tag->close());
     }
 }
