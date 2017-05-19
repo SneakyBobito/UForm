@@ -173,7 +173,8 @@ trait FluentElement
      * @return $this
      * @throws BuilderException
      */
-    public function addClass($className){
+    public function addClass($className)
+    {
         try {
             $this->last()->addClass($className);
         } catch (BuilderException $e) {
