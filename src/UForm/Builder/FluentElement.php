@@ -166,4 +166,19 @@ trait FluentElement
         }
         return $this;
     }
+
+    /**
+     * Adds a css class to the element
+     * @param $className
+     * @return $this
+     * @throws BuilderException
+     */
+    public function addClass($className){
+        try {
+            $this->last()->addClass($className);
+        } catch (BuilderException $e) {
+            throw new BuilderException('id() call requires you already added an element to the builder', 0, $e);
+        }
+        return $this;
+    }
 }

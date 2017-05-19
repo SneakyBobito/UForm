@@ -98,4 +98,14 @@ class FluentElementTest extends \PHPUnit_Framework_TestCase
         $this->fluentElementStub->option('testOption', 'value');
         $this->assertEquals('value', $element->getOption('testOption'));
     }
+
+    public function testAddClass()
+    {
+        $element = new Text('test');
+        $this->fluentElementStub->add($element);
+        $this->fluentElementStub->addClass('foo');
+        $this->assertEquals('foo', $element->getAttribute('class'));
+        $this->fluentElementStub->addClass('bar');
+        $this->assertEquals('foo bar', $element->getAttribute('class'));
+    }
 }
