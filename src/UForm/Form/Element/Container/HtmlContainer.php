@@ -10,7 +10,7 @@ use UForm\Form\Element;
 use UForm\Tag;
 
 /**
- * @semanticType rawTtml
+ * @semanticType htmlContainer
  */
 class HtmlContainer extends Group
 {

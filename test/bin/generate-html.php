@@ -138,6 +138,10 @@ $form = Builder::init("#", "POST")
             ->close()
         ->close()
     ->close()
+
+    ->htmlContainer('fieldset')
+    ->close()
+
     ->submit()
     ->getForm();
 
