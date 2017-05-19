@@ -182,4 +182,24 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $form = new Form();
         $this->assertNull($form->getEnctype());
     }
+
+    public function testGetInputFromGlobal()
+    {
+
+        $_POST = [
+            'foo' => 'bar',
+            'baz' => 'qux'
+        ];
+
+        $_GET = [
+            'qux' => 'foo',
+            'boo' => 'baz'
+        ];
+
+
+        $form = new Form(null, 'POST');
+        $this->assertEquals($_POST, $form->getInputFromGlobals());
+        $form->setMethod('GET');
+        $this->assertEquals($_GET, $form->getInputFromGlobals());
+    }
 }
