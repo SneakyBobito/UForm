@@ -10,7 +10,7 @@ use UForm\Validation\Message;
 use UForm\Validation\ValidationItem;
 use UForm\Validator;
 
-class MimeType extends Validator
+class MimeType extends Validator\File\AbstractFileValidator
 {
 
     const INVALID_FILE_TYPE = 'MimeType::INVALID_FILE_TYPE';
@@ -38,11 +38,9 @@ class MimeType extends Validator
     {
         return $this->allowedMimeTypes;
     }
-    
-    public function validate(ValidationItem $validationItem)
-    {
-        $item = $validationItem->getValue();
 
+    protected function validateItem($item, ValidationItem $validationItem)
+    {
         if (!$item instanceof FileUpload) {
             $validationItem->setInvalid();
             $message = new Message('Invalid file', [], self::NOT_A_FILE);

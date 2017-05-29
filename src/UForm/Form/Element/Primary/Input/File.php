@@ -46,6 +46,19 @@ class File extends Input implements Requirable, Validatable
         $this->addSemanticType('input:file');
     }
 
+    /**
+     * @return bool
+     */
+    public function isMultiple()
+    {
+        return $this->multiple;
+    }
+
+
+
+    /**
+     * @inheritdoc
+     */
     public function refreshParent()
     {
         parent::refreshParent();
@@ -53,6 +66,8 @@ class File extends Input implements Requirable, Validatable
             $this->form->setEnctype(Form::ENCTYPE_MULTIPART_FORMDATA);
         }
     }
+
+
 
     /**
      * @return null|string
@@ -70,6 +85,7 @@ class File extends Input implements Requirable, Validatable
 
         if ($this->multiple) {
             $params['multiple'] = true;
+            $params['name'] = $params['name'] . '[]';
         }
 
         if ($this->accept) {

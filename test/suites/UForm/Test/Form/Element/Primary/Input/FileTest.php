@@ -49,7 +49,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $id = $this->input->getId();
         $render = $this->input->render([], []);
 
-        $expected = '<input type="file" name="inputname" id="' . $id . '" multiple accept="image/*"/>';
+        $expected = '<input type="file" name="inputname[]" id="' . $id . '" multiple accept="image/*"/>';
         $this->assertEquals($expected, $render);
 
 
@@ -59,7 +59,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $file = new FileUpload('foo.txt', '/tmp/foo.txt', UPLOAD_ERR_OK);
         $render = $this->input->render(['inputname' => $file], []);
 
-        $expected = '<input type="file" name="inputname" id="' . $id . '" multiple accept="image/*"/>';
+        $expected = '<input type="file" name="inputname[]" id="' . $id . '" multiple accept="image/*"/>';
         $this->assertEquals($expected, $render);
     }
 
