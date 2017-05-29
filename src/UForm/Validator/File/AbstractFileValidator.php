@@ -12,6 +12,13 @@ use UForm\InvalidArgumentException;
 use UForm\Validation\ValidationItem;
 use UForm\Validator;
 
+/**
+ * Contains common logic for file validator and requires the element validated to be a file element
+ *
+ * File validators expect that the data were previously validated to be valid files by adding
+ * the validator @see Validator\IsValid
+ *
+ */
 abstract class AbstractFileValidator extends Validator
 {
 

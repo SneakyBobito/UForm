@@ -5,6 +5,7 @@
 
 namespace UForm\Builder;
 
+use UForm\Filter\ArrayValue;
 use UForm\Filter\BooleanValue;
 use UForm\Filter\DefaultValue;
 use UForm\Filter\FreezeValue;
@@ -180,6 +181,10 @@ trait InputBuilder
 
         if ($accept) {
             $this->validator(new MimeType($allowMimeTypes));
+        }
+
+        if ($multiple) {
+            $element->addFilter(new ArrayValue(false));
         }
 
         return $this;

@@ -74,7 +74,14 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
     public function testIsDefined()
     {
+        $form = new Form();
+        $form->addElement($this->input);
+        $this->input->addValidator(new Required());
+        $this->assertFalse($form->validate(['inputname' => null])->isValid());
+    }
 
+    public function testCheckValidity()
+    {
         $form = new Form();
         $form->addElement($this->input);
         $this->input->addValidator(new IsValid());
@@ -82,7 +89,19 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($form->validate([])->isValid());
         $this->assertTrue($form->validate(['inputname' => null])->isValid());
         $this->assertFalse($form->validate(['inputname' => 'sometext'])->isValid());
-        $this->input->addValidator(new Required());
+
+
+        // Multiple
+        $form = new Form();
+        $input = new File('inputname', true);
+        $form->addElement($input);
+        $input->addValidator(new IsValid());
+
+        $this->assertFalse($form->validate([])->isValid());
         $this->assertFalse($form->validate(['inputname' => null])->isValid());
+        $this->assertFalse($form->validate(['inputname' => 'sometext'])->isValid());
+        $this->assertTrue($form->validate(['inputname' => []])->isValid());
+        $this->assertTrue($form->validate(['inputname' => [new FileUpload('foo', 'bar', UPLOAD_ERR_OK)]])->isValid());
+        $this->assertFalse($form->validate(['inputname' => [new FileUpload('foo', 'bar', UPLOAD_ERR_OK), 'foo']])->isValid());
     }
 }

@@ -103,27 +103,58 @@ class File extends Input implements Requirable, Validatable
 
     public function checkValidity(ValidationItem $validationItem)
     {
-        $value = $validationItem->getValue();
+        $values = $validationItem->getValue();
 
-        if (!$value instanceof FileUpload && $value !== null) {
-            $message = new Message('The data sent is not a valid file', [], self::NOT_VALID_NOT_A_FILE);
-            $validationItem->appendMessage($message);
-            $validationItem->setInvalid();
-        } elseif (null !== $value && $value->getStatus() !== UPLOAD_ERR_OK) {
-            switch ($value->getStatus()) {
-                case UPLOAD_ERR_INI_SIZE:
-                    $message = new Message('File is too large', [], self::FILE_TOO_LARGE);
-                    $validationItem->appendMessage($message);
-                    $validationItem->setInvalid();
-                    break;
 
-                // TODO more cases
+        if ($this->isMultiple()) {
+            if (is_array($values)) {
+                foreach ($values as $v) {
+                    if (!$v instanceof FileUpload) {
+                        $message = new Message('The data sent contains invalid files', [], self::NOT_VALID_NOT_A_FILE);
+                        $validationItem->appendMessage($message);
+                        $validationItem->setInvalid();
+                        return;
+                    }
+                }
+            } else {
+                $message = new Message('The data sent contains invalid files', [], self::NOT_VALID_NOT_A_FILE);
+                $validationItem->appendMessage($message);
+                $validationItem->setInvalid();
+                return;
+            }
+        } else {
+            if (!$values instanceof FileUpload && $values !== null) {
+                $message = new Message('The data sent contains invalid files', [], self::NOT_VALID_NOT_A_FILE);
+                $validationItem->appendMessage($message);
+                $validationItem->setInvalid();
+                return;
+            }
 
-                default:
-                    $message = new Message('Invalid file upload', [], self::NOT_VALID_NOT_A_FILE);
-                    $validationItem->appendMessage($message);
-                    $validationItem->setInvalid();
-                    break;
+            if ($values) {
+                $values = [$values];
+            } else {
+                $values = [];
+            }
+        }
+
+
+        foreach ($values as $value) {
+            if ($value->getStatus() !== UPLOAD_ERR_OK) {
+                switch ($value->getStatus()) {
+                    case UPLOAD_ERR_INI_SIZE:
+                        $message = new Message('File is too large', [], self::FILE_TOO_LARGE);
+                        $validationItem->appendMessage($message);
+                        $validationItem->setInvalid();
+                        return;
+
+                    // TODO more cases
+
+                    default:
+                        $message = new Message('Invalid file upload', [], self::NOT_VALID_NOT_A_FILE);
+                        $validationItem->appendMessage($message);
+                        $validationItem->setInvalid();
+                        return;
+                }
             }
         }
     }
