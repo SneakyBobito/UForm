@@ -294,7 +294,7 @@ trait InputBuilder
     }
 
     /**
-     * Set the last element disabled.
+     * Set the last element to be disabled.
      * The value will be removed @see \UForm\Filter\RemoveValue
      * @return $this
      */
@@ -306,7 +306,7 @@ trait InputBuilder
     }
 
     /**
-     * Set an attribute on the last element added
+     * Set an attribute on the last element added.
      * @param $name
      * @param $value
      * @return $this
@@ -314,6 +314,17 @@ trait InputBuilder
     public function attribute($name, $value)
     {
         $this->last()->setAttribute($name, $value);
+        return $this;
+    }
+
+    /**
+     * Set a placeholder attribute on the last element added.
+     * @param $value
+     * @return $this
+     */
+    public function placeholder($value)
+    {
+        $this->last()->setAttribute('placeholder', $value);
         return $this;
     }
 }

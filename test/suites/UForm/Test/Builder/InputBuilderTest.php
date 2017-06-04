@@ -160,6 +160,16 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->inputBuilderStub, $ret);
     }
 
+    public function testPlaceholder()
+    {
+        $ret = $this->inputBuilderStub
+            ->text('text')
+            ->placeholder('qux');
+        $this->assertEquals('qux', $this->inputBuilderStub->last()->getAttribute('placeholder'));
+
+        $this->assertSame($this->inputBuilderStub, $ret);
+    }
+
 
     public function testSubmit()
     {
