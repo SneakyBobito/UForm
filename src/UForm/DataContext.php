@@ -39,14 +39,15 @@ class DataContext implements \IteratorAggregate
      * If you are sure that the value you want to get is a direct value,
      * please consider using getDirectValue for performance purposes
      * @param string $path the path of the data, accepts dotted notation
+     * @param int $rOffset the offset passed to the navigator
      * @return mixed the value
      */
-    public function findValue($path)
+    public function findValue($path, $roffset = 0)
     {
         if (!$this->isArray()) {
             return null;
         }
-        return $this->navigator->arrayGet($this->data, $path);
+        return $this->navigator->arrayGet($this->data, $path, $roffset);
     }
 
     /**

@@ -79,12 +79,8 @@ class RenderContext
     {
 
         if ($element instanceof Element\Drawable) {
-            $navigator = new Navigator();
-            $value = $navigator->arrayGet(
-                $this->formContext->getData()->getDataCopy(),
-                $element->getName(true, true),
-                1
-            );
+
+            $value = $this->formContext->getData()->findValue($element->getName(true, true), 1);
 
             return $element->render($value, $options);
         } else {
