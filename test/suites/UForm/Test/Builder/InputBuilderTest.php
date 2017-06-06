@@ -7,6 +7,7 @@ namespace UForm\Test\Builder;
 
 use UForm\Builder;
 use UForm\Form\Element\Container\Group;
+use UForm\Form\Element\Primary\Input\Check;
 use UForm\Form\Element\Primary\Input\File;
 use UForm\Form\Element\Primary\Input\Submit;
 use UForm\Validator\File\MimeType;
@@ -73,6 +74,24 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->inputBuilderStub->file('inputName', 'inputTitle');
         $this->assertInstanceOf(File::class, $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
+    }
+
+    public function testCheck()
+    {
+        $this->inputBuilderStub->check('inputName', 'inputTitle');
+        /* @var Check $check */
+        $check = $this->inputBuilderStub->last();
+        $this->assertInstanceOf(Check::class, $check);
+        $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
+        $this->assertEquals(false, $check->isDefaultChecked());
+
+
+        $this->inputBuilderStub->check('inputName', 'inputTitle', true);
+        /* @var Check $check */
+        $check = $this->inputBuilderStub->last();
+        $this->assertInstanceOf(Check::class, $check);
+        $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
+        $this->assertEquals(true, $check->isDefaultChecked());
     }
 
     public function testFileMimeType()

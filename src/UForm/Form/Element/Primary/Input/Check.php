@@ -24,6 +24,11 @@ class Check extends Input
         $this->defaultChecked = $defaultChecked;
     }
 
+    public function isDefaultChecked()
+    {
+        return $this->defaultChecked;
+    }
+
     protected function overridesParamsBeforeRender($params, $value)
     {
         if (isset($value[$this->getName()])) {

@@ -23,6 +23,15 @@ class CheckTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($input->hasSemanticType('input:checkbox'));
     }
 
+    public function testIsDefaultChecked()
+    {
+        $input = new Check('foo');
+        $this->assertFalse($input->isDefaultChecked());
+
+        $input = new Check('foo', true);
+        $this->assertTrue($input->isDefaultChecked());
+    }
+
     public function testRender()
     {
         $input = new Check('inputname');

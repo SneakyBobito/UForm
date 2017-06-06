@@ -212,8 +212,13 @@ trait InputBuilder
      */
     public function check($name, $label, $checkedDefault = null)
     {
-        $element = new Check($name);
-        $this->_makeInput($element, $label, $checkedDefault == true);
+        // Dont set default to true (default filter in _makeInput),
+        // instead we ask the checkedbox to be checked by default
+        // because unchecked checkbox in html wont send any value
+        // and thus default value is unable to check for unchecked checkebox
+        $element = new Check($name, $checkedDefault == true);
+
+        $this->_makeInput($element, $label, null);
         $element->addFilter(new BooleanValue());
         $this->add($element);
         return $this;
