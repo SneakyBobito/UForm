@@ -79,7 +79,7 @@ class File extends Input implements Requirable, Validatable
 
 
 
-    protected function overridesParamsBeforeRender($params, $value)
+    protected function overridesParamsBeforeRender($params, $value, \UForm\Form\FormContext $context = null)
     {
         unset($params['value']);
 

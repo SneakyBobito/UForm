@@ -151,9 +151,9 @@ class Form extends ElementGroup
         $filterChain = new FilterChain($this);
         $this->prepareFilterChain($filterChain);
 
-        $data = $filterChain->sanitizeData($data);
+        $saneData = $filterChain->sanitizeData($data);
 
-        $formContext = new FormContext($this, new DataContext($data));
+        $formContext = new FormContext($this, new DataContext($saneData), new DataContext($data));
         return $formContext;
     }
 

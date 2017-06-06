@@ -40,10 +40,10 @@ class Input extends Primary implements Drawable
     /**
      * @inheritdoc
      */
-    public function render($localValue, array $options = [])
+    public function render($localData, array $options = [], \UForm\Form\FormContext $formContext = null)
     {
 
-        $options = $this->processRenderOptionHandlers($localValue, $options);
+        $options = $this->processRenderOptionHandlers($localData, $options);
 
         $params = [
             'type' => $this->inputType,
@@ -66,11 +66,11 @@ class Input extends Primary implements Drawable
             $params['class'] = $options['class'];
         }
 
-        if (is_array($localValue) && isset($localValue[$this->getName()])) {
-            $params['value'] = (string)$localValue[$this->getName()];
+        if (is_array($localData) && isset($localData[$this->getName()])) {
+            $params['value'] = (string)$localData[$this->getName()];
         }
 
-        $render = new Tag('input', $this->overridesParamsBeforeRender($params, $localValue), true);
+        $render = new Tag('input', $this->overridesParamsBeforeRender($params, $localData, $formContext), true);
 
         return $render->draw([], null);
     }
@@ -80,9 +80,10 @@ class Input extends Primary implements Drawable
      * (e.g checkbox will use 'checked' instead of 'value')
      * @param $params
      * @param $value
+     * @param \UForm\Form\FormContext $context
      * @return mixed
      */
-    protected function overridesParamsBeforeRender($params, $value)
+    protected function overridesParamsBeforeRender($params, $value, \UForm\Form\FormContext $context = null)
     {
         return $params;
     }

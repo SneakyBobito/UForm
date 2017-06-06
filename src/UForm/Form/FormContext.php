@@ -27,14 +27,20 @@ class FormContext
     protected $data;
 
     /**
+     * @var DataContext
+     */
+    protected $originalData;
+
+    /**
      * @var ChainedValidation
      */
     protected $chainValidation;
 
-    public function __construct($form, DataContext $data)
+    public function __construct($form, DataContext $data, DataContext $originalData)
     {
         $this->form = $form;
         $this->data = $data;
+        $this->originalData = $originalData;
         $this->chainValidation = new ChainedValidation($data);
         $this->form->prepareValidation($this->data, $this);
     }
@@ -79,6 +85,15 @@ class FormContext
     }
 
     /**
+     * Gets the original data of the form context (non filtered data)
+     * @return DataContext
+     */
+    public function getOriginalData()
+    {
+        return $this->originalData;
+    }
+
+    /**
      * Check if the form context is valid
      * A form context will always be valid before being validate
      * @return bool
@@ -101,7 +116,6 @@ class FormContext
      * Check if an element is valid
      * A element will always be valid before the formContext is validated
      * @param string|Element $elementName
-     * @param bool $iname true to use the internal name
      * @return bool
      * @throws \UForm\Exception
      */
@@ -141,6 +155,19 @@ class FormContext
     {
         return $this->getData()->findValue($name);
     }
+
+
+    /**
+     * Get the value of an element
+     * @param $name
+     * @return mixed
+     */
+    public function getOriginalValueFor($name)
+    {
+        return $this->getOriginalData()->findValue($name);
+    }
+
+
 
     /**
      * bind the given objet or array with the data of the form context

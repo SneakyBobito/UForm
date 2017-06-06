@@ -68,7 +68,10 @@ class Select extends Element\Primary implements Element\Drawable
     /**
      * Returns the choices' options
      *
-     * @return array|object|null
+     * @param $localData
+     * @param array $options
+     * @param \UForm\Form\FormContext|\UForm\Render\RenderContext $formContext
+     * @return array|null|object
      */
 //    public function getOptionValues()
 //    {
@@ -77,10 +80,10 @@ class Select extends Element\Primary implements Element\Drawable
 
 
 
-    public function render($value, array $options = [])
+    public function render($localData, array $options = [], \UForm\Form\FormContext $formContext = null)
     {
 
-        $options = $this->processRenderOptionHandlers($value, $options);
+        $options = $this->processRenderOptionHandlers($localData, $options);
 
         $params = [
             'id' => $this->getId(),
@@ -109,10 +112,10 @@ class Select extends Element\Primary implements Element\Drawable
             unset($params['multiple']);
         }
 
-        if (isset($value[$this->getName()])) {
-            $value = $value[$this->getName()];
+        if (isset($localData[$this->getName()])) {
+            $localData = $localData[$this->getName()];
         } else {
-            $value = null;
+            $localData = null;
         }
 
         $render = new Tag('select', $params, false);
@@ -120,7 +123,7 @@ class Select extends Element\Primary implements Element\Drawable
         $selectOptions = '';
 
         foreach ($this->rootGroup->getOptions() as $v) {
-            $selectOptions .= $v->render($value);
+            $selectOptions .= $v->render($localData);
         }
 
         return $render->draw([], $selectOptions);

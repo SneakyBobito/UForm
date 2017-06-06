@@ -32,9 +32,9 @@ class Submit extends Input
         return $this->submitValue;
     }
 
-    public function overridesParamsBeforeRender($params, $value)
+    public function overridesParamsBeforeRender($params, $value, \UForm\Form\FormContext $context = null)
     {
-        $params = parent::overridesParamsBeforeRender($params, $value);
+        $params = parent::overridesParamsBeforeRender($params, $value, $context);
         if ($this->submitValue) {
             $params['value'] = $this->submitValue;
         }

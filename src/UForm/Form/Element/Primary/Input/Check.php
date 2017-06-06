@@ -13,7 +13,7 @@ use UForm\Form\Element\Primary\Input;
  * input checkbox
  * @semanticType input:checkbox
  */
-class Check extends Input implements Filter
+class Check extends Input
 {
 
     protected $defaultChecked;
@@ -30,9 +30,15 @@ class Check extends Input implements Filter
         return $this->defaultChecked;
     }
 
-    protected function overridesParamsBeforeRender($params, $value)
+    protected function overridesParamsBeforeRender($params, $value, \UForm\Form\FormContext $context = null)
     {
-        if (isset($value[$this->getName()])) {
+
+        if ($context) {
+            $checked = $context->getOriginalValueFor($this->getName(true, true));
+            if ($checked) {
+                $params['checked'] = 'checked';
+            }
+        } elseif (isset($value[$this->getName()])) {
             if ($value[$this->getName()]) {
                 $params['checked'] = 'checked';
             }
@@ -42,18 +48,5 @@ class Check extends Input implements Filter
 
         $params['value'] = 1;
         return $params;
-    }
-
-    public function processFiltering(&$data, $name)
-    {
-        if (isset($data[$name])) {
-            if ($data[$name]) {
-                $data[$name] = true;
-            } else {
-                $data[$name] = false;
-            }
-        } else {
-            $data[$name] = false;
-        }
     }
 }

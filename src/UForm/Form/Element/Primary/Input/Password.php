@@ -24,9 +24,9 @@ class Password extends Input
         $this->addSemanticType('input:password');
     }
 
-    protected function overridesParamsBeforeRender($params, $value)
+    protected function overridesParamsBeforeRender($params, $value, \UForm\Form\FormContext $context = null)
     {
-        $params = parent::overridesParamsBeforeRender($params, $value);
+        $params = parent::overridesParamsBeforeRender($params, $value, $context);
 
         if (isset($params['value'])) {
             unset($params['value']);

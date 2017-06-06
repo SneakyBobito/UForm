@@ -33,7 +33,7 @@ class SimpleHtmlElement extends Primary implements Drawable
     /**
      * @inheritdoc
      */
-    public function render($value, array $options = [])
+    public function render($localData, array $options = [], \UForm\Form\FormContext $formContext = null)
     {
         $options = $this->processRenderOptionHandlers([], $options);
 

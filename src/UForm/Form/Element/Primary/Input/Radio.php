@@ -24,7 +24,7 @@ class Radio extends Input
         return $this->value;
     }
 
-    protected function overridesParamsBeforeRender($params, $value)
+    protected function overridesParamsBeforeRender($params, $value, \UForm\Form\FormContext $context = null)
     {
         if (isset($value[$this->getName()]) && (string) $value[$this->getName()] === (string) $this->value) {
             $params['checked'] = 'checked';

@@ -10,6 +10,7 @@ use UForm\Filter\BoolToInt;
 use UForm\Filter\DefaultValue;
 use UForm\Form;
 use UForm\Form\Element\Primary\Input\Check;
+use UForm\Render\RenderContext;
 
 /**
  * @covers \UForm\Form\Element\Primary\Input\Check
@@ -57,11 +58,35 @@ class CheckTest extends \PHPUnit_Framework_TestCase
         $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1"/>';
         $this->assertEquals($expected, $render);
 
-        // no value - default checked
+        // no value - with form context
         $input = new Check('inputname', true);
         $id = $input->getId();
         $render = $input->render([]);
         $expected = '<input type="checkbox" name="inputname" id="' . $id . '" checked="checked" value="1"/>';
+        $this->assertEquals($expected, $render);
+    }
+
+    public function testRenderWithContext()
+    {
+
+        $input = new Check('inputname');
+        $input->addFilter(new BooleanValue());
+
+        $form = new Form();
+        $form->addElement($input);
+
+
+        $context = $form->generateContext([]);
+        $id = $input->getId();
+        $render = $input->render(['inputname' => true], [], $context);
+        $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1"/>';
+        $this->assertEquals($expected, $render);
+
+
+        $context = $form->generateContext(['inputname' => 1]);
+        $id = $input->getId();
+        $render = $input->render(['inputname' => true], [], $context);
+        $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1" checked="checked"/>';
         $this->assertEquals($expected, $render);
     }
 }

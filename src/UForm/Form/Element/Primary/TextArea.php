@@ -28,20 +28,20 @@ class TextArea extends Element\Primary implements Drawable
     }
 
 
-    public function render($value, array $options = [])
+    public function render($localData, array $options = [], \UForm\Form\FormContext $formContext = null)
     {
 
-        $options = $this->processRenderOptionHandlers($value, $options);
+        $options = $this->processRenderOptionHandlers($localData, $options);
 
         $params = [
             'name' => $this->getName(true),
             'id'   => $this->getId()
         ];
 
-        if (isset($value[$this->getName()])) {
-            $value = $value[$this->getName()];
+        if (isset($localData[$this->getName()])) {
+            $localData = $localData[$this->getName()];
         } else {
-            $value = '';
+            $localData = '';
         }
 
         foreach ($this->getAttributes() as $attrName => $attrValue) {
@@ -64,6 +64,6 @@ class TextArea extends Element\Primary implements Drawable
 
         $render = new Tag('textarea', $params, false);
 
-        return $render->draw([], $value);
+        return $render->draw([], $localData);
     }
 }

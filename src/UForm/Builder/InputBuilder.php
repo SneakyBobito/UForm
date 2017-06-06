@@ -219,7 +219,7 @@ trait InputBuilder
         $element = new Check($name, $checkedDefault == true);
 
         $this->_makeInput($element, $label, null);
-        $element->addFilter($element);
+        $element->addFilter(new BooleanValue());
         $this->add($element);
         return $this;
     }
