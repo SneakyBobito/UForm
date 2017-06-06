@@ -17,6 +17,12 @@ class FormContext
 {
 
     /**
+     * true if the form is submitted and data are provided by end user
+     * @var bool
+     */
+    protected $isSubmitted;
+
+    /**
      * @var Form
      */
     protected $form;
@@ -36,12 +42,13 @@ class FormContext
      */
     protected $chainValidation;
 
-    public function __construct($form, DataContext $data, DataContext $originalData)
+    public function __construct($form, $isSubmitted, DataContext $data, DataContext $originalData)
     {
         $this->form = $form;
         $this->data = $data;
         $this->originalData = $originalData;
         $this->chainValidation = new ChainedValidation($data);
+        $this->isSubmitted = $isSubmitted;
         $this->form->prepareValidation($this->data, $this);
     }
 
@@ -52,6 +59,11 @@ class FormContext
     public function getChainedValidation()
     {
         return $this->chainValidation;
+    }
+
+    public function isSubmitted()
+    {
+        return $this->isSubmitted;
     }
 
     /**

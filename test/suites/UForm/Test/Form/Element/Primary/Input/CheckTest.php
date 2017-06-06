@@ -24,15 +24,6 @@ class CheckTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($input->hasSemanticType('input:checkbox'));
     }
 
-    public function testIsDefaultChecked()
-    {
-        $input = new Check('foo');
-        $this->assertFalse($input->isDefaultChecked());
-
-        $input = new Check('foo', true);
-        $this->assertTrue($input->isDefaultChecked());
-    }
-
     public function testRender()
     {
         $input = new Check('inputname');
@@ -47,30 +38,22 @@ class CheckTest extends \PHPUnit_Framework_TestCase
         $render = $input->render(['inputname' => false]);
         $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1"/>';
         $this->assertEquals($expected, $render);
-    }
 
-    public function testRenderNoValue()
-    {
         // No value
         $input = new Check('inputname');
         $id = $input->getId();
         $render = $input->render([]);
         $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1"/>';
         $this->assertEquals($expected, $render);
-
-        // no value - with form context
-        $input = new Check('inputname', true);
-        $id = $input->getId();
-        $render = $input->render([]);
-        $expected = '<input type="checkbox" name="inputname" id="' . $id . '" checked="checked" value="1"/>';
-        $this->assertEquals($expected, $render);
     }
+
+
 
     public function testRenderWithContext()
     {
 
-        $input = new Check('inputname');
-        $input->addFilter(new BooleanValue());
+        $input = new Check('inputname', true);
+        $input->addFilter($input);
 
         $form = new Form();
         $form->addElement($input);
@@ -78,14 +61,38 @@ class CheckTest extends \PHPUnit_Framework_TestCase
 
         $context = $form->generateContext([]);
         $id = $input->getId();
-        $render = $input->render(['inputname' => true], [], $context);
-        $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1"/>';
+        $render = $input->render(['inputname' => true], []);
+        $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1" checked="checked"/>';
         $this->assertEquals($expected, $render);
 
 
         $context = $form->generateContext(['inputname' => 1]);
         $id = $input->getId();
-        $render = $input->render(['inputname' => true], [], $context);
+        $render = $input->render(['inputname' => true], []);
+        $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1" checked="checked"/>';
+        $this->assertEquals($expected, $render);
+    }
+
+    public function testRenderWithSubmittedContext()
+    {
+
+        $input = new Check('inputname');
+        $input->addFilter($input);
+
+        $form = new Form();
+        $form->addElement($input);
+
+
+        $context = $form->generateContext([], true);
+        $id = $input->getId();
+        $render = $input->render($context->getData()->getDataCopy(), [], $context);
+        $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1"/>';
+        $this->assertEquals($expected, $render);
+
+
+        $context = $form->generateContext(['inputname' => 1], true);
+        $id = $input->getId();
+        $render = $input->render($context->getData()->getDataCopy(), [], $context);
         $expected = '<input type="checkbox" name="inputname" id="' . $id . '" value="1" checked="checked"/>';
         $this->assertEquals($expected, $render);
     }

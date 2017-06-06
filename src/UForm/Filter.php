@@ -19,5 +19,5 @@ interface Filter
      * @param string $name index of the array item that is currently filtered
      * @return void
      */
-    public function processFiltering(&$data, $name);
+    public function processFiltering(&$data, $name, $isSubmitted);
 }

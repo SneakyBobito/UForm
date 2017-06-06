@@ -217,9 +217,9 @@ trait InputBuilder
         // because unchecked checkbox in html wont send any value
         // and thus default value is unable to check for unchecked checkebox
         $element = new Check($name, $checkedDefault == true);
+        $element->addFilter($element);
 
         $this->_makeInput($element, $label, null);
-        $element->addFilter(new BooleanValue());
         $this->add($element);
         return $this;
     }

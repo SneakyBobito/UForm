@@ -84,15 +84,6 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $check = $this->inputBuilderStub->last();
         $this->assertInstanceOf(Check::class, $check);
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
-        $this->assertEquals(false, $check->isDefaultChecked());
-
-
-        $this->inputBuilderStub->check('inputName', 'inputTitle', true);
-        /* @var Check $check */
-        $check = $this->inputBuilderStub->last();
-        $this->assertInstanceOf(Check::class, $check);
-        $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
-        $this->assertEquals(true, $check->isDefaultChecked());
     }
 
     public function testCheckLogic()
@@ -106,16 +97,28 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
 
         $data = [];
         $form->generateContext()->bind($data);
-        $this->assertEquals(['inputName' => false], $data);
-
+        $this->assertEquals(['inputName' => true], $data);
 
         $data = [];
         $form->generateContext(['inputName' => 0])->bind($data);
         $this->assertEquals(['inputName' => false], $data);
 
-
         $data = [];
         $form->generateContext(['inputName' => 1])->bind($data);
+        $this->assertEquals(['inputName' => true], $data);
+
+
+        // with submitted filter
+        $data = [];
+        $form->generateContext([], true)->bind($data);
+        $this->assertEquals(['inputName' => false], $data);
+
+        $data = [];
+        $form->generateContext(['inputName' => 0], true)->bind($data);
+        $this->assertEquals(['inputName' => false], $data);
+
+        $data = [];
+        $form->generateContext(['inputName' => 1], true)->bind($data);
         $this->assertEquals(['inputName' => true], $data);
     }
 

@@ -12,7 +12,7 @@ use UForm\Filter;
  */
 class RemoveValue implements Filter
 {
-    public function processFiltering(&$data, $name)
+    public function processFiltering(&$data, $name, $isSubmitted)
     {
         unset($data[$name]);
     }

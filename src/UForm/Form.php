@@ -142,7 +142,7 @@ class Form extends ElementGroup
      * @param null $data
      * @return FormContext
      */
-    public function generateContext($data = null)
+    public function generateContext($data = null, $isSubmitted = false)
     {
         if (null === $data) {
             $data = null;
@@ -151,9 +151,9 @@ class Form extends ElementGroup
         $filterChain = new FilterChain($this);
         $this->prepareFilterChain($filterChain);
 
-        $saneData = $filterChain->sanitizeData($data);
+        $saneData = $filterChain->sanitizeData($data, $isSubmitted);
 
-        $formContext = new FormContext($this, new DataContext($saneData), new DataContext($data));
+        $formContext = new FormContext($this, $isSubmitted, new DataContext($saneData), new DataContext($data));
         return $formContext;
     }
 

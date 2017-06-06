@@ -15,7 +15,7 @@ use UForm\Filter;
 abstract class AbstractSimpleFilter implements Filter
 {
 
-    public function processFiltering(&$data, $name)
+    public function processFiltering(&$data, $name, $isSubmitted)
     {
         $value = isset($data[$name]) ? $data[$name] : null;
         $data[$name] = $this->filter($value);

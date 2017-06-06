@@ -69,7 +69,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $chainFilter = new FilterChain();
         $this->container->prepareFilterChain($chainFilter);
-        $data = $chainFilter->sanitizeData(['data' => 'value']);
+        $data = $chainFilter->sanitizeData(['data' => 'value'], true);
         $this->assertEquals([
             'data' => 'value',
             'username' => null,

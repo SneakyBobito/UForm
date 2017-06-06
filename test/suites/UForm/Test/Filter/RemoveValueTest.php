@@ -17,7 +17,7 @@ class RemoveValueTest extends \PHPUnit_Framework_TestCase
     {
         $data = ['firstname' => 'bart', 'lastname' => 'simpson'];
         $filter = new RemoveValue();
-        $filter->processFiltering($data, 'firstname');
+        $filter->processFiltering($data, 'firstname', false);
         $this->assertSame(['lastname' => 'simpson'], $data);
     }
 }

@@ -13,7 +13,7 @@ use UForm\Form\Element\Primary\Input;
  * input checkbox
  * @semanticType input:checkbox
  */
-class Check extends Input
+class Check extends Input implements Filter
 {
 
     protected $defaultChecked;
@@ -25,28 +25,36 @@ class Check extends Input
         $this->defaultChecked = $defaultChecked;
     }
 
+    /**
+     * @return bool
+     */
     public function isDefaultChecked()
     {
         return $this->defaultChecked;
     }
 
+
+
     protected function overridesParamsBeforeRender($params, $value, \UForm\Form\FormContext $context = null)
     {
 
-        if ($context) {
-            $checked = $context->getOriginalValueFor($this->getName(true, true));
-            if ($checked) {
-                $params['checked'] = 'checked';
-            }
-        } elseif (isset($value[$this->getName()])) {
-            if ($value[$this->getName()]) {
-                $params['checked'] = 'checked';
-            }
-        } elseif ($this->defaultChecked) {
+        $checked = isset($value[$this->getName()])
+            && $value[$this->getName()];
+
+        if ($checked) {
             $params['checked'] = 'checked';
         }
 
         $params['value'] = 1;
         return $params;
+    }
+
+    public function processFiltering(&$data, $name, $isSubmitted)
+    {
+        if ($isSubmitted) {
+            $data[$name] = isset($data[$name]) && $data[$name];
+        } else {
+            $data[$name] = isset($data[$name]) ? $data[$name] : $this->isDefaultChecked();
+        }
     }
 }
