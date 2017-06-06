@@ -92,9 +92,9 @@ class Form extends ElementGroup
      * @var array|null $data the data used for the validation.
      * @return FormContext
      */
-    public function validate($inputData)
+    public function validate($inputData, $isSubmitted = true)
     {
-        $formContext = $this->generateContext($inputData);
+        $formContext = $this->generateContext($inputData, $isSubmitted);
         $formContext->validate();
         return $formContext;
     }
