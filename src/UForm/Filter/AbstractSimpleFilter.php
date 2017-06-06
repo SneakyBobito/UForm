@@ -12,7 +12,7 @@ use UForm\Filter;
  *
  * @see UForm\Filter for moe controle on the filtering
  */
-abstract class AbstractSimpleFilter extends Filter
+abstract class AbstractSimpleFilter implements Filter
 {
 
     public function processFiltering(&$data, $name)

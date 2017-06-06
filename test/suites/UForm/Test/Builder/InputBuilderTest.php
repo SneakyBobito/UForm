@@ -6,6 +6,7 @@
 namespace UForm\Test\Builder;
 
 use UForm\Builder;
+use UForm\Form;
 use UForm\Form\Element\Container\Group;
 use UForm\Form\Element\Primary\Input\Check;
 use UForm\Form\Element\Primary\Input\File;
@@ -92,6 +93,30 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Check::class, $check);
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
         $this->assertEquals(true, $check->isDefaultChecked());
+    }
+
+    public function testCheckLogic()
+    {
+        $this->inputBuilderStub->check('inputName', 'inputTitle', true);
+        /* @var Check $check */
+        $check = $this->inputBuilderStub->last();
+
+        /* @var Form $form */
+        $form = $this->inputBuilderStub->getForm();
+
+        $data = [];
+        $form->generateContext()->bind($data);
+        $this->assertEquals(['inputName' => false], $data);
+
+
+        $data = [];
+        $form->generateContext(['inputName' => 0])->bind($data);
+        $this->assertEquals(['inputName' => false], $data);
+
+
+        $data = [];
+        $form->generateContext(['inputName' => 1])->bind($data);
+        $this->assertEquals(['inputName' => true], $data);
     }
 
     public function testFileMimeType()

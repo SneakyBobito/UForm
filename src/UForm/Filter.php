@@ -10,7 +10,7 @@ namespace UForm;
  * @see UForm\Filter\AbstractSimpleFilter for simple value filtering
  *
  */
-abstract class Filter
+interface Filter
 {
 
     /**
@@ -19,5 +19,5 @@ abstract class Filter
      * @param string $name index of the array item that is currently filtered
      * @return void
      */
-    abstract public function processFiltering(&$data, $name);
+    public function processFiltering(&$data, $name);
 }
