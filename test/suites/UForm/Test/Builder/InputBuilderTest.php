@@ -17,7 +17,7 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var Builder\InputBuilder
+     * @var Builder
      */
     protected $inputBuilderStub;
 
@@ -61,6 +61,25 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(\UForm\Form\Element\Primary\Select::class, $this->inputBuilderStub->last());
         $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
         $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
+    }
+
+    public function testSelectMultiple()
+    {
+        $this->inputBuilderStub->selectMultiple('inputName', 'inputTitle');
+        /* @var Form\Element\Primary\Select $select */
+        $select = $this->inputBuilderStub->last();
+        $this->assertInstanceOf(\UForm\Form\Element\Primary\Select::class, $select);
+        $this->assertTrue($select->isMultiple());
+        $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
+        $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
+
+        $form = $this->inputBuilderStub->getForm();
+
+        $context = $form->generateContext();
+
+        $inputValue = $context->getValueFor('inputName');
+
+        $this->assertEquals([], $inputValue);
     }
 
     public function testHidden()

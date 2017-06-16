@@ -146,6 +146,7 @@ trait InputBuilder
         $element = new Select($name, $values, true);
         $this->_makeInput($element, $label, $defaultValue);
         $this->add($element);
+        $this->filter(new ArrayValue());
         return $this;
     }
 

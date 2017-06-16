@@ -66,6 +66,14 @@ class Select extends Element\Primary implements Element\Drawable
     }
 
     /**
+     * @return bool
+     */
+    public function isMultiple()
+    {
+        return $this->isMultiple;
+    }
+
+    /**
      * Returns the choices' options
      *
      * @param $localData
@@ -77,6 +85,7 @@ class Select extends Element\Primary implements Element\Drawable
 //    {
 //        return $this->optionsValues;
 //    }
+
 
 
 
