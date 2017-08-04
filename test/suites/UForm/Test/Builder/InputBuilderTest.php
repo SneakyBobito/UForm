@@ -39,6 +39,17 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
     }
 
+    public function testRange()
+    {
+        $this->inputBuilderStub->range('foobar', 'baz', null, 9, 22, 2);
+        $this->assertInstanceOf(\UForm\Form\Element\Primary\Input\Range::class, $this->inputBuilderStub->last());
+        $this->assertEquals('foobar', $this->inputBuilderStub->last()->getName());
+        $this->assertEquals('baz', $this->inputBuilderStub->last()->getOption('label'));
+        $this->assertEquals(9, $this->inputBuilderStub->last()->getAttribute('min'));
+        $this->assertEquals(22, $this->inputBuilderStub->last()->getAttribute('max'));
+        $this->assertEquals(2, $this->inputBuilderStub->last()->getAttribute('step'));
+    }
+
     public function testTextArea()
     {
         $this->inputBuilderStub->textArea('inputName', 'inputTitle');

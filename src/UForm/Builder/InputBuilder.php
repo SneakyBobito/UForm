@@ -6,7 +6,6 @@
 namespace UForm\Builder;
 
 use UForm\Filter\ArrayValue;
-use UForm\Filter\BooleanValue;
 use UForm\Filter\DefaultValue;
 use UForm\Filter\FreezeValue;
 use UForm\Filter\RemoveValue;
@@ -22,8 +21,7 @@ use UForm\Form\Element\Primary\Input\Text;
 use UForm\Form\Element\Primary\Select;
 use UForm\Form\Element\Primary\TextArea;
 use UForm\Validator\File\MimeType;
-use UForm\Validator\IsFile;
-use UForm\Validator\IsValid;
+use UForm\Form\Element\Primary\Input\Range;
 
 trait InputBuilder
 {
@@ -84,6 +82,22 @@ trait InputBuilder
     public function text($name, $label = null, $defaultValue = null)
     {
         $element = new Text($name);
+        $this->_makeInput($element, $label, $defaultValue);
+        $this->add($element);
+
+        return $this;
+    }
+
+    /**
+     * creates an input range
+     * @see \UForm\Form\Element\Primary\Range
+     * @param $name
+     * @param $label
+     * @return $this
+     */
+    public function range($name, $label = null, $defaultValue = null, $min = null, $max = null, $step = null)
+    {
+        $element = new Range($name, $min, $max, $step);
         $this->_makeInput($element, $label, $defaultValue);
         $this->add($element);
 
