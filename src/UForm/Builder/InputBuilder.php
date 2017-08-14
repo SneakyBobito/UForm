@@ -22,6 +22,7 @@ use UForm\Form\Element\Primary\Select;
 use UForm\Form\Element\Primary\TextArea;
 use UForm\Validator\File\MimeType;
 use UForm\Form\Element\Primary\Input\Range;
+use UForm\Form\Element\Primary\Input\Color;
 
 trait InputBuilder
 {
@@ -84,6 +85,24 @@ trait InputBuilder
         $element = new Text($name);
         $this->_makeInput($element, $label, $defaultValue);
         $this->add($element);
+
+        return $this;
+    }
+
+    /**
+     * creates an input color
+     * @see \UForm\Form\Element\Primary\Text
+     * @param $name
+     * @param $label
+     * @return $this
+     */
+    public function color($name, $label = null, $defaultValue = null)
+    {
+        $element = new Color($name);
+        $this->_makeInput($element, $label, $defaultValue);
+        $this->add($element);
+
+        // TODO color validation
 
         return $this;
     }

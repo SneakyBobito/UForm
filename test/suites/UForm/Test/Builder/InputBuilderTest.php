@@ -39,6 +39,14 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
     }
 
+    public function testColor()
+    {
+        $this->inputBuilderStub->color('inputName', 'inputTitle');
+        $this->assertInstanceOf(\UForm\Form\Element\Primary\Input\Color::class, $this->inputBuilderStub->last());
+        $this->assertEquals('inputName', $this->inputBuilderStub->last()->getName());
+        $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
+    }
+
     public function testRange()
     {
         $this->inputBuilderStub->range('foobar', 'baz', null, 9, 22, 2);
