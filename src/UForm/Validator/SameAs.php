@@ -17,6 +17,11 @@ class SameAs extends Validator
 
     protected $sameElement = null;
 
+    /**
+     * @param string $sameAs name of the element the must have the same value
+     * @param null $options
+     *
+     */
     public function __construct($sameAs, $options = null)
     {
         $this->sameElement = $sameAs;
