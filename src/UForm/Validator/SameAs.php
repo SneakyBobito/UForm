@@ -40,11 +40,8 @@ class SameAs extends Validator
 
         if ($value2 !== $value1) {
             $message = new Validation\Message(
-                'Fields %_tested-field_% and %_compare-field_% have different values',
-                [
-                    'tested-field' => $validationItem->getElement()->getName(true, true),
-                    'compare-field' => $this->sameElement
-                ],
+                'Fields are not identical',
+                $this->getOptions(),
                 self::DIFFERENT
             );
 
