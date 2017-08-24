@@ -32,7 +32,6 @@ class Regexp extends Validator
     {
         parent::__construct(null);
 
-
         if (!is_string($pattern)) {
             throw new InvalidArgumentException('set', 'string pattern', $pattern);
         }
@@ -66,12 +65,11 @@ class Regexp extends Validator
             if ($this->message) {
                 $message = new Message(
                     $this->message,
-                    [],
-                    self::NO_MATCH
+                    []
                 );
             } else {
                 $message = new Message(
-                    'No match for regexp',
+                    'Does not match the expected format',
                     [],
                     self::NO_MATCH
                 );
@@ -79,5 +77,13 @@ class Regexp extends Validator
             $validationItem->appendMessage($message);
             $validationItem->setInvalid();
         }
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 }

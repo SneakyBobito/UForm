@@ -89,9 +89,9 @@ trait ValidatorBuilder
      * @param bool|false $allowSpace
      * @return $this
      */
-    public function regexp($pattern)
+    public function regexp($pattern, $message = null, $format = null)
     {
-        $this->last()->addValidator(new Validator\Regexp($pattern));
+        $this->last()->addValidator(new Validator\Regexp($pattern, $message, $format));
         return $this;
     }
 }

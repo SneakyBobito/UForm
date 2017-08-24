@@ -9,6 +9,13 @@ class InvalidArgumentException extends \InvalidArgumentException
 {
 
 
+    /**
+     * InvalidArgumentException constructor.
+     * @param string $argumentName
+     * @param int $expectedType
+     * @param mixed $argument
+     * @param null $message
+     */
     public function __construct($argumentName, $expectedType, $argument, $message = null)
     {
         $actualType = gettype($argument);

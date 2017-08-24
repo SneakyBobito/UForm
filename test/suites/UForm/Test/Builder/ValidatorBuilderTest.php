@@ -72,9 +72,14 @@ class ValidatorBuilderTest extends \PHPUnit_Framework_TestCase
     public function testRegexp()
     {
         $this->validatorBuilder->text('text');
-        $output = $this->validatorBuilder->regexp('/[a-z]+/');
+        $output = $this->validatorBuilder->regexp('/[a-z]+/', 'foo');
 
         $this->assertSame($this->validatorBuilder, $output);
-        $this->assertInstanceOf(Regexp::class, $this->validatorBuilder->last()->getValidators()[0]);
+
+        /** @var Regexp $validator */
+        $validator = $this->validatorBuilder->last()->getValidators()[0];
+
+        $this->assertInstanceOf(Regexp::class, $validator);
+        $this->assertEquals('foo', $validator->getMessage());
     }
 }
