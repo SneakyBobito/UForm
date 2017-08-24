@@ -88,6 +88,16 @@ trait OptionGroup
     }
 
     /**
+     * Check if the option exists
+     * @param string $option
+     * @return bool
+     */
+    public function hasOption($option)
+    {
+        return array_key_exists($option, $this->optionGroup);
+    }
+
+    /**
      * Returns the options for the element
      *
      * @return array

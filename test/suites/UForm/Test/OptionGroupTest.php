@@ -11,7 +11,7 @@ class OptionGroupTest extends \PHPUnit_Framework_TestCase
      * @var OptionGroup
      */
     protected $optionGroup;
-    
+
     public function setup()
     {
         $this->optionGroup = $this->getMockForTrait('UForm\OptionGroup');
@@ -42,6 +42,14 @@ class OptionGroupTest extends \PHPUnit_Framework_TestCase
 
         $this->optionGroup->addOptions([ 'qux' => 'qux', 'toto' => 'titi']);
         $this->assertSame(['foo' => 'bar', 'qux' => 'qux', 'toto' => 'titi'], $this->optionGroup->getOptions());
+    }
+
+    public function testHasOption()
+    {
+        $this->optionGroup->addOptions(['foo' => 'bar', 'qux' => 'quux']);
+        $this->assertTrue($this->optionGroup->hasOption('foo'));
+        $this->assertFalse($this->optionGroup->hasOption('bar'));
+        $this->assertTrue($this->optionGroup->hasOption('qux'));
     }
 
 
