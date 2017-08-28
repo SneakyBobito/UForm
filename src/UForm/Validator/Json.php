@@ -11,9 +11,6 @@ class Json extends Validator
 
     const INVALID_JSON_STRING = 'Json::INVALID_JSON_STRING';
 
-    private $minLength;
-    private $maxLength;
-
     public function __construct()
     {
         parent::__construct();
