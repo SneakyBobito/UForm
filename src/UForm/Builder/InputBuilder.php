@@ -53,7 +53,7 @@ trait InputBuilder
 
     /**
      * @see FluentElement::current()
-     * @return $this
+     * @return Element\Container
      */
     abstract public function current();
 

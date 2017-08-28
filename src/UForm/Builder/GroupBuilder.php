@@ -194,12 +194,12 @@ trait GroupBuilder
      *   ->getForm();
      * </code>
      *
-     * @see Uform\Form\Element\Input\Radio
+     * @see Element\Primary\Input\Radio
      * @param string $name name of the radio to take into the group. This name wont modify the namespace of children
      * @param string $defaultValue value of the radio that will be checked by default
      * @return $this
      */
-    public function radioGroup($name, $defaultValue = null)
+    public function radioGroup($name, $defaultValue = null, $title = null)
     {
         $element = new RadioGroup($name);
         $this->add($element);
@@ -209,6 +209,10 @@ trait GroupBuilder
 
         if (null !== $defaultValue) {
             $element->addFilter(new DefaultValue($defaultValue));
+        }
+
+        if (null !== $title) {
+            $element->setOption('title', $title);
         }
 
         return $this;
