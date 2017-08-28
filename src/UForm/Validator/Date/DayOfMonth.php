@@ -22,7 +22,7 @@ class DayOfMonth extends Validator
 
         if (!is_numeric($value) || $value < 1 || $value > 31) {
             $validationItem->appendMessage(new Message(
-                'Day of the month is not valid',
+                'Day of the month is not valid.',
                 [],
                 self::NOT_DAY_OF_MONTH
             ));
