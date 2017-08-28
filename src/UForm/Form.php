@@ -65,7 +65,7 @@ class Form extends ElementGroup
 
     public function setMethod($method)
     {
-        $this->method = strtoupper($method);
+        $this->method = $method;
     }
 
     /**
@@ -163,7 +163,7 @@ class Form extends ElementGroup
     public function getInputFromGlobals()
     {
 
-        switch ($this->getMethod()) {
+        switch (strtoupper($this->getMethod())) {
             case 'POST':
                 $finalData = $_POST + FileUpload::fromGlobalFilesVariable($_FILES, true);
                 break;
