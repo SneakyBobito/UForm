@@ -65,7 +65,7 @@ class Form extends ElementGroup
 
     public function setMethod($method)
     {
-        $this->method = $method;
+        $this->method = strtoupper($method);
     }
 
     /**
