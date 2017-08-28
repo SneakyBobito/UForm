@@ -29,7 +29,5 @@ class SameAsTest extends ValidatorTestCase
         $this->assertCount(1, $validation->getMessages());
         $message =  $validation->getMessages()->getAt(0);
         $this->assertSame(SameAs::DIFFERENT, $message->getType());
-        $this->assertSame('firstname', $message->getVariables()['tested-field']);
-        $this->assertSame('lastname', $message->getVariables()['compare-field']);
     }
 }
