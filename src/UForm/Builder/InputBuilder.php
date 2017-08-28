@@ -160,7 +160,7 @@ trait InputBuilder
      * @param $label
      * @return $this
      */
-    public function select($name, $label, $values = [], $defaultValue = null)
+    public function select($name, $label = null, $values = [], $defaultValue = null)
     {
         $element = new Select($name, $values);
         $this->_makeInput($element, $label, $defaultValue);
@@ -174,7 +174,7 @@ trait InputBuilder
      * @param $label
      * @return $this
      */
-    public function selectMultiple($name, $label, $values = [], $defaultValue = null)
+    public function selectMultiple($name, $label  = null, $values = [], $defaultValue = null)
     {
         $element = new Select($name, $values, true);
         $this->_makeInput($element, $label, $defaultValue);
