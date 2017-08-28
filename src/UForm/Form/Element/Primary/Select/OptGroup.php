@@ -62,7 +62,7 @@ class OptGroup extends AbstractOption
                     $option = new OptGroup($key, $option);
                 }
             } else {
-                if (!is_string($option)) {
+                if (!is_string($option) && !is_numeric($option)) {
                     throw new Exception(
                         'An option is not valid for option factory. It should be a string, '
                         . 'instead ' . gettype($option) . ' was given'
