@@ -86,12 +86,14 @@ trait ValidatorBuilder
     /**
      * Adds a regexp validator to the last element
      * @see Validator\Regexp
-     * @param bool|false $allowSpace
+     *
+     * @param string $pattern to match against
+     * @param string $message message to show if pattern does not match
      * @return $this
      */
-    public function regexp($pattern, $message = null, $format = null)
+    public function regexp($pattern, $message = null)
     {
-        $this->last()->addValidator(new Validator\Regexp($pattern, $message, $format));
+        $this->last()->addValidator(new Validator\Regexp($pattern, $message));
         return $this;
     }
 }
