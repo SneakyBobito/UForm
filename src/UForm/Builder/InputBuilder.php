@@ -345,6 +345,16 @@ trait InputBuilder
     }
 
     /**
+     * Set the value for last element "inputmode" attribute.
+     * @return $this
+     */
+    public function inputMode($inputMode)
+    {
+        $this->last()->setAttribute('inputmode', $inputMode);
+        return $this;
+    }
+
+    /**
      * Set an attribute on the last element added.
      * @param $name
      * @param $value

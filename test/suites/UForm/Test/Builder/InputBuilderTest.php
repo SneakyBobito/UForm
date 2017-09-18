@@ -47,6 +47,13 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('inputTitle', $this->inputBuilderStub->last()->getOption('label'));
     }
 
+    public function testInputMode()
+    {
+        $b = $this->inputBuilderStub->text('inputName', 'inputTitle')->inputMode('numeric');
+        $this->assertSame($this->inputBuilderStub, $b);
+        $this->assertEquals('numeric', $this->inputBuilderStub->last()->getAttribute('inputmode'));
+    }
+
     public function testRange()
     {
         $this->inputBuilderStub->range('foobar', 'baz', null, 9, 22, 2);
