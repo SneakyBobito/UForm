@@ -345,12 +345,22 @@ trait InputBuilder
     }
 
     /**
-     * Set the value for last element "inputmode" attribute.
+     * Set the value for last element's "inputmode" attribute.
      * @return $this
      */
     public function inputMode($inputMode)
     {
         $this->last()->setAttribute('inputmode', $inputMode);
+        return $this;
+    }
+
+    /**
+     * Set the value for last element's "autocomplete" attribute.
+     * @return $this
+     */
+    public function autoComplete($autoComplete)
+    {
+        $this->last()->setAttribute('autocomplete', $autoComplete);
         return $this;
     }
 

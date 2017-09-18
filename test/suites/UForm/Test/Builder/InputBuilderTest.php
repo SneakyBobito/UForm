@@ -54,6 +54,13 @@ class InputBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('numeric', $this->inputBuilderStub->last()->getAttribute('inputmode'));
     }
 
+    public function testAutoComplete()
+    {
+        $b = $this->inputBuilderStub->text('inputName', 'inputTitle')->autoComplete('cc-name');
+        $this->assertSame($this->inputBuilderStub, $b);
+        $this->assertEquals('cc-name', $this->inputBuilderStub->last()->getAttribute('autocomplete'));
+    }
+
     public function testRange()
     {
         $this->inputBuilderStub->range('foobar', 'baz', null, 9, 22, 2);
