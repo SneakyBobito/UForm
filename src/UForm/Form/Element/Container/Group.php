@@ -55,7 +55,19 @@ class Group extends Container
     public function getName($prenamed = null, $dottedNotation = false)
     {
         if (null === $this->name) {
-            return $this->prename;
+            // if prenamed and dotted notation dont do further check that's stored in $this->prename
+            if ($prenamed && $dottedNotation) {
+                return $this->prename;
+
+                // else get name from parent
+            } else {
+                // if parent get parent name else, return null
+                if ($this->parent) {
+                    return $this->parent->getName($prenamed, $dottedNotation);
+                } else {
+                    return null;
+                }
+            }
         }
 
         return  parent::getName($prenamed, $dottedNotation);

@@ -37,6 +37,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([$text1, $text2], $group->getElements());
     }
 
+
     public function testGetName()
     {
 
@@ -49,6 +50,37 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group->setNamespace('namespace');
 
         $this->assertSame('namespace.name', $group->getName(true, true));
+    }
+
+    public function testGetNameDeeper()
+    {
+        $grandParent = new Group('foo');
+        $parentGroup = new Group('bar');
+        $unknown = new Group();
+        $child = new Group('baz');
+
+        $text1 = new Text('txt1');
+        $text2 = new Text('txt2');
+
+        $grandParent->addElement($parentGroup);
+        $parentGroup->addElement($unknown);
+        $unknown->addElement($child);
+        $child->addElement($text1);
+        $child->addElement($text2);
+
+        $this->assertEquals('foo', $grandParent->getName());
+        $this->assertEquals('bar', $parentGroup->getName());
+        $this->assertEquals('bar', $unknown->getName());
+        $this->assertEquals('baz', $child->getName());
+        $this->assertEquals('txt1', $text1->getName());
+        $this->assertEquals('txt2', $text2->getName());
+
+        $this->assertEquals('foo', $grandParent->getName(true));
+        $this->assertEquals('foo.bar', $parentGroup->getName(true, true));
+        $this->assertEquals('foo.bar', $unknown->getName(true, true));
+        $this->assertEquals('foo.bar.baz', $child->getName(true, true));
+        $this->assertEquals('foo.bar.baz.txt1', $text1->getName(true, true));
+        $this->assertEquals('foo.bar.baz.txt2', $text2->getName(true, true));
     }
 
     public function testGetElement()
