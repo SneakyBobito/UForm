@@ -63,7 +63,11 @@ class Input extends Primary implements Drawable
 
 
         if (isset($options['class'])) {
-            $params['class'] = $options['class'];
+            if (isset($params['class'])) {
+                $params['class'] = $params['class'] . ' ' . $options['class'];
+            } else {
+                $params['class'] = $options['class'];
+            }
         }
 
         if (is_array($localData) && isset($localData[$this->getName()])) {
