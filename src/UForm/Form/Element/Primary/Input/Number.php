@@ -23,7 +23,10 @@ class Number extends Input
     {
         parent::__construct('number', $name);
         $this->addSemanticType('input:textfield');
+        $this->addSemanticType('input__textfield');
         $this->addSemanticType('input:text');
+        $this->addSemanticType('input__text');
         $this->addSemanticType('input:number');
+        $this->addSemanticType('input__number');
     }
 }

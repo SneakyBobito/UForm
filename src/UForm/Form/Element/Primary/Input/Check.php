@@ -22,6 +22,7 @@ class Check extends Input implements Filter
     {
         parent::__construct('checkbox', $name);
         $this->addSemanticType('input:checkbox');
+        $this->addSemanticType('input__checkbox');
         $this->defaultChecked = $defaultChecked;
     }
 

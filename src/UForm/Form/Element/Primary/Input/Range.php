@@ -22,6 +22,7 @@ class Range extends Input
     {
         parent::__construct('range', $name);
         $this->addSemanticType('input:range');
+        $this->addSemanticType('input__range');
 
         if (null !== $min) {
             $this->setAttribute('min', $min);

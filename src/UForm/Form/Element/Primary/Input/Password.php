@@ -21,7 +21,9 @@ class Password extends Input
     {
         parent::__construct('password', $name);
         $this->addSemanticType('input:textfield');
+        $this->addSemanticType('input__textfield');
         $this->addSemanticType('input:password');
+        $this->addSemanticType('input__password');
     }
 
     protected function overridesParamsBeforeRender($params, $value, \UForm\Form\FormContext $context = null)

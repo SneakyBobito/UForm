@@ -22,5 +22,6 @@ class Color extends Input
     {
         parent::__construct('color', $name);
         $this->addSemanticType('input:color');
+        $this->addSemanticType('input__color');
     }
 }

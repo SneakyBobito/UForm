@@ -22,6 +22,7 @@ class Submit extends Input
 
         $this->submitValue = $value;
         $this->addSemanticType('input:submit');
+        $this->addSemanticType('input__submit');
     }
 
     /**

@@ -16,6 +16,7 @@ class Radio extends Input
     {
         parent::__construct('radio', $name);
         $this->addSemanticType('input:radio');
+        $this->addSemanticType('input__radio');
         $this->value = $value;
     }
 

@@ -44,6 +44,7 @@ class File extends Input implements Requirable, Validatable
         $this->multiple = $multiple;
         $this->accept = $accept;
         $this->addSemanticType('input:file');
+        $this->addSemanticType('input__file');
     }
 
     /**
